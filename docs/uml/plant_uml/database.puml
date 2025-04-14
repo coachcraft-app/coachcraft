@@ -1,0 +1,114 @@
+' C4 - Code - of C4 Model
+' Entity Relation Diagram
+!define GITHUB_PLANTUML_URL
+@startuml Backend Database
+entity "User" as user {
+    * id: integer <<generated>> 
+    --
+    * username: text
+    * email: text
+    * firstname: text
+    * lastname: text
+    * dateRegistered: datetime
+    * lastLogin: datetime
+    * isActive: boolean
+}
+
+entity "Role" as role {
+    * id: integer <<generated>> 
+    --
+    * name: text
+    * description: text
+}
+
+entity "Permission" as perm {
+    * id: integer <<generated>>
+    --
+    * name: text
+    * description: text
+}
+
+entity "UserRole" as userrole {
+    * user_id: integer <<FK>>
+    * role_id: integer <<FK>>
+    --
+
+}
+
+entity "RolePermission" as roleperm {
+    * role_id: integer <<FK>>
+    * perm_id: integer <<FK>>
+    --
+
+}
+
+' Coach owns a team which has many planned sessions
+entity "Team" as team {
+    * id: integer <<generated>> 
+    --
+    * name: text
+    ' As hex rgbs format "#rrggbb"
+    * primaryColour: text
+    ' These optional as through research at most one color, but three is usually enough
+    secondaryColor: text
+    tertiaryColor: text
+}
+
+' One continuous coaching session, composed of activities in time slots
+entity "Session" as session {
+    * id: integer <<generated>> 
+    --
+    ' Name the sessions? for example "Friday Kicks", "Sunday Laps"
+    * name: text
+    ' if name have mandatory ("" instead of null on empty) description
+    * description: text
+    * date: date
+}
+
+' One activity in a coaching session
+' e.g.) laps, long kicks, etc.
+entity "Activity" as activity {
+    * id: integer <<generated>>  
+    --
+    * name: text
+    * description: text
+    * timeStart: datetime
+    * timeEnd: datetime
+    ' Calculate duration as seconds between start and end
+    * duration: integer <<computed>>
+    ' Style them as cards with hex colour backgrounds?
+    * colour: text
+}
+
+' Activities saved for reuse per team (information not secure if
+' you could see templates created for other teams)
+entity "Activity_Template" as activity_temp {
+    * id: integer <<generated>> 
+    --
+    * name: text
+    * description: text
+    ' Optional stored duration for activity so you can make "10 mins laps"
+    duration: integer
+    ' Style them as cards with hex colour backgrounds?
+    * colour: text
+}
+
+
+' User must have a role (default role rather than null)
+' User can have many roles (parent, coach)
+' Roles may or may not have Users but can theoretically can have all users (default)
+user ||--|{ userrole : has >
+role ||--o{ userrole : < has
+role ||--o{ roleperm : has >
+perm ||--o{ roleperm : < has
+
+' Sessions may be empty of all Activities
+' Sessions will most likely have many Activities
+' Activities must have a Session
+activity }o--|| session : < is composed of
+activity_temp }o--|| team : < owns
+
+team }o--|| user : < controls
+session }o--|| team: < has planned
+
+@enduml

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA</title>
+  <script type="module" crossorigin src="/assets/index-CyfsLWWU.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BfrZGwhV.css">
+</head>
+
+<body class="bg-green-400">
+    <div id="container" x-data="auth" class="flex flex-col">
+        <header class="grid grid-cols-3 items-center justify-between h-[70px] bg-gray-500 text-white">
+            <nav>
+                <ul class="flex">
+                    <li class="p-2.5"><a href="#">Home</a></li>
+                    <li class="p-2.5"><a href="#">Sessions</a></li>
+                    <li class="p-2.5"><a href="#">Activities</a></li>
+                    <li class="p-2.5"><a href="#">Parents</a></li>
+                </ul>
+            </nav>
+            <h1 class="text-4xl text-center">Coaching Software</h1>
+            <section id="profile-info" class="flex min-w-[10px] min-h-[10px]">
+                <p class="text-white my-auto mr-2 ml-auto" 
+                        x-text="user.name"></p>
+                <img class="size-10 mx-2 my-auto" 
+                    x-bind:src="user.picture"
+                    x-show="isReady && isAuthenticated"
+                    x-cloak
+                    referrerpolicy="no-referrer"
+                    alt="Profile Picture">
+                <button class="text-white m-2 h-10 w-25 rounded bg-blue-400"
+                    x-show="isReady && !isAuthenticated"
+                    @click="login">Log in</button>
+                <button class="text-white m-2 h-10 w-25 rounded bg-red-400"
+                    x-show="isReady && isAuthenticated"
+                    x-cloak
+                    @click="logout">Log out</button>
+            </section>
+        </header>
+        
+        <main class="grow">
+            <section id="hero" class="bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(undraw_goal.svg)] bg-center bg-no-repeat bg-cover overflow-clip relative h-full">
+                <div class="absolute top-1/2 left-1/2 -translate-1/2 text-white text-center overflow-hidden">
+                    <p 
+                        x-show="isReady && !isAuthenticated"
+                        x-cloak>Welcome to our page!</p>
+                    <h2 class="text-3xl pt-3"
+                        x-show="isReady && isAuthenticated"
+                        x-cloak>User Information</h2>
+                    <template x-for="(value, index) in user">
+                        <li class="list-none ml-2" x-show="isReady && isAuthenticated">
+                            <span x-text="index"></span> : <span x-text="value"></span>
+                        </li>
+                    </template>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

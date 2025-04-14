@@ -1,0 +1,58 @@
+' C2 - Container - of C4 Model
+!define GITHUB_PLANTUML_URL
+@startuml Coach Session Planning System
+' C4 Model components
+' https://github.com/plantuml-stdlib/C4-PlantUML
+!include <C4/C4_Container>
+' Icons
+' https://github.com/tupadr3/plantuml-icon-font-sprites/tree/main
+!define ICONURL https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v3.0.0/icons
+!include ICONURL/common.puml
+
+!define DEVICONS2 ICONURL/devicons2
+!include DEVICONS2/framework7_original.puml
+!include DEVICONS2/express_original.puml
+!include DEVICONS2/oauth.puml
+!include DEVICONS2/alpinejs_original.puml
+
+!define FONT_AWESOME ICONURL/font-awesome-6
+!include FONT_AWESOME/user_gear.puml
+!include FONT_AWESOME/user.puml
+
+' People
+Person(coach, "Coach", "Coordinator of team sessions", $sprite="user")
+Person(admin, "Admin", "Administrator of whole of whole application", $sprite="user_gear")
+Person(parent, "Parent", "Parent of child in team", $sprite="user")
+
+' Containers
+System_Boundary(s1, "Coach Session Planning System") {
+    Container(spa, "Single-Page Application", "alpinejs, bootstrap",\
+        "Features all the coach session planning functionality via a browser",\
+        $sprite="alpinejs_original")
+    Container(framework, "Mobile App", "Framework7, Capacitor",\
+        "A framework7 application wrapped into a native iOS and Android phone app",\
+        $sprite="framework7_original")
+    Container(webapp, "API Application and Web Application", "ExpressJS",\
+        "A web application accessible by browser",\
+        $sprite="express_original")
+}
+
+' Systems
+System_Ext(auth0, "Auth0", "Auth0 authorisation service", $sprite="oauth")
+
+' Person-Container Relations
+Rel(coach, spa, "CRUD sessions, CRUD activities, Manage parent accounts")
+Rel(coach, framework, "CRUD sessions, CRUD activities, Manage parent accounts")
+Rel_R(admin, spa, "Manage coach/parent accounts")
+Rel(parent, framework, "Views child's session")
+Rel(parent, spa, "Views child's session")
+
+' Inter-Container Relations
+Rel(framework, webapp, "Makes API calls to", "JSON/HTTP")
+Rel(spa, webapp, "Makes API calls to", "JSON/HTTP")
+
+' Container-System Relations
+Rel_R(webapp, auth0, "Authorises users", "HTTP/JSON/JWT")
+
+SHOW_LEGEND()
+@enduml

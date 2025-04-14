@@ -1,0 +1,40 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production tsx src/index.ts",
+    "dev": "cross-env NODE_ENV=development tsx watch src/index.ts",
+    "build": "tsc & npm --prefix ../web run build",
+    "serve": "node dist/index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "better-sqlite3": "12.2.0",
+    "dotenv": "17.2.1",
+    "drizzle-graphql": "0.8.5",
+    "drizzle-orm": "0.44.4",
+    "fastify": "5.6.0",
+    "graphql": "16.11.0",
+    "graphql-yoga": "5.15.2",
+    "jsonwebtoken": "9.0.2",
+    "jwks-rsa": "3.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.33.0",
+    "@types/better-sqlite3": "7.6.13",
+    "@types/jsonwebtoken": "9.0.10",
+    "@types/node": "24.2.1",
+    "cross-env": "10.0.0",
+    "drizzle-kit": "0.31.5",
+    "eslint": "9.33.0",
+    "globals": "16.3.0",
+    "jiti": "2.5.1",
+    "npm-check-updates": "18.0.2",
+    "ts-node": "10.9.2",
+    "tsx": "4.20.3",
+    "typescript": "5.9.2",
+    "typescript-eslint": "8.39.1"
+  }
+}
