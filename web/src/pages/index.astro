@@ -1,12 +1,13 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import MenuButton from "../components/MenuButton.astro";
 import { getSession } from 'auth-astro/server';
 
 const session = await getSession(Astro.request);
 ---
 
 <MainLayout title="Dashboard">
-    <hr>
+
     <button class="rounded-md bg-blue-800 p-2" id="login">
         Login
     </button>
