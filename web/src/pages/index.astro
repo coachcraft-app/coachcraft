@@ -1,6 +1,5 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-<<<<<<< HEAD
 import { getSession } from 'auth-astro/server';
 
 const session = await getSession(Astro.request);
@@ -37,8 +36,3 @@ const session = await getSession(Astro.request);
         document.querySelector("#logout").onclick = () => signOut();
     </script>
 </MainLayout>
-=======
----
-
-<MainLayout title="Dashboard" />
->>>>>>> 73f8ae1 (style: add files formatted by Prettier)
