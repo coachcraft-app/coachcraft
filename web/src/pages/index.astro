@@ -1,8 +1,38 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro"
+import MainLayout from "../layouts/MainLayout.astro";
+import { getSession } from 'auth-astro/server';
 
+const session = await getSession(Astro.request);
 ---
 
 <MainLayout title="Dashboard">
-    
+    <hr>
+    <button class="rounded-md bg-blue-800 p-2" id="login">
+        Login
+    </button>
+    <button class="rounded-md bg-red-800 p-2" id="logout">
+        Logout
+    </button>
+
+    <div class="flex justify-center">
+        <div>
+            <h1 class="">Auth info</h1>
+            {
+                session ? (
+                    <p>Welcome {session.user?.name}</p>
+                    <p>id: {session.user?.email}</p>
+                    <p>email: {session.user?.email}</p>
+                    <img src={session.user?.image} referrerpolicy="no-referrer" alt="profile picture">
+                ) : (
+                    <p>Not logged in</p>
+                )
+            }
+        </div>
+    </div>
+
+    <script>
+        const { signIn, signOut } = await import("auth-astro/client");
+        document.querySelector("#login").onclick = () => signIn("auth0");
+        document.querySelector("#logout").onclick = () => signOut();
+    </script>
 </MainLayout>
