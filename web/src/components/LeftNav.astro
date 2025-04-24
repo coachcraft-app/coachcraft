@@ -1,7 +1,74 @@
-<nav>
-    <a href="/">Dashboard</a>
-    <a href="/activities/">Activities</a>
-    <a href="/notes/">Notes</a>
-    <a href="/scheduling/">Scheduling</a>
-    <a href="/settings/">Settings</a>
-</nav>
+---
+import MenuButton from "../components/MenuButton.astro";
+
+const currentURL = Astro.url.pathname;
+---
+
+<div
+  x-data="{ sidebarIsOpen: false }"
+  class="relative flex w-full flex-col md:flex-row"
+>
+  <!-- This allows screen readers to skip the sidebar and go directly to the main content. -->
+  <a class="sr-only" href="#main-content">skip to the main content</a>
+
+  <!-- dark overlay for when the sidebar is open on smaller screens  -->
+  <div
+    x-show="sidebarIsOpen"
+    class="fixed inset-0 z-20 bg-surface-dark/10 backdrop-blur-xs md:hidden"
+    aria-hidden="true"
+    x-on:click="sidebarIsOpen = false"
+    x-transition.opacity
+  >
+  </div>
+
+  <nav
+    class="fixed left-0
+    z-30 flex h-svh w-50
+    shrink-0
+    flex-col
+    bg-surface-alt
+    p-4
+    transition-transform
+    duration-300
+    md:w-50 md:translate-x-0 md:relative
+    dark:bg-surface-dark-alt"
+    x-bind:class="sidebarIsOpen ? 'translate-x-0' : '-translate-x-60'"
+    aria-label="sidebar navigation"
+  >
+    <!-- sidebar links  -->
+    <div class="flex flex-col gap-3 overflow-y-auto pb-6">
+      <MenuButton
+        label="Dashboard"
+        href="/"
+        isSelected={currentURL == "/" || ""}
+      />
+      <MenuButton
+        label="Activities"
+        href="/activities/"
+        isSelected={currentURL.startsWith("/activities")}
+      />
+      <MenuButton
+        label="Notes"
+        href="/notes/"
+        isSelected={currentURL.startsWith("/notes")}
+      />
+      <MenuButton
+        label="Scheduling"
+        href="/scheduling/"
+        isSelected={currentURL.startsWith("/scheduling")}
+      />
+      <MenuButton
+        label="Settings"
+        href="/settings/"
+        isSelected={currentURL.startsWith("/settings")}
+      />
+    </div>
+
+    <!-- main content  -->
+    <div id="main-content" class="p-4">
+      <div class="overflow-y-auto">
+        <!-- Add main content here  -->
+      </div>
+    </div>
+  </nav>
+</div>
