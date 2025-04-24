@@ -1,5 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 
+@theme {
+  /* --color-button-unselected: #262626; */
+  --color-low-contrast-grey: #8c8c8c;
+
+  /* web client background color */
+  --color-bg-black: #0d0d0d;
+
+  /* team flag colors */
+  --color-team-green: #019445;
+  --color-team-yellow: #f3941f;
+  --color-team-white: #fffdfe;
+  --color-team-red: #eb1c2b;
+}
+
 :root {
-    color-scheme: dark;
+  color-scheme: dark;
 }
