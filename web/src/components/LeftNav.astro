@@ -1,7 +1,59 @@
-<nav>
-    <a href="/">Dashboard</a>
-    <a href="/activities/">Activities</a>
-    <a href="/notes/">Notes</a>
-    <a href="/scheduling/">Scheduling</a>
-    <a href="/settings/">Settings</a>
-</nav>
+---
+import MenuButton from "../components/MenuButton.astro";
+
+const currentURL = Astro.url.pathname;
+---
+
+<div x-data="{ sidebarIsOpen: false }" class="relative">
+  <div
+    x-show="sidebarIsOpen"
+    class="fixed inset-0 z-20 bg-surface-dark/10 backdrop-blur-xs md:hidden"
+    aria-hidden="true"
+    x-on:click="sidebarIsOpen = false"
+    x-transition.opacity
+  >
+  </div>
+
+  <nav
+    class="fixed left-0
+    z-30 flex h-svh w-40
+    shrink-0
+    flex-col
+    bg-surface-alt
+    p-1
+    transition-transform
+    duration-300
+    md:w-40 md:translate-x-0 md:relative
+    dark:bg-surface-dark-alt"
+    x-bind:class="sidebarIsOpen ? 'translate-x-0' : '-translate-x-60'"
+    aria-label="sidebar navigation"
+  >
+    <div class="flex flex-col gap-3 overflow-y-auto w-full">
+      <MenuButton
+        label="Dashboard"
+        href="/"
+        isSelected={currentURL == "/" || ""}
+      />
+      <MenuButton
+        label="Activities"
+        href="/activities/"
+        isSelected={currentURL.startsWith("/activities")}
+      />
+      <MenuButton
+        label="Notes"
+        href="/notes/"
+        isSelected={currentURL.startsWith("/notes")}
+      />
+      <MenuButton
+        label="Scheduling"
+        href="/scheduling/"
+        isSelected={currentURL.startsWith("/scheduling")}
+      />
+      <MenuButton
+        label="Settings"
+        href="/settings/"
+        isSelected={currentURL.startsWith("/settings")}
+      />
+    </div>
+  </nav>
+</div>
