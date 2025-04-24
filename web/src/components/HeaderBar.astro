@@ -42,6 +42,7 @@ import { Image } from "astro:assets";
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <!-- User Pic -->
       <li x-data="{ userDropDownIsOpen: false, openWithKeyboard: false }" x-on:keydown.esc.window="userDropDownIsOpen = false, openWithKeyboard = false" class="relative flex items-center">
         <button x-on:click="userDropDownIsOpen = ! userDropDownIsOpen" x-bind:aria-expanded="userDropDownIsOpen" x-on:keydown.space.prevent="openWithKeyboard = true" x-on:keydown.enter.prevent="openWithKeyboard = true" x-on:keydown.down.prevent="openWithKeyboard = true" class="rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:focus-visible:outline-primary-dark" aria-controls="userMenu">
@@ -100,11 +101,16 @@ import { Image } from "astro:assets";
     </ul>
   </nav>
 =======
+=======
+>>>>>>> e294be1 (feat: #74 add profile btn displaying both user & team's icons)
     <!-- profile button -->
     <li
       x-data="{ userDropDownIsOpen: false, openWithKeyboard: false }"
       x-on:keydown.esc.window="userDropDownIsOpen = false, openWithKeyboard = false"
-      class="relative flex items-center"
+      class="hidden
+            sm:relative
+            sm:flex 
+            sm:items-center"
     >
       <button
         x-on:click="userDropDownIsOpen = ! userDropDownIsOpen"
@@ -135,7 +141,7 @@ import { Image } from "astro:assets";
         />
       </button>
 
-      <!-- User Dropdown -->
+      <!-- profile dropdown -->
       <ul
         x-cloak
         x-show="userDropDownIsOpen || openWithKeyboard"
@@ -193,5 +199,4 @@ import { Image } from "astro:assets";
       </ul>
     </li>
   </div>
->>>>>>> 2631d25 (feat: #74 add updated profile drop-down)
 </nav>
