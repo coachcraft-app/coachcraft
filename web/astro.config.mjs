@@ -1,5 +1,6 @@
 // @ts-check
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { defineConfig } from 'astro/config';
 // AlpineJS for declarative dynamic behaviour
 import alpinejs from '@astrojs/alpinejs';
@@ -29,10 +30,25 @@ export default defineConfig({
       }
     ),
     auth()
+=======
+import { defineConfig } from "astro/config";
+
+import alpinejs from "@astrojs/alpinejs";
+
+import tailwindcss from "@tailwindcss/vite";
+
+// https://astro.build/config
+export default defineConfig({
+  integrations: [
+    alpinejs({
+      entrypoint: "/src/alpineEntryPoint",
+    }),
+>>>>>>> 6201599 (config: #74 cleanup astro config)
   ],
 
   vite: {
     plugins: [tailwindcss()]
+<<<<<<< HEAD
   },
 
   // Required for Auth0
@@ -60,3 +76,7 @@ export default defineConfig({
   },
 });
 >>>>>>> 73f8ae1 (style: add files formatted by Prettier)
+=======
+  }
+});
+>>>>>>> 6201599 (config: #74 cleanup astro config)
