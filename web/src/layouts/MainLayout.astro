@@ -21,9 +21,14 @@ title = `CoachCraft ${title}`;
   </head>
   <body class="bg-bg-black mx-6 my-4">
     <HeaderBar />
-    <LeftNav />
 
-    <slot />
+    <div class="flex flex-row">
+      <LeftNav class="flex-none" />
+
+      <div class="flex-1 p-6">
+        <slot />
+      </div>
+    </div>
 
     <Footer />
   </body>
