@@ -1,4 +1,5 @@
 // @ts-check
+<<<<<<< HEAD
 import { defineConfig } from 'astro/config';
 // AlpineJS for declarative dynamic behaviour
 import alpinejs from '@astrojs/alpinejs';
@@ -39,3 +40,23 @@ export default defineConfig({
     port: 3000
   }  
 });
+=======
+import { defineConfig } from "astro/config";
+
+import alpinejs from "@astrojs/alpinejs";
+
+import tailwindcss from "@tailwindcss/vite";
+
+// https://astro.build/config
+export default defineConfig({
+  integrations: [
+    alpinejs({
+      entrypoint: "/src/alpineEntryPoint",
+    }),
+  ],
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
+});
+>>>>>>> 73f8ae1 (style: add files formatted by Prettier)
