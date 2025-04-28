@@ -6,7 +6,7 @@ import { ClientRouter } from "astro:transitions";
 
 import "../styles/global.css";
 
-var { title } = Astro.props;
+var { title, user_profile_pic } = Astro.props;
 title = `CoachCraft ${title}`;
 ---
 
@@ -20,7 +20,7 @@ title = `CoachCraft ${title}`;
     <ClientRouter />
   </head>
   <body class="bg-bg-black mx-6 my-4">
-    <HeaderBar />
+    <HeaderBar user_profile_pic={user_profile_pic} />
 
     <div class="flex flex-row">
       <LeftNav class="flex-none" />

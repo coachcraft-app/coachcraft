@@ -1,8 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { getSession } from "auth-astro/server";
-
-const session = await getSession(Astro.request);
+var { user_profile_pic } = Astro.props;
 ---
 
 <!-- navigation implementation goes here -->
@@ -59,6 +57,7 @@ const session = await getSession(Astro.request);
         aria-controls="userMenu"
       >
         <Image
+          id="user_profile_pic"
           src="/images/profile_icon.png"
           alt="User Profile"
           width="50"
@@ -110,24 +109,23 @@ const session = await getSession(Astro.request);
           <a
             href="#"
             class="block
-            bg-surface-alt
-            px-4 py-2
-            text-sm
-            text-on-surface
-            hover:cursor-pointer
-            hover:bg-surface-dark-alt/5
-            hover:text-on-surface-strong
-            focus-visible:bg-surface-dark-alt/10
-            focus-visible:text-on-surface-strong
-            focus-visible:outline-hidden
-            dark:bg-surface-dark-alt
-            dark:text-on-surface-dark
-            dark:hover:bg-surface-alt/5
-            dark:hover:text-on-surface-dark-strong
-            dark:focus-visible:bg-surface-alt/10
-            dark:focus-visible:text-on-surface-dark-strong"
-            >Sign Out</a
-          >
+                  bg-surface-alt
+                  px-4 py-2
+                  text-sm
+                  text-on-surface
+                  hover:cursor-pointer
+                  hover:bg-surface-dark-alt/5
+                  hover:text-on-surface-strong
+                  focus-visible:bg-surface-dark-alt/10
+                  focus-visible:text-on-surface-strong
+                  focus-visible:outline-hidden
+                  dark:bg-surface-dark-alt
+                  dark:text-on-surface-dark
+                  dark:hover:bg-surface-alt/5
+                  dark:hover:text-on-surface-dark-strong
+                  dark:focus-visible:bg-surface-alt/10
+                  dark:focus-visible:text-on-surface-dark-strong"
+            >Sign Out</a>
         </li>
       </ul>
     </li>
@@ -139,9 +137,9 @@ const session = await getSession(Astro.request);
       x-bind:class="mobileMenuIsOpen ? 'fixed top-6 right-6 z-20' : null"
       type="button"
       class="flex
-              text-on-surface
-              dark:text-on-surface-dark
-              sm:hidden"
+            text-on-surface
+            dark:text-on-surface-dark
+            sm:hidden"
       aria-label="mobile menu"
       aria-controls="mobileMenu"
     >
@@ -190,19 +188,19 @@ const session = await getSession(Astro.request);
       x-transition:leave-start="translate-y-0"
       x-transition:leave-end="-translate-y-full"
       class="fixed
-                inset-x-0
-                top-12
-                z-10
-                max-h-svh
-                overflow-y-auto
-                flex flex-col
-                rounded-b-radius border-b border-outline
-                bg-surface-alt
-                px-8 pb-6 pt-10
-                dark:border-outline-dark
-                dark:bg-surface-dark-alt
-                sm:hidden"
-    >
+            inset-x-0
+            top-12
+            z-10
+            max-h-svh
+            overflow-y-auto
+            flex flex-col
+            rounded-b-radius border-b border-outline
+            bg-surface-alt
+            px-8 pb-6 pt-10
+            dark:border-outline-dark
+            dark:bg-surface-dark-alt
+            sm:hidden"
+      >
       <li class="mb-4 border-none">
         <div class="flex items-center gap-2 py-2">
           <Image
@@ -227,114 +225,114 @@ const session = await getSession(Astro.request);
         <a
           href="/"
           class="rounded-radius
-                                bg-primary
-                                border-primary
-                                px-4 py-2
-                                block
-                                text-center
-                                font-medium tracking-wide text-on-primary
-                                hover:opacity-75
-                                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
-                                active:opacity-100 active:outline-offset-0
-                                dark:bg-primary-dark
-                                dark:border-primary-dark
-                                dark:text-on-primary-dark
-                                dark:focus-visible:outline-primary-dark"
+                bg-primary
+                border-primary
+                px-4 py-2
+                block
+                text-center
+                font-medium tracking-wide text-on-primary
+                hover:opacity-75
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+                active:opacity-100 active:outline-offset-0
+                dark:bg-primary-dark
+                dark:border-primary-dark
+                dark:text-on-primary-dark
+                dark:focus-visible:outline-primary-dark"
         >
           Dashboard
         </a>
         <a
           href="/activities/"
           class="rounded-radius
-                                bg-primary
-                                border-primary
-                                px-4 py-2
-                                block
-                                text-center
-                                font-medium tracking-wide text-on-primary
-                                hover:opacity-75
-                                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
-                                active:opacity-100 active:outline-offset-0
-                                dark:bg-primary-dark
-                                dark:border-primary-dark
-                                dark:text-on-primary-dark
-                                dark:focus-visible:outline-primary-dark"
+                bg-primary
+                border-primary
+                px-4 py-2
+                block
+                text-center
+                font-medium tracking-wide text-on-primary
+                hover:opacity-75
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+                active:opacity-100 active:outline-offset-0
+                dark:bg-primary-dark
+                dark:border-primary-dark
+                dark:text-on-primary-dark
+                dark:focus-visible:outline-primary-dark"
         >
           Activities
         </a>
         <a
           href="/notes/"
           class="rounded-radius
-                                bg-primary
-                                border-primary
-                                px-4 py-2
-                                block
-                                text-center
-                                font-medium tracking-wide text-on-primary
-                                hover:opacity-75
-                                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
-                                active:opacity-100 active:outline-offset-0
-                                dark:bg-primary-dark
-                                dark:border-primary-dark
-                                dark:text-on-primary-dark
-                                dark:focus-visible:outline-primary-dark"
+                bg-primary
+                border-primary
+                px-4 py-2
+                block
+                text-center
+                font-medium tracking-wide text-on-primary
+                hover:opacity-75
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+                active:opacity-100 active:outline-offset-0
+                dark:bg-primary-dark
+                dark:border-primary-dark
+                dark:text-on-primary-dark
+                dark:focus-visible:outline-primary-dark"
         >
           Notes
         </a>
         <a
           href="/scheduling/"
           class="rounded-radius
-                                bg-primary
-                                border-primary
-                                px-4 py-2
-                                block
-                                text-center
-                                font-medium tracking-wide text-on-primary
-                                hover:opacity-75
-                                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
-                                active:opacity-100 active:outline-offset-0
-                                dark:bg-primary-dark
-                                dark:border-primary-dark
-                                dark:text-on-primary-dark
-                                dark:focus-visible:outline-primary-dark"
+                bg-primary
+                border-primary
+                px-4 py-2
+                block
+                text-center
+                font-medium tracking-wide text-on-primary
+                hover:opacity-75
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+                active:opacity-100 active:outline-offset-0
+                dark:bg-primary-dark
+                dark:border-primary-dark
+                dark:text-on-primary-dark
+                dark:focus-visible:outline-primary-dark"
         >
           Scheduling
         </a>
         <a
           href="/settings/"
           class="rounded-radius
-                                bg-primary
-                                border-primary
-                                px-4 py-2
-                                block
-                                text-center
-                                font-medium tracking-wide text-on-primary
-                                hover:opacity-75
-                                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
-                                active:opacity-100 active:outline-offset-0
-                                dark:bg-primary-dark
-                                dark:border-primary-dark
-                                dark:text-on-primary-dark
-                                dark:focus-visible:outline-primary-dark"
+                bg-primary
+                border-primary
+                px-4 py-2
+                block
+                text-center
+                font-medium tracking-wide text-on-primary
+                hover:opacity-75
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+                active:opacity-100 active:outline-offset-0
+                dark:bg-primary-dark
+                dark:border-primary-dark
+                dark:text-on-primary-dark
+                dark:focus-visible:outline-primary-dark"
         >
           Settings
         </a>
         <a
           href="#"
           class="rounded-radius
-                        bg-primary
-                        border-primary
-                        px-4 py-2
-                        block
-                        text-center
-                        font-medium tracking-wide text-on-primary
-                        hover:opacity-75
-                        focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
-                        active:opacity-100 active:outline-offset-0
-                        dark:bg-primary-dark
-                        dark:border-primary-dark
-                        dark:text-on-primary-dark
-                        dark:focus-visible:outline-primary-dark"
+                bg-primary
+                border-primary
+                px-4 py-2
+                block
+                text-center
+                font-medium tracking-wide text-on-primary
+                hover:opacity-75
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+                active:opacity-100 active:outline-offset-0
+                dark:bg-primary-dark
+                dark:border-primary-dark
+                dark:text-on-primary-dark
+                dark:focus-visible:outline-primary-dark"
         >
           Sign Out
         </a>
