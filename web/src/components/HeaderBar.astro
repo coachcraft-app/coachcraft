@@ -3,6 +3,36 @@ import { Image } from "astro:assets";
 var { user_profile_pic } = Astro.props;
 ---
 
+<!-- Fetch user information and set profile picture -->
+<script>
+  async function getUser() {
+    try {
+      const response = await fetch("/api/user");
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  }
+
+  async function changeProfilePicture() {
+    const user = await getUser();
+    const user_profile_pic = document.getElementById("user_profile_pic");
+
+    if (user_profile_pic) {
+      user_profile_pic.setAttribute("referrerpolicy", "no-referrer");
+      user_profile_pic.setAttribute("src", user.picture);
+    }
+  }
+
+  // As the header is always visible, should only need to do this on page-load not every
+  // swap
+  document.addEventListener("astro:page-load", changeProfilePicture);
+</script>
+
 <!-- navigation implementation goes here -->
 <nav
   x-data="{ mobileMenuIsOpen: false }"
@@ -127,7 +157,8 @@ var { user_profile_pic } = Astro.props;
                   dark:hover:text-on-surface-dark-strong
                   dark:focus-visible:bg-surface-alt/10
                   dark:focus-visible:text-on-surface-dark-strong"
-            >Sign Out</a>
+            >Sign Out</a
+          >
         </li>
       </ul>
     </li>
@@ -202,7 +233,7 @@ var { user_profile_pic } = Astro.props;
             dark:border-outline-dark
             dark:bg-surface-dark-alt
             sm:hidden"
-      >
+    >
       <li class="mb-4 border-none">
         <div class="flex items-center gap-2 py-2">
           <Image

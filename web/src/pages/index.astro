@@ -2,37 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 ---
 
-<MainLayout title="Dashboard" >
-
-    <a class="rounded-md bg-blue-800 p-2" id="login" href="/login">Login</a>
-    <a class="rounded-md bg-red-800 p-2" id="logout" href="/logout">Logout</a>
-
-    <div id="user">
-        
-    </div>
-
-    <script>
-        try {
-            const response = await fetch("/api/user");
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
-
-            const json = await response.json();
-
-
-            const userDiv: HTMLElement | null = document.querySelector("#user");
-            const user_profile_pic = document.querySelector("#user_profile_pic");
-            if (user_profile_pic) {
-                user_profile_pic.setAttribute("referrerpolicy", "no-referrer");
-                user_profile_pic.setAttribute("src", json.picture);
-            }
-
-            if (userDiv)
-                userDiv.innerHTML = JSON.stringify(json);
-        } catch (error: any) {
-            console.error(error.message);
-        }
-    </script>
-
+<MainLayout title="Dashboard">
+  <a class="rounded-md bg-blue-800 p-2" id="login" href="/login">Login</a>
+  <a class="rounded-md bg-red-800 p-2" id="logout" href="/logout">Logout</a>
 </MainLayout>
