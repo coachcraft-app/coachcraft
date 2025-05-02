@@ -7,7 +7,7 @@ var { user_profile_pic } = Astro.props;
 <nav
   x-data="{ mobileMenuIsOpen: false }"
   x-on:click.away="mobileMenuIsOpen = false"
-  class="flex items-center justify-between px-4 py-4"
+  class="flex items-center justify-between pr-4 pl-2 py-4"
   aria-label="penguin ui menu"
 >
   <!-- Brand Logo -->
@@ -15,8 +15,8 @@ var { user_profile_pic } = Astro.props;
     <Image
       src="/images/coach_craft_logo.svg"
       alt="brand logo"
-      width="90"
-      height="90"
+      width="80"
+      height="80"
     />
   </a>
 
@@ -88,7 +88,9 @@ var { user_profile_pic } = Astro.props;
               flex w-fit min-w-48 flex-col
               overflow-hidden rounded-radius
               border border-outline
-              bg-surface-alt
+              bg-black
+              shadow-xl
+              shadow-gray-900
               py-1
               dark:border-low-contrast-grey
               dark:bg-surface-dark-alt
