@@ -10,10 +10,12 @@ export default defineConfig({
   // Required for auth, makes it so the server does not pre-render by default
   output: "static",
 
+  // outDir: "../backend/public",
+
   integrations: [
     alpinejs({
       entrypoint: "/src/alpineEntryPoint",
-    })
+    }),
   ],
 
   vite: {
