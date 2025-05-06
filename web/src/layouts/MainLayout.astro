@@ -6,11 +6,7 @@ import { ClientRouter } from "astro:transitions";
 
 import "../styles/global.css";
 
-<<<<<<< HEAD
-var { title } = Astro.props;
-=======
 var { title, user_profile_pic } = Astro.props;
->>>>>>> atharv/#68/manage_activities
 title = `CoachCraft ${title}`;
 ---
 
@@ -23,22 +19,13 @@ title = `CoachCraft ${title}`;
     <!-- Astro.js SPA mode, page transitions -->
     <ClientRouter />
   </head>
-<<<<<<< HEAD
-  <body class="bg-bg-black mx-6 my-4">
-    <HeaderBar />
-=======
   <body class="bg-bg-black mx-5 my-1">
     <HeaderBar user_profile_pic={user_profile_pic} />
->>>>>>> atharv/#68/manage_activities
 
     <div class="flex flex-row">
       <LeftNav class="flex-none" />
 
-<<<<<<< HEAD
-      <div class="flex-1 p-6">
-=======
       <div class="flex-1 pl-15 pr-10 pt-5">
->>>>>>> atharv/#68/manage_activities
         <slot />
       </div>
     </div>
