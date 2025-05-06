@@ -1,5 +1,6 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+<<<<<<< HEAD
 import MenuButton from "../components/MenuButton.astro";
 import { getSession } from 'auth-astro/server';
 
@@ -36,4 +37,11 @@ const session = await getSession(Astro.request);
         document.querySelector("#login").onclick = () => signIn("auth0");
         document.querySelector("#logout").onclick = () => signOut();
     </script>
+=======
+---
+
+<MainLayout title="Dashboard">
+  <a class="rounded-md bg-blue-800 p-2" id="login" href="/login">Login</a>
+  <a class="rounded-md bg-red-800 p-2" id="logout" href="/logout">Logout</a>
+>>>>>>> atharv/#68/manage_activities
 </MainLayout>

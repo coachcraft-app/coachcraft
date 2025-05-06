@@ -1,40 +1,27 @@
 ---
-var { label, href, isSelected = false } = Astro.props;
+var { label, isSelected = false } = Astro.props;
 ---
 
-<!-- <button
-  class="bg-button-unselected
-                flex items-center
-                justify-center
-                w-50 h-9 p-7"
->
-  Menu Button
-</button> -->
 <a
   type="button"
-  href={href}
+  href="#"
   class={`whitespace-nowrap
         ${isSelected ? "bg-low-contrast-grey" : "bg-transparent"}
-<<<<<<< HEAD
         rounded-radius
-=======
->>>>>>> atharv/#68/manage_activities
         border border-primary
         px-4 py-2
+        block
         text-sm font-medium
         text-primary
         text-left
+        truncate
         tracking-wide
         transition
         hover:opacity-75
         focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
         active:opacity-100 active:outline-offset-0
         disabled:opacity-75 disabled:cursor-not-allowed
-<<<<<<< HEAD
         dark:border-low-contrast-grey dark:${isSelected ? "text-bg-black" : "text-primary-dark"} 
-=======
-        dark:border-low-contrast-grey
->>>>>>> atharv/#68/manage_activities
         dark:focus-visible:outline-primary-dark
         rounded-lg`}
 >

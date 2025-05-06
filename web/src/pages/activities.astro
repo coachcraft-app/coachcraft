@@ -1,5 +1,59 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import ListButton from "../components/ListButton.astro";
+import PageHeader from "../components/PageHeader.astro"
+import TextInput from "../components/TextInput.astro";
+import TextArea from "../components/TextArea.astro";
+import Button from "../components/Button.astro";
+
+const activities = ['Push-ups', 'Jumping Jacks', 'Jogging'];
 ---
 
-<MainLayout title="Activities" />
+<MainLayout title="Activities">
+
+    <PageHeader heading="Manage Activities" action_label1="New Activity" />
+
+    <div class="flex flex-row
+                w-full
+                mt-3">
+
+        <!-- activities list -->
+        <div class="w-64
+                    pr-5
+                    overflow-y-auto">
+
+            <div class="flex flex-col gap-y-3">
+                {activities.map(activities => (<ListButton label={activities} />))}
+            </div>
+            
+        </div>
+
+        <!-- edit activity -->
+        <div class="
+                    w-full
+                    pl-5
+                    border-1
+                  border-l-gray-500/50
+                    border-r-0
+                    border-y-0">
+            
+            <p class="text-xl">Push-Ups</p>
+
+            <div class="w-full mt-5 gap-4">
+                <TextInput name="" label="Duration" placeholder="Duration" />
+                <div>
+                    <TextArea label="Description" placeholder="Brief description such as sets, laps, plan, etc." rows="5" />
+                    <TextArea label="Notes" placeholder="Notes" rows="2" />
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <Button label="Save Changes" width="fit" />
+                <Button label="Reset Changes" width="fit" />
+            </div>
+
+        </div>
+
+    </div>
+
+</MainLayout>

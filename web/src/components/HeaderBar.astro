@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+<<<<<<< HEAD
 import { getSession } from "auth-astro/server";
 
 const session = await getSession(Astro.request);
@@ -22,6 +23,58 @@ const session = await getSession(Astro.request);
     />
   </a>
 
+=======
+var { user_profile_pic } = Astro.props;
+---
+
+<!-- Fetch user information and set profile picture -->
+<script>
+  async function getUser() {
+    try {
+      const response = await fetch("/api/user");
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  }
+
+  async function changeProfilePicture() {
+    const user = await getUser();
+    const user_profile_pic = document.getElementById("user_profile_pic");
+
+    if (user_profile_pic) {
+      user_profile_pic.setAttribute("referrerpolicy", "no-referrer");
+      user_profile_pic.setAttribute("src", user.picture);
+    }
+  }
+
+  // As the header is always visible, should only need to do this on page-load not every
+  // swap
+  document.addEventListener("astro:page-load", changeProfilePicture);
+</script>
+
+<!-- navigation implementation goes here -->
+<nav
+  x-data="{ mobileMenuIsOpen: false }"
+  x-on:click.away="mobileMenuIsOpen = false"
+  class="flex items-center justify-between pr-4 pl-2 py-4"
+  aria-label="penguin ui menu"
+>
+  <!-- Brand Logo -->
+  <a href="/">
+    <Image
+      src="/images/coach_craft_logo.svg"
+      alt="brand logo"
+      width="80"
+      height="80"
+    />
+  </a>
+
+>>>>>>> atharv/#68/manage_activities
   <div class="flex flex-row">
     <!-- team colors container -->
     <div class="pr-5 flex items-end">
@@ -59,6 +112,10 @@ const session = await getSession(Astro.request);
         aria-controls="userMenu"
       >
         <Image
+<<<<<<< HEAD
+=======
+          id="user_profile_pic"
+>>>>>>> atharv/#68/manage_activities
           src="/images/profile_icon.png"
           alt="User Profile"
           width="50"
@@ -89,7 +146,13 @@ const session = await getSession(Astro.request);
               flex w-fit min-w-48 flex-col
               overflow-hidden rounded-radius
               border border-outline
+<<<<<<< HEAD
               bg-surface-alt
+=======
+              bg-black
+              shadow-xl
+              shadow-gray-900
+>>>>>>> atharv/#68/manage_activities
               py-1
               dark:border-low-contrast-grey
               dark:bg-surface-dark-alt
@@ -110,6 +173,7 @@ const session = await getSession(Astro.request);
           <a
             href="#"
             class="block
+<<<<<<< HEAD
             bg-surface-alt
             px-4 py-2
             text-sm
@@ -126,6 +190,24 @@ const session = await getSession(Astro.request);
             dark:hover:text-on-surface-dark-strong
             dark:focus-visible:bg-surface-alt/10
             dark:focus-visible:text-on-surface-dark-strong"
+=======
+                  bg-surface-alt
+                  px-4 py-2
+                  text-sm
+                  text-on-surface
+                  hover:cursor-pointer
+                  hover:bg-surface-dark-alt/5
+                  hover:text-on-surface-strong
+                  focus-visible:bg-surface-dark-alt/10
+                  focus-visible:text-on-surface-strong
+                  focus-visible:outline-hidden
+                  dark:bg-surface-dark-alt
+                  dark:text-on-surface-dark
+                  dark:hover:bg-surface-alt/5
+                  dark:hover:text-on-surface-dark-strong
+                  dark:focus-visible:bg-surface-alt/10
+                  dark:focus-visible:text-on-surface-dark-strong"
+>>>>>>> atharv/#68/manage_activities
             >Sign Out</a
           >
         </li>
@@ -139,9 +221,15 @@ const session = await getSession(Astro.request);
       x-bind:class="mobileMenuIsOpen ? 'fixed top-6 right-6 z-20' : null"
       type="button"
       class="flex
+<<<<<<< HEAD
               text-on-surface
               dark:text-on-surface-dark
               sm:hidden"
+=======
+            text-on-surface
+            dark:text-on-surface-dark
+            sm:hidden"
+>>>>>>> atharv/#68/manage_activities
       aria-label="mobile menu"
       aria-controls="mobileMenu"
     >
@@ -190,6 +278,7 @@ const session = await getSession(Astro.request);
       x-transition:leave-start="translate-y-0"
       x-transition:leave-end="-translate-y-full"
       class="fixed
+<<<<<<< HEAD
                 inset-x-0
                 top-12
                 z-10
@@ -202,6 +291,20 @@ const session = await getSession(Astro.request);
                 dark:border-outline-dark
                 dark:bg-surface-dark-alt
                 sm:hidden"
+=======
+            inset-x-0
+            top-12
+            z-10
+            max-h-svh
+            overflow-y-auto
+            flex flex-col
+            rounded-b-radius border-b border-outline
+            bg-surface-alt
+            px-8 pb-6 pt-10
+            dark:border-outline-dark
+            dark:bg-surface-dark-alt
+            sm:hidden"
+>>>>>>> atharv/#68/manage_activities
     >
       <li class="mb-4 border-none">
         <div class="flex items-center gap-2 py-2">
@@ -227,6 +330,7 @@ const session = await getSession(Astro.request);
         <a
           href="/"
           class="rounded-radius
+<<<<<<< HEAD
                                 bg-primary
                                 border-primary
                                 px-4 py-2
@@ -240,12 +344,28 @@ const session = await getSession(Astro.request);
                                 dark:border-primary-dark
                                 dark:text-on-primary-dark
                                 dark:focus-visible:outline-primary-dark"
+=======
+                bg-primary
+                border-primary
+                px-4 py-2
+                block
+                text-center
+                font-medium tracking-wide text-on-primary
+                hover:opacity-75
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+                active:opacity-100 active:outline-offset-0
+                dark:bg-primary-dark
+                dark:border-primary-dark
+                dark:text-on-primary-dark
+                dark:focus-visible:outline-primary-dark"
+>>>>>>> atharv/#68/manage_activities
         >
           Dashboard
         </a>
         <a
           href="/activities/"
           class="rounded-radius
+<<<<<<< HEAD
                                 bg-primary
                                 border-primary
                                 px-4 py-2
@@ -259,12 +379,28 @@ const session = await getSession(Astro.request);
                                 dark:border-primary-dark
                                 dark:text-on-primary-dark
                                 dark:focus-visible:outline-primary-dark"
+=======
+                bg-primary
+                border-primary
+                px-4 py-2
+                block
+                text-center
+                font-medium tracking-wide text-on-primary
+                hover:opacity-75
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+                active:opacity-100 active:outline-offset-0
+                dark:bg-primary-dark
+                dark:border-primary-dark
+                dark:text-on-primary-dark
+                dark:focus-visible:outline-primary-dark"
+>>>>>>> atharv/#68/manage_activities
         >
           Activities
         </a>
         <a
           href="/notes/"
           class="rounded-radius
+<<<<<<< HEAD
                                 bg-primary
                                 border-primary
                                 px-4 py-2
@@ -278,12 +414,28 @@ const session = await getSession(Astro.request);
                                 dark:border-primary-dark
                                 dark:text-on-primary-dark
                                 dark:focus-visible:outline-primary-dark"
+=======
+                bg-primary
+                border-primary
+                px-4 py-2
+                block
+                text-center
+                font-medium tracking-wide text-on-primary
+                hover:opacity-75
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+                active:opacity-100 active:outline-offset-0
+                dark:bg-primary-dark
+                dark:border-primary-dark
+                dark:text-on-primary-dark
+                dark:focus-visible:outline-primary-dark"
+>>>>>>> atharv/#68/manage_activities
         >
           Notes
         </a>
         <a
           href="/scheduling/"
           class="rounded-radius
+<<<<<<< HEAD
                                 bg-primary
                                 border-primary
                                 px-4 py-2
@@ -297,12 +449,28 @@ const session = await getSession(Astro.request);
                                 dark:border-primary-dark
                                 dark:text-on-primary-dark
                                 dark:focus-visible:outline-primary-dark"
+=======
+                bg-primary
+                border-primary
+                px-4 py-2
+                block
+                text-center
+                font-medium tracking-wide text-on-primary
+                hover:opacity-75
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+                active:opacity-100 active:outline-offset-0
+                dark:bg-primary-dark
+                dark:border-primary-dark
+                dark:text-on-primary-dark
+                dark:focus-visible:outline-primary-dark"
+>>>>>>> atharv/#68/manage_activities
         >
           Scheduling
         </a>
         <a
           href="/settings/"
           class="rounded-radius
+<<<<<<< HEAD
                                 bg-primary
                                 border-primary
                                 px-4 py-2
@@ -316,12 +484,28 @@ const session = await getSession(Astro.request);
                                 dark:border-primary-dark
                                 dark:text-on-primary-dark
                                 dark:focus-visible:outline-primary-dark"
+=======
+                bg-primary
+                border-primary
+                px-4 py-2
+                block
+                text-center
+                font-medium tracking-wide text-on-primary
+                hover:opacity-75
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+                active:opacity-100 active:outline-offset-0
+                dark:bg-primary-dark
+                dark:border-primary-dark
+                dark:text-on-primary-dark
+                dark:focus-visible:outline-primary-dark"
+>>>>>>> atharv/#68/manage_activities
         >
           Settings
         </a>
         <a
           href="#"
           class="rounded-radius
+<<<<<<< HEAD
                         bg-primary
                         border-primary
                         px-4 py-2
@@ -335,6 +519,21 @@ const session = await getSession(Astro.request);
                         dark:border-primary-dark
                         dark:text-on-primary-dark
                         dark:focus-visible:outline-primary-dark"
+=======
+                bg-primary
+                border-primary
+                px-4 py-2
+                block
+                text-center
+                font-medium tracking-wide text-on-primary
+                hover:opacity-75
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+                active:opacity-100 active:outline-offset-0
+                dark:bg-primary-dark
+                dark:border-primary-dark
+                dark:text-on-primary-dark
+                dark:focus-visible:outline-primary-dark"
+>>>>>>> atharv/#68/manage_activities
         >
           Sign Out
         </a>
