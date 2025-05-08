@@ -1,0 +1,27 @@
+meta {
+  name: Put Activity copy
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:3000/api/activity/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 4
+}
+
+body:json {
+  {
+    "title": "Change Activity Title",
+    "description": "new description",
+    "duration": 30
+  }
+}
+
+docs {
+  Updates an activity template, with integer id specified in path. Body should be a json or html form with a string "title" and/or "description" and/or integer "duration".
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Post Activity
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:3000/api/activity
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "Test Activity",
+    "description": "A test activity made in Bruno.",
+    "duration": 30
+  }
+}
+
+docs {
+  Create a new activity with an id assigned automatically. Body should be a html form or json, with string "title" and "description" fields and an integer "duration" field.
+}
