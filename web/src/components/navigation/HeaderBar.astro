@@ -118,13 +118,12 @@ var { user_profile_pic } = Astro.props;
               flex w-fit min-w-48 flex-col
               overflow-hidden rounded-radius
               border border-outline
-              bg-black
-              shadow-xl
-              shadow-gray-900
+              backdrop-blur-xs
               py-1
               dark:border-low-contrast-grey
               dark:bg-surface-dark-alt
-              rounded-lg"
+              rounded-lg
+              z-10"
       >
         <li class="border-b border-outline dark:border-low-contrast-grey">
           <div class="flex flex-col px-4 py-2">

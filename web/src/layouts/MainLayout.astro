@@ -1,7 +1,8 @@
 ---
-import HeaderBar from "../components/HeaderBar.astro";
-import LeftNav from "../components/LeftNav.astro";
-import Footer from "../components/Footer.astro";
+import HeaderBar from "../components/navigation/HeaderBar.astro";
+import Breadcrumb from "../components/navigation/Breadcrumb.astro";
+import LeftNav from "../components/navigation/LeftNav.astro";
+import Footer from "../components/navigation/Footer.astro";
 import { ClientRouter } from "astro:transitions";
 
 import "../styles/global.css";
@@ -19,17 +20,27 @@ title = `CoachCraft ${title}`;
     <!-- Astro.js SPA mode, page transitions -->
     <ClientRouter />
   </head>
+
   <body class="bg-bg-black mx-5 my-1">
+
     <HeaderBar user_profile_pic={user_profile_pic} />
 
-    <div class="flex flex-row">
-      <LeftNav class="flex-none" />
+    <div class="grid grid-cols-[auto_1fr] gap-4">
 
-      <div class="flex-1 pl-15 pr-10 pt-5">
-        <slot />
+      <LeftNav />
+      <div class="">
+
+        <Breadcrumb />
+        <div class="flex w-full">
+          <slot />
+        </div>
+      
       </div>
+
     </div>
 
     <Footer />
+
   </body>
+
 </html>
