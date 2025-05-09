@@ -1,10 +1,11 @@
 ---
-var { label, href, addClasses, icon_url = "", width, isSelected = false } = Astro.props;
+var { label, href, addClasses, icon_url = "", width, isSelected = false, type } = Astro.props;
 ---
 
 <a
   type="button"
   href={href}
+  type={type}
 
   class={`whitespace-nowrap
         ${isSelected ? "bg-low-contrast-grey" : "bg-transparent"}
@@ -12,7 +13,7 @@ var { label, href, addClasses, icon_url = "", width, isSelected = false } = Astr
         block
         border border-primary
         w-${width}
-        pl-${icon_url != "" ? "2" : "4"} pr-4 py-1.5
+        pl-4 pr-4 py-1.5
         text-sm font-medium
         cursor-pointer
         select-none

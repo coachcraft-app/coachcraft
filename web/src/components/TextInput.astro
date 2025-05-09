@@ -1,23 +1,32 @@
 ---
-var { label, placeholder, name } = Astro.props;
+var { label, placeholder, name, required } = Astro.props;
 
 ---
 
-<div class="flex w-full max-w-xs flex-col gap-1 text-on-surface dark:text-on-surface-dark">
+<div class="flex 
+        w-full 
+        flex-col 
+        gap-1 
+        text-on-surface 
+        dark:text-on-surface-dark">
     <label for="textInputDefault" class="w-fit pl-0.5 text-sm">{label}</label>
     <input id="textInputDefault" type="text" 
     class="w-full 
         rounded-radius 
-        border border-outline rounded-lg
-        bg-surface-alt 
-        px-2 py-2 text-sm 
-        focus-visible:outline-1 
-        focus-visible:border-white 
-        disabled:cursor-not-allowed disabled:opacity-75 
-        dark:border-low-contrast-grey 
-        dark:bg-surface-dark-alt/50 
-        dark:focus-visible:outline-primary-dark" 
+        rounded-lg
+        outline-2
+        px-2 py-2 
+        text-sm 
+
+        dark:outline-low-contrast-grey 
+
+        dark:focus-visible:outline-3
+        dark:focus-visible:outline-low-contrast-grey-2
+
+        disabled:cursor-not-allowed disabled:opacity-75" 
+
         name={name} 
         placeholder={placeholder} 
+        required={required}
         autocomplete="name"/>
 </div>
