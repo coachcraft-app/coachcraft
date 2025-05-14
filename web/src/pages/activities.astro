@@ -7,51 +7,48 @@ import Button from "../components/Button.astro";
 import DropDown from "../components/DropDown.astro";
 
 import Image from "astro/components/Image.astro";
-import DropdownItem from "../components/DropdownItem.astro";
-
-const activities = ['Push-ups', 'Jumping Jacks', 'Jogging'];
 ---
 
 <MainLayout title="Activities">
-    
-    <div class="flex flex-row
+  <div class="flex flex-row
                 mt-3">
-
-        <!-- activities list -->
-        <div class="w-64
-                    pr-5
-                    overflow-y-auto">
-
-            <div class="flex flex-col gap-y-8">
-
-                <div class="flex flex-col gap-y-2"
-                    x-data="{
-                        items: $store.activities.listsList,
-                        label: $store.activities.listsList[$store.activities.selectedList].list_name
-                    }">
-                    <DropDown />
-                    <Button label="New Activity"></Button>
-                </div>
-
-                <div x-data class="flex flex-col gap-y-3">
-
-                    <template x-for="activity in $store.activities.activitiesList" :key="activity.activity_id">
-                        <div x-data="{
-                            label: activity.activity_name,
-                            isSelected: $store.activities.selectedActivity === activity.activity_id
-                        }" >
-                            <ListButton />
-                        </div>
-                    </template>
-
-                </div>
-            
-            </div>
-            
+    <!-- activities list -->
+    <div class="w-64
+                pr-5
+                overflow-y-auto">
+      <div class="flex flex-col gap-y-8">
+        <div
+          class="flex flex-col gap-y-2"
+          x-data="{
+                    get items() { return $store.activities.listsList; },
+                    get label() { return $store.activities.selectedListName; },
+                    handleSelect: (item) => $store.activities.handleListSwitch(item.id)
+                }"
+        >
+          <DropDown />
+          <Button label="New Activity" />
         </div>
 
-        <!-- place holder for when no activity is selected -->
-        <!-- <div class="w-100
+        <div x-data class="flex flex-col gap-y-3">
+          <template
+            x-for="activity in $store.activities.selectedListActivities"
+            :key="activity.id"
+          >
+            <div
+              x-data="{
+                        label: activity.name,
+                        isSelected: $store.activities.selectedActivity === activity.id
+                    }"
+            >
+              <ListButton />
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+
+    <!-- place holder for when no activity is selected -->
+    <!-- <div class="w-100
                 pl-5
                 border-1
                 border-l-gray-500/50
@@ -66,52 +63,57 @@ const activities = ['Push-ups', 'Jumping Jacks', 'Jogging'];
 
         </div> -->
 
-        <!-- edit activity -->
-        <div class="pl-5
+    <!-- edit activity -->
+    <div
+      class="pl-5
                 border-1
                 border-l-gray-500/50
                 border-r-0
                 border-y-0
                 
                 flex flex-col
-                gap-5">
-
-            <div>
-
-                <div class="aspect-[16/5] 
+                gap-5"
+    >
+      <div>
+        <div
+          class="aspect-[16/5]
                         overflow-hidden
-                        rounded-lg 
-                        brightness-80">
-                    <Image       
-                        src="/images/activity_img_placeholder.jpg"
-                        alt="brand logo"
-                        width="500"
-                        height="200" 
-                    />
-                </div>
+                        rounded-lg
+                        brightness-80"
+        >
+          <Image
+            src="/images/activity_img_placeholder.jpg"
+            alt="brand logo"
+            width="500"
+            height="200"
+          />
+        </div>
+      </div>
 
-            </div>
-
-            <form class="flex flex-col gap-5">
-
-                <div class="flex flex-col gap-5">
-                    <TextInput name="" label="Activity Name" required="true" placeholder="Activity" />
-                    <TextInput name="" label="Duration" placeholder="HH:MM" />
-                    <div class="flex flex-col gap-5">
-                        <TextArea label="Description" placeholder="Brief description such as sets, laps, plan, etc." rows="5" />
-                        <TextArea label="Notes" placeholder="Notes" rows="2" />
-                    </div>
-                </div>
-    
-                <div class="flex gap-3">
-                    <Button type="submit" label="Save Changes" width="fit" />
-                    <Button type="reset" label="Reset Changes" width="fit" />
-                </div>
-
-            </form>
-
+      <form class="flex flex-col gap-5">
+        <div class="flex flex-col gap-5">
+          <TextInput
+            name=""
+            label="Activity Name"
+            required="true"
+            placeholder="Activity"
+          />
+          <TextInput name="" label="Duration" placeholder="HH:MM" />
+          <div class="flex flex-col gap-5">
+            <TextArea
+              label="Description"
+              placeholder="Brief description such as sets, laps, plan, etc."
+              rows="5"
+            />
+            <TextArea label="Notes" placeholder="Notes" rows="2" />
+          </div>
         </div>
 
+        <div class="flex gap-3">
+          <Button type="submit" label="Save Changes" width="fit" />
+          <Button type="reset" label="Reset Changes" width="fit" />
+        </div>
+      </form>
     </div>
-
+  </div>
 </MainLayout>
