@@ -4,7 +4,7 @@ import mask from "@alpinejs/mask";
 
 import activitiesStore from "./stores/activitiesStore.js";
 
-export default function () {
+export default (Alpine) => {
   Alpine.plugin(collapse);
   Alpine.plugin(focus);
   Alpine.plugin(mask);
