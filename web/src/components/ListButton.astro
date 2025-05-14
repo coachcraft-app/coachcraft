@@ -2,9 +2,7 @@
 
 ---
 
-<a
-  type="button"
-  href="#"
+<div
   x-bind:class="{
     'bg-low-contrast-grey dark:text-bg-black': isSelected, 
     'bg-neutral-800 dark:text-primary-dark': !isSelected 
@@ -17,6 +15,7 @@
         text-sm font-medium
         text-primary
         text-left
+        select-none
         truncate
         tracking-wide
         transition
@@ -39,4 +38,4 @@
       `}
 >
   <span x-text="label"></span>
-</a>
+</div>
