@@ -1,5 +1,5 @@
 ---
-var { label, placeholder, rows, required } = Astro.props;
+var { label, placeholder, rows, required, value } = Astro.props;
 ---
 
 <div
@@ -24,5 +24,6 @@ var { label, placeholder, rows, required } = Astro.props;
         disabled:cursor-not-allowed disabled:opacity-75"
     required={required}
     rows={rows}
-    placeholder={placeholder}></textarea>
+    placeholder={placeholder}
+    x-bind:value={value}></textarea>
 </div>

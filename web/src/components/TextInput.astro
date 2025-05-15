@@ -1,5 +1,5 @@
 ---
-var { label, placeholder, name, required } = Astro.props;
+var { label, placeholder, name, required, value } = Astro.props;
 ---
 
 <div
@@ -27,6 +27,6 @@ var { label, placeholder, name, required } = Astro.props;
     name={name}
     placeholder={placeholder}
     required={required}
-    autocomplete="name"
+    x-bind:value={value}
   />
 </div>

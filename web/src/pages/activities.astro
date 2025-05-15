@@ -23,9 +23,6 @@ import Image from "astro/components/Image.astro";
             getItems="get getItems() { return $store.activities.listsList; }"
             getHandleListSwitch="get getHandleListSwitch() { return (id) => $store.activities.handleListSwitch(id); }"
           />
-                }"
-        >
-          <DropDown />
           <Button label="New Activity" />
         </div>
 
@@ -40,15 +37,14 @@ import Image from "astro/components/Image.astro";
               isSelected="get isSelected() { return (id) => $store.activities.isActivitySelected(id); }"
               handleClick="get handleClick() { return (id) => $store.activities.handleActivitySelection(id); }"
             />
-              <ListButton />
-            </div>
           </template>
         </div>
       </div>
     </div>
 
     <!-- place holder for when no activity is selected -->
-    <!-- <div class="w-100
+    <div
+      class="w-100
                 pl-5
                 border-1
                 border-l-gray-500/50
@@ -57,11 +53,13 @@ import Image from "astro/components/Image.astro";
                 
                 flex gap-[5vw]
                 items-center
-                align-middle">
-
-            <p class="text-center">Select Activity To Get Started</p>
-
-        </div> -->
+                align-middle"
+      x-data
+      x-transition
+      x-show="!$store.activities.selectedActivity"
+    >
+      <p class="text-center">Select Activity To Get Started</p>
+    </div>
 
     <!-- edit activity -->
     <div
@@ -73,6 +71,11 @@ import Image from "astro/components/Image.astro";
                 
                 flex flex-col
                 gap-5"
+      x-data
+      x-transition:enter="transition ease-out duration-400"
+      x-transition:enter-start="opacity-0 scale-85"
+      x-transition:enter-end="opacity-100 scale-100"
+      x-show="$store.activities.selectedActivity"
     >
       <div>
         <div
@@ -91,19 +94,26 @@ import Image from "astro/components/Image.astro";
       </div>
 
       <form class="flex flex-col gap-5">
-        <div class="flex flex-col gap-5">
+        <div x-data class="flex flex-col gap-5">
           <TextInput
             name=""
             label="Activity Name"
             required="true"
             placeholder="Activity"
+            value="$store.activities.selectedActivityObj?.name || ''"
           />
-          <TextInput name="" label="Duration" placeholder="HH:MM" />
+          <TextInput
+            name=""
+            label="Duration"
+            placeholder="HH:MM"
+            value="$store.activities.selectedActivityObj?.duration || ''"
+          />
           <div class="flex flex-col gap-5">
             <TextArea
               label="Description"
               placeholder="Brief description such as sets, laps, plan, etc."
               rows="5"
+              value="$store.activities.selectedActivityObj?.description || ''"
             />
           </div>
         </div>
