@@ -1,59 +1,152 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import ListButton from "../components/ListButton.astro";
-import PageHeader from "../components/PageHeader.astro"
 import TextInput from "../components/TextInput.astro";
 import TextArea from "../components/TextArea.astro";
 import Button from "../components/Button.astro";
+import DropDown from "../components/DropDown.astro";
 
-const activities = ['Push-ups', 'Jumping Jacks', 'Jogging'];
+import Image from "astro/components/Image.astro";
 ---
 
 <MainLayout title="Activities">
-
-    <PageHeader heading="Manage Activities" action_label1="New Activity" />
-
-    <div class="flex flex-row
-                w-full
+  <div class="flex flex-row
                 mt-3">
-
-        <!-- activities list -->
-        <div class="w-64
-                    pr-5
-                    overflow-y-auto">
-
-            <div class="flex flex-col gap-y-3">
-                {activities.map(activities => (<ListButton label={activities} />))}
-            </div>
-            
+    <!-- activities list -->
+    <div class="w-64
+                pr-5
+                overflow-y-auto">
+      <div class="flex flex-col gap-y-8">
+        <div class="flex flex-col gap-y-2">
+          <DropDown
+            mode="regular"
+            getLabel="get getLabel() { return $store.activities.selectedListName; }"
+            getItems="get getItems() { return $store.activities.listsList; }"
+            getHandleListSwitch="get getHandleListSwitch() { return (id) => $store.activities.handleListSwitch(id); }"
+          />
+          <Button
+            type="button"
+            label="New Activity"
+            handleClick="get handleClick() { return () => $store.activities.addNewActivity(); }"
+          />
         </div>
 
-        <!-- edit activity -->
-        <div class="
-                    w-full
-                    pl-5
-                    border-1
-                  border-l-gray-500/50
-                    border-r-0
-                    border-y-0">
-            
-            <p class="text-xl">Push-Ups</p>
-
-            <div class="w-full mt-5 gap-4">
-                <TextInput name="" label="Duration" placeholder="Duration" />
-                <div>
-                    <TextArea label="Description" placeholder="Brief description such as sets, laps, plan, etc." rows="5" />
-                    <TextArea label="Notes" placeholder="Notes" rows="2" />
-                </div>
-            </div>
-
-            <div class="flex gap-3">
-                <Button label="Save Changes" width="fit" />
-                <Button label="Reset Changes" width="fit" />
-            </div>
-
+        <div x-data class="flex flex-col gap-y-3">
+          <template
+            x-for="activity in $store.activities.selectedListActivities"
+            :key="activity.id"
+          >
+            <ListButton
+              label="get label() { return activity.name; }"
+              id="get id() { return activity.id; }"
+              isSelected="get isSelected() { return (id) => $store.activities.isActivitySelected(id); }"
+              handleClick="get handleClick() { return (id) => $store.activities.handleActivitySelection(id); }"
+            />
+          </template>
         </div>
-
+      </div>
     </div>
 
+    <!-- edit activity -->
+    <div
+      class="pl-5
+            border-1
+            border-l-gray-500/50
+            border-r-0
+            border-y-0
+            
+            flex flex-col
+            justify-center
+            gap-5"
+    >
+      <div>
+        <!-- place holder for when no activity is selected -->
+        <div
+          class=""
+          x-data
+          x-transition
+          x-show="!$store.activities.selectedActivity"
+        >
+          <p class="text-center">
+            Select or Create new Activity to get started.
+          </p>
+        </div>
+      </div>
+      <div
+        class="flex flex-col gap-5"
+        x-data
+        x-transition:enter="transition ease-out duration-400"
+        x-transition:enter-start="opacity-0 scale-85"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-show="$store.activities.selectedActivity"
+      >
+        <div>
+          <div
+            class="aspect-[16/5]
+                            overflow-hidden
+                            rounded-lg
+                            brightness-80"
+          >
+            <Image
+              src="/images/activity_img_placeholder.jpg"
+              alt="brand logo"
+              width="500"
+              height="200"
+            />
+          </div>
+        </div>
+
+        <form
+          class="flex flex-col gap-5"
+          @submit.prevent="$store.activities.handleSaveChanges(event)"
+        >
+          <div class="flex flex-col gap-5">
+            <TextInput
+              name="activityName"
+              label="Activity Name"
+              required
+              placeholder="Activity"
+              value="$store.activities.selectedActivityObj?.name || ''"
+            />
+            <TextInput
+              name="duration"
+              label="Duration"
+              required
+              placeholder="HH:MM"
+              value="$store.activities.selectedActivityObj?.duration || ''"
+            />
+            <TextArea
+              name="description"
+              label="Description"
+              placeholder="Brief description such as sets, laps, plan, etc."
+              rows="10"
+              value="$store.activities.selectedActivityObj?.description || ''"
+            />
+            <DropDown
+              mode="checkbox"
+              getLabel="get getLabel() { return 'Select Lists'; }"
+              getItems="get getItems() { return () => {}; }"
+              getHandleCheckbox="get getHandleCheckbox() { return () => {}; }"
+            />
+          </div>
+
+          <div class="flex gap-3">
+            <Button type="submit" label="Save Changes" width="fit" />
+            <Button
+              type="button"
+              label="Reset Changes"
+              width="fit"
+              handleClick="get handleClick() { return (id) => $store.activities.handleActivitySelection(id); }"
+            />
+            <Button
+              type="reset"
+              label="Delete Activity"
+              width="fit"
+              handleClick="get handleClick() { return $store.activities.handleDeleteActivity(); }"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </MainLayout>

@@ -22,25 +22,18 @@ title = `CoachCraft ${title}`;
   </head>
 
   <body class="bg-bg-black mx-5 my-1">
-
     <HeaderBar user_profile_pic={user_profile_pic} />
 
     <div class="grid grid-cols-[auto_1fr] gap-4">
-
       <LeftNav />
       <div class="">
-
         <Breadcrumb />
         <div class="flex w-full">
           <slot />
         </div>
-      
       </div>
-
     </div>
 
     <Footer />
-
   </body>
-
 </html>

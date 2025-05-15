@@ -1,29 +1,52 @@
 ---
-var { label, isSelected = false } = Astro.props;
+var { label, id, isSelected, handleClick } = Astro.props;
 ---
 
-<a
-  type="button"
-  href="#"
-  class={`whitespace-nowrap
-        ${isSelected ? "bg-low-contrast-grey" : "bg-transparent"}
-        rounded-radius
+<div
+  x-bind:class="{
+    'bg-low-contrast-grey': isSelected(id), 
+    'bg-neutral-800 dark:text-primary-dark': !isSelected(id) 
+  }"
+  x-data={"{ " +
+    label +
+    ", " +
+    id +
+    ", " +
+    isSelected +
+    ", " +
+    handleClick +
+    " }"}
+  @click="handleClick(id);"
+  class={`
+        rounded-lg
         border border-primary
         px-4 py-2
         block
         text-sm font-medium
         text-primary
         text-left
+        select-none
         truncate
         tracking-wide
         transition
+        cursor-pointer
+
         hover:opacity-75
-        focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
-        active:opacity-100 active:outline-offset-0
-        disabled:opacity-75 disabled:cursor-not-allowed
-        dark:border-low-contrast-grey dark:${isSelected ? "text-bg-black" : "text-primary-dark"} 
+
+        focus-visible:outline-2 
+        focus-visible:outline-offset-2 
+        focus-visible:outline-primary
+
+        active:opacity-100 
+        active:outline-offset-0
+
+        disabled:opacity-75 
+        disabled:cursor-not-allowed
+
+        dark:border-low-contrast-grey 
+
         dark:focus-visible:outline-primary-dark
-        rounded-lg`}
+      `}
 >
-  {label}
-</a>
+  <span x-text="label"></span>
+</div>
