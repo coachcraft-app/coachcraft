@@ -19,6 +19,7 @@ import Image from "astro/components/Image.astro";
       <div class="flex flex-col gap-y-8">
         <div class="flex flex-col gap-y-2">
           <DropDown
+            mode="regular"
             getLabel="get getLabel() { return $store.activities.selectedListName; }"
             getItems="get getItems() { return $store.activities.listsList; }"
             getHandleListSwitch="get getHandleListSwitch() { return (id) => $store.activities.handleListSwitch(id); }"
@@ -66,7 +67,9 @@ import Image from "astro/components/Image.astro";
           x-transition
           x-show="!$store.activities.selectedActivity"
         >
-          <p class="text-center">Select an Activity to get started</p>
+          <p class="text-center">
+            Select or Create new Activity to get started.
+          </p>
         </div>
       </div>
       <div
@@ -93,35 +96,48 @@ import Image from "astro/components/Image.astro";
           </div>
         </div>
 
-        <form class="flex flex-col gap-5">
-          <div x-data class="flex flex-col gap-5">
+        <form
+          class="flex flex-col gap-5"
+          @submit.prevent="$store.activities.handleSaveChanges(event)"
+        >
+          <div class="flex flex-col gap-5">
             <TextInput
-              name=""
+              name="activityName"
               label="Activity Name"
               required
               placeholder="Activity"
               value="$store.activities.selectedActivityObj?.name || ''"
             />
             <TextInput
-              name=""
+              name="duration"
               label="Duration"
               required
               placeholder="HH:MM"
               value="$store.activities.selectedActivityObj?.duration || ''"
             />
-            <div class="flex flex-col gap-5">
-              <TextArea
-                label="Description"
-                placeholder="Brief description such as sets, laps, plan, etc."
-                rows="10"
-                value="$store.activities.selectedActivityObj?.description || ''"
-              />
-            </div>
+            <TextArea
+              name="description"
+              label="Description"
+              placeholder="Brief description such as sets, laps, plan, etc."
+              rows="10"
+              value="$store.activities.selectedActivityObj?.description || ''"
+            />
+            <DropDown
+              mode="checkbox"
+              getLabel="get getLabel() { return 'Select Lists'; }"
+              getItems="get getItems() { return () => {}; }"
+              getHandleCheckbox="get getHandleCheckbox() { return () => {}; }"
+            />
           </div>
 
           <div class="flex gap-3">
             <Button type="submit" label="Save Changes" width="fit" />
-            <Button type="reset" label="Reset Changes" width="fit" />
+            <Button
+              type="button"
+              label="Reset Changes"
+              width="fit"
+              handleClick="get handleClick() { return (id) => $store.activities.handleActivitySelection(id); }"
+            />
             <Button
               type="reset"
               label="Delete Activity"

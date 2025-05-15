@@ -1,5 +1,5 @@
 ---
-var { label, placeholder, rows, required, value } = Astro.props;
+var { label, placeholder, rows, required, value, name } = Astro.props;
 ---
 
 <div
@@ -25,5 +25,6 @@ var { label, placeholder, rows, required, value } = Astro.props;
     required={required}
     rows={rows}
     placeholder={placeholder}
+    name={name}
     x-bind:value={value}></textarea>
 </div>
