@@ -1,10 +1,19 @@
 ---
-var { label, addClasses, width, isSelected = false, type } = Astro.props;
+var {
+  label,
+  addClasses,
+  width,
+  isSelected = false,
+  type,
+  handleClick = "get handleClick() { return () => {}; }",
+} = Astro.props;
 ---
 
 <input
   type={type}
   value={label}
+  x-data={"{ " + handleClick + " }"}
+  @click="handleClick(event);"
   class={`whitespace-nowrap
         ${isSelected ? "bg-low-contrast-grey" : "bg-transparent"}
         rounded-radius
