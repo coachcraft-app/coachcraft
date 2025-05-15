@@ -111,7 +111,7 @@ export default function activitiesStore(Alpine) {
     },
 
     get selectedListName() {
-      return this.listsList.find((list) => list.id === this.selectedList).name;
+      return this.listsList.find((list) => list.id == this.selectedList).name;
     },
 
     handleListSwitch(id) {

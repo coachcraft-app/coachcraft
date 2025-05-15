@@ -1,23 +1,16 @@
 ---
-
+// wrap props in getters, for values referenced from $store, or those that require reactivity
+var { getLabel, getItems, getHandleListSwitch } = Astro.props;
 ---
 
-<!-- Usage
-
-    - wrap component in an outer HTML element
-    - define the following variables with in $store with x-data in the outer HTML element
-    
-    {
-        get items() { return $store.Object; },  // array of JSON objects, each obj should contain `item.id` (str), `item.name` (str)
-        
-        get label() { return $store.""; },  // str for label on the toggle button
-        
-        handleSelect(item): (item) => $store.func(item),  // func runs on @click, supplies JSON obj for dropdown `item` selected
-    }
-
- -->
 <div
-  x-data="{ isOpen: false, openedWithKeyboard: false }"
+  x-data={"{ isOpen: false, openedWithKeyboard: false, " +
+    getLabel +
+    ", " +
+    getItems +
+    ", " +
+    getHandleListSwitch +
+    "}"}
   class="relative w-full"
   x-on:keydown.esc.window="isOpen = false, openedWithKeyboard = false"
 >
@@ -57,7 +50,7 @@
     x-bind:aria-expanded="isOpen || openedWithKeyboard"
   >
     <div class="flex items-center justify-between gap-2">
-      <span x-text="label"></span>
+      <span x-text="getLabel"></span>
 
       <svg
         aria-hidden="true"
@@ -98,7 +91,7 @@
               z-10"
     role="menu"
   >
-    <template x-for="item in items" :key="item.id">
+    <template x-for="item in getItems" :key="item.id">
       <div
         class="bg-surface-alt
                 px-4 py-2
@@ -119,7 +112,7 @@
                 dark:focus-visible:text-on-surface-dark-strong"
         role="menuitem"
         x-text="item.name"
-        @click="handleSelect(item); isOpen = false; openedWithKeyboard = false"
+        @click="getHandleListSwitch(item.id); isOpen = false; openedWithKeyboard = false"
       >
       </div>
     </template>

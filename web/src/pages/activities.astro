@@ -17,12 +17,12 @@ import Image from "astro/components/Image.astro";
                 pr-5
                 overflow-y-auto">
       <div class="flex flex-col gap-y-8">
-        <div
-          class="flex flex-col gap-y-2"
-          x-data="{
-                    get items() { return $store.activities.listsList; },
-                    get label() { return $store.activities.selectedListName; },
-                    handleSelect: (item) => $store.activities.handleListSwitch(item.id)
+        <div class="flex flex-col gap-y-2">
+          <DropDown
+            getLabel="get getLabel() { return $store.activities.selectedListName; }"
+            getItems="get getItems() { return $store.activities.listsList; }"
+            getHandleListSwitch="get getHandleListSwitch() { return (id) => $store.activities.handleListSwitch(id); }"
+          />
                 }"
         >
           <DropDown />
