@@ -7,6 +7,7 @@ const activity = Router();
 activity.get("/activity/:id", validateActivityId(), getActivity);
 activity.get("/activity", getAllActivities);
 activity.post("/activity", validateActivityTitle(), validateActivityDescription(), postActivity);
+// TODO: change validators so that certain parts are optional
 activity.put("/activity/:id", validateActivityId(), validateActivityTitle(), validateActivityDescription(), putActivity);
 activity.delete("/activity/:id", validateActivityId(), deleteActivity);
 

@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { Request, Response, NextFunction } from 'express';
 import { db } from "../db/db.ts";
-import { ActivityTemplatesTable } from "../db/schema.ts";
+import {ActivityTemplateListTable, ActivityTemplatesTable} from "../db/schema.ts";
 import { StatusError } from "../lib/status-error.ts";
 import {validationResult} from "express-validator";
 
@@ -25,7 +25,7 @@ export async function getActivity(req: Request, res: Response, next: NextFunctio
             .from(ActivityTemplatesTable)
             .where(eq(ActivityTemplatesTable.id, +req.params.id));
 
-        res.status(200).json({ activity });
+        res.status(200).json({ activity: activity[0] });
     } catch (error) {
         next(new StatusError("Failed to get activity", 500));
     }
@@ -38,6 +38,7 @@ export async function postActivity(req: Request, res: Response, next: NextFuncti
     }
     try {
         const activity = await db.insert(ActivityTemplatesTable).values(req.body).returning();
+        await db.insert(ActivityTemplateListTable).values({activityTemplate: activity[0].id, list: 1});
         res.status(201).json({ activity });
     } catch (error) {
         console.log(error);

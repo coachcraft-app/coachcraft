@@ -1,6 +1,7 @@
 import { sql } from "drizzle-orm";
 import { sqliteTable, integer, text, check } from "drizzle-orm/sqlite-core";
 
+// ----- SESSION CREATION -----
 // A user of the application
 export const UsersTable = sqliteTable("user", {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
@@ -21,7 +22,7 @@ export const SessionsTable = sqliteTable("session", {
         .references(() => UsersTable.id, {onDelete: 'cascade', onUpdate: 'cascade'})
         .notNull(),
     date: integer({ mode: 'timestamp' }).unique().notNull(),
-})
+});
 
 // Activities that are part of a session
 export const ActivitiesTable = sqliteTable("activity", {
@@ -34,10 +35,29 @@ export const ActivitiesTable = sqliteTable("activity", {
     duration: integer({ mode: 'number' }).notNull(),
 });
 
+
+// ----- ACTIVITY TEMPLATE CREATION -----
 // Activities that can be added to a session
 export const ActivityTemplatesTable = sqliteTable("activity_template", {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
     title: text().notNull().unique(),
     description: text(),
     duration: integer({ mode: 'number' }).notNull(),
+});
+
+// A list (or category) of activity templates for organisation
+export const ListTable = sqliteTable("list", {
+    id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+    title: text(),
+});
+
+// The many-to-many link between activities and lists
+export const ActivityTemplateListTable = sqliteTable("activity_template_list", {
+    id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+    activityTemplate: integer( "activity_template", {mode: 'number' })
+        .references(() => ActivityTemplatesTable.id, {onDelete: 'cascade', onUpdate: 'cascade'})
+        .notNull(),
+    list: integer({mode: 'number' })
+        .references(() => ListTable.id, {onDelete: 'cascade', onUpdate: 'cascade'})
+        .notNull(),
 });
