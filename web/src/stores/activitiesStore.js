@@ -139,6 +139,20 @@ export default function activitiesStore(Alpine) {
       console.log("Activity data to save:", activityData);
       this.saveActivity(activityData);
     },
+    handleResetChanges() {}, //TODO
+    handleDeleteActivity() {
+      this.activitiesList = this.activitiesList.filter(
+        (activity) => activity.id != this.selectedActivity,
+      );
+
+      this.listsList.array.forEach((list) => {
+        list.activities.filter(
+          (activity_id) => activity_id != this.selectedActivity,
+        );
+      });
+
+      this.selectedActivity = "";
+    },
 
     saveActivity(activityData) {
       // if updating an existing activity

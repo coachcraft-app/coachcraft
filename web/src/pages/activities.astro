@@ -122,6 +122,12 @@ import Image from "astro/components/Image.astro";
           <div class="flex gap-3">
             <Button type="submit" label="Save Changes" width="fit" />
             <Button type="reset" label="Reset Changes" width="fit" />
+            <Button
+              type="reset"
+              label="Delete Activity"
+              width="fit"
+              handleClick="get handleClick() { return $store.activities.handleDeleteActivity(); }"
+            />
           </div>
         </form>
       </div>
