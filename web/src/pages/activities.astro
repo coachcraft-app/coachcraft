@@ -23,7 +23,7 @@ import Image from "astro/components/Image.astro";
             getItems="get getItems() { return $store.activities.listsList; }"
             getHandleListSwitch="get getHandleListSwitch() { return (id) => $store.activities.handleListSwitch(id); }"
           />
-          <Button label="New Activity" />
+          <Button type="button" label="New Activity" />
         </div>
 
         <div x-data class="flex flex-col gap-y-3">
@@ -42,87 +42,85 @@ import Image from "astro/components/Image.astro";
       </div>
     </div>
 
-    <!-- place holder for when no activity is selected -->
-    <div
-      class="w-100
-                pl-5
-                border-1
-                border-l-gray-500/50
-                border-r-0
-                border-y-0
-                
-                flex gap-[5vw]
-                items-center
-                align-middle"
-      x-data
-      x-transition
-      x-show="!$store.activities.selectedActivity"
-    >
-      <p class="text-center">Select Activity To Get Started</p>
-    </div>
-
     <!-- edit activity -->
     <div
       class="pl-5
-                border-1
-                border-l-gray-500/50
-                border-r-0
-                border-y-0
-                
-                flex flex-col
-                gap-5"
-      x-data
-      x-transition:enter="transition ease-out duration-400"
-      x-transition:enter-start="opacity-0 scale-85"
-      x-transition:enter-end="opacity-100 scale-100"
-      x-show="$store.activities.selectedActivity"
+            border-1
+            border-l-gray-500/50
+            border-r-0
+            border-y-0
+            
+            flex flex-col
+            justify-center
+            gap-5"
     >
       <div>
+        <!-- place holder for when no activity is selected -->
         <div
-          class="aspect-[16/5]
-                        overflow-hidden
-                        rounded-lg
-                        brightness-80"
+          class=""
+          x-data
+          x-transition
+          x-show="!$store.activities.selectedActivity"
         >
-          <Image
-            src="/images/activity_img_placeholder.jpg"
-            alt="brand logo"
-            width="500"
-            height="200"
-          />
+          <p class="text-center">Select an Activity to get started</p>
         </div>
       </div>
-
-      <form class="flex flex-col gap-5">
-        <div x-data class="flex flex-col gap-5">
-          <TextInput
-            name=""
-            label="Activity Name"
-            required="true"
-            placeholder="Activity"
-            value="$store.activities.selectedActivityObj?.name || ''"
-          />
-          <TextInput
-            name=""
-            label="Duration"
-            placeholder="HH:MM"
-            value="$store.activities.selectedActivityObj?.duration || ''"
-          />
-          <div class="flex flex-col gap-5">
-            <TextArea
-              label="Description"
-              placeholder="Brief description such as sets, laps, plan, etc."
-              rows="5"
-              value="$store.activities.selectedActivityObj?.description || ''"
+      <div
+        class="flex flex-col gap-5"
+        x-data
+        x-transition:enter="transition ease-out duration-400"
+        x-transition:enter-start="opacity-0 scale-85"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-show="$store.activities.selectedActivity"
+      >
+        <div>
+          <div
+            class="aspect-[16/5]
+                            overflow-hidden
+                            rounded-lg
+                            brightness-80"
+          >
+            <Image
+              src="/images/activity_img_placeholder.jpg"
+              alt="brand logo"
+              width="500"
+              height="200"
             />
           </div>
         </div>
 
-        <div class="flex gap-3">
-          <Button type="submit" label="Save Changes" width="fit" />
-          <Button type="reset" label="Reset Changes" width="fit" />
-        </div>
-      </form>
+        <form class="flex flex-col gap-5">
+          <div x-data class="flex flex-col gap-5">
+            <TextInput
+              name=""
+              label="Activity Name"
+              required
+              placeholder="Activity"
+              value="$store.activities.selectedActivityObj?.name || ''"
+            />
+            <TextInput
+              name=""
+              label="Duration"
+              required
+              placeholder="HH:MM"
+              value="$store.activities.selectedActivityObj?.duration || ''"
+            />
+            <div class="flex flex-col gap-5">
+              <TextArea
+                label="Description"
+                placeholder="Brief description such as sets, laps, plan, etc."
+                rows="10"
+                value="$store.activities.selectedActivityObj?.description || ''"
+              />
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <Button type="submit" label="Save Changes" width="fit" />
+            <Button type="reset" label="Reset Changes" width="fit" />
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </MainLayout>

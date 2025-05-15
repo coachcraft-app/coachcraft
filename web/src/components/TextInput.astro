@@ -1,5 +1,5 @@
 ---
-var { label, placeholder, name, required, value } = Astro.props;
+var { label, placeholder, name, value, ...rest } = Astro.props;
 ---
 
 <div
@@ -26,7 +26,7 @@ var { label, placeholder, name, required, value } = Astro.props;
         disabled:cursor-not-allowed disabled:opacity-75"
     name={name}
     placeholder={placeholder}
-    required={required}
     x-bind:value={value}
+    {...rest}
   />
 </div>

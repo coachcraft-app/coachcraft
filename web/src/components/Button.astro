@@ -1,19 +1,10 @@
 ---
-var {
-  label,
-  href,
-  addClasses,
-  icon_url = "",
-  width,
-  isSelected = false,
-  type,
-} = Astro.props;
+var { label, addClasses, width, isSelected = false, type } = Astro.props;
 ---
 
-<a
-  type="button"
-  href={href}
+<input
   type={type}
+  value={label}
   class={`whitespace-nowrap
         ${isSelected ? "bg-low-contrast-grey" : "bg-transparent"}
         rounded-radius
@@ -36,12 +27,4 @@ var {
         dark:focus-visible:outline-primary-dark
         rounded-lg
         ${addClasses}`}
->
-  <div class="flex">
-    <div class=`display: ${icon_url != "" ? "block" : "hidden"}`>
-      <img class="w-6 mr-0.5 mb-0.5" src={icon_url} />
-    </div>
-
-    <p class="mt-0.5">{label}</p>
-  </div>
-</a>
+/>
