@@ -1,15 +1,20 @@
 ---
 // wrap props in getters, for values referenced from $store, or those that require reactivity
-var { getLabel, getItems, getHandleListSwitch } = Astro.props;
+var { getLabel, getItems, getHandleListSwitch, getHandleCheckbox, mode } =
+  Astro.props;
 ---
 
 <div
-  x-data={"{ isOpen: false, openedWithKeyboard: false, " +
+  x-data={"{ isOpen: false, openedWithKeyboard: false, mode: '" +
+    mode +
+    "', " +
     getLabel +
     ", " +
     getItems +
     ", " +
     getHandleListSwitch +
+    ", " +
+    getHandleCheckbox +
     "}"}
   class="relative w-full"
   x-on:keydown.esc.window="isOpen = false, openedWithKeyboard = false"
@@ -17,7 +22,7 @@ var { getLabel, getItems, getHandleListSwitch } = Astro.props;
   <!-- Toggle Button -->
   <button
     type="button"
-    x-on:click="isOpen = ! isOpen"
+    x-on:click="isOpen = ! isOpen; console.log('Items:', getItems);"
     class="bg-transparent
                 rounded-lg
                 w-full
@@ -50,7 +55,13 @@ var { getLabel, getItems, getHandleListSwitch } = Astro.props;
     x-bind:aria-expanded="isOpen || openedWithKeyboard"
   >
     <div class="flex items-center justify-between gap-2">
-      <span x-text="getLabel"></span>
+      <template x-if="mode === 'regular'">
+        <span x-text="getLabel"></span>
+      </template>
+
+      <template x-if="mode === 'checkbox'">
+        <span x-text="getLabel"></span>
+      </template>
 
       <svg
         aria-hidden="true"
@@ -79,42 +90,74 @@ var { getLabel, getItems, getHandleListSwitch } = Astro.props;
     x-on:keydown.down.prevent="$focus.wrap().next()"
     x-on:keydown.up.prevent="$focus.wrap().previous()"
     class="absolute
-              top-10.5
-              flex w-full flex-col
-              overflow-hidden rounded-radius
-              border border-outline
-              backdrop-blur-md
-              py-1
-              dark:border-low-contrast-grey
-              dark:bg-surface-dark-alt
-              rounded-lg
-              z-10"
+            top-10.5
+            flex w-full flex-col
+            overflow-hidden rounded-radius
+            border border-outline
+            backdrop-blur-md
+            py-1
+            dark:border-low-contrast-grey
+            dark:bg-surface-dark-alt
+            rounded-lg
+            z-10"
     role="menu"
   >
     <template x-for="item in getItems" :key="item.id">
-      <div
-        class="bg-surface-alt
-                px-4 py-2
-                text-sm
-                text-on-surface
-                select-none
-                cursor-pointer
-                hover:bg-surface-dark-alt/5
-                hover:text-on-surface-strong
-                focus-visible:bg-surface-dark-alt/10
-                focus-visible:text-on-surface-strong
-                focus-visible:outline-hidden
-                dark:bg-surface-dark-alt
-                dark:text-on-surface-dark
-                dark:hover:bg-surface-alt/5
-                dark:hover:text-on-surface-dark-strong
-                dark:focus-visible:bg-surface-alt/10
-                dark:focus-visible:text-on-surface-dark-strong"
-        role="menuitem"
-        x-text="item.name"
-        @click="getHandleListSwitch(item.id); isOpen = false; openedWithKeyboard = false"
-      >
-      </div>
+      <!-- Regular Mode Item -->
+      <template x-if="mode == 'regular'">
+        <div
+          class="bg-surface-alt
+              px-4 py-2
+              text-sm
+              text-on-surface
+              select-none
+              cursor-pointer
+              hover:bg-surface-dark-alt/5
+              hover:text-on-surface-strong
+              focus-visible:bg-surface-dark-alt/10
+              focus-visible:text-on-surface-strong
+              focus-visible:outline-hidden
+              dark:bg-surface-dark-alt
+              dark:text-on-surface-dark
+              dark:hover:bg-surface-alt/5
+              dark:hover:text-on-surface-dark-strong
+              dark:focus-visible:bg-surface-alt/10
+              dark:focus-visible:text-on-surface-dark-strong"
+          role="menuitem"
+          x-text="item.name"
+          @click="getHandleListSwitch(item.id); isOpen = false; openedWithKeyboard = false"
+          tabindex="0"
+        >
+        </div>
+      </template>
+
+      <!-- Checkbox Mode Item -->
+      <template x-if="mode == 'checkbox'">
+        <div
+          class="bg-surface-alt
+              px-4 py-2
+              text-sm
+              text-on-surface
+              select-none
+              cursor-pointer
+              hover:bg-surface-dark-alt/5
+              hover:text-on-surface-strong
+              focus-visible:bg-surface-dark-alt/10
+              focus-visible:text-on-surface-strong
+              focus-visible:outline-hidden
+              dark:bg-surface-dark-alt
+              dark:text-on-surface-dark
+              dark:hover:bg-surface-alt/5
+              dark:hover:text-on-surface-dark-strong
+              dark:focus-visible:bg-surface-alt/10
+              dark:focus-visible:text-on-surface-dark-strong"
+          role="menuitem"
+          x-text="item.name"
+          @click="getHandleListSwitch(item.id); isOpen = false; openedWithKeyboard = false"
+          tabindex="0"
+        >
+        </div>
+      </template>
     </template>
   </div>
 </div>
