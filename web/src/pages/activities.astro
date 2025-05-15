@@ -23,7 +23,11 @@ import Image from "astro/components/Image.astro";
             getItems="get getItems() { return $store.activities.listsList; }"
             getHandleListSwitch="get getHandleListSwitch() { return (id) => $store.activities.handleListSwitch(id); }"
           />
-          <Button type="button" label="New Activity" />
+          <Button
+            type="button"
+            label="New Activity"
+            handleClick="get handleClick() { return () => $store.activities.addNewActivity(); }"
+          />
         </div>
 
         <div x-data class="flex flex-col gap-y-3">

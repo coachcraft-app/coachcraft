@@ -96,13 +96,21 @@ export default function activitiesStore(Alpine) {
     changesMade: false,
     changesSyncInProgress: false,
 
+    newActivity: {
+      id: "new",
+      name: "New Activity",
+      duration: "",
+      description: "",
+      img_url: "",
+    },
+
     get selectedListActivities() {
-      if (this.selectedList === "default") {
+      if (this.selectedList == "default") {
         return this.activitiesList;
       }
 
       const selectedActivitiyIDs = this.listsList.find(
-        (list) => list.id === this.selectedList,
+        (list) => list.id == this.selectedList,
       ).activities;
 
       return this.activitiesList.filter((activity) =>
@@ -125,10 +133,74 @@ export default function activitiesStore(Alpine) {
     handleActivitySelection(id) {
       this.selectedActivity = id;
     },
+    handleSaveChanges(event) {
+      event.preventDefault();
+      const activityData = Object.fromEntries(new FormData(event.target));
+      console.log("Activity data to save:", activityData);
+      this.saveActivity(activityData);
+    },
+
+    saveActivity(activityData) {
+      // if updating an existing activity
+      if (this.selectedActivity != "new") {
+        const activityToUpdate = this.activitiesList.find(
+          (activity) => activity.id == this.selectedActivity,
+        );
+
+        activityToUpdate.name = activityData.activityName;
+        activityToUpdate.duration = activityData.duration;
+        activityToUpdate.description = activityData.description;
+      } else {
+        // create new activtiy
+        const newActivity = {
+          id: Date.now().toString(), // temporary unique ID
+          name: activityData.activityName,
+          duration: activityData.duration,
+          description: activityData.description || "",
+          img_url: "",
+        };
+
+        this.activitiesList.shift(); // remove default new activity template
+        this.activitiesList.unshift(newActivity); // insert new activity obj
+
+        // add to currently selected list, unless "All Activities" is selected
+        if (this.selectedList !== "default") {
+          const list = this.listsList
+            .find((list) => list.id === this.selectedList)
+            .activities.unshift(newActivity.id);
+        }
+
+        this.selectedActivity = newActivity.id;
+        console.log("New activity created:", newActivity);
+      }
+    },
     isActivitySelected(id) {
       return this.selectedActivity == id;
     },
-    addNewActivity() {},
+    addNewActivity() {
+      // only create a new activity if a draft does not already exist
+      if (
+        !this.activitiesList.find(
+          (activity) => activity.id == this.newActivity.id,
+        )
+      ) {
+        this.activitiesList.unshift(this.newActivity);
+
+        this.listsList
+          .find((list) => list.id == this.selectedList)
+          .activities.push(this.newActivity.id);
+
+        this.selectedActivity = this.newActivity.id;
+      } else {
+        // if draft new activity exists, redirect to it
+        this.handleListSwitch(
+          this.listsList.find((list) =>
+            list.activities.includes(this.newActivity.id),
+          ).id,
+        );
+        this.handleActivitySelection(this.newActivity.id);
+      }
+    },
 
     // fetch data from API
     async fetchData() {},
