@@ -34,12 +34,12 @@ import Image from "astro/components/Image.astro";
             x-for="activity in $store.activities.selectedListActivities"
             :key="activity.id"
           >
-            <div
-              x-data="{
-                        label: activity.name,
-                        isSelected: $store.activities.selectedActivity === activity.id
-                    }"
-            >
+            <ListButton
+              label="get label() { return activity.name; }"
+              id="get id() { return activity.id; }"
+              isSelected="get isSelected() { return (id) => $store.activities.isActivitySelected(id); }"
+              handleClick="get handleClick() { return (id) => $store.activities.handleActivitySelection(id); }"
+            />
               <ListButton />
             </div>
           </template>

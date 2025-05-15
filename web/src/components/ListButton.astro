@@ -1,12 +1,22 @@
 ---
-
+var { label, id, isSelected, handleClick } = Astro.props;
 ---
 
 <div
   x-bind:class="{
-    'bg-low-contrast-grey dark:text-bg-black': isSelected, 
-    'bg-neutral-800 dark:text-primary-dark': !isSelected 
+    'bg-low-contrast-grey': isSelected(id), 
+    'bg-neutral-800 dark:text-primary-dark': !isSelected(id) 
   }"
+  x-data={"{ " +
+    label +
+    ", " +
+    id +
+    ", " +
+    isSelected +
+    ", " +
+    handleClick +
+    " }"}
+  @click="handleClick(id);"
   class={`
         rounded-lg
         border border-primary
@@ -19,6 +29,7 @@
         truncate
         tracking-wide
         transition
+        cursor-pointer
 
         hover:opacity-75
 

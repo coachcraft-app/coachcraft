@@ -118,6 +118,13 @@ export default function activitiesStore(Alpine) {
       this.selectedList = id;
     },
 
+    handleActivitySelection(id) {
+      this.selectedActivity = id;
+    },
+    isActivitySelected(id) {
+      return this.selectedActivity == id;
+    },
+
     addNewActivity() {},
 
     // fetch data from API
