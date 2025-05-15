@@ -2,28 +2,27 @@
 var { label, placeholder, rows, required } = Astro.props;
 ---
 
-<div class="flex flex-col
+<div
+  class="flex flex-col
             w-full
-            gap-1 
-            text-on-surface 
-            dark:text-on-surface-dark">
-    <label for="textArea" class="w-fit pl-0.5 text-sm">{label}</label>
-    <textarea id="textArea" 
-    class="w-full 
-        rounded-radius 
+            gap-1
+            text-on-surface
+            dark:text-on-surface-dark"
+>
+  <label for="textArea" class="w-fit pl-0.5 text-sm">{label}</label>
+  <textarea
+    id="textArea"
+    class="w-full
+        rounded-radius
         rounded-lg
         outline-2
-        px-2 py-2 
-        text-sm 
-
-        dark:outline-low-contrast-grey 
-
+        px-2 py-2
+        text-sm
+        dark:outline-low-contrast-grey
         dark:focus-visible:outline-3
         dark:focus-visible:outline-low-contrast-grey-2
-
-        disabled:cursor-not-allowed disabled:opacity-75" 
-
-        required={required}
-        rows={rows} 
-        placeholder={placeholder}/>
+        disabled:cursor-not-allowed disabled:opacity-75"
+    required={required}
+    rows={rows}
+    placeholder={placeholder}></textarea>
 </div>
