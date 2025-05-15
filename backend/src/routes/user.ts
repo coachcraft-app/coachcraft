@@ -13,10 +13,12 @@ user.get("/user", (
     req: Request,
     res: Response
 ) => {
+    // @ts-ignore
     const sentUser: User = {
         name: req.oidc.user?.name,
         picture: req.oidc.user?.picture,
         email: req.oidc.user?.email,
+        role: req.oidc.user["rbac/roles"]
     };
     res.json(sentUser);
 });
