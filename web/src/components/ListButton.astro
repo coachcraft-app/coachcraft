@@ -1,5 +1,13 @@
 ---
+import reactify from "./utils/reactify";
 var { label, id, isSelected, handleClick } = Astro.props;
+
+const x_data = `{ 
+  ${reactify(label, "label")}, 
+  ${reactify(id, "id")}, 
+  ${reactify(isSelected, "isSelected")}, 
+  ${reactify(handleClick, "handleClick")}
+}`;
 ---
 
 <div
@@ -7,15 +15,7 @@ var { label, id, isSelected, handleClick } = Astro.props;
     'bg-low-contrast-grey': isSelected(id), 
     'bg-neutral-800 dark:text-primary-dark': !isSelected(id) 
   }"
-  x-data={"{ " +
-    label +
-    ", " +
-    id +
-    ", " +
-    isSelected +
-    ", " +
-    handleClick +
-    " }"}
+  x-data={x_data}
   @click="handleClick(id);"
   class={`
         rounded-lg

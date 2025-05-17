@@ -1,28 +1,25 @@
 ---
-// wrap props in getters, for values referenced from $store, or those that require reactivity
-var { getLabel, getItems, getHandleListSwitch, getHandleCheckbox, mode } =
-  Astro.props;
+import reactify from "./utils/reactify";
+var { label, items, handleListSwitch } = Astro.props;
+
+const x_data = `{
+  ${reactify(label, "label")},
+  ${reactify(items, "items")},
+  ${reactify(handleListSwitch, "handleListSwitch")},
+  isOpen: false, 
+  openedWithKeyboard: false
+}`;
 ---
 
 <div
-  x-data={"{ isOpen: false, openedWithKeyboard: false, mode: '" +
-    mode +
-    "', " +
-    getLabel +
-    ", " +
-    getItems +
-    ", " +
-    getHandleListSwitch +
-    ", " +
-    getHandleCheckbox +
-    "}"}
+  x-data={x_data}
   class="relative w-full"
   x-on:keydown.esc.window="isOpen = false, openedWithKeyboard = false"
 >
   <!-- Toggle Button -->
   <button
     type="button"
-    x-on:click="isOpen = ! isOpen; console.log('Items:', getItems);"
+    x-on:click="isOpen = ! isOpen;"
     class="bg-transparent
                 rounded-lg
                 w-full
@@ -55,13 +52,7 @@ var { getLabel, getItems, getHandleListSwitch, getHandleCheckbox, mode } =
     x-bind:aria-expanded="isOpen || openedWithKeyboard"
   >
     <div class="flex items-center justify-between gap-2">
-      <template x-if="mode === 'regular'">
-        <span x-text="getLabel"></span>
-      </template>
-
-      <template x-if="mode === 'checkbox'">
-        <span x-text="getLabel"></span>
-      </template>
+      <span x-text="label"></span>
 
       <svg
         aria-hidden="true"
@@ -102,11 +93,9 @@ var { getLabel, getItems, getHandleListSwitch, getHandleCheckbox, mode } =
             z-10"
     role="menu"
   >
-    <template x-for="item in getItems" :key="item.id">
-      <!-- Regular Mode Item -->
-      <template x-if="mode == 'regular'">
-        <div
-          class="bg-surface-alt
+    <template x-for="item in items" :key="item.id">
+      <div
+        class="bg-surface-alt
               px-4 py-2
               text-sm
               text-on-surface
@@ -123,41 +112,12 @@ var { getLabel, getItems, getHandleListSwitch, getHandleCheckbox, mode } =
               dark:hover:text-on-surface-dark-strong
               dark:focus-visible:bg-surface-alt/10
               dark:focus-visible:text-on-surface-dark-strong"
-          role="menuitem"
-          x-text="item.name"
-          @click="getHandleListSwitch(item.id); isOpen = false; openedWithKeyboard = false"
-          tabindex="0"
-        >
-        </div>
-      </template>
-
-      <!-- Checkbox Mode Item -->
-      <template x-if="mode == 'checkbox'">
-        <div
-          class="bg-surface-alt
-              px-4 py-2
-              text-sm
-              text-on-surface
-              select-none
-              cursor-pointer
-              hover:bg-surface-dark-alt/5
-              hover:text-on-surface-strong
-              focus-visible:bg-surface-dark-alt/10
-              focus-visible:text-on-surface-strong
-              focus-visible:outline-hidden
-              dark:bg-surface-dark-alt
-              dark:text-on-surface-dark
-              dark:hover:bg-surface-alt/5
-              dark:hover:text-on-surface-dark-strong
-              dark:focus-visible:bg-surface-alt/10
-              dark:focus-visible:text-on-surface-dark-strong"
-          role="menuitem"
-          x-text="item.name"
-          @click="getHandleListSwitch(item.id); isOpen = false; openedWithKeyboard = false"
-          tabindex="0"
-        >
-        </div>
-      </template>
+        role="menuitem"
+        x-text="item.name"
+        @click="handleListSwitch(item.id); isOpen = false; openedWithKeyboard = false"
+        tabindex="0"
+      >
+      </div>
     </template>
   </div>
 </div>

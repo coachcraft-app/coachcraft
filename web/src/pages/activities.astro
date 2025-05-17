@@ -20,14 +20,14 @@ import Image from "astro/components/Image.astro";
         <div class="flex flex-col gap-y-2">
           <DropDown
             mode="regular"
-            getLabel="get getLabel() { return $store.activities.selectedListName; }"
-            getItems="get getItems() { return $store.activities.listsList; }"
-            getHandleListSwitch="get getHandleListSwitch() { return (id) => $store.activities.handleListSwitch(id); }"
+            label="$store.activities.selectedListName"
+            items="$store.activities.listsList"
+            handleListSwitch="$store.activities.handleListSwitch(id)"
           />
           <Button
             type="button"
             label="New Activity"
-            handleClick="get handleClick() { return () => $store.activities.addNewActivity(); }"
+            handleClick="$store.activities.addNewActivity()"
           />
         </div>
 
@@ -37,10 +37,10 @@ import Image from "astro/components/Image.astro";
             :key="activity.id"
           >
             <ListButton
-              label="get label() { return activity.name; }"
-              id="get id() { return activity.id; }"
-              isSelected="get isSelected() { return (id) => $store.activities.isActivitySelected(id); }"
-              handleClick="get handleClick() { return (id) => $store.activities.handleActivitySelection(id); }"
+              label="activity.name"
+              id="activity.id"
+              isSelected="$store.activities.isActivitySelected(id)"
+              handleClick="$store.activities.handleActivitySelection(id)"
             />
           </template>
         </div>
@@ -122,12 +122,6 @@ import Image from "astro/components/Image.astro";
               rows="10"
               value="$store.activities.selectedActivityObj?.description || ''"
             />
-            <DropDown
-              mode="checkbox"
-              getLabel="get getLabel() { return 'Select Lists'; }"
-              getItems="get getItems() { return () => {}; }"
-              getHandleCheckbox="get getHandleCheckbox() { return () => {}; }"
-            />
           </div>
 
           <div class="flex gap-3">
@@ -136,13 +130,13 @@ import Image from "astro/components/Image.astro";
               type="button"
               label="Reset Changes"
               width="fit"
-              handleClick="get handleClick() { return (id) => $store.activities.handleActivitySelection(id); }"
+              handleClick="$store.activities.handleActivitySelection(id)"
             />
             <Button
               type="reset"
               label="Delete Activity"
               width="fit"
-              handleClick="get handleClick() { return $store.activities.handleDeleteActivity(); }"
+              handleClick="$store.activities.handleDeleteActivity()"
             />
           </div>
         </form>

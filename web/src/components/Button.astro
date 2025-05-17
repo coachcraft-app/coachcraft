@@ -1,19 +1,25 @@
 ---
+import reactify from "./utils/reactify";
+
 var {
   label,
   addClasses,
   width,
   isSelected = false,
   type,
-  handleClick = "get handleClick() { return () => {}; }",
+  handleClick = "",
 } = Astro.props;
+
+const x_data = `{
+  ${reactify(handleClick, "handleClick")}
+}`;
 ---
 
 <input
   type={type}
   value={label}
-  x-data={"{ " + handleClick + " }"}
-  @click="handleClick(event);"
+  x-data={x_data}
+  @click="handleClick"
   class={`whitespace-nowrap
         ${isSelected ? "bg-low-contrast-grey" : "bg-transparent"}
         rounded-radius
