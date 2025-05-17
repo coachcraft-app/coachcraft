@@ -145,7 +145,7 @@ export default function activitiesStore(Alpine) {
         (activity) => activity.id != this.selectedActivity,
       );
 
-      this.listsList.array.forEach((list) => {
+      this.listsList.forEach((list) => {
         list.activities.filter(
           (activity_id) => activity_id != this.selectedActivity,
         );
