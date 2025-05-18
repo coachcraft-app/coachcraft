@@ -96,14 +96,6 @@ export default function activitiesStore(Alpine) {
     changesMade: false,
     changesSyncInProgress: false,
 
-    newActivity: {
-      id: "new",
-      name: "New Activity",
-      duration: "",
-      description: "",
-      img_url: "",
-    },
-
     get selectedListActivities() {
       if (this.selectedList == "default") {
         return this.activitiesList;
@@ -136,7 +128,6 @@ export default function activitiesStore(Alpine) {
     handleSaveChanges(event) {
       event.preventDefault();
       const activityData = Object.fromEntries(new FormData(event.target));
-      console.log("Activity data to save:", activityData);
       this.saveActivity(activityData);
     },
     handleResetChanges() {
@@ -162,8 +153,9 @@ export default function activitiesStore(Alpine) {
     },
 
     saveActivity(activityData) {
-      // if updating an existing activity
       if (this.selectedActivity != "new") {
+        // update an existing activity
+
         const activityToUpdate = this.activitiesList.find(
           (activity) => activity.id == this.selectedActivity,
         );
@@ -172,9 +164,10 @@ export default function activitiesStore(Alpine) {
         activityToUpdate.duration = activityData.duration;
         activityToUpdate.description = activityData.description;
       } else {
-        // create new activtiy
-        const newActivity = {
-          id: Date.now().toString(), // temporary unique ID
+        // save as new activtiy
+
+        const activity = {
+          id: Date.now().toString(), // TODO: update to assign ID provided by backend
           name: activityData.activityName,
           duration: activityData.duration,
           description: activityData.description || "",
@@ -182,45 +175,54 @@ export default function activitiesStore(Alpine) {
         };
 
         this.activitiesList.shift(); // remove default new activity template
-        this.activitiesList.unshift(newActivity); // insert new activity obj
+        this.activitiesList.unshift(activity); // insert new activity obj
 
         // add to currently selected list, unless "All Activities" is selected
         if (this.selectedList !== "default") {
           const list = this.listsList
-            .find((list) => list.id === this.selectedList)
-            .activities.unshift(newActivity.id);
+            .find((list) => list.id == this.selectedList)
+            .activities.unshift(activity.id);
         }
 
-        this.selectedActivity = newActivity.id;
-        console.log("New activity created:", newActivity);
+        this.selectedActivity = activity.id;
       }
     },
     isActivitySelected(id) {
       return this.selectedActivity == id;
     },
-    addNewActivity() {
-      // only create a new activity if a draft does not already exist
+    createActivity() {
+      const newActivityTemplate = {
+        id: "new",
+        name: "New Activity",
+        duration: "",
+        description: "",
+        img_url: "",
+      };
+
       if (
         !this.activitiesList.find(
-          (activity) => activity.id == this.newActivity.id,
+          (activity) => activity.id == newActivityTemplate.id,
         )
       ) {
-        this.activitiesList.unshift(this.newActivity);
-
-        this.listsList
-          .find((list) => list.id == this.selectedList)
-          .activities.push(this.newActivity.id);
-
-        this.selectedActivity = this.newActivity.id;
+        // if no new activity draft is already present
+        this.activitiesList.unshift(newActivityTemplate);
       } else {
-        // if draft new activity exists, redirect to it
-        this.handleListSwitch(
-          this.listsList.find((list) =>
-            list.activities.includes(this.newActivity.id),
-          ).id,
+        // if a new activity draft exists in another list,
+        // detach it and create a new one
+        const containingList = this.listsList.find((list) =>
+          list.activities.includes(newActivityTemplate.id),
         );
-        this.handleActivitySelection(this.newActivity.id);
+        containingList.activities = containingList.activities.filter(
+          (id) => id != newActivityTemplate.id,
+        );
       }
+
+      // assign new activity draft to currently selected list
+      this.listsList
+        .find((list) => list.id == this.selectedList)
+        .activities.push(newActivityTemplate.id);
+
+      this.selectedActivity = newActivityTemplate.id;
     },
 
     // fetch data from API
