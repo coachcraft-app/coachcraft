@@ -1,5 +1,5 @@
 export default function activitiesStore(Alpine) {
-  Alpine.store("activities", {
+  Alpine.store("pages").activities = {
     // state
     listsList: [
       {
@@ -94,8 +94,6 @@ export default function activitiesStore(Alpine) {
     selectedList: "default",
     selectedActivity: "",
     rightPanelState: "placeholder", // "placeholder" || "edit_activity" || "manage_lists"
-    changesMade: false,
-    changesSyncInProgress: false,
 
     get selectedListActivities() {
       if (this.selectedList == "default") {
@@ -230,9 +228,10 @@ export default function activitiesStore(Alpine) {
         .activities.push(newActivityTemplate.id);
 
       this.selectedActivity = newActivityTemplate.id;
+      this.rightPanelState = "edit_activity";
     },
 
     // fetch data from API
     async fetchData() {},
-  });
+  };
 }

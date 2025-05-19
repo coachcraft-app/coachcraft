@@ -21,27 +21,26 @@ import Image from "astro/components/Image.astro";
           <Button
             type="button"
             label="Create Activity"
-            handleClick="$store.activities.createActivity()"
+            handleClick="$store.pages.activities.createActivity()"
           />
 
           <DropDown
-            mode="regular"
-            label="$store.activities.selectedListName"
-            items="$store.activities.listsList"
-            handleListSwitch="$store.activities.handleListSwitch(id)"
+            label="$store.pages.activities.selectedListName"
+            items="$store.pages.activities.listsList"
+            handleListSwitch="$store.pages.activities.handleListSwitch(id)"
           />
         </div>
 
         <div x-data class="flex flex-col gap-y-3">
           <template
-            x-for="activity in $store.activities.selectedListActivities"
+            x-for="activity in $store.pages.activities.selectedListActivities"
             :key="activity.id"
           >
             <ListButton
               label="activity.name"
               id="activity.id"
-              isSelected="isSelected() { return $store.activities.selectedActivity == activity.id; }"
-              handleClick="$store.activities.handleActivitySelection(id)"
+              isSelected="isSelected() { return $store.pages.activities.selectedActivity == activity.id; }"
+              handleClick="$store.pages.activities.handleActivitySelection(id)"
             />
           </template>
         </div>
@@ -60,19 +59,19 @@ import Image from "astro/components/Image.astro";
             justify-center
             gap-5"
     >
-      <div>
-        <!-- place holder for when no activity is selected -->
-        <div
-          class=""
-          x-data
-          x-transition
-          x-show="!$store.activities.selectedActivity"
-        >
+      <!-- manage lists -->
+      <div
+        x-data
+        x-transition
+        x-show="$store.pages.activities.rightPanelState == 'manage_lists'"
+      >
+      </div>
+
       <!-- place holder for when no activity is selected -->
       <div
         x-data
         x-transition
-        x-show="$store.activities.rightPanelState == 'placeholder'"
+        x-show="$store.pages.activities.rightPanelState == 'placeholder'"
       >
         <p class="text-center">Select or Create new Activity to get started.</p>
       </div>
@@ -84,7 +83,7 @@ import Image from "astro/components/Image.astro";
         x-transition:enter="transition ease-out duration-400"
         x-transition:enter-start="opacity-0 scale-85"
         x-transition:enter-end="opacity-100 scale-100"
-        x-show="$store.activities.rightPanelState == 'edit_activity'"
+        x-show="$store.pages.activities.rightPanelState == 'edit_activity'"
       >
         <div>
           <div
@@ -104,7 +103,7 @@ import Image from "astro/components/Image.astro";
 
         <form
           class="flex flex-col gap-5"
-          @submit.prevent="$store.activities.handleSaveChanges(event)"
+          @submit.prevent="$store.pages.activities.handleSaveChanges(event)"
         >
           <div class="flex flex-col gap-5">
             <TextInput
@@ -112,21 +111,21 @@ import Image from "astro/components/Image.astro";
               label="Activity Name"
               required
               placeholder="Activity"
-              value="$store.activities.selectedActivityObj?.name || ''"
+              value="$store.pages.activities.selectedActivityObj?.name || ''"
             />
             <TextInput
               name="duration"
               label="Duration"
               required
               placeholder="HH:MM"
-              value="$store.activities.selectedActivityObj?.duration || ''"
+              value="$store.pages.activities.selectedActivityObj?.duration || ''"
             />
             <TextArea
               name="description"
               label="Description"
               placeholder="Brief description such as sets, laps, plan, etc."
               rows="10"
-              value="$store.activities.selectedActivityObj?.description || ''"
+              value="$store.pages.activities.selectedActivityObj?.description || ''"
             />
           </div>
 
@@ -136,13 +135,13 @@ import Image from "astro/components/Image.astro";
               type="button"
               label="Reset Changes"
               width="fit"
-              handleClick="$store.activities.handleResetChanges()"
+              handleClick="$store.pages.activities.handleResetChanges()"
             />
             <Button
               type="button"
               label="Delete Activity"
               width="fit"
-              handleClick="$store.activities.handleDeleteActivity()"
+              handleClick="$store.pages.activities.handleDeleteActivity()"
             />
           </div>
         </form>
