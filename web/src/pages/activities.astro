@@ -25,9 +25,8 @@ import Image from "astro/components/Image.astro";
           />
 
           <DropDown
-            label="$store.pages.activities.selectedListName"
-            items="$store.pages.activities.listsList"
-            handleListSwitch="$store.pages.activities.handleListSwitch(id)"
+            items="$store.pages.activities.listsNames"
+            handleItemSwitch="$store.pages.activities.handleListSwitch(listToSelect)"
           />
         </div>
 

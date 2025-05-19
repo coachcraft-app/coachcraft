@@ -108,17 +108,21 @@ export default function activitiesStore(Alpine) {
         selectedActivitiyIDs.includes(activity.id),
       );
     },
-    get selectedListName() {
-      return this.listsList.find((list) => list.id == this.selectedList).name;
-    },
     get selectedActivityObj() {
       return this.activitiesList.find(
         (activity) => activity.id == this.selectedActivity,
       );
     },
+    get listsNames() {
+      var listsNames = [];
+      this.listsList.forEach((list) => listsNames.push(list.name));
+      return listsNames;
+    },
 
-    handleListSwitch(id) {
-      this.selectedList = id;
+    handleListSwitch(listToSelect) {
+      this.selectedList = this.listsList.find(
+        (list) => list.name == listToSelect,
+      ).id;
       this.selectedActivity = "";
       this.rightPanelState = "placeholder";
     },
