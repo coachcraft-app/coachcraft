@@ -7,11 +7,11 @@ var {
   width,
   isSelected = false,
   type,
-  handleClick = "",
+  onClick = "",
 } = Astro.props;
 
 const x_data = `{
-  ${reactify(handleClick, "handleClick")}
+  ${reactify(onClick, "onClick")}
 }`;
 ---
 
@@ -19,7 +19,7 @@ const x_data = `{
   type={type}
   value={label}
   x-data={x_data}
-  @click="handleClick"
+  @click="onClick"
   class={`whitespace-nowrap
         ${isSelected ? "bg-low-contrast-grey" : "bg-transparent"}
         rounded-radius

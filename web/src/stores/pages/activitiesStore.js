@@ -119,14 +119,14 @@ export default function activitiesStore(Alpine) {
       return listsNames;
     },
 
-    handleListSwitch(listToSelect) {
+    onListSwitch(listToSelect) {
       this.selectedList = this.listsList.find(
         (list) => list.name == listToSelect,
       ).id;
       this.selectedActivity = "";
       this.rightPanelState = "placeholder";
     },
-    handleActivitySelection(id) {
+    onActivitySelection(id) {
       // if the activity is already selected, just deselect it
       if (this.selectedActivity == id) {
         this.selectedActivity = "";
@@ -136,12 +136,12 @@ export default function activitiesStore(Alpine) {
         this.rightPanelState = "edit_activity";
       }
     },
-    handleSaveChanges(event) {
+    onSaveChanges(event) {
       event.preventDefault();
       const activityData = Object.fromEntries(new FormData(event.target));
       this.saveActivity(activityData);
     },
-    handleResetChanges() {
+    onResetChanges() {
       // store current selection
       const currentSelection = this.selectedActivity;
 
@@ -149,7 +149,7 @@ export default function activitiesStore(Alpine) {
       this.selectedActivity = "";
       this.selectedActivity = currentSelection;
     },
-    handleDeleteActivity() {
+    onDeleteActivity() {
       this.activitiesList = this.activitiesList.filter(
         (activity) => activity.id != this.selectedActivity,
       );

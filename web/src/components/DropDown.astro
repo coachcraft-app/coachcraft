@@ -1,10 +1,10 @@
 ---
 import reactify from "../utils/reactify";
-var { items, handleItemSwitch } = Astro.props;
+var { items, onItemSwitch } = Astro.props;
 
 const x_data = `{
   ${reactify(items, "items")},
-  ${reactify(handleItemSwitch, "handleItemSwitch")},
+  ${reactify(onItemSwitch, "onItemSwitch")},
   label: "",
   isOpen: false, 
   openedWithKeyboard: false
@@ -115,7 +115,7 @@ const x_data = `{
               dark:focus-visible:text-on-surface-dark-strong"
         role="menuitem"
         x-text="item"
-        @click="handleItemSwitch(item); label=item; isOpen = false; openedWithKeyboard = false"
+        @click="onItemSwitch(item); label=item; isOpen = false; openedWithKeyboard = false"
         tabindex="0"
       >
       </div>

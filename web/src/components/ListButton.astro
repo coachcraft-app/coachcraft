@@ -2,13 +2,13 @@
 import reactify from "../utils/reactify";
 
 // isSelected should be a function that returns a Boolean
-var { label, id, isSelected, handleClick } = Astro.props;
+var { label, id, isSelected, onClick } = Astro.props;
 
 const x_data = `{ 
   ${reactify(label, "label")}, 
   ${reactify(id, "id")}, 
   ${isSelected},
-  ${reactify(handleClick, "handleClick")}
+  ${reactify(onClick, "onClick")}
 }`;
 ---
 
@@ -18,7 +18,7 @@ const x_data = `{
     'bg-neutral-800 dark:text-primary-dark': !isSelected()
   }"
   x-data={x_data}
-  @click="handleClick(id);"
+  @click="onClick(id);"
   class={`
         rounded-lg
         border border-primary

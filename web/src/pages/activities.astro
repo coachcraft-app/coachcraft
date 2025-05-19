@@ -18,15 +18,16 @@ import Image from "astro/components/Image.astro";
                 overflow-y-auto">
       <div class="flex flex-col gap-y-8">
         <div class="flex flex-col gap-y-2">
+          <Button type="button" label="Manage Lists" onClick="" />
           <Button
             type="button"
             label="Create Activity"
-            handleClick="$store.pages.activities.createActivity()"
+            onClick="$store.pages.activities.createActivity()"
           />
 
           <DropDown
             items="$store.pages.activities.listsNames"
-            handleItemSwitch="$store.pages.activities.handleListSwitch(listToSelect)"
+            onItemSwitch="$store.pages.activities.onListSwitch(listToSelect)"
           />
         </div>
 
@@ -39,7 +40,7 @@ import Image from "astro/components/Image.astro";
               label="activity.name"
               id="activity.id"
               isSelected="isSelected() { return $store.pages.activities.selectedActivity == activity.id; }"
-              handleClick="$store.pages.activities.handleActivitySelection(id)"
+              onClick="$store.pages.activities.onActivitySelection(id)"
             />
           </template>
         </div>
@@ -102,7 +103,7 @@ import Image from "astro/components/Image.astro";
 
         <form
           class="flex flex-col gap-5"
-          @submit.prevent="$store.pages.activities.handleSaveChanges(event)"
+          @submit.prevent="$store.pages.activities.onSaveChanges(event)"
         >
           <div class="flex flex-col gap-5">
             <TextInput
@@ -134,13 +135,13 @@ import Image from "astro/components/Image.astro";
               type="button"
               label="Reset Changes"
               width="fit"
-              handleClick="$store.pages.activities.handleResetChanges()"
+              onClick="$store.pages.activities.onResetChanges()"
             />
             <Button
               type="button"
               label="Delete Activity"
               width="fit"
-              handleClick="$store.pages.activities.handleDeleteActivity()"
+              onClick="$store.pages.activities.onDeleteActivity()"
             />
           </div>
         </form>
