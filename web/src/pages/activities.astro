@@ -40,7 +40,7 @@ import Image from "astro/components/Image.astro";
             <ListButton
               label="activity.name"
               id="activity.id"
-              isSelected="$store.activities.isActivitySelected(id)"
+              isSelected="isSelected() { return $store.activities.selectedActivity == activity.id; }"
               handleClick="$store.activities.handleActivitySelection(id)"
             />
           </template>
