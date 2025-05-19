@@ -10,7 +10,7 @@ import Image from "astro/components/Image.astro";
 ---
 
 <MainLayout title="Activities">
-  <div class="flex flex-row
+  <div x-data class="flex flex-row
                 mt-3">
     <!-- activities list -->
     <div class="w-64
@@ -23,6 +23,7 @@ import Image from "astro/components/Image.astro";
             label="Create Activity"
             handleClick="$store.activities.createActivity()"
           />
+
           <DropDown
             mode="regular"
             label="$store.activities.selectedListName"
@@ -67,18 +68,23 @@ import Image from "astro/components/Image.astro";
           x-transition
           x-show="!$store.activities.selectedActivity"
         >
-          <p class="text-center">
-            Select or Create new Activity to get started.
-          </p>
-        </div>
+      <!-- place holder for when no activity is selected -->
+      <div
+        x-data
+        x-transition
+        x-show="$store.activities.rightPanelState == 'placeholder'"
+      >
+        <p class="text-center">Select or Create new Activity to get started.</p>
       </div>
+
+      <!-- edit activity form -->
       <div
         class="flex flex-col gap-5"
         x-data
         x-transition:enter="transition ease-out duration-400"
         x-transition:enter-start="opacity-0 scale-85"
         x-transition:enter-end="opacity-100 scale-100"
-        x-show="$store.activities.selectedActivity"
+        x-show="$store.activities.rightPanelState == 'edit_activity'"
       >
         <div>
           <div

@@ -93,6 +93,7 @@ export default function activitiesStore(Alpine) {
     ],
     selectedList: "default",
     selectedActivity: "",
+    rightPanelState: "placeholder", // "placeholder" || "edit_activity" || "manage_lists"
     changesMade: false,
     changesSyncInProgress: false,
 
@@ -121,9 +122,17 @@ export default function activitiesStore(Alpine) {
     handleListSwitch(id) {
       this.selectedList = id;
       this.selectedActivity = "";
+      this.rightPanelState = "placeholder";
     },
     handleActivitySelection(id) {
-      this.selectedActivity = id;
+      // if the activity is already selected, just deselect it
+      if (this.selectedActivity == id) {
+        this.selectedActivity = "";
+        this.rightPanelState = "placeholder";
+      } else {
+        this.selectedActivity = id;
+        this.rightPanelState = "edit_activity";
+      }
     },
     handleSaveChanges(event) {
       event.preventDefault();
@@ -150,6 +159,7 @@ export default function activitiesStore(Alpine) {
       });
 
       this.selectedActivity = "";
+      this.rightPanelState = "placeholder";
     },
 
     saveActivity(activityData) {
@@ -186,9 +196,6 @@ export default function activitiesStore(Alpine) {
 
         this.selectedActivity = activity.id;
       }
-    },
-    isActivitySelected(id) {
-      return this.selectedActivity == id;
     },
     createActivity() {
       const newActivityTemplate = {
