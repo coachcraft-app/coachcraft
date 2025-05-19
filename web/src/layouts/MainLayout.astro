@@ -1,6 +1,5 @@
 ---
 import HeaderBar from "../components/navigation/HeaderBar.astro";
-import Breadcrumb from "../components/navigation/Breadcrumb.astro";
 import LeftNav from "../components/navigation/LeftNav.astro";
 import Footer from "../components/navigation/Footer.astro";
 import { ClientRouter } from "astro:transitions";
@@ -26,10 +25,8 @@ title = `CoachCraft ${title}`;
 
     <div class="grid grid-cols-[auto_1fr] gap-4">
       <LeftNav />
-      <div class="">
-        <div class="flex w-full justify-center">
-          <slot />
-        </div>
+      <div class="flex w-full justify-center">
+        <slot />
       </div>
     </div>
 
