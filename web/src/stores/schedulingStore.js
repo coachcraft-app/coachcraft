@@ -11,5 +11,20 @@ export default function schedulingStore(Alpine) {
       { id: "s2", name: "Practice session", activities: ["5", "3", "7"] },
     ],
     selectedTab: "lists", // which tab is currently shown
+
+    // ----------------getters-------------
+
+    get filteredActivities() {
+      // return the selected list
+      return Alpine.store("activities").selectedListActivities;
+    },
+    get lastSession() {
+      // first item in previousSessions
+      if (this.previousSessions[0]) {
+        return this.previousSessions[0];
+      } else {
+        return { activities: [] };
+      }
+    },
   });
 }
