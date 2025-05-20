@@ -94,5 +94,34 @@ import Image from "astro/components/Image.astro";
           </template>
         </ul>
       </div>
+
+      <!-- LAST SESSION TAB -->
+      <div x-show="$store.scheduling.selectedTab==='last'" class="mt-4">
+        <h3 class="mb-2">
+          “<span x-text="$store.scheduling.lastSession.name"></span>”
+        </h3>
+        <ul class="space-y-2">
+          <template
+            x-for="id in $store.scheduling.lastSession.activities"
+            :key="id"
+          >
+            <li
+              class="p-2 bg-gray-800 rounded cursor-pointer"
+              @click="$store.scheduling.addToSession($store.activities.activitiesList.find(a => a.id===id))"
+            >
+              <span
+                x-text="$store.activities.activitiesList.find(a => a.id===id).name"
+              ></span>
+            </li>
+          </template>
+        </ul>
+        <Button
+          class="mt-3"
+          type="button"
+          label="Load Entire Session"
+          width="fit"
+          handleClick="$store.scheduling.loadSession($store.scheduling.lastSession)"
+        />
+      </div>
   </div>
 </MainLayout>
