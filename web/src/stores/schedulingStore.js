@@ -26,5 +26,14 @@ export default function schedulingStore(Alpine) {
         return { activities: [] };
       }
     },
+
+    // ----------------METHODS---------------
+
+    addToSession(activity) {
+      // push a copy of the activity into sessionActivities
+      if (!this.sessionActivities.find((a) => a.id === activity.id)) {
+        this.sessionActivities.push({ ...activity });
+      }
+    },
   });
 }
