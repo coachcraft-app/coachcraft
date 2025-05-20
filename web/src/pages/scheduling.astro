@@ -123,5 +123,28 @@ import Image from "astro/components/Image.astro";
           handleClick="$store.scheduling.loadSession($store.scheduling.lastSession)"
         />
       </div>
+
+      <!-- HISTORY TAB -->
+      <div x-show="$store.scheduling.selectedTab==='history'" class="mt-4">
+        <ul class="space-y-2">
+          <template
+            x-for="sess in $store.scheduling.previousSessions"
+            :key="sess.id"
+          >
+            <li
+              class="flex justify-between items-center p-2 bg-gray-800 rounded"
+            >
+              <span x-text="sess.name"></span>
+              <Button
+                type="button"
+                label="Pick"
+                width="fit"
+                handleClick="$store.scheduling.loadSession(sess)"
+              />
+            </li>
+          </template>
+        </ul>
+      </div>
+    </div>
   </div>
 </MainLayout>
