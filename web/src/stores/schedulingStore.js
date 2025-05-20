@@ -39,5 +39,21 @@ export default function schedulingStore(Alpine) {
       // remove by array index
       this.sessionActivities.splice(index, 1);
     },
+
+    // Drag & Drop functionality
+    handleDragStart(dragEvent, activity) {
+      dragEvent.dataTransfer.setData("text/plain", activity.id);
+      dragEvent.dataTransfer.effectAllowed = "copy";
+    },
+    handleDragOver(dragEvent) {
+      dragEvent.preventDefault();
+      dragEvent.dataTransfer.dropEffect = "copy";
+    },
+    handleDrop(dragEvent) {
+      dragEvent.preventDefault();
+      const id = dragEvent.dataTransfer.getData("text/plain");
+      const act = this.activitiesList.find((a) => a.id === id);
+      if (act) this.addToSession(act);
+    },
   });
 }
