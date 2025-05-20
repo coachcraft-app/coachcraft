@@ -35,5 +35,9 @@ export default function schedulingStore(Alpine) {
         this.sessionActivities.push({ ...activity });
       }
     },
+    removeFromSession(index) {
+      // remove by array index
+      this.sessionActivities.splice(index, 1);
+    },
   });
 }
