@@ -55,5 +55,10 @@ export default function schedulingStore(Alpine) {
       const act = this.activitiesList.find((a) => a.id === id);
       if (act) this.addToSession(act);
     },
+
+    // switch tabs
+    switchTab(tab) {
+      this.selectedTab = tab;
+    },
   });
 }
