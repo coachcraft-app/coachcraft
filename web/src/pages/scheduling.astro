@@ -46,5 +46,25 @@ import Image from "astro/components/Image.astro";
         </template>
       </ul>
     </div>
+
+    <!-- Right pane: Tabs -->
+    <div class="w-1/2 p-4">
+      <div class="flex border-b border-gray-600">
+        <button
+          class="px-4 py-2"
+          :class="{'border-b-2 border-white': $store.scheduling.selectedTab==='lists'}"
+          @click="$store.scheduling.switchTab('lists')">Lists</button
+        >
+        <button
+          class="px-4 py-2"
+          :class="{'border-b-2 border-white': $store.scheduling.selectedTab==='last'}"
+          @click="$store.scheduling.switchTab('last')">Last Session</button
+        >
+        <button
+          class="px-4 py-2"
+          :class="{'border-b-2 border-white': $store.scheduling.selectedTab==='history'}"
+          @click="$store.scheduling.switchTab('history')">History</button
+        >
+      </div>
   </div>
 </MainLayout>
