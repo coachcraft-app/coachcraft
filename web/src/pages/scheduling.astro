@@ -10,5 +10,41 @@ import Image from "astro/components/Image.astro";
 
 <MainLayout title="Scheduling">
   <div class="flex h-full" x-data>
+    <!-- Left pane: Current Schedule -->
+    <div
+      class="w-1/2 p-4 border-r border-gray-600"
+      @dragover.prevent="$store.scheduling.handleDragOver($event)"
+      @drop="$store.scheduling.handleDrop($event)"
+    >
+      <h2 class="text-xl mb-2">Current Schedule</h2>
+      <input
+        x-model="$store.scheduling.sessionName"
+        placeholder="Schedule Name"
+        class="w-full mb-4 px-2 py-1 bg-gray-800 rounded"
+      />
+
+      <template x-if="!$store.scheduling.sessionActivities.length">
+        <p class="text-gray-400">
+          Drag activities here to assemble your session.
+        </p>
+      </template>
+
+      <ul class="space-y-2">
+        <template
+          x-for="(act, idx) in $store.scheduling.sessionActivities"
+          :key="act.id"
+        >
+          <li class="flex justify-between items-center p-2 bg-gray-700 rounded">
+            <span x-text="act.name"></span>
+            <Button
+              type="button"
+              label="Remove"
+              width="fit"
+              handleClick="$store.scheduling.removeFromSession(idx)"
+            />
+          </li>
+        </template>
+      </ul>
+    </div>
   </div>
 </MainLayout>
