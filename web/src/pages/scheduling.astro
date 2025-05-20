@@ -66,5 +66,33 @@ import Image from "astro/components/Image.astro";
           @click="$store.scheduling.switchTab('history')">History</button
         >
       </div>
+
+      <!-- LISTS TAB -->
+      <div x-show="$store.scheduling.selectedTab==='lists'" class="mt-4">
+        <DropDown
+          mode="regular"
+          label="$store.activities.selectedListName"
+          items="$store.activities.listsList"
+          handleListSwitch="$store.activities.handleListSwitch(id)"
+        />
+        <ul class="mt-2 space-y-2">
+          <template
+            x-for="activity in $store.scheduling.filteredActivities"
+            :key="activity.id"
+          >
+            <li
+              class="p-2 bg-gray-800 rounded cursor-grab"
+              draggable="true"
+              @dragstart="$store.scheduling.handleDragStart($event, activity)"
+            >
+              <div class="flex justify-between">
+                <span x-text="activity.name"></span>
+                <span class="text-sm text-gray-400" x-text="activity.duration"
+                ></span>
+              </div>
+            </li>
+          </template>
+        </ul>
+      </div>
   </div>
 </MainLayout>
