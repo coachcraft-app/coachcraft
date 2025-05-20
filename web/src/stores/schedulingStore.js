@@ -60,5 +60,12 @@ export default function schedulingStore(Alpine) {
     switchTab(tab) {
       this.selectedTab = tab;
     },
+
+    // shows activities in the session
+    loadSession(session) {
+      this.sessionActivities = session.activities
+        .map((id) => this.activitiesList.find((a) => a.id === id))
+        .filter(Boolean);
+    },
   });
 }
