@@ -37,18 +37,26 @@ import Image from "astro/components/Image.astro";
       </div>
 
       <!-- activities list -->
-          <template
-            x-for="activity in $store.pages.activities.selectedListActivities"
-            :key="activity.id"
-          >
-            <ListButton
-              label="activity.name"
-              id="activity.id"
-              isSelected="isSelected() { return $store.pages.activities.selectedActivity == activity.id; }"
-              onClick="$store.pages.activities.onActivitySelection(id)"
-            />
-          </template>
+      <div x-data class="flex flex-col gap-y-3">
+        <div x-data class="flex flex-col gap-y-1">
+          <p class="text-sm text-gray-400">
+            Activities:
+            <span x-text="$store.pages.activities.selectedListActivities.length"
+            ></span>
+          </p>
+          <hr class="border-gray-500/50" />
         </div>
+        <template
+          x-for="activity in $store.pages.activities.selectedListActivities"
+          :key="activity.id"
+        >
+          <ListButton
+            label="activity.name"
+            id="activity.id"
+            isSelected="isSelected() { return $store.pages.activities.selectedActivity == activity.id; }"
+            onClick="$store.pages.activities.onActivitySelection(id)"
+          />
+        </template>
       </div>
     </div>
 
