@@ -10,28 +10,33 @@ import Image from "astro/components/Image.astro";
 ---
 
 <MainLayout title="Activities">
-  <div x-data class="flex flex-row
-                mt-3">
-    <!-- activities list -->
-    <div class="w-64
-                pr-5
-                overflow-y-auto">
-      <div class="flex flex-col gap-y-8">
-        <div class="flex flex-col gap-y-2">
-          <Button type="button" label="Manage Lists" onClick="" />
-          <Button
-            type="button"
-            label="Create Activity"
-            onClick="$store.pages.activities.createActivity()"
-          />
+  <div x-data class="flex flex-row justify-center">
+    <!-- left panel -->
+    <div
+      class="pr-[2.5vw]
+            min-w-[13vw]
+            overflow-y-auto
+            flex flex-col gap-y-8"
+    >
+      <div class="flex flex-col gap-y-2">
+        <Button
+          type="button"
+          label="Manage Lists"
+          onClick="$store.pages.activities.onManageLists()"
+        />
+        <Button
+          type="button"
+          label="Create Activity"
+          onClick="$store.pages.activities.createActivity()"
+        />
 
-          <DropDown
-            items="$store.pages.activities.listsNames"
-            onItemSwitch="$store.pages.activities.onListSwitch(listToSelect)"
-          />
-        </div>
+        <DropDown
+          items="$store.pages.activities.listsDropdownItems"
+          onItemSwitch="$store.pages.activities.onListSwitch(listToSelect)"
+        />
+      </div>
 
-        <div x-data class="flex flex-col gap-y-3">
+      <!-- activities list -->
           <template
             x-for="activity in $store.pages.activities.selectedListActivities"
             :key="activity.id"
@@ -47,24 +52,24 @@ import Image from "astro/components/Image.astro";
       </div>
     </div>
 
-    <!-- edit activity -->
+    <!-- right panel -->
     <div
-      class="pl-5
-            border-1
+      class="pl-[2.5vw]
+            border-l-1
             border-l-gray-500/50
-            border-r-0
-            border-y-0
-            
-            flex flex-col
-            justify-center
-            gap-5"
+            grow
+            max-w-[50vw]"
     >
-      <!-- manage lists -->
+      <!-- place holder for when no activity is selected -->
       <div
         x-data
         x-transition
-        x-show="$store.pages.activities.rightPanelState == 'manage_lists'"
+        x-show="$store.pages.activities.rightPanelState == 'placeholder'"
+        class="h-full w-full flex items-center justify-center"
       >
+        <p class="text-gray-400 text-lg select-none">
+          Select or Create new Activity to get started.
+        </p>
       </div>
 
       <!-- place holder for when no activity is selected -->
@@ -88,15 +93,17 @@ import Image from "astro/components/Image.astro";
         <div>
           <div
             class="aspect-[16/5]
-                            overflow-hidden
-                            rounded-lg
-                            brightness-80"
+                  overflow-hidden
+                  rounded-lg
+                  brightness-80
+                  w-full"
           >
             <Image
               src="/images/activity_img_placeholder.jpg"
               alt="brand logo"
               width="500"
               height="200"
+              class="w-full"
             />
           </div>
         </div>
