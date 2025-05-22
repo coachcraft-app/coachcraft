@@ -31,7 +31,7 @@ import Image from "astro/components/Image.astro";
         />
 
         <DropDown
-          items="$store.pages.activities.listsDropdownItems"
+          items="$store.pages.activities.listsNames"
           onItemSwitch="$store.pages.activities.onListSwitch(listToSelect)"
         />
       </div>
@@ -80,13 +80,61 @@ import Image from "astro/components/Image.astro";
         </p>
       </div>
 
-      <!-- place holder for when no activity is selected -->
+      <!-- manage lists -->
       <div
         x-data
         x-transition
-        x-show="$store.pages.activities.rightPanelState == 'placeholder'"
+        x-show="$store.pages.activities.rightPanelState == 'manage_lists'"
+        class="h-full flex flex-col gap-25"
       >
-        <p class="text-center">Select or Create new Activity to get started.</p>
+        <div class="flex gap-5">
+          <DropDown
+            items="$store.pages.activities.listsNames"
+            onItemSwitch="$store.pages.activities.onManageListsListSwitch(listToSelect)"
+          />
+          <Button
+            type="button"
+            width="fit"
+            label="Create New List"
+            onClick="$store.pages.activities.onCreateNewList()"
+          />
+        </div>
+
+        <div>
+          <form
+            class="flex flex-col gap-5"
+            @submit.prevent="$store.pages.activities.onManageListsSaveChanges(event)"
+          >
+            <div class="flex items-end gap-5">
+              <TextInput
+                name="listName"
+                label="List Name"
+                required
+                placeholder="List"
+                value="$store.pages.activities.manageListsSelectedListObj?.name || ''"
+              />
+              <div class="flex flex-col gap-1">
+                <label class="w-fit pl-0.5 text-sm text-gray-400"
+                  >Accent Color</label
+                >
+                <DropDown
+                  items="$store.pages.activities.listAccentColorNames"
+                  onItemSwitch="$store.pages.activities.onListsAccentColorPreviewSwitch"
+                />
+              </div>
+            </div>
+
+            <div class="flex gap-5 mt-5">
+              <Button type="submit" width="fit" label="Save Changes" />
+              <Button
+                type="button"
+                width="fit"
+                label="Delete List"
+                onClick="$store.pages.activities.onDeleteList()"
+              />
+            </div>
+          </form>
+        </div>
       </div>
 
       <!-- edit activity form -->
@@ -144,7 +192,7 @@ import Image from "astro/components/Image.astro";
             />
           </div>
 
-          <div class="flex gap-3">
+          <div class="flex gap-5">
             <Button type="submit" label="Save Changes" width="fit" />
             <Button
               type="button"

@@ -7,21 +7,25 @@ export default function activitiesStore(Alpine) {
         id: "default",
         name: "All Activities",
         activities: [],
+        accent_color: "Colors",
       },
       {
         id: "0",
         name: "Warm Up",
         activities: ["1", "2", "3", "4"],
+        accent_color: "Lavender",
       },
       {
         id: "1",
         name: "Dribbling Drills",
         activities: ["5", "6", "7", "8"],
+        accent_color: "Sage",
       },
       {
         id: "2",
         name: "Assorted",
         activities: ["1", "5", "4", "7"],
+        accent_color: "Basil",
       },
     ],
 
@@ -91,9 +95,43 @@ export default function activitiesStore(Alpine) {
         img_url: "",
       },
     ],
+
+    listAccentColors: [
+      {
+        name: "Colors",
+        hex: "",
+      },
+      {
+        name: "Blueberry",
+        hex: "",
+      },
+      {
+        name: "Lavender",
+        hex: "",
+      },
+      {
+        name: "Sage",
+        hex: "",
+      },
+      {
+        name: "Basil",
+        hex: "",
+      },
+      {
+        name: "Flamingo",
+        hex: "",
+      },
+      {
+        name: "Banana",
+        hex: "",
+      },
+    ],
+
     selectedList: "default",
     selectedActivity: "",
     rightPanelState: "placeholder", // "placeholder" || "edit_activity" || "manage_lists"
+
+    manageListsSelectedList: "default",
 
     get selectedListActivities() {
       if (this.selectedList == "default") {
@@ -114,9 +152,25 @@ export default function activitiesStore(Alpine) {
       );
     },
     get listsNames() {
+      // grab array of strings of list names
       var listsNames = [];
       this.listsList.forEach((list) => listsNames.push(list.name));
       return listsNames;
+    },
+    get listAccentColorNames() {
+      var listAccentColors = [];
+      this.listAccentColors.forEach((color) =>
+        listAccentColors.push(color.name),
+      );
+      return listAccentColors;
+    },
+    get manageListsSelectedListObj() {
+      console.log(
+        this.listsList.find((list) => list.id == this.manageListsSelectedList),
+      );
+      return this.listsList.find(
+        (list) => list.id == this.manageListsSelectedList,
+      );
     },
 
     onListSwitch(listToSelect) {
@@ -162,6 +216,68 @@ export default function activitiesStore(Alpine) {
 
       this.selectedActivity = "";
       this.rightPanelState = "placeholder";
+    },
+    onManageLists() {
+      if (this.rightPanelState != "manage_lists") {
+        this.selectedActivity = "";
+        this.rightPanelState = "manage_lists";
+      } else {
+        this.rightPanelState = "placeholder";
+      }
+    },
+    onManageListsListSwitch(listToSelect) {
+      this.manageListsSelectedList = this.listsList.find(
+        (list) => list.name == listToSelect,
+      ).id;
+    },
+    onManageListsAccentColorPreviewSwitch(colorToPreview) {},
+    onManageListsSaveChanges(event) {
+      event.preventDefault();
+      const listData = Object.fromEntries(new FormData(event.target));
+
+      if (
+        this.manageListsSelectedList != "new" ||
+        this.manageListsSelectedList != "default"
+      ) {
+        // update existing list
+        const listToUpdate = this.listsList.find(
+          (list) => list.id == this.manageListsSelectedList,
+        );
+        listToUpdate.name = listData.listName;
+        // TODO: save list accent color
+      } else {
+        // save new list
+        const newList = {
+          id: Date.now().toString(), // TODO: update to assign ID provided by backend
+          name: listData.listName,
+          activities: [],
+          accent_color: "Colors", // TODO: grab accent color
+        };
+
+        this.listsList.shift(); // remove newListTemplate
+        this.listsList.unshift(newList); // add the new list to the top
+      }
+    },
+    onCreateNewList() {
+      const newListTemplate = {
+        id: "new",
+        name: "New List",
+        activities: [],
+        accent_color: "Colors",
+      };
+
+      if (!this.listsList.find((list) => list.id == newListTemplate.id)) {
+        // proceed only if new list draft doesn't already exist
+        this.listsList.unshift(newListTemplate);
+        this.manageListsSelectedList = "new";
+      }
+    },
+    onDeleteList() {
+      if (this.manageListsSelectedList != "default") {
+        this.listsList = this.listsList.filter(
+          (list) => list.id != this.manageListsSelectedList,
+        );
+      }
     },
 
     saveActivity(activityData) {
