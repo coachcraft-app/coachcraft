@@ -82,12 +82,12 @@ import Image from "astro/components/Image.astro";
       <!-- LISTS TAB -->
       <div x-show="$store.scheduling.selectedTab==='lists'" class="mt-4">
         <DropDown
-          items="$store.pages.activities.listsList.map(list => list.name)"
-          onItemSwitch="$store.pages.activities.onListSwitch"
+          items="$store.pages.activities.listsNames"
+          onItemSwitch="$store.pages.activities.onListSwitch(listToSelect)"
         />
         <ul class="mt-2 space-y-2">
           <template
-            x-for="activity in $store.scheduling.filteredActivities"
+            x-for="activity in $store.pages.activities.selectedListActivities"
             :key="activity.id"
           >
             <li
@@ -96,12 +96,9 @@ import Image from "astro/components/Image.astro";
               @dragstart="$store.scheduling.handleDragStart($event, activity)"
             >
               <div class="flex justify-between items-center">
-                <div class="flex flex-col">
-                  <span x-text="activity.name" class="font-medium"></span>
-                  <span class="text-sm text-gray-400" x-text="activity.duration"
-                  ></span>
-                </div>
-                <span class="text-xs text-gray-500">Drag to schedule</span>
+                <span x-text="activity.name" class="font-medium"></span>
+                <span class="text-sm text-gray-400" x-text="activity.duration"
+                ></span>
               </div>
             </li>
           </template>

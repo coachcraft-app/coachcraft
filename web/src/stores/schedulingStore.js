@@ -14,10 +14,6 @@ export default function schedulingStore(Alpine) {
 
     // ----------------getters-------------
 
-    get filteredActivities() {
-      // return the selected list
-      return Alpine.store("pages").activities.selectedListActivities;
-    },
     get lastSession() {
       // first item in previousSessions
       if (this.previousSessions[0]) {
