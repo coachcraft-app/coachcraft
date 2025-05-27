@@ -1,17 +1,10 @@
 ---
 import reactify from "../utils/reactify";
 
-var {
-  label,
-  addClasses,
-  width,
-  isSelected = false,
-  type,
-  handleClick = "",
-} = Astro.props;
+var { label, width = "full", type, onClick = "" } = Astro.props;
 
 const x_data = `{
-  ${reactify(handleClick, "handleClick")}
+  ${reactify(onClick, "onClick")}
 }`;
 ---
 
@@ -19,9 +12,9 @@ const x_data = `{
   type={type}
   value={label}
   x-data={x_data}
-  @click="handleClick"
+  @click="onClick"
   class={`whitespace-nowrap
-        ${isSelected ? "bg-low-contrast-grey" : "bg-transparent"}
+        bg-transparent
         rounded-radius
         block
         border border-primary
@@ -38,8 +31,7 @@ const x_data = `{
         focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
         active:opacity-100 active:outline-offset-0
         disabled:opacity-75 disabled:cursor-not-allowed
-        dark:border-low-contrast-grey dark:${isSelected ? "text-bg-black" : "text-primary-dark"} 
+        dark:border-low-contrast-grey
         dark:focus-visible:outline-primary-dark
-        rounded-lg
-        ${addClasses}`}
+        rounded-lg`}
 />

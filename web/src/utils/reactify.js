@@ -9,7 +9,7 @@
  * @param {String} $storeObj - The $store object as String, for ex. "$store.x.y"
  * @param {String} objName - String "y" in "$store.x.y(arg)"" || "$store.x.y()"" || "$store.x.y"
  */
-export default ($storeObj, funcName) => {
+export default ($storeObj, objName) => {
   //
   //  How the SIGNATURE_ARG_REGEX regex works -
   //
@@ -23,11 +23,11 @@ export default ($storeObj, funcName) => {
   const SIGNATURE_ARG_REGEX = /\([^()]*[^() ][^()]*\)/;
   const REGEX_RESULT = $storeObj.match(SIGNATURE_ARG_REGEX);
 
-  // if arg present, returns `get funcName(arg) { return (arg) => { return $store.x.y(arg); } }`
+  // if arg present, returns `get objName(arg) { return (arg) => { return $store.x.y(arg); } }`
   if (REGEX_RESULT)
-    return `get ${funcName}() { return ${REGEX_RESULT} => ${$storeObj}; }`;
-  // if no arg, returns `get funcName() { return $store.x.y(); }` || `get funcName() { return $store.x.y; }`
+    return `get ${objName}() { return ${REGEX_RESULT} => ${$storeObj}; }`;
+  // if no arg, returns `get objName() { return $store.x.y(); }` || `get objName() { return $store.x.y; }`
   else {
-    return `get ${funcName}() { return ${$storeObj}; }`;
+    return `get ${objName}() { return ${$storeObj}; }`;
   }
 };

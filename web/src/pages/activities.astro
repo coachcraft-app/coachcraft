@@ -10,95 +10,163 @@ import Image from "astro/components/Image.astro";
 ---
 
 <MainLayout title="Activities">
-  <div class="flex flex-row
-                mt-3">
-    <!-- activities list -->
-    <div class="w-64
-                pr-5
-                overflow-y-auto">
-      <div class="flex flex-col gap-y-8">
-        <div class="flex flex-col gap-y-2">
-          <DropDown
-            mode="regular"
-            label="$store.activities.selectedListName"
-            items="$store.activities.listsList"
-            handleListSwitch="$store.activities.handleListSwitch(id)"
-          />
-          <Button
-            type="button"
-            label="New Activity"
-            handleClick="$store.activities.addNewActivity()"
-          />
-        </div>
+  <div x-data class="flex flex-row justify-center">
+    <!-- left panel -->
+    <div
+      class="pr-[2.5vw]
+            min-w-[13vw]
+            overflow-y-auto
+            flex flex-col gap-y-8"
+    >
+      <div class="flex flex-col gap-y-2">
+        <Button
+          type="button"
+          label="Manage Lists"
+          onClick="$store.pages.activities.onManageLists()"
+        />
+        <Button
+          type="button"
+          label="Create Activity"
+          onClick="$store.pages.activities.createActivity()"
+        />
 
-        <div x-data class="flex flex-col gap-y-3">
-          <template
-            x-for="activity in $store.activities.selectedListActivities"
-            :key="activity.id"
-          >
-            <ListButton
-              label="activity.name"
-              id="activity.id"
-              isSelected="$store.activities.isActivitySelected(id)"
-              handleClick="$store.activities.handleActivitySelection(id)"
-            />
-          </template>
+        <DropDown
+          items="$store.pages.activities.listsNames"
+          onItemSwitch="$store.pages.activities.onListSwitch(listToSelect)"
+        />
+      </div>
+
+      <!-- activities list -->
+      <div x-data class="flex flex-col gap-y-3">
+        <div x-data class="flex flex-col gap-y-1">
+          <p class="text-sm text-gray-400">
+            Activities:
+            <span x-text="$store.pages.activities.selectedListActivities.length"
+            ></span>
+          </p>
+          <hr class="border-gray-500/50" />
         </div>
+        <template
+          x-for="activity in $store.pages.activities.selectedListActivities"
+          :key="activity.id"
+        >
+          <ListButton
+            label="activity.name"
+            id="activity.id"
+            isSelected="isSelected() { return $store.pages.activities.selectedActivity == activity.id; }"
+            onClick="$store.pages.activities.onActivitySelection(id)"
+          />
+        </template>
       </div>
     </div>
 
-    <!-- edit activity -->
+    <!-- right panel -->
     <div
-      class="pl-5
-            border-1
+      class="pl-[2.5vw]
+            border-l-1
             border-l-gray-500/50
-            border-r-0
-            border-y-0
-            
-            flex flex-col
-            justify-center
-            gap-5"
+            grow
+            max-w-[50vw]"
     >
-      <div>
-        <!-- place holder for when no activity is selected -->
-        <div
-          class=""
-          x-data
-          x-transition
-          x-show="!$store.activities.selectedActivity"
-        >
-          <p class="text-center">
-            Select or Create new Activity to get started.
-          </p>
+      <!-- place holder for when no activity is selected -->
+      <div
+        x-data
+        x-transition
+        x-show="$store.pages.activities.rightPanelState == 'placeholder'"
+        class="h-full w-full flex items-center justify-center"
+      >
+        <p class="text-gray-400 text-lg select-none">
+          Select or Create new Activity to get started.
+        </p>
+      </div>
+
+      <!-- manage lists -->
+      <div
+        x-data
+        x-transition
+        x-show="$store.pages.activities.rightPanelState == 'manage_lists'"
+        class="h-full flex flex-col gap-25"
+      >
+        <div class="flex gap-5">
+          <DropDown
+            items="$store.pages.activities.listsNames"
+            onItemSwitch="$store.pages.activities.onManageListsListSwitch(listToSelect)"
+          />
+          <Button
+            type="button"
+            width="fit"
+            label="Create New List"
+            onClick="$store.pages.activities.onCreateNewList()"
+          />
+        </div>
+
+        <div>
+          <form
+            class="flex flex-col gap-5"
+            @submit.prevent="$store.pages.activities.onManageListsSaveChanges(event)"
+          >
+            <div class="flex items-end gap-5">
+              <TextInput
+                name="listName"
+                label="List Name"
+                required
+                placeholder="List"
+                value="$store.pages.activities.manageListsSelectedListObj?.name || ''"
+              />
+              <div class="flex flex-col gap-1">
+                <label class="w-fit pl-0.5 text-sm text-gray-400"
+                  >Accent Color</label
+                >
+                <DropDown
+                  items="$store.pages.activities.listAccentColorNames"
+                  onItemSwitch="$store.pages.activities.onListsAccentColorPreviewSwitch"
+                />
+              </div>
+            </div>
+
+            <div class="flex gap-5 mt-5">
+              <Button type="submit" width="fit" label="Save Changes" />
+              <Button
+                type="button"
+                width="fit"
+                label="Delete List"
+                onClick="$store.pages.activities.onDeleteList()"
+              />
+            </div>
+          </form>
         </div>
       </div>
+
+      <!-- edit activity form -->
       <div
         class="flex flex-col gap-5"
         x-data
         x-transition:enter="transition ease-out duration-400"
         x-transition:enter-start="opacity-0 scale-85"
         x-transition:enter-end="opacity-100 scale-100"
-        x-show="$store.activities.selectedActivity"
+        x-show="$store.pages.activities.rightPanelState == 'edit_activity'"
       >
         <div>
           <div
             class="aspect-[16/5]
-                            overflow-hidden
-                            rounded-lg
-                            brightness-80"
+                  overflow-hidden
+                  rounded-lg
+                  brightness-80
+                  w-full"
           >
             <Image
               src="/images/activity_img_placeholder.jpg"
               alt="brand logo"
               width="500"
               height="200"
+              class="w-full"
             />
           </div>
         </div>
 
         <form
           class="flex flex-col gap-5"
-          @submit.prevent="$store.activities.handleSaveChanges(event)"
+          @submit.prevent="$store.pages.activities.onSaveChanges(event)"
         >
           <div class="flex flex-col gap-5">
             <TextInput
@@ -106,37 +174,37 @@ import Image from "astro/components/Image.astro";
               label="Activity Name"
               required
               placeholder="Activity"
-              value="$store.activities.selectedActivityObj?.name || ''"
+              value="$store.pages.activities.selectedActivityObj?.name || ''"
             />
             <TextInput
               name="duration"
               label="Duration"
               required
               placeholder="HH:MM"
-              value="$store.activities.selectedActivityObj?.duration || ''"
+              value="$store.pages.activities.selectedActivityObj?.duration || ''"
             />
             <TextArea
               name="description"
               label="Description"
               placeholder="Brief description such as sets, laps, plan, etc."
               rows="10"
-              value="$store.activities.selectedActivityObj?.description || ''"
+              value="$store.pages.activities.selectedActivityObj?.description || ''"
             />
           </div>
 
-          <div class="flex gap-3">
+          <div class="flex gap-5">
             <Button type="submit" label="Save Changes" width="fit" />
             <Button
               type="button"
               label="Reset Changes"
               width="fit"
-              handleClick="$store.activities.handleActivitySelection(id)"
+              onClick="$store.pages.activities.onResetChanges()"
             />
             <Button
-              type="reset"
+              type="button"
               label="Delete Activity"
               width="fit"
-              handleClick="$store.activities.handleDeleteActivity()"
+              onClick="$store.pages.activities.onDeleteActivity()"
             />
           </div>
         </form>

@@ -1,5 +1,5 @@
 export default function activitiesStore(Alpine) {
-  Alpine.store("activities", {
+  Alpine.store("pages").activities = {
     // state
     listsList: [
       {
@@ -7,21 +7,25 @@ export default function activitiesStore(Alpine) {
         id: "default",
         name: "All Activities",
         activities: [],
+        accent_color: "Colors",
       },
       {
         id: "0",
         name: "Warm Up",
         activities: ["1", "2", "3", "4"],
+        accent_color: "Lavender",
       },
       {
         id: "1",
         name: "Dribbling Drills",
         activities: ["5", "6", "7", "8"],
+        accent_color: "Sage",
       },
       {
         id: "2",
         name: "Assorted",
         activities: ["1", "5", "4", "7"],
+        accent_color: "Basil",
       },
     ],
 
@@ -91,18 +95,43 @@ export default function activitiesStore(Alpine) {
         img_url: "",
       },
     ],
+
+    listAccentColors: [
+      {
+        name: "Colors",
+        hex: "",
+      },
+      {
+        name: "Blueberry",
+        hex: "",
+      },
+      {
+        name: "Lavender",
+        hex: "",
+      },
+      {
+        name: "Sage",
+        hex: "",
+      },
+      {
+        name: "Basil",
+        hex: "",
+      },
+      {
+        name: "Flamingo",
+        hex: "",
+      },
+      {
+        name: "Banana",
+        hex: "",
+      },
+    ],
+
     selectedList: "default",
     selectedActivity: "",
-    changesMade: false,
-    changesSyncInProgress: false,
+    rightPanelState: "placeholder", // "placeholder" || "edit_activity" || "manage_lists"
 
-    newActivity: {
-      id: "new",
-      name: "New Activity",
-      duration: "",
-      description: "",
-      img_url: "",
-    },
+    manageListsSelectedList: "default",
 
     get selectedListActivities() {
       if (this.selectedList == "default") {
@@ -117,30 +146,64 @@ export default function activitiesStore(Alpine) {
         selectedActivitiyIDs.includes(activity.id),
       );
     },
-    get selectedListName() {
-      return this.listsList.find((list) => list.id == this.selectedList).name;
-    },
     get selectedActivityObj() {
       return this.activitiesList.find(
         (activity) => activity.id == this.selectedActivity,
       );
     },
+    get listsNames() {
+      // grab array of strings of list names
+      var listsNames = [];
+      this.listsList.forEach((list) => listsNames.push(list.name));
+      return listsNames;
+    },
+    get listAccentColorNames() {
+      var listAccentColors = [];
+      this.listAccentColors.forEach((color) =>
+        listAccentColors.push(color.name),
+      );
+      return listAccentColors;
+    },
+    get manageListsSelectedListObj() {
+      console.log(
+        this.listsList.find((list) => list.id == this.manageListsSelectedList),
+      );
+      return this.listsList.find(
+        (list) => list.id == this.manageListsSelectedList,
+      );
+    },
 
-    handleListSwitch(id) {
-      this.selectedList = id;
+    onListSwitch(listToSelect) {
+      this.selectedList = this.listsList.find(
+        (list) => list.name == listToSelect,
+      ).id;
       this.selectedActivity = "";
+      this.rightPanelState = "placeholder";
     },
-    handleActivitySelection(id) {
-      this.selectedActivity = id;
+    onActivitySelection(id) {
+      // if the activity is already selected, just deselect it
+      if (this.selectedActivity == id) {
+        this.selectedActivity = "";
+        this.rightPanelState = "placeholder";
+      } else {
+        this.selectedActivity = id;
+        this.rightPanelState = "edit_activity";
+      }
     },
-    handleSaveChanges(event) {
+    onSaveChanges(event) {
       event.preventDefault();
       const activityData = Object.fromEntries(new FormData(event.target));
-      console.log("Activity data to save:", activityData);
       this.saveActivity(activityData);
     },
-    handleResetChanges() {}, //TODO
-    handleDeleteActivity() {
+    onResetChanges() {
+      // store current selection
+      const currentSelection = this.selectedActivity;
+
+      // clear selection and re-select
+      this.selectedActivity = "";
+      this.selectedActivity = currentSelection;
+    },
+    onDeleteActivity() {
       this.activitiesList = this.activitiesList.filter(
         (activity) => activity.id != this.selectedActivity,
       );
@@ -152,11 +215,75 @@ export default function activitiesStore(Alpine) {
       });
 
       this.selectedActivity = "";
+      this.rightPanelState = "placeholder";
+    },
+    onManageLists() {
+      if (this.rightPanelState != "manage_lists") {
+        this.selectedActivity = "";
+        this.rightPanelState = "manage_lists";
+      } else {
+        this.rightPanelState = "placeholder";
+      }
+    },
+    onManageListsListSwitch(listToSelect) {
+      this.manageListsSelectedList = this.listsList.find(
+        (list) => list.name == listToSelect,
+      ).id;
+    },
+    onManageListsAccentColorPreviewSwitch(colorToPreview) {},
+    onManageListsSaveChanges(event) {
+      event.preventDefault();
+      const listData = Object.fromEntries(new FormData(event.target));
+
+      if (
+        this.manageListsSelectedList != "new" ||
+        this.manageListsSelectedList != "default"
+      ) {
+        // update existing list
+        const listToUpdate = this.listsList.find(
+          (list) => list.id == this.manageListsSelectedList,
+        );
+        listToUpdate.name = listData.listName;
+        // TODO: save list accent color
+      } else {
+        // save new list
+        const newList = {
+          id: Date.now().toString(), // TODO: update to assign ID provided by backend
+          name: listData.listName,
+          activities: [],
+          accent_color: "Colors", // TODO: grab accent color
+        };
+
+        this.listsList.shift(); // remove newListTemplate
+        this.listsList.unshift(newList); // add the new list to the top
+      }
+    },
+    onCreateNewList() {
+      const newListTemplate = {
+        id: "new",
+        name: "New List",
+        activities: [],
+        accent_color: "Colors",
+      };
+
+      if (!this.listsList.find((list) => list.id == newListTemplate.id)) {
+        // proceed only if new list draft doesn't already exist
+        this.listsList.unshift(newListTemplate);
+        this.manageListsSelectedList = "new";
+      }
+    },
+    onDeleteList() {
+      if (this.manageListsSelectedList != "default") {
+        this.listsList = this.listsList.filter(
+          (list) => list.id != this.manageListsSelectedList,
+        );
+      }
     },
 
     saveActivity(activityData) {
-      // if updating an existing activity
       if (this.selectedActivity != "new") {
+        // update an existing activity
+
         const activityToUpdate = this.activitiesList.find(
           (activity) => activity.id == this.selectedActivity,
         );
@@ -165,9 +292,10 @@ export default function activitiesStore(Alpine) {
         activityToUpdate.duration = activityData.duration;
         activityToUpdate.description = activityData.description;
       } else {
-        // create new activtiy
-        const newActivity = {
-          id: Date.now().toString(), // temporary unique ID
+        // save as new activtiy
+
+        const activity = {
+          id: Date.now().toString(), // TODO: update to assign ID provided by backend
           name: activityData.activityName,
           duration: activityData.duration,
           description: activityData.description || "",
@@ -175,48 +303,55 @@ export default function activitiesStore(Alpine) {
         };
 
         this.activitiesList.shift(); // remove default new activity template
-        this.activitiesList.unshift(newActivity); // insert new activity obj
+        this.activitiesList.unshift(activity); // insert new activity obj
 
         // add to currently selected list, unless "All Activities" is selected
         if (this.selectedList !== "default") {
           const list = this.listsList
-            .find((list) => list.id === this.selectedList)
-            .activities.unshift(newActivity.id);
+            .find((list) => list.id == this.selectedList)
+            .activities.unshift(activity.id);
         }
 
-        this.selectedActivity = newActivity.id;
-        console.log("New activity created:", newActivity);
+        this.selectedActivity = activity.id;
       }
     },
-    isActivitySelected(id) {
-      return this.selectedActivity == id;
-    },
-    addNewActivity() {
-      // only create a new activity if a draft does not already exist
+    createActivity() {
+      const newActivityTemplate = {
+        id: "new",
+        name: "New Activity",
+        duration: "",
+        description: "",
+        img_url: "",
+      };
+
       if (
         !this.activitiesList.find(
-          (activity) => activity.id == this.newActivity.id,
+          (activity) => activity.id == newActivityTemplate.id,
         )
       ) {
-        this.activitiesList.unshift(this.newActivity);
-
-        this.listsList
-          .find((list) => list.id == this.selectedList)
-          .activities.push(this.newActivity.id);
-
-        this.selectedActivity = this.newActivity.id;
+        // if no new activity draft is already present
+        this.activitiesList.unshift(newActivityTemplate);
       } else {
-        // if draft new activity exists, redirect to it
-        this.handleListSwitch(
-          this.listsList.find((list) =>
-            list.activities.includes(this.newActivity.id),
-          ).id,
+        // if a new activity draft exists in another list,
+        // detach it and create a new one
+        const containingList = this.listsList.find((list) =>
+          list.activities.includes(newActivityTemplate.id),
         );
-        this.handleActivitySelection(this.newActivity.id);
+        containingList.activities = containingList.activities.filter(
+          (id) => id != newActivityTemplate.id,
+        );
       }
+
+      // assign new activity draft to currently selected list
+      this.listsList
+        .find((list) => list.id == this.selectedList)
+        .activities.push(newActivityTemplate.id);
+
+      this.selectedActivity = newActivityTemplate.id;
+      this.rightPanelState = "edit_activity";
     },
 
     // fetch data from API
     async fetchData() {},
-  });
+  };
 }
