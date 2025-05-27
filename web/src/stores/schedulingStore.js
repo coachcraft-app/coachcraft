@@ -3,8 +3,8 @@ export default function schedulingStore(Alpine) {
     // state
     sessionName: "", //name of the schedule
     sessionActivities: [], //array of activities dropped in
-    listsList: Alpine.store("activities").listsList,
-    activitiesList: Alpine.store("activities").activitiesList,
+    listsList: Alpine.store("pages").activities.listsList,
+    activitiesList: Alpine.store("pages").activities.activitiesList,
     previousSessions: [
       // EXAMPLE PREVIOUS sessions for Last/History tabs. just to show functionality
       { id: "s1", name: "Week 1 Warmup", activities: ["1", "4", "2"] },
@@ -16,7 +16,7 @@ export default function schedulingStore(Alpine) {
 
     get filteredActivities() {
       // return the selected list
-      return Alpine.store("activities").selectedListActivities;
+      return Alpine.store("pages").activities.selectedListActivities;
     },
     get lastSession() {
       // first item in previousSessions
@@ -66,6 +66,21 @@ export default function schedulingStore(Alpine) {
       this.sessionActivities = session.activities
         .map((id) => this.activitiesList.find((a) => a.id === id))
         .filter(Boolean);
+    },
+
+    // Save current session to history
+    saveSession() {
+      if (!this.sessionName || !this.sessionActivities.length) return;
+
+      const newSession = {
+        id: `s${Date.now()}`,
+        name: this.sessionName,
+        activities: this.sessionActivities.map((a) => a.id),
+      };
+
+      this.previousSessions.unshift(newSession);
+      this.sessionName = "";
+      this.sessionActivities = [];
     },
   });
 }
