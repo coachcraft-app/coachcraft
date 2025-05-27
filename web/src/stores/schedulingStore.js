@@ -79,9 +79,14 @@ export default function schedulingStore(Alpine) {
 
     // shows activities in the session
     loadSession(session) {
-      this.sessionActivities = session.activities
-        .map((id) => this.activitiesList.find((a) => a.id === id))
-        .filter(Boolean);
+      if (!session || !session.activities) return;
+
+      session.activities.forEach((id) => {
+        const activity = this.activitiesList.find((a) => a.id === id);
+        if (activity) {
+          this.addToSession(activity);
+        }
+      });
     },
 
     // Save current session to history

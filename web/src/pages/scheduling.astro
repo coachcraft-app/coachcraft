@@ -183,13 +183,12 @@ import Image from "astro/components/Image.astro";
             </li>
           </template>
         </ul>
-        <Button
-          class="mt-3"
-          type="button"
-          label="Load Session"
-          width="fit"
-          onClick="$store.scheduling.loadSession($store.scheduling.lastSession)"
-        />
+        <button
+          class="mt-3 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition-colors"
+          @click="$store.scheduling.loadSession($store.scheduling.lastSession)"
+        >
+          Load Session
+        </button>
       </div>
 
       <!-- HISTORY TAB -->
@@ -236,13 +235,12 @@ import Image from "astro/components/Image.astro";
                     </li>
                   </template>
                 </ul>
-                <Button
-                  class="mt-2"
-                  type="button"
-                  label="Load Session"
-                  width="fit"
-                  onClick="$store.scheduling.loadSession(sess)"
-                />
+                <button
+                  class="mt-2 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition-colors"
+                  @click="$store.scheduling.loadSession(sess)"
+                >
+                  Load Session
+                </button>
               </div>
             </li>
           </template>
