@@ -78,5 +78,21 @@ export default function schedulingStore(Alpine) {
       this.sessionName = "";
       this.sessionActivities = [];
     },
+
+    moveActivityUp(index) {
+      if (index > 0) {
+        const activity = this.sessionActivities[index];
+        this.sessionActivities.splice(index, 1);
+        this.sessionActivities.splice(index - 1, 0, activity);
+      }
+    },
+
+    moveActivityDown(index) {
+      if (index < this.sessionActivities.length - 1) {
+        const activity = this.sessionActivities[index];
+        this.sessionActivities.splice(index, 1);
+        this.sessionActivities.splice(index + 1, 0, activity);
+      }
+    },
   });
 }
