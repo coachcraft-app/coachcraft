@@ -12,19 +12,20 @@ export default function schedulingStore(Alpine) {
       {
         id: "s1",
         name: "Week 1 Warmup",
-        date: "2024-03-20",
-        notes: "Focus on warmup exercises",
+        date: "20-05-2025",
+        notes: "Focus on warmup exercises ",
         activities: ["1", "4", "2"],
       },
       {
         id: "s2",
         name: "Practice session",
-        date: "2024-03-21",
+        date: "15-04-2025",
         notes: "Regular practice",
         activities: ["5", "3", "7"],
       },
     ],
     selectedTab: "lists", // which tab is currently shown
+    expandedSessions: {}, // shows which history sessions are expanded
 
     // ----------------getters-------------
 
@@ -71,6 +72,11 @@ export default function schedulingStore(Alpine) {
       this.selectedTab = tab;
     },
 
+    // Toggle session details in history
+    toggleSessionDetails(sessionId) {
+      this.expandedSessions[sessionId] = !this.expandedSessions[sessionId];
+    },
+
     // shows activities in the session
     loadSession(session) {
       this.sessionActivities = session.activities
@@ -79,14 +85,17 @@ export default function schedulingStore(Alpine) {
     },
 
     // Save current session to history
-    saveSession() {
-      if (!this.sessionName || !this.sessionActivities.length) return;
+    saveSession(event) {
+      event.preventDefault();
+      const formData = Object.fromEntries(new FormData(event.target));
+
+      if (!formData.sessionName || !this.sessionActivities.length) return;
 
       const newSession = {
-        id: `s${Date.now()}`,
-        name: this.sessionName,
-        date: this.sessionDate,
-        notes: this.sessionNotes,
+        id: `s${this.previousSessions.length + 1}`,
+        name: formData.sessionName,
+        date: formData.sessionDate,
+        notes: formData.sessionNotes,
         activities: this.sessionActivities.map((a) => a.id),
       };
 

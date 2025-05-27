@@ -18,81 +18,86 @@ import Image from "astro/components/Image.astro";
     >
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl">Current Schedule</h2>
-        <Button
-          type="button"
-          label="Save Session"
-          width="fit"
-          onClick="$store.scheduling.saveSession()"
-        />
       </div>
 
-      <div class="flex flex-col gap-4">
-        <TextInput
-          name="sessionName"
-          label="Schedule Name"
-          required
-          placeholder="Schedule Name"
-          value="$store.scheduling.sessionName"
-        />
-        <TextInput
-          name="sessionDate"
-          label="Date"
-          required
-          type="date"
-          placeholder="DD/MM/YYYY"
-          value="$store.scheduling.sessionDate"
-        />
-        <TextArea
-          name="sessionNotes"
-          label="Notes"
-          placeholder="Add any notes or additional information about this schedule"
-          rows="4"
-          value="$store.scheduling.sessionNotes"
-        />
-      </div>
+      <form
+        @submit.prevent="$store.scheduling.saveSession(event)"
+        class="flex flex-col gap-4"
+      >
+        <div class="flex flex-col gap-4">
+          <TextInput
+            name="sessionName"
+            label="Schedule Name"
+            required
+            placeholder="Schedule Name"
+            value="$store.scheduling.sessionName"
+          />
+          <TextInput
+            name="sessionDate"
+            label="Date"
+            required
+            type="date"
+            placeholder="DD-MM-YYYY"
+            value="$store.scheduling.sessionDate"
+          />
+          <TextArea
+            name="sessionNotes"
+            label="Notes"
+            placeholder="Add any notes or additional information about this schedule"
+            rows="4"
+            value="$store.scheduling.sessionNotes"
+          />
+        </div>
 
-      <template x-if="!$store.scheduling.sessionActivities.length">
-        <p class="text-gray-400">
-          Drag activities here to assemble your session.
-        </p>
-      </template>
-
-      <ul class="space-y-2">
-        <template
-          x-for="(act, idx) in $store.scheduling.sessionActivities"
-          :key="act.id"
-        >
-          <li class="flex justify-between items-center p-2 bg-gray-700 rounded">
-            <div class="flex items-center gap-2">
-              <div class="flex flex-col">
-                <button
-                  class="text-gray-400 hover:text-white"
-                  @click="$store.scheduling.moveActivityUp(idx)"
-                  :disabled="idx === 0"
-                  aria-label="Move activity up">&uarr;</button
-                >
-                <button
-                  class="text-gray-400 hover:text-white"
-                  @click="$store.scheduling.moveActivityDown(idx)"
-                  :disabled="idx === $store.scheduling.sessionActivities.length - 1"
-                  aria-label="Move activity down">&darr;</button
-                >
-              </div>
-              <div class="flex flex-col">
-                <span x-text="act.name" class="font-medium"></span>
-                <span x-text="act.duration" class="text-sm text-gray-400"
-                ></span>
-              </div>
-            </div>
-            <Button
-              type="button"
-              label="Remove"
-              width="fit"
-              onClick="$store.scheduling.removeFromSession(idx)"
-            />
-          </li>
+        <template x-if="!$store.scheduling.sessionActivities.length">
+          <p class="text-gray-400">
+            Drag activities here to assemble your session.
+          </p>
         </template>
-      </ul>
+
+        <ul class="space-y-2">
+          <template
+            x-for="(act, idx) in $store.scheduling.sessionActivities"
+            :key="act.id"
+          >
+            <li
+              class="flex justify-between items-center p-2 bg-gray-700 rounded"
+            >
+              <div class="flex items-center gap-2">
+                <div class="flex flex-col">
+                  <button
+                    type="button"
+                    class="text-gray-400 hover:text-white"
+                    @click="$store.scheduling.moveActivityUp(idx)"
+                    :disabled="idx === 0"
+                    aria-label="Move activity up">&uarr;</button
+                  >
+                  <button
+                    type="button"
+                    class="text-gray-400 hover:text-white"
+                    @click="$store.scheduling.moveActivityDown(idx)"
+                    :disabled="idx === $store.scheduling.sessionActivities.length - 1"
+                    aria-label="Move activity down">&darr;</button
+                  >
+                </div>
+                <div class="flex flex-col">
+                  <span x-text="act.name" class="font-medium"></span>
+                  <span x-text="act.duration" class="text-sm text-gray-400"
+                  ></span>
+                </div>
+              </div>
+              <Button
+                type="button"
+                label="Remove"
+                width="fit"
+                onClick="$store.scheduling.removeFromSession(idx)"
+              />
+            </li>
+          </template>
+        </ul>
+
+        <Button type="submit" label="Save Session" width="fit" />
+      </form>
     </div>
 
     <!-- Right pane: Tabs -->
@@ -152,16 +157,17 @@ import Image from "astro/components/Image.astro";
             :key="id"
           >
             <li
-              class="p-2 bg-gray-800 rounded cursor-pointer hover:bg-gray-700 transition-colors"
-              @click="$store.scheduling.addToSession($store.scheduling.activitiesList.find(a => a.id===id))"
+              class="p-2 bg-gray-800 rounded cursor-grab hover:bg-gray-700 transition-colors"
+              draggable="true"
+              @dragstart="$store.scheduling.handleDragStart($event, $store.scheduling.activitiesList.find(a => a.id === id))"
             >
               <div class="flex justify-between items-center">
                 <span
-                  x-text="$store.scheduling.activitiesList.find(a => a.id===id).name"
+                  x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
                 ></span>
                 <span
                   class="text-sm text-gray-400"
-                  x-text="$store.scheduling.activitiesList.find(a => a.id===id).duration"
+                  x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
                 ></span>
               </div>
             </li>
@@ -184,15 +190,44 @@ import Image from "astro/components/Image.astro";
             :key="sess.id"
           >
             <li
-              class="flex justify-between items-center p-2 bg-gray-800 rounded hover:bg-gray-700 transition-colors"
+              class="flex flex-col p-2 bg-gray-800 rounded hover:bg-gray-700 transition-colors cursor-pointer"
+              @click="$store.scheduling.toggleSessionDetails(sess.id)"
             >
-              <span x-text="sess.name"></span>
-              <Button
-                type="button"
-                label="Load"
-                width="fit"
-                onClick="$store.scheduling.loadSession(sess)"
-              />
+              <div class="flex justify-between items-center">
+                <div>
+                  <span x-text="sess.name" class="font-medium"></span>
+                  <span x-text="sess.date" class="text-sm text-gray-400 ml-2"
+                  ></span>
+                </div>
+              </div>
+
+              <!-- Expanded Details -->
+              <div
+                x-show="$store.scheduling.expandedSessions[sess.id]"
+                x-transition
+                class="mt-2 pt-2 border-t border-gray-600"
+              >
+                <p x-text="sess.notes" class="text-sm text-gray-400 mb-2"></p>
+                <ul class="space-y-1">
+                  <template x-for="id in sess.activities" :key="id">
+                    <li class="text-sm">
+                      <span
+                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
+                      ></span>
+                      <span
+                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
+                        class="text-gray-400 ml-2"></span>
+                    </li>
+                  </template>
+                </ul>
+                <Button
+                  class="mt-2"
+                  type="button"
+                  label="Load Session"
+                  width="fit"
+                  onClick="$store.scheduling.loadSession(sess)"
+                />
+              </div>
             </li>
           </template>
         </ul>
