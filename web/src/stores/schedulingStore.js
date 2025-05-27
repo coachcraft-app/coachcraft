@@ -2,13 +2,27 @@ export default function schedulingStore(Alpine) {
   Alpine.store("scheduling", {
     // state
     sessionName: "", //name of the schedule
+    sessionDate: "", //date of the schedule
+    sessionNotes: "", //notes for the schedule
     sessionActivities: [], //array of activities dropped in
     listsList: Alpine.store("pages").activities.listsList,
     activitiesList: Alpine.store("pages").activities.activitiesList,
     previousSessions: [
       // EXAMPLE PREVIOUS sessions for Last/History tabs. just to show functionality
-      { id: "s1", name: "Week 1 Warmup", activities: ["1", "4", "2"] },
-      { id: "s2", name: "Practice session", activities: ["5", "3", "7"] },
+      {
+        id: "s1",
+        name: "Week 1 Warmup",
+        date: "2024-03-20",
+        notes: "Focus on warmup exercises",
+        activities: ["1", "4", "2"],
+      },
+      {
+        id: "s2",
+        name: "Practice session",
+        date: "2024-03-21",
+        notes: "Regular practice",
+        activities: ["5", "3", "7"],
+      },
     ],
     selectedTab: "lists", // which tab is currently shown
 
@@ -71,11 +85,15 @@ export default function schedulingStore(Alpine) {
       const newSession = {
         id: `s${Date.now()}`,
         name: this.sessionName,
+        date: this.sessionDate,
+        notes: this.sessionNotes,
         activities: this.sessionActivities.map((a) => a.id),
       };
 
       this.previousSessions.unshift(newSession);
       this.sessionName = "";
+      this.sessionDate = "";
+      this.sessionNotes = "";
       this.sessionActivities = [];
     },
 

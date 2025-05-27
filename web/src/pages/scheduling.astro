@@ -26,11 +26,30 @@ import Image from "astro/components/Image.astro";
         />
       </div>
 
-      <input
-        x-model="$store.scheduling.sessionName"
-        placeholder="Schedule Name"
-        class="w-full mb-4 px-2 py-1 bg-gray-800 rounded"
-      />
+      <div class="flex flex-col gap-4">
+        <TextInput
+          name="sessionName"
+          label="Schedule Name"
+          required
+          placeholder="Schedule Name"
+          value="$store.scheduling.sessionName"
+        />
+        <TextInput
+          name="sessionDate"
+          label="Date"
+          required
+          type="date"
+          placeholder="DD/MM/YYYY"
+          value="$store.scheduling.sessionDate"
+        />
+        <TextArea
+          name="sessionNotes"
+          label="Notes"
+          placeholder="Add any notes or additional information about this schedule"
+          rows="4"
+          value="$store.scheduling.sessionNotes"
+        />
+      </div>
 
       <template x-if="!$store.scheduling.sessionActivities.length">
         <p class="text-gray-400">
