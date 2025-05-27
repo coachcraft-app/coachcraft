@@ -186,7 +186,7 @@ import Image from "astro/components/Image.astro";
         <Button
           class="mt-3"
           type="button"
-          label="Load Entire Session"
+          label="Load Session"
           width="fit"
           onClick="$store.scheduling.loadSession($store.scheduling.lastSession)"
         />
@@ -220,13 +220,19 @@ import Image from "astro/components/Image.astro";
                 <p x-text="sess.notes" class="text-sm text-gray-400 mb-2"></p>
                 <ul class="space-y-1">
                   <template x-for="id in sess.activities" :key="id">
-                    <li class="text-sm">
-                      <span
-                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
-                      ></span>
-                      <span
-                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
-                        class="text-gray-400 ml-2"></span>
+                    <li
+                      class="p-2 bg-gray-700 rounded cursor-grab hover:bg-gray-600 transition-colors"
+                      draggable="true"
+                      @dragstart="$store.scheduling.handleDragStart($event, $store.scheduling.activitiesList.find(a => a.id === id))"
+                    >
+                      <div class="flex justify-between items-center">
+                        <span
+                          x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
+                        ></span>
+                        <span
+                          x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
+                          class="text-sm text-gray-400"></span>
+                      </div>
                     </li>
                   </template>
                 </ul>
