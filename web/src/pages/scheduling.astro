@@ -148,9 +148,19 @@ import Image from "astro/components/Image.astro";
 
       <!-- LAST SESSION TAB -->
       <div x-show="$store.scheduling.selectedTab==='last'" class="mt-4">
-        <h3 class="mb-2">
-          "<span x-text="$store.scheduling.lastSession.name"></span>"
-        </h3>
+        <div class="mb-4">
+          <h3 class="text-lg font-medium">
+            <span x-text="$store.scheduling.lastSession.name"></span>
+          </h3>
+          <div class="text-sm text-gray-400 mt-1">
+            <span x-text="$store.scheduling.lastSession.date"></span>
+          </div>
+          <p
+            class="text-sm text-gray-400 mt-2"
+            x-text="$store.scheduling.lastSession.notes"
+          >
+          </p>
+        </div>
         <ul class="space-y-2">
           <template
             x-for="id in $store.scheduling.lastSession.activities"
