@@ -1,0 +1,141 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Button from "../components/Button.astro";
+---
+
+<MainLayout title="Sessions">
+  <div class="flex h-full" x-data="{ activeTab: 'upcoming' }">
+    <div class="w-full p-4">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl">Sessions</h2>
+        <div class="flex border-b border-gray-600">
+          <button
+            class="px-4 py-2"
+            :class="{'border-b-2 border-white': activeTab === 'upcoming'}"
+            @click="activeTab = 'upcoming'">Upcoming</button
+          >
+          <button
+            class="px-4 py-2"
+            :class="{'border-b-2 border-white': activeTab === 'previous'}"
+            @click="activeTab = 'previous'">Previous</button
+          >
+        </div>
+      </div>
+
+      <!-- Upcoming Sessions -->
+      <div x-show="activeTab === 'upcoming'">
+        <ul class="space-y-2">
+          <template
+            x-for="sess in $store.scheduling.upcomingSessions"
+            :key="sess.id"
+          >
+            <li
+              class="flex flex-col p-2 bg-gray-800 rounded hover:bg-gray-700 transition-colors"
+            >
+              <div class="flex justify-between items-center">
+                <div>
+                  <span x-text="sess.name" class="font-medium"></span>
+                  <span x-text="sess.date" class="text-sm text-gray-400 ml-2"
+                  ></span>
+                </div>
+                <div class="flex gap-2">
+                  <button
+                    type="button"
+                    class="whitespace-nowrap bg-transparent rounded-radius block border border-primary w-fit pl-4 pr-4 py-1.5 text-sm font-medium cursor-pointer select-none text-primary text-left tracking-wide transition hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:opacity-100 active:outline-offset-0 disabled:opacity-75 disabled:cursor-not-allowed dark:border-low-contrast-grey dark:focus-visible:outline-primary-dark rounded-lg"
+                    @click="$store.sessions.completeSession(sess.id)"
+                  >
+                    Mark as Complete
+                  </button>
+                </div>
+              </div>
+
+              <div class="mt-2 pt-2 border-t border-gray-600">
+                <div class="mb-2">
+                  <label class="block text-sm text-gray-400 mb-1">Notes:</label>
+                  <textarea
+                    class="w-full p-2 bg-gray-700 rounded text-sm text-white"
+                    rows="3"
+                    x-text="sess.notes"
+                    @input="$store.sessions.updateNotes(sess.id, $event.target.value)"
+                  ></textarea>
+                </div>
+                <p class="text-sm text-gray-400 mb-2">
+                  Team: <span
+                    x-text="sess.team ? $store.pages.teams.teamsList.find(t => t.id === sess.team)?.name : '---'"
+                  ></span>
+                </p>
+                <ul class="space-y-1">
+                  <template x-for="id in sess.activities" :key="id">
+                    <li class="p-2 bg-gray-700 rounded">
+                      <div class="flex justify-between items-center">
+                        <span
+                          x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
+                        ></span>
+                        <span
+                          x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
+                          class="text-sm text-gray-400"></span>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </li>
+          </template>
+        </ul>
+      </div>
+
+      <!-- Previous Sessions -->
+      <div x-show="activeTab === 'previous'">
+        <ul class="space-y-2">
+          <template
+            x-for="sess in $store.scheduling.previousSessions"
+            :key="sess.id"
+          >
+            <li
+              class="flex flex-col p-2 bg-gray-800 rounded hover:bg-gray-700 transition-colors"
+            >
+              <div class="flex justify-between items-center">
+                <div>
+                  <span x-text="sess.name" class="font-medium"></span>
+                  <span x-text="sess.date" class="text-sm text-gray-400 ml-2"
+                  ></span>
+                </div>
+              </div>
+
+              <div class="mt-2 pt-2 border-t border-gray-600">
+                <div class="mb-2">
+                  <label class="block text-sm text-gray-400 mb-1">Notes:</label>
+                  <textarea
+                    class="w-full p-2 bg-gray-700 rounded text-sm text-white"
+                    rows="3"
+                    x-text="sess.notes"
+                    @input="$store.sessions.updateNotes(sess.id, $event.target.value)"
+                  ></textarea>
+                </div>
+                <p class="text-sm text-gray-400 mb-2">
+                  Team: <span
+                    x-text="sess.team ? $store.pages.teams.teamsList.find(t => t.id === sess.team)?.name : '---'"
+                  ></span>
+                </p>
+                <ul class="space-y-1">
+                  <template x-for="id in sess.activities" :key="id">
+                    <li class="p-2 bg-gray-700 rounded">
+                      <div class="flex justify-between items-center">
+                        <span
+                          x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
+                        ></span>
+                        <span
+                          x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
+                          class="text-sm text-gray-400"></span>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </div>
+  </div>
+</MainLayout>
