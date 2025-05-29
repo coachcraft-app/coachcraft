@@ -1,5 +1,5 @@
 ---
-var { label, placeholder, name, value, ...rest } = Astro.props;
+var { label, placeholder, name, value, type = "text", ...rest } = Astro.props;
 ---
 
 <div
@@ -13,7 +13,7 @@ var { label, placeholder, name, value, ...rest } = Astro.props;
   <label class="w-fit pl-0.5 text-sm text-gray-400">{label}</label>
   <input
     id="textInputDefault"
-    type="text"
+    type={type}
     class="w-full
         rounded-radius
         rounded-lg
