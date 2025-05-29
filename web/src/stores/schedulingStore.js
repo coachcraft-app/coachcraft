@@ -5,21 +5,23 @@ export default function schedulingStore(Alpine) {
     sessionDate: "", //date of the schedule
     sessionNotes: "", //notes for the schedule
     sessionActivities: [], //array of activities dropped in
+    selectedTeam: null, //id of selected team
     listsList: Alpine.store("pages").activities.listsList,
     activitiesList: Alpine.store("pages").activities.activitiesList,
+    upcomingSessions: [], // sessions that haven't been completed yet
     previousSessions: [
       // EXAMPLE PREVIOUS sessions for Last/History tabs. just to show functionality
       {
         id: "s1",
         name: "Week 1 Warmup",
-        date: "20-05-2025",
+        date: "2025-05-20",
         notes: "Focus on warmup exercises ",
         activities: ["1", "4", "2"],
       },
       {
         id: "s2",
         name: "Practice session",
-        date: "15-04-2025",
+        date: "2025-04-15",
         notes: "Regular practice",
         activities: ["5", "3", "7"],
       },
@@ -81,6 +83,12 @@ export default function schedulingStore(Alpine) {
     loadSession(session) {
       if (!session || !session.activities) return;
 
+      this.sessionName = session.name;
+      this.sessionDate = session.date;
+      this.sessionNotes = session.notes;
+      this.selectedTeam = session.team;
+      this.sessionActivities = [];
+
       session.activities.forEach((id) => {
         const activity = this.activitiesList.find((a) => a.id === id);
         if (activity) {
@@ -97,18 +105,25 @@ export default function schedulingStore(Alpine) {
       if (!formData.sessionName || !this.sessionActivities.length) return;
 
       const newSession = {
-        id: `s${this.previousSessions.length + 1}`,
+        id: `s${this.upcomingSessions.length + this.previousSessions.length + 1}`,
         name: formData.sessionName,
         date: formData.sessionDate,
         notes: formData.sessionNotes,
         activities: this.sessionActivities.map((a) => a.id),
+        team: this.selectedTeam,
       };
 
-      this.previousSessions.unshift(newSession);
+      this.upcomingSessions.unshift(newSession);
+
+      // Reset form fields
       this.sessionName = "";
       this.sessionDate = "";
       this.sessionNotes = "";
       this.sessionActivities = [];
+      this.selectedTeam = null;
+
+      // Reset the form element
+      event.target.reset();
     },
 
     moveActivityUp(index) {
