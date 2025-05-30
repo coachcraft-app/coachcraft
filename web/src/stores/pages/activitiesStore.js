@@ -171,12 +171,20 @@ export default function activitiesStore(Alpine) {
       return listAccentColors;
     },
     get manageListsSelectedListObj() {
-      console.log(
-        this.listsList.find((list) => list.id == this.manageListsSelectedList),
-      );
       return this.listsList.find(
         (list) => list.id == this.manageListsSelectedList,
       );
+    },
+    get containingListsNames() {
+      // get all lists that this.selectedActivity belongs to
+
+      var containingLists = [];
+      this.listsList.forEach((list) => {
+        if (list.activities.includes(this.selectedActivity)) {
+          containingLists.push(list.name);
+        }
+      });
+      return containingLists;
     },
 
     onListSwitch(listToSelect) {
@@ -195,6 +203,23 @@ export default function activitiesStore(Alpine) {
         this.selectedActivity = id;
         this.rightPanelState = "edit_activity";
       }
+    },
+    onContainingListsUpdate(containingList) {
+      // update the lists to which this.selectedActivity belongs
+
+      this.listsList.forEach((list) => {
+        if (containingList.includes(list.name)) {
+          if (!list.activities.includes(this.selectedActivity)) {
+            list.activities.push(this.selectedActivity);
+          }
+        } else {
+          // to account for any instances of
+          // this.selectedActivity being detached from any lists
+          list.activities = list.activities.filter(
+            (activityId) => activityId != this.selectedActivity,
+          );
+        }
+      });
     },
     onSaveChanges(event) {
       event.preventDefault();
