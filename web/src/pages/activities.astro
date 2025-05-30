@@ -31,8 +31,9 @@ import Image from "astro/components/Image.astro";
         />
 
         <DropDown
-          items="$store.pages.activities.listsNames"
-          onItemSwitch="$store.pages.activities.onListSwitch(listToSelect)"
+          options="$store.pages.activities.listsNamesWithDefault"
+          defaultOption="All Activities"
+          onOptionSwitch="$store.pages.activities.onListSwitch(listToSelect)"
         />
       </div>
 
@@ -89,8 +90,9 @@ import Image from "astro/components/Image.astro";
       >
         <div class="flex gap-5">
           <DropDown
-            items="$store.pages.activities.listsNames"
-            onItemSwitch="$store.pages.activities.onManageListsListSwitch(listToSelect)"
+            options="$store.pages.activities.listsNames"
+            defaultOption="Select List"
+            onOptionSwitch="$store.pages.activities.onManageListsListSwitch(listToSelect)"
           />
           <Button
             type="button"
@@ -118,8 +120,9 @@ import Image from "astro/components/Image.astro";
                   >Accent Color</label
                 >
                 <DropDown
-                  items="$store.pages.activities.listAccentColorNames"
-                  onItemSwitch="$store.pages.activities.onListsAccentColorPreviewSwitch"
+                  options="$store.pages.activities.listAccentColorNames"
+                  defaultOption="Colors"
+                  onOptionSwitch="$store.pages.activities.onListsAccentColorPreviewSwitch"
                 />
               </div>
             </div>

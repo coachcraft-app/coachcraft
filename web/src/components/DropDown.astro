@@ -1,10 +1,10 @@
 ---
 import reactify from "../utils/reactify";
-var { items, onItemSwitch } = Astro.props;
+var { options, onOptionSwitch, defaultOption, label } = Astro.props;
 
 const x_data = `{
-  ${reactify(items, "items")},
-  ${reactify(onItemSwitch, "onItemSwitch")},
+  ${reactify(options, "options")},
+  ${reactify(onOptionSwitch, "onOptionSwitch")},
   label: "",
   isOpen: false, 
   openedWithKeyboard: false
@@ -13,10 +13,18 @@ const x_data = `{
 
 <div
   x-data={x_data}
-  x-init="label = items[0]"
+  x-init=`label = "${defaultOption}"`
   class="relative w-full"
   x-on:keydown.esc.window="isOpen = false, openedWithKeyboard = false"
 >
+  {
+    !label ? (
+      <label class="w-fit pl-0.5 text-sm text-gray-400">{label}</label>
+    ) : (
+      <div class="h-5" />
+    )
+  }
+
   <!-- Toggle Button -->
   <button
     type="button"
@@ -82,7 +90,6 @@ const x_data = `{
     x-on:keydown.down.prevent="$focus.wrap().next()"
     x-on:keydown.up.prevent="$focus.wrap().previous()"
     class="absolute
-            top-10.5
             flex w-full flex-col
             overflow-hidden rounded-radius
             border border-outline
@@ -90,32 +97,20 @@ const x_data = `{
             py-1
             dark:border-low-contrast-grey
             dark:bg-surface-dark-alt
-            rounded-lg
-            z-10"
+            rounded-lg"
     role="menu"
   >
-    <template x-for="item in items">
+    <template x-for="option in options">
       <div
         class="bg-surface-alt
               px-4 py-2
               text-sm
-              text-on-surface
               select-none
-              cursor-pointer
-              hover:bg-surface-dark-alt/5
-              hover:text-on-surface-strong
-              focus-visible:bg-surface-dark-alt/10
-              focus-visible:text-on-surface-strong
-              focus-visible:outline-hidden
-              dark:bg-surface-dark-alt
-              dark:text-on-surface-dark
-              dark:hover:bg-surface-alt/5
-              dark:hover:text-on-surface-dark-strong
-              dark:focus-visible:bg-surface-alt/10
-              dark:focus-visible:text-on-surface-dark-strong"
+              hover:opacity-75
+              cursor-pointer"
         role="menuitem"
-        x-text="item"
-        @click="onItemSwitch(item); label=item; isOpen = false; openedWithKeyboard = false"
+        x-text="option"
+        @click="onOptionSwitch(option); label=option; isOpen = false; openedWithKeyboard = false"
         tabindex="0"
       >
       </div>

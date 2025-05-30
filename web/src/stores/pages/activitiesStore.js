@@ -155,6 +155,12 @@ export default function activitiesStore(Alpine) {
       // grab array of strings of list names
       var listsNames = [];
       this.listsList.forEach((list) => listsNames.push(list.name));
+      listsNames.shift();
+      return listsNames;
+    },
+    get listsNamesWithDefault() {
+      var listsNames = [];
+      this.listsList.forEach((list) => listsNames.push(list.name));
       return listsNames;
     },
     get listAccentColorNames() {
