@@ -1,0 +1,91 @@
+' C3 - Component - of C4 model
+' Models the expressjs backend which hosts the single page application and REST API
+!define GITHUB_PLANTUML_URL
+@startuml Express backend
+' C4 Model components
+' https://github.com/plantuml-stdlib/C4-PlantUML
+!include <C4/C4_Component>
+' Icons
+' https://github.com/tupadr3/plantuml-icon-font-sprites/tree/main
+!define ICONURL https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v3.0.0/icons
+!include ICONURL/common.puml
+
+!define DEVICONS2 ICONURL/devicons2
+!include DEVICONS2/framework7_original.puml
+!include DEVICONS2/express_original.puml
+!include DEVICONS2/alpinejs_original.puml
+' !include DEVICONS2/oauth.puml
+
+
+!define FONT_AWESOME ICONURL/font-awesome-6
+' !include FONT_AWESOME/user_gear.puml
+' !include FONT_AWESOME/user.puml
+
+Container(spa, "Single-Page Application", "alpinejs, astro",\
+    "Features all the coach session planning functionality via a browser",\
+    $sprite="alpinejs_original")
+Container(framework, "Mobile App", "Framework7, Capacitor",\
+        "A framework7 application wrapped into a native iOS and Android phone app",\
+        $sprite="framework7_original")
+
+' Component(server, "Server Application", "Component: Expressjs server app instance",\
+'     "Hosts all of the routes of the server (api, pages, auth, etc.)")
+
+Container_Boundary(backend, "Express Backend") {
+Component(middleware, "Middleware", "Component: Expressjs middleware",\
+    "Functionality that runs before a route is handled, such as auth, errors and 404 handling.")
+
+Component(aValidators, "Activity Validators", "Component: Express-validator validator and sanitiser middleware",\
+    "Validates and sanitises Activity REST API request data before being handled")
+Component(lValidators, "Lists Validators", "Component: Express-validator validator and sanitiser middleware",\
+    "Validates and sanitises Lists REST API request data before being handled")
+Component(sValidators, "Sessions Validators", "Component: Express-validator validator and sanitiser middleware",\
+    "Validates and sanitises Sessions REST API request data before being handled")
+Component(uValidators, "User Validators", "Component: Express-validator validator and sanitiser middleware",\
+    "Validates and sanitises User REST API request data before being handled")
+
+
+Component(aHandlers, "Activity Handlers", "Component: Callbacks for activities REST API route",\
+    "Handles REST API request for activities")
+Component(lHandlers, "Lists Handlers", "Component: Callbacks for lists REST API route",\
+    "Handles REST API request for lists")
+Component(sHandlers, "Sessions Handlers", "Component: Callbacks for activities REST API route",\
+    "Handles REST API request for sessions")
+Component(uHandlers, "User Handlers", "Component: Callbacks for user REST API route",\
+    "Handles REST API request for users")
+ComponentDb(database, "Database Controller", "Component: SQLite/Drizzle ORM/better-sqlite3",\
+    "Stores users, sessions, teams, activities and templates")
+}
+
+Rel_Up(spa, aHandlers, "Makes API calls to", "JSON/HTTP")
+Rel_Up(spa, lHandlers, "Makes API calls to", "JSON/HTTP")
+Rel_Up(spa, sHandlers, "Makes API calls to", "JSON/HTTP")
+Rel_Up(spa, uHandlers, "Makes API calls to", "JSON/HTTP")
+
+Rel_Up(framework, aHandlers, "Makes API calls to", "JSON/HTTP")
+Rel_Up(framework, lHandlers, "Makes API calls to", "JSON/HTTP")
+Rel_Up(framework, sHandlers, "Makes API calls to", "JSON/HTTP")
+Rel_Up(framework, uHandlers, "Makes API calls to", "JSON/HTTP")
+
+Rel_L(aHandlers, middleware, "Uses")
+Rel_L(lHandlers, middleware, "Uses")
+Rel_L(sHandlers, middleware, "Uses")
+Rel_L(uHandlers, middleware, "Uses")
+
+Rel_R(aHandlers, database, "Uses")
+Rel_R(lHandlers, database, "Uses")
+Rel_R(sHandlers, database, "Uses")
+Rel_R(uHandlers, database, "Uses")
+
+Rel_Up(aHandlers, aValidators, "Uses")
+Rel_Up(lHandlers, lValidators, "Uses")
+Rel_Up(sHandlers, sValidators, "Uses")
+Rel_Up(uHandlers, uValidators, "Uses")
+
+' Rel_Up(server, aHandlers, "Uses")
+' Rel_Up(server, lHandlers, "Uses")
+' Rel_Up(server, sHandlers, "Uses")
+' Rel_Up(server, uHandlers, "Uses")
+
+SHOW_LEGEND()
+@enduml
