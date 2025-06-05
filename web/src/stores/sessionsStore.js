@@ -36,9 +36,10 @@ export default function sessionsStore(Alpine) {
     },
 
     toggleAttendance(sessionId, player) {
+      const schedulingStore = Alpine.store("scheduling");
       let session =
-        this.upcomingSessions.find((s) => s.id === sessionId) ||
-        this.previousSessions.find((s) => s.id === sessionId);
+        schedulingStore.upcomingSessions.find((s) => s.id === sessionId) ||
+        schedulingStore.previousSessions.find((s) => s.id === sessionId);
       if (!session) return;
       if (!session.attendance) session.attendance = {};
       session.attendance[player] = !session.attendance[player];
