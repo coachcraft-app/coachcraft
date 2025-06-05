@@ -34,5 +34,14 @@ export default function sessionsStore(Alpine) {
         schedulingStore.previousSessions[previousIndex].notes = newNotes;
       }
     },
+
+    toggleAttendance(sessionId, player) {
+      let session =
+        this.upcomingSessions.find((s) => s.id === sessionId) ||
+        this.previousSessions.find((s) => s.id === sessionId);
+      if (!session) return;
+      if (!session.attendance) session.attendance = {};
+      session.attendance[player] = !session.attendance[player];
+    },
   });
 }

@@ -67,6 +67,32 @@ import Button from "../components/Button.astro";
                     x-text="sess.team ? $store.pages.teams.teamsList.find(t => t.id === sess.team)?.name : '---'"
                   ></span>
                 </p>
+                <template x-if="sess.team">
+                  <div class="mb-2 p-3 bg-gray-900/60 rounded-lg">
+                    <p class="text-sm text-gray-300 mb-2 font-medium">
+                      Players & Attendance:
+                    </p>
+                    <ul class="space-y-1">
+                      <template
+                        x-for="player in ($store.pages.teams.teamsList.find(t => t.id === sess.team)?.players || [])"
+                        :key="player"
+                      >
+                        <li
+                          class="flex items-center gap-3 p-2 bg-gray-800 rounded"
+                        >
+                          <span class="flex-1 text-white" x-text="player"
+                          ></span>
+                          <input
+                            type="checkbox"
+                            class="accent-green-500 w-4 h-4"
+                            :checked="sess.attendance && sess.attendance[player]"
+                            @change="$store.sessions.toggleAttendance(sess.id, player)"
+                          />
+                        </li>
+                      </template>
+                    </ul>
+                  </div>
+                </template>
                 <ul class="space-y-1">
                   <template x-for="id in sess.activities" :key="id">
                     <li
@@ -130,6 +156,32 @@ import Button from "../components/Button.astro";
                     x-text="sess.team ? $store.pages.teams.teamsList.find(t => t.id === sess.team)?.name : '---'"
                   ></span>
                 </p>
+                <template x-if="sess.team">
+                  <div class="mb-2 p-3 bg-gray-900/60 rounded-lg">
+                    <p class="text-sm text-gray-300 mb-2 font-medium">
+                      Players & Attendance:
+                    </p>
+                    <ul class="space-y-1">
+                      <template
+                        x-for="player in ($store.pages.teams.teamsList.find(t => t.id === sess.team)?.players || [])"
+                        :key="player"
+                      >
+                        <li
+                          class="flex items-center gap-3 p-2 bg-gray-800 rounded"
+                        >
+                          <span class="flex-1 text-white" x-text="player"
+                          ></span>
+                          <input
+                            type="checkbox"
+                            class="accent-green-500 w-4 h-4"
+                            :checked="sess.attendance && sess.attendance[player]"
+                            @change="$store.sessions.toggleAttendance(sess.id, player)"
+                          />
+                        </li>
+                      </template>
+                    </ul>
+                  </div>
+                </template>
                 <ul class="space-y-1">
                   <template x-for="id in sess.activities" :key="id">
                     <li

@@ -111,6 +111,15 @@ export default function schedulingStore(Alpine) {
         notes: formData.sessionNotes,
         activities: this.sessionActivities.map((a) => a.id),
         team: this.selectedTeam,
+        attendance: (() => {
+          const team = Alpine.store("pages").teams.teamsList.find(
+            (t) => t.id === this.selectedTeam,
+          );
+          if (!team) return {};
+          const att = {};
+          team.players.forEach((p) => (att[p] = true));
+          return att;
+        })(),
       };
 
       this.upcomingSessions.unshift(newSession);
