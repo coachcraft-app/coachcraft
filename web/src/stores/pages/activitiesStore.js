@@ -3,13 +3,6 @@ export default function activitiesStore(Alpine) {
     // state
     listsList: [
       {
-        // Not dummy data, do not remove this default option
-        id: "default",
-        name: "All Activities",
-        activities: [],
-        accent_color: "Colors",
-      },
-      {
         id: "0",
         name: "Warm Up",
         activities: ["1", "2", "3", "4"],
@@ -98,10 +91,6 @@ export default function activitiesStore(Alpine) {
 
     listAccentColors: [
       {
-        name: "Colors",
-        hex: "",
-      },
-      {
         name: "Blueberry",
         hex: "",
       },
@@ -152,13 +141,6 @@ export default function activitiesStore(Alpine) {
       );
     },
     get listsNames() {
-      // grab array of strings of list names
-      var listsNames = [];
-      this.listsList.forEach((list) => listsNames.push(list.name));
-      listsNames.shift();
-      return listsNames;
-    },
-    get listsNamesWithDefault() {
       var listsNames = [];
       this.listsList.forEach((list) => listsNames.push(list.name));
       return listsNames;
@@ -188,9 +170,13 @@ export default function activitiesStore(Alpine) {
     },
 
     onListSwitch(listToSelect) {
-      this.selectedList = this.listsList.find(
-        (list) => list.name == listToSelect,
-      ).id;
+      if (listToSelect == "All Activities") {
+        this.selectedList = "default";
+      } else {
+        this.selectedList = this.listsList.find(
+          (list) => list.name == listToSelect,
+        ).id;
+      }
       this.selectedActivity = "";
       this.rightPanelState = "placeholder";
     },

@@ -32,7 +32,7 @@ import Image from "astro/components/Image.astro";
         />
 
         <DropDown
-          options="$store.pages.activities.listsNamesWithDefault"
+          options="$store.pages.activities.listsNames"
           defaultOption="All Activities"
           onOptionSwitch="$store.pages.activities.onListSwitch(listToSelect)"
         />
@@ -92,7 +92,8 @@ import Image from "astro/components/Image.astro";
         <div class="flex gap-5">
           <DropDown
             options="$store.pages.activities.listsNames"
-            defaultOption="Select List"
+            label="Select List"
+            placeHolder="Select List"
             onOptionSwitch="$store.pages.activities.onManageListsListSwitch(listToSelect)"
           />
           <Button
@@ -108,7 +109,7 @@ import Image from "astro/components/Image.astro";
             class="flex flex-col gap-5"
             @submit.prevent="$store.pages.activities.onManageListsSaveChanges(event)"
           >
-            <div class="flex items-end gap-5">
+            <div class="flex items-center gap-5">
               <TextInput
                 name="listName"
                 label="List Name"
@@ -116,16 +117,12 @@ import Image from "astro/components/Image.astro";
                 placeholder="List"
                 value="$store.pages.activities.manageListsSelectedListObj?.name || ''"
               />
-              <div class="flex flex-col gap-1">
-                <label class="w-fit pl-0.5 text-sm text-gray-400"
-                  >Accent Color</label
-                >
-                <DropDown
-                  options="$store.pages.activities.listAccentColorNames"
-                  defaultOption="Colors"
-                  onOptionSwitch="$store.pages.activities.onListsAccentColorPreviewSwitch"
-                />
-              </div>
+              <DropDown
+                options="$store.pages.activities.listAccentColorNames"
+                label="Accent Color"
+                placeHolder="Accent Color"
+                onOptionSwitch="$store.pages.activities.onManageListsAccentColorPreviewSwitch"
+              />
             </div>
 
             <div class="flex gap-5 mt-5">
