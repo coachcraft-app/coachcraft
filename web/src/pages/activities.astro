@@ -280,65 +280,69 @@ import Image from "astro/components/Image.astro";
           </div>
         </div>
 
-        <div>
-          <form
-            class="flex flex-col gap-5"
-            @submit.prevent="$store.pages.activities.onSaveChanges(event)"
+        <form
+          class="flex flex-col gap-5"
+          @submit.prevent="$store.pages.activities.onSaveChanges(event)"
+        >
+          <div
+            class="flex
+                    max-xl:flex-col
+                    max-xl:max-w-full
+                    gap-5"
           >
-            <div class="flex gap-10">
-              <div class="flex flex-col gap-5 grow max-w-1/2">
-                <TextInput
-                  name="activityName"
-                  label="Activity Name"
-                  required
-                  placeholder="Activity"
-                  value="$store.pages.activities.selectedActivityObj?.name || ''"
-                />
-                <TextInput
-                  name="duration"
-                  label="Duration"
-                  required
-                  placeholder="HH:MM"
-                  value="$store.pages.activities.selectedActivityObj?.duration || ''"
-                  x-mask="99:99"
-                />
-                <TextArea
-                  name="description"
-                  label="Description"
-                  placeholder="Brief description such as sets, laps, plan, etc."
-                  rows="10"
-                  value="$store.pages.activities.selectedActivityObj?.description || ''"
-                />
-              </div>
-              <div class="grow max-w-1/2">
-                <CheckboxDropDown
-                  label="Containing Lists"
-                  items="$store.pages.activities.listsNames"
-                  checkedItems="$store.pages.activities.containingListsNames"
-                  onUpdate="$store.pages.activities.onContainingListsUpdate(containingList)"
-                />
-              </div>
-            </div>
-
-            <div class="flex gap-5">
-              <Button type="submit" label="Save Changes" width="fit" />
-              <Button
-                type="button"
-                label="Reset Changes"
-                width="fit"
-                onClick="$store.pages.activities.onResetChanges()"
+            <!-- xl: left-half -->
+            <div class="flex flex-col gap-5 grow xl:max-w-1/2">
+              <TextInput
+                name="activityName"
+                label="Activity Name"
+                required
+                placeholder="Activity"
+                value="$store.pages.activities.selectedActivityObj?.name || ''"
               />
-              <Button
-                type="button"
-                label="Delete Activity"
-                width="fit"
-                onClick="$store.pages.activities.onDeleteActivity()"
+              <TextInput
+                name="duration"
+                label="Duration"
+                required
+                placeholder="HH:MM"
+                value="$store.pages.activities.selectedActivityObj?.duration || ''"
+                x-mask="99:99"
+              />
+              <TextArea
+                name="description"
+                label="Description"
+                placeholder="Brief description such as sets, laps, plan, etc."
+                rows="10"
+                value="$store.pages.activities.selectedActivityObj?.description || ''"
               />
             </div>
-          </form>
 
-          <div></div>
-        </div>
+            <!-- xl: right-half -->
+            <div class="grow xl:max-w-1/2">
+              <CheckboxDropDown
+                label="Containing Lists"
+                items="$store.pages.activities.listsNames"
+                checkedItems="$store.pages.activities.containingListsNames"
+                onUpdate="$store.pages.activities.onContainingListsUpdate(containingList)"
+              />
+            </div>
+          </div>
+
+          <div class="flex gap-5">
+            <Button type="submit" label="Save Changes" width="fit" />
+            <Button
+              type="button"
+              label="Reset Changes"
+              width="fit"
+              onClick="$store.pages.activities.onResetChanges()"
+            />
+            <Button
+              type="button"
+              label="Delete Activity"
+              width="fit"
+              onClick="$store.pages.activities.onDeleteActivity()"
+            />
+          </div>
+        </form>
       </div>
     </div>
   </div>
