@@ -150,5 +150,20 @@ export default function schedulingStore(Alpine) {
         this.sessionActivities.splice(index + 1, 0, activity);
       }
     },
+
+    // Delete a session by ID
+    deleteSession(sessionId) {
+      // Try to remove from upcomingSessions
+      let idx = this.upcomingSessions.findIndex((s) => s.id === sessionId);
+      if (idx !== -1) {
+        this.upcomingSessions.splice(idx, 1);
+        return;
+      }
+      // Try to remove from previousSessions
+      idx = this.previousSessions.findIndex((s) => s.id === sessionId);
+      if (idx !== -1) {
+        this.previousSessions.splice(idx, 1);
+      }
+    },
   });
 }
