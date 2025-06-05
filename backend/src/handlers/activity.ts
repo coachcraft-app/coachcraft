@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import {eq, max} from "drizzle-orm";
 import { Request, Response, NextFunction } from 'express';
 import { db } from "../db/db.ts";
 import {ActivityTemplateListTable, ActivityTemplatesTable} from "../db/schema.ts";
@@ -7,6 +7,11 @@ import {validationResult} from "express-validator";
 
 export async function getAllActivities(req: Request, res: Response, next: NextFunction) {
     try {
+        const lastModified = await db.select({value: max(ActivityTemplatesTable.lastModified)}).from(ActivityTemplatesTable);
+        if (lastModified[0].value) {
+            res.append("Last-Modified", lastModified[0].value.toUTCString());
+        }
+
         const activities = await db.select().from(ActivityTemplatesTable);
         res.status(200).json({ activities });
     } catch (error) {
@@ -25,6 +30,8 @@ export async function getActivity(req: Request, res: Response, next: NextFunctio
             .from(ActivityTemplatesTable)
             .where(eq(ActivityTemplatesTable.id, +req.params.id));
 
+        res.append("Last-Modified", activity[0].lastModified.toUTCString());
+
         res.status(200).json({ activity: activity[0] });
     } catch (error) {
         next(new StatusError("Failed to get activity", 500));
@@ -37,6 +44,7 @@ export async function postActivity(req: Request, res: Response, next: NextFuncti
         return next(new StatusError(JSON.stringify(result.array()), 400))
     }
     try {
+        req.body.lastModified = new Date();
         const activity = await db.insert(ActivityTemplatesTable).values(req.body).returning();
         await db.insert(ActivityTemplateListTable).values({activityTemplate: activity[0].id, list: 1});
         res.status(201).json({ activity });
@@ -52,6 +60,7 @@ export async function putActivity(req: Request, res: Response, next: NextFunctio
         return next(new StatusError(JSON.stringify(result.array()), 400))
     }
     try {
+        req.body.lastModified = new Date();
         const activity = await db
             .update(ActivityTemplatesTable)
             .set(req.body)

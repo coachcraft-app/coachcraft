@@ -4,7 +4,6 @@ import {ActivityTemplateListTable, ActivityTemplatesTable, ListTable} from "../d
 import {StatusError} from "../lib/status-error.js";
 import {validationResult} from "express-validator";
 import {eq} from "drizzle-orm";
-import activity from "../routes/activity.js";
 
 export async function getAllLists(req: Request, res: Response, next: NextFunction) {
     try {
@@ -59,13 +58,13 @@ export async function postList(req: Request, res: Response, next: NextFunction) 
     try {
         const list = await db
             .insert(ListTable)
-            .values({title: req.body.title})
+            .values({title: req.body.title, lastModified: new Date()})
             .returning();
 
 
         // Create a list of ActivityTemplateList rows to insert from list.id from above and activityTemplate from input
         const activityList: typeof ActivityTemplateListTable.$inferInsert[] = []
-        req.body.activities.forEach((v, i, arr) => {
+        req.body.activities.forEach((v: any, i: number) => {
             activityList[i] = {activityTemplate: v, list: list[0].id};
         });
 
@@ -93,18 +92,19 @@ export async function putList(req: Request, res: Response, next: NextFunction) {
     }
     try {
         let list : typeof ListTable.$inferSelect[];
-        if (req.body.title) {
+        // edit title or not
+        // if (req.body.title) {
             list = await db
                 .update(ListTable)
-                .set({title: req.body.title})
+                .set({title: req.body.title, lastModified: new Date()})
                 .where(eq(ListTable.id, +req.params.id))
                 .returning();
-        } else {
-            list = await db
-                .select()
-                .from(ListTable)
-                .where(eq(ListTable.id, +req.params.id));
-        }
+        // } else {
+        //     list = await db
+        //         .select()
+        //         .from(ListTable)
+        //         .where(eq(ListTable.id, +req.params.id));
+        // }
 
         if (req.body.activities) {
             // Remove all items from the many-to-many table to completely
@@ -115,7 +115,7 @@ export async function putList(req: Request, res: Response, next: NextFunction) {
 
             // Create a list of ActivityTemplateList rows to insert from list.id from above and activityTemplate from input
             const activityList: typeof ActivityTemplateListTable.$inferInsert[] = []
-            req.body.activities.forEach((v, i, arr) => {
+            req.body.activities.forEach((v: any, i: number) => {
                 activityList[i] = {activityTemplate: v, list: +req.params.id};
             });
 

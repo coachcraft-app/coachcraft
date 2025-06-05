@@ -11,6 +11,9 @@ export const UsersTable = sqliteTable("user", {
     lastname: text(),
     lastLogin: text("last_login"),
     role: text({ enum: ["coach", "parent", "anonymous"]}).default("anonymous"),
+    lastModified: integer({ mode: 'timestamp' })
+        .notNull()
+        .default(sql`(unixepoch())`),
 }, (table) => [
     check("role_check", sql`${table.role} in ('coach', 'parent', 'anonymous')`)
 ]);
@@ -22,6 +25,9 @@ export const SessionsTable = sqliteTable("session", {
         .references(() => UsersTable.id, {onDelete: 'cascade', onUpdate: 'cascade'})
         .notNull(),
     date: integer({ mode: 'timestamp' }).unique().notNull(),
+    lastModified: integer({ mode: 'timestamp' })
+        .notNull()
+        .default(sql`(unixepoch())`),
 });
 
 // Activities that are part of a session
@@ -33,6 +39,9 @@ export const ActivitiesTable = sqliteTable("activity", {
     title: text().notNull().unique(),
     description: text(),
     duration: integer({ mode: 'number' }).notNull(),
+    lastModified: integer({ mode: 'timestamp' })
+        .notNull()
+        .default(sql`(unixepoch())`),
 });
 
 
@@ -43,12 +52,18 @@ export const ActivityTemplatesTable = sqliteTable("activity_template", {
     title: text().notNull().unique(),
     description: text(),
     duration: integer({ mode: 'number' }).notNull(),
+    lastModified: integer({ mode: 'timestamp' })
+        .notNull()
+        .default(sql`(unixepoch())`),
 });
 
 // A list (or category) of activity templates for organisation
 export const ListTable = sqliteTable("list", {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
     title: text(),
+    lastModified: integer({ mode: 'timestamp' })
+        .notNull()
+        .default(sql`(unixepoch())`),
 });
 
 // The many-to-many link between activities and lists
@@ -60,4 +75,7 @@ export const ActivityTemplateListTable = sqliteTable("activity_template_list", {
     list: integer({mode: 'number' })
         .references(() => ListTable.id, {onDelete: 'cascade', onUpdate: 'cascade'})
         .notNull(),
+    lastModified: integer({ mode: 'timestamp' })
+        .notNull()
+        .default(sql`(unixepoch())`),
 });
