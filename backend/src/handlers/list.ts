@@ -3,10 +3,15 @@ import {db} from "../db/db.js";
 import {ActivityTemplateListTable, ActivityTemplatesTable, ListTable} from "../db/schema.js";
 import {StatusError} from "../lib/status-error.js";
 import {validationResult} from "express-validator";
-import {eq} from "drizzle-orm";
+import {eq, max} from "drizzle-orm";
 
 export async function getAllLists(req: Request, res: Response, next: NextFunction) {
     try {
+        const lastModified = await db.select({value: max(ListTable.lastModified)}).from(ListTable);
+        if (lastModified[0].value) {
+            res.append("Last-Modified", lastModified[0].value.toUTCString());
+        }
+
         const lists = await db.select().from(ListTable);
 
         for (const list of lists) {
@@ -47,6 +52,8 @@ export async function getList(req: Request, res: Response, next: NextFunction) {
             .select()
             .from(ListTable)
             .where(eq(ListTable.id, +req.params.id));
+
+        res.append("Last-Modified", list[0].lastModified.toUTCString());
 
         const activityList = db
             .select()
