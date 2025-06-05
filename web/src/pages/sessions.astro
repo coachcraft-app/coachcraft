@@ -4,7 +4,10 @@ import Button from "../components/Button.astro";
 ---
 
 <MainLayout title="Sessions">
-  <div class="flex h-full" x-data="{ activeTab: 'upcoming' }">
+  <div
+    class="flex h-full"
+    x-data="{ activeTab: 'upcoming', showConfirm: false, sessionToComplete: null, expandedActivitiesUpcoming: {}, expandedActivitiesPrevious: {} }"
+  >
     <div class="w-full p-4">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl">Sessions</h2>
@@ -66,7 +69,10 @@ import Button from "../components/Button.astro";
                 </p>
                 <ul class="space-y-1">
                   <template x-for="id in sess.activities" :key="id">
-                    <li class="p-2 bg-gray-700 rounded">
+                    <li
+                      class="p-2 bg-gray-700 rounded cursor-pointer"
+                      @click="expandedActivitiesUpcoming[sess.id + '-' + id] = !expandedActivitiesUpcoming[sess.id + '-' + id]"
+                    >
                       <div class="flex justify-between items-center">
                         <span
                           x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
@@ -74,6 +80,13 @@ import Button from "../components/Button.astro";
                         <span
                           x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
                           class="text-sm text-gray-400"></span>
+                      </div>
+                      <div
+                        class="mt-1 text-sm text-gray-300"
+                        x-show="expandedActivitiesUpcoming[sess.id + '-' + id]"
+                        x-transition
+                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).description"
+                      >
                       </div>
                     </li>
                   </template>
@@ -119,7 +132,10 @@ import Button from "../components/Button.astro";
                 </p>
                 <ul class="space-y-1">
                   <template x-for="id in sess.activities" :key="id">
-                    <li class="p-2 bg-gray-700 rounded">
+                    <li
+                      class="p-2 bg-gray-700 rounded cursor-pointer"
+                      @click="expandedActivitiesPrevious[sess.id + '-' + id] = !expandedActivitiesPrevious[sess.id + '-' + id]"
+                    >
                       <div class="flex justify-between items-center">
                         <span
                           x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
@@ -127,6 +143,13 @@ import Button from "../components/Button.astro";
                         <span
                           x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
                           class="text-sm text-gray-400"></span>
+                      </div>
+                      <div
+                        class="mt-1 text-sm text-gray-300"
+                        x-show="expandedActivitiesPrevious[sess.id + '-' + id]"
+                        x-transition
+                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).description"
+                      >
                       </div>
                     </li>
                   </template>
