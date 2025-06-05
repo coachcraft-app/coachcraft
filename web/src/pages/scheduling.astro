@@ -137,8 +137,9 @@ import Image from "astro/components/Image.astro";
       <!-- LISTS TAB -->
       <div x-show="$store.scheduling.selectedTab==='lists'" class="mt-4">
         <DropDown
-          items="$store.pages.activities.listsNames"
-          onItemSwitch="$store.pages.activities.onListSwitch(listToSelect)"
+          options="$store.pages.activities.listsNames"
+          defaultOption="All Activities"
+          onOptionSwitch="$store.pages.activities.onListSwitch(listToSelect)"
         />
         <ul class="mt-2 space-y-2">
           <template
