@@ -61,6 +61,7 @@ export const ActivityTemplatesTable = sqliteTable("activity_template", {
 export const ListTable = sqliteTable("list", {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
     title: text(),
+    accentColor: text(),
     lastModified: integer({ mode: 'timestamp' })
         .notNull()
         .default(sql`(unixepoch())`),

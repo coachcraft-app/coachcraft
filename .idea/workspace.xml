@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="23d02b6f-1638-414c-9ea3-2f9bd6f40fa7" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/james/projects/SENG3150_software_proj/node_modules/typescript/lib&quot;
+  }
+}</component>
+  <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
+    <layout>
+      <window_info id="Merge Requests" />
+      <window_info id="Backup and Sync History" />
+      <window_info id="Commit_Guest" show_stripe_button="false" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8262342" visible="true" weight="0.23964843" />
+      <window_info id="Commit" order="1" weight="0.3298828" />
+      <window_info id="Structure" order="2" sideWeight="0.17376572" side_tool="true" weight="0.23964843" />
+      <window_info id="Pull Requests" order="3" weight="0.3298828" />
+      <window_info active="true" id="Bookmarks" order="4" sideWeight="0.17376572" side_tool="true" visible="true" weight="0.23964843" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="TypeScript" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="File Transfer" />
+      <window_info anchor="bottom" id="Find" />
+      <window_info anchor="bottom" id="Version Control" order="0" weight="0.20797414" />
+      <window_info anchor="bottom" id="Problems" order="1" />
+      <window_info active="true" anchor="bottom" id="Problems View" order="2" visible="true" weight="0.20797414" />
+      <window_info anchor="bottom" id="Terminal" order="3" weight="0.20797414" />
+      <window_info anchor="bottom" id="Services" order="4" weight="0.3301006" />
+      <window_info anchor="bottom" id="Run" order="5" weight="0.3301006" />
+      <window_info anchor="right" id="PlantUML" />
+      <window_info anchor="right" id="Endpoints" />
+      <window_info anchor="right" id="Coverage" side_tool="true" />
+      <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
+      <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
+      <window_info anchor="right" id="Database" order="2" visible="true" weight="0.18847656" />
+      <window_info anchor="right" id="Gradle" order="3" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="4" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+</project>
