@@ -5,6 +5,7 @@ import TextInput from "../components/TextInput.astro";
 import TextArea from "../components/TextArea.astro";
 import Button from "../components/Button.astro";
 import DropDown from "../components/DropDown.astro";
+import CheckboxDropDown from "../components/CheckboxDropDown.astro";
 
 import Image from "astro/components/Image.astro";
 ---
@@ -31,8 +32,9 @@ import Image from "astro/components/Image.astro";
         />
 
         <DropDown
-          items="$store.pages.activities.listsNames"
-          onItemSwitch="$store.pages.activities.onListSwitch(listToSelect)"
+          options="$store.pages.activities.listsNames"
+          defaultOption="All Activities"
+          onOptionSwitch="$store.pages.activities.onListSwitch(listToSelect)"
         />
       </div>
 
@@ -89,8 +91,10 @@ import Image from "astro/components/Image.astro";
       >
         <div class="flex gap-5">
           <DropDown
-            items="$store.pages.activities.listsNames"
-            onItemSwitch="$store.pages.activities.onManageListsListSwitch(listToSelect)"
+            options="$store.pages.activities.listsNames"
+            label="Select List"
+            placeHolder="Select List"
+            onOptionSwitch="$store.pages.activities.onManageListsListSwitch(listToSelect)"
           />
           <Button
             type="button"
@@ -105,7 +109,7 @@ import Image from "astro/components/Image.astro";
             class="flex flex-col gap-5"
             @submit.prevent="$store.pages.activities.onManageListsSaveChanges(event)"
           >
-            <div class="flex items-end gap-5">
+            <div class="flex items-center gap-5">
               <TextInput
                 name="listName"
                 label="List Name"
@@ -113,15 +117,12 @@ import Image from "astro/components/Image.astro";
                 placeholder="List"
                 value="$store.pages.activities.manageListsSelectedListObj?.name || ''"
               />
-              <div class="flex flex-col gap-1">
-                <label class="w-fit pl-0.5 text-sm text-gray-400"
-                  >Accent Color</label
-                >
-                <DropDown
-                  items="$store.pages.activities.listAccentColorNames"
-                  onItemSwitch="$store.pages.activities.onListsAccentColorPreviewSwitch"
-                />
-              </div>
+              <DropDown
+                options="$store.pages.activities.listAccentColorNames"
+                label="Accent Color"
+                placeHolder="Accent Color"
+                onOptionSwitch="$store.pages.activities.onManageListsAccentColorPreviewSwitch"
+              />
             </div>
 
             <div class="flex gap-5 mt-5">
@@ -164,50 +165,65 @@ import Image from "astro/components/Image.astro";
           </div>
         </div>
 
-        <form
-          class="flex flex-col gap-5"
-          @submit.prevent="$store.pages.activities.onSaveChanges(event)"
-        >
-          <div class="flex flex-col gap-5">
-            <TextInput
-              name="activityName"
-              label="Activity Name"
-              required
-              placeholder="Activity"
-              value="$store.pages.activities.selectedActivityObj?.name || ''"
-            />
-            <TextInput
-              name="duration"
-              label="Duration"
-              required
-              placeholder="HH:MM"
-              value="$store.pages.activities.selectedActivityObj?.duration || ''"
-            />
-            <TextArea
-              name="description"
-              label="Description"
-              placeholder="Brief description such as sets, laps, plan, etc."
-              rows="10"
-              value="$store.pages.activities.selectedActivityObj?.description || ''"
-            />
-          </div>
+        <div>
+          <form
+            class="flex flex-col gap-5"
+            @submit.prevent="$store.pages.activities.onSaveChanges(event)"
+          >
+            <div class="flex gap-10">
+              <div class="flex flex-col gap-5 grow max-w-1/2">
+                <TextInput
+                  name="activityName"
+                  label="Activity Name"
+                  required
+                  placeholder="Activity"
+                  value="$store.pages.activities.selectedActivityObj?.name || ''"
+                />
+                <TextInput
+                  name="duration"
+                  label="Duration"
+                  required
+                  placeholder="HH:MM"
+                  value="$store.pages.activities.selectedActivityObj?.duration || ''"
+                  x-mask="99:99"
+                />
+                <TextArea
+                  name="description"
+                  label="Description"
+                  placeholder="Brief description such as sets, laps, plan, etc."
+                  rows="10"
+                  value="$store.pages.activities.selectedActivityObj?.description || ''"
+                />
+              </div>
+              <div class="grow max-w-1/2">
+                <CheckboxDropDown
+                  label="Containing Lists"
+                  items="$store.pages.activities.listsNames"
+                  checkedItems="$store.pages.activities.containingListsNames"
+                  onUpdate="$store.pages.activities.onContainingListsUpdate(containingList)"
+                />
+              </div>
+            </div>
 
-          <div class="flex gap-5">
-            <Button type="submit" label="Save Changes" width="fit" />
-            <Button
-              type="button"
-              label="Reset Changes"
-              width="fit"
-              onClick="$store.pages.activities.onResetChanges()"
-            />
-            <Button
-              type="button"
-              label="Delete Activity"
-              width="fit"
-              onClick="$store.pages.activities.onDeleteActivity()"
-            />
-          </div>
-        </form>
+            <div class="flex gap-5">
+              <Button type="submit" label="Save Changes" width="fit" />
+              <Button
+                type="button"
+                label="Reset Changes"
+                width="fit"
+                onClick="$store.pages.activities.onResetChanges()"
+              />
+              <Button
+                type="button"
+                label="Delete Activity"
+                width="fit"
+                onClick="$store.pages.activities.onDeleteActivity()"
+              />
+            </div>
+          </form>
+
+          <div></div>
+        </div>
       </div>
     </div>
   </div>
