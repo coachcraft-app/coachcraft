@@ -36,9 +36,10 @@ export const ActivitiesTable = sqliteTable("activity", {
     session: integer({ mode: 'number' })
         .references(() => SessionsTable.id, {onDelete: 'cascade', onUpdate: 'cascade'})
         .notNull(),
-    title: text().notNull().unique(),
+    name: text().notNull().unique(),
     description: text(),
     duration: integer({ mode: 'number' }).notNull(),
+    imgUrl: text("img_url"),
     lastModified: integer({ mode: 'timestamp' })
         .notNull()
         .default(sql`(unixepoch())`),
@@ -49,9 +50,10 @@ export const ActivitiesTable = sqliteTable("activity", {
 // Activities that can be added to a session
 export const ActivityTemplatesTable = sqliteTable("activity_template", {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-    title: text().notNull().unique(),
+    name: text().notNull().unique(),
     description: text(),
     duration: integer({ mode: 'number' }).notNull(),
+    imgUrl: text("img_url"),
     lastModified: integer({ mode: 'timestamp' })
         .notNull()
         .default(sql`(unixepoch())`),
@@ -60,7 +62,7 @@ export const ActivityTemplatesTable = sqliteTable("activity_template", {
 // A list (or category) of activity templates for organisation
 export const ListTable = sqliteTable("list", {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-    title: text(),
+    name: text().notNull().unique(),
     accentColor: text(),
     lastModified: integer({ mode: 'timestamp' })
         .notNull()

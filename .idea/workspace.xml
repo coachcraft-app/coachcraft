@@ -10,25 +10,26 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/james/projects/SENG3150_software_proj/node_modules/typescript/lib&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Node.js.sync.ts.executor": "Debug",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "ts.external.directory.path": "/home/james/projects/SENG3150_software_proj/node_modules/typescript/lib"
   }
-}</component>
+}]]></component>
   <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
     <layout>
       <window_info id="Merge Requests" />
       <window_info id="Backup and Sync History" />
       <window_info id="Commit_Guest" show_stripe_button="false" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8262342" visible="true" weight="0.23964843" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8260633" visible="true" weight="0.23964843" />
       <window_info id="Commit" order="1" weight="0.3298828" />
       <window_info id="Structure" order="2" sideWeight="0.17376572" side_tool="true" weight="0.23964843" />
       <window_info id="Pull Requests" order="3" weight="0.3298828" />
-      <window_info active="true" id="Bookmarks" order="4" sideWeight="0.17376572" side_tool="true" visible="true" weight="0.23964843" />
+      <window_info active="true" id="Bookmarks" order="4" sideWeight="0.17393675" side_tool="true" visible="true" weight="0.23964843" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="TODO" />
@@ -36,21 +37,44 @@
       <window_info anchor="bottom" id="Find" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.20797414" />
       <window_info anchor="bottom" id="Problems" order="1" />
-      <window_info active="true" anchor="bottom" id="Problems View" order="2" visible="true" weight="0.20797414" />
-      <window_info anchor="bottom" id="Terminal" order="3" weight="0.20797414" />
+      <window_info anchor="bottom" id="Problems View" order="2" weight="0.23886494" />
+      <window_info anchor="bottom" id="Terminal" order="3" weight="0.29130745" />
       <window_info anchor="bottom" id="Services" order="4" weight="0.3301006" />
-      <window_info anchor="bottom" id="Run" order="5" weight="0.3301006" />
+      <window_info anchor="bottom" id="Run" order="5" weight="0.29130745" />
+      <window_info active="true" anchor="bottom" id="Debug" order="6" visible="true" weight="0.29130745" />
       <window_info anchor="right" id="PlantUML" />
       <window_info anchor="right" id="Endpoints" />
       <window_info anchor="right" id="Coverage" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
       <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
-      <window_info anchor="right" id="Database" order="2" visible="true" weight="0.18847656" />
+      <window_info anchor="right" id="Database" order="2" weight="0.18847656" />
       <window_info anchor="right" id="Gradle" order="3" weight="0.25" />
       <window_info anchor="right" id="Maven" order="4" weight="0.25" />
     </layout>
   </component>
+  <component name="RunManager">
+    <configuration name="sync.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/web/src/utils/sync.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/web/src/utils">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.sync.ts" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="TaskManager">
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/web/src/utils/sync.ts</url>
+          <line>268</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

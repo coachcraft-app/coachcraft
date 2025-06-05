@@ -8,6 +8,29 @@ import {eq} from "drizzle-orm";
 export async function getAllLists(req: Request, res: Response, next: NextFunction) {
     try {
         const lists = await db.select().from(ListTable);
+
+        for (const list of lists) {
+            const activityList = db
+                .select()
+                .from(ActivityTemplateListTable)
+                .where(eq(ActivityTemplateListTable.list, list.id))
+                .as("activity_list");
+
+            const activities = await db
+                .select({id: ActivityTemplatesTable.id})
+                .from(ActivityTemplatesTable)
+                .innerJoin(activityList, eq(activityList.activityTemplate, ActivityTemplatesTable.id))
+
+
+            // @ts-ignore
+            list.activities = [];
+
+            for (const activity of activities) {
+                // @ts-ignore
+                list.activities.push(activity.id);
+            }
+        }
+
         res.status(200).json({ lists });
     } catch (error) {
         next(new StatusError("Failed to get lists", 500));
@@ -58,7 +81,7 @@ export async function postList(req: Request, res: Response, next: NextFunction) 
     try {
         const list = await db
             .insert(ListTable)
-            .values({title: req.body.title, lastModified: new Date()})
+            .values({name: req.body.name, lastModified: new Date(), accentColor: req.body.accentColor})
             .returning();
 
 
@@ -68,15 +91,21 @@ export async function postList(req: Request, res: Response, next: NextFunction) 
             activityList[i] = {activityTemplate: v, list: list[0].id};
         });
 
-        const activities = await db.insert(ActivityTemplateListTable).values(activityList).returning();
+        if (activityList.length > 0) {
+            const activities = await db.insert(ActivityTemplateListTable).values(activityList).returning();
 
-        activities.forEach((v, i, arr) => {
+
+            activities.forEach((v, i, arr) => {
+                // @ts-ignore
+                arr[i] = v.activityTemplate;
+            })
+
             // @ts-ignore
-            arr[i] = v.activityTemplate;
-        })
-
-        // @ts-ignore
-        list[0].activities = activities;
+            list[0].activities = activities;
+        } else {
+            //@ts-ignore
+            list[0].activities = []
+        }
 
         res.status(201).json({ list: list[0] });
     } catch (error) {
@@ -92,19 +121,11 @@ export async function putList(req: Request, res: Response, next: NextFunction) {
     }
     try {
         let list : typeof ListTable.$inferSelect[];
-        // edit title or not
-        // if (req.body.title) {
-            list = await db
-                .update(ListTable)
-                .set({title: req.body.title, lastModified: new Date()})
-                .where(eq(ListTable.id, +req.params.id))
-                .returning();
-        // } else {
-        //     list = await db
-        //         .select()
-        //         .from(ListTable)
-        //         .where(eq(ListTable.id, +req.params.id));
-        // }
+        list = await db
+            .update(ListTable)
+            .set({name: req.body.name, lastModified: new Date()})
+            .where(eq(ListTable.id, +req.params.id))
+            .returning();
 
         if (req.body.activities) {
             // Remove all items from the many-to-many table to completely

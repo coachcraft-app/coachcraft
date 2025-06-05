@@ -8,7 +8,7 @@ export function validateActivityId() {
 }
 
 export function validateActivityTitle() {
-    return body("title").notEmpty().isString().trim().escape();
+    return body("name").notEmpty().isString().trim().escape();
 }
 
 export function validateActivityDescription() {
