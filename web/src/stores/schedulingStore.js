@@ -83,10 +83,6 @@ export default function schedulingStore(Alpine) {
     loadSession(session) {
       if (!session || !session.activities) return;
 
-      this.sessionName = session.name;
-      this.sessionDate = session.date;
-      this.sessionNotes = session.notes;
-      this.selectedTeam = session.team;
       this.sessionActivities = [];
 
       session.activities.forEach((id) => {
