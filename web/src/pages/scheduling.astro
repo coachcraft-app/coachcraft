@@ -42,14 +42,17 @@ import Image from "astro/components/Image.astro";
           />
           <div class="flex flex-col gap-1">
             <label class="w-fit pl-0.5 text-sm text-gray-400">Team</label>
-            <div x-data="{ teams: $store.pages.teams.teamsNames }">
-              <DropDown
-                items="$store.pages.teams.teamsNames"
-                onItemSwitch="(listToSelect) => { $store.scheduling.selectedTeam = $store.pages.teams.onTeamSelectForSession(listToSelect); }"
-                label="Team"
-                value="$store.pages.teams.teamsNames[0]"
-              />
-            </div>
+            <select
+              class="bg-gray-900 text-white border border-white rounded-lg px-2 py-1"
+              x-model="$store.scheduling.selectedTeam"
+            >
+              <template
+                x-for="team in $store.pages.teams.teamsList"
+                :key="team.id"
+              >
+                <option :value="team.id" x-text="team.name"></option>
+              </template>
+            </select>
           </div>
           <TextArea
             name="sessionNotes"
