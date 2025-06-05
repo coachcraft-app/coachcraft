@@ -9,7 +9,7 @@ import Image from "astro/components/Image.astro";
 ---
 
 <MainLayout title="Scheduling">
-  <div class="flex h-full" x-data>
+  <div class="flex h-full" x-data="{ showConfirm: false, sessionToLoad: null }">
     <!-- Left pane: Current Schedule -->
     <div
       class="w-1/2 p-4 border-r border-gray-600"
@@ -201,10 +201,39 @@ import Image from "astro/components/Image.astro";
         </ul>
         <button
           class="mt-3 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition-colors"
-          @click="$store.scheduling.loadSession($store.scheduling.lastSession)"
+          @click="sessionToLoad = $store.scheduling.lastSession; showConfirm = true"
         >
           Load Session
         </button>
+        <div
+          x-show="showConfirm"
+          x-cloak
+          class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
+        >
+          <div
+            class="bg-gray-800 p-6 rounded shadow-lg w-full max-w-sm text-center"
+          >
+            <p class="mb-6 text-white">
+              Loading a session will remove current activities. Continue?
+            </p>
+            <div class="flex justify-center gap-4">
+              <button
+                type="button"
+                class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                @click="$store.scheduling.loadSession(sessionToLoad); showConfirm = false"
+              >
+                Confirm
+              </button>
+              <button
+                type="button"
+                class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+                @click="showConfirm = false"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- HISTORY TAB -->
@@ -258,7 +287,7 @@ import Image from "astro/components/Image.astro";
                 </ul>
                 <button
                   class="mt-2 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition-colors"
-                  @click="$store.scheduling.loadSession(sess)"
+                  @click="sessionToLoad = sess; showConfirm = true"
                 >
                   Load Session
                 </button>
@@ -266,6 +295,35 @@ import Image from "astro/components/Image.astro";
             </li>
           </template>
         </ul>
+        <div
+          x-show="showConfirm"
+          x-cloak
+          class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
+        >
+          <div
+            class="bg-gray-800 p-6 rounded shadow-lg w-full max-w-sm text-center"
+          >
+            <p class="mb-6 text-white">
+              Loading a session will remove current activities. Continue?
+            </p>
+            <div class="flex justify-center gap-4">
+              <button
+                type="button"
+                class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                @click="$store.scheduling.loadSession(sessionToLoad); showConfirm = false"
+              >
+                Confirm
+              </button>
+              <button
+                type="button"
+                class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+                @click="showConfirm = false"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
