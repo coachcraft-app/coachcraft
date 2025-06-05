@@ -350,3 +350,13 @@ import Image from "astro/components/Image.astro";
     </div>
   </div>
 </MainLayout>
+
+<script is:inline>
+  document.addEventListener('alpine:initialized', () => {
+    this.Alpine.store("pages").activities.sync.sync();
+  })
+  document.addEventListener("astro:page-load", (event) => {
+    this.Alpine.store("pages").activities.sync.sync();
+  });
+</script>
+

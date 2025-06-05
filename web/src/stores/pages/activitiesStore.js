@@ -1,3 +1,5 @@
+import { Sync } from "../../utils/sync.js"
+
 export default function activitiesStore(Alpine) {
   Alpine.store("pages").activities = {
     // state
@@ -205,6 +207,7 @@ export default function activitiesStore(Alpine) {
             (activityId) => activityId != this.selectedActivity,
           );
         }
+        this.sync.putList(list);
       });
     },
     onSaveChanges(event) {
@@ -231,6 +234,10 @@ export default function activitiesStore(Alpine) {
         );
       });
 
+      // Sync to backend
+      this.sync.deleteActivity(this.selectedActivity);
+
+      // Cleanup
       this.selectedActivity = "";
       this.rightPanelState = "placeholder";
     },
@@ -253,7 +260,7 @@ export default function activitiesStore(Alpine) {
       const listData = Object.fromEntries(new FormData(event.target));
 
       if (
-        this.manageListsSelectedList != "new" ||
+        this.manageListsSelectedList != "new" &&
         this.manageListsSelectedList != "default"
       ) {
         // update existing list
@@ -262,6 +269,8 @@ export default function activitiesStore(Alpine) {
         );
         listToUpdate.name = listData.listName;
         // TODO: save list accent color
+        // sync with backend
+        this.sync.putList(listToUpdate);
       } else {
         // save new list
         const newList = {
@@ -273,6 +282,7 @@ export default function activitiesStore(Alpine) {
 
         this.listsList.shift(); // remove newListTemplate
         this.listsList.unshift(newList); // add the new list to the top
+        this.sync.postList(newList);
       }
     },
     onCreateNewList() {
@@ -294,6 +304,8 @@ export default function activitiesStore(Alpine) {
         this.listsList = this.listsList.filter(
           (list) => list.id != this.manageListsSelectedList,
         );
+
+        this.sync.deleteList(this.manageListsSelectedList);
       }
     },
 
@@ -308,6 +320,9 @@ export default function activitiesStore(Alpine) {
         activityToUpdate.name = activityData.activityName;
         activityToUpdate.duration = activityData.duration;
         activityToUpdate.description = activityData.description;
+
+        // Sync to backend
+        this.sync.putActivity(activityToUpdate);
       } else {
         // save as new activtiy
 
@@ -330,6 +345,7 @@ export default function activitiesStore(Alpine) {
         }
 
         this.selectedActivity = activity.id;
+        this.sync.postActivity(activity);
       }
     },
     createActivity() {
@@ -371,4 +387,5 @@ export default function activitiesStore(Alpine) {
     // fetch data from API
     async fetchData() {},
   };
+  Alpine.store("pages").activities.sync = new Sync(Alpine.store("pages").activities.activitiesList, Alpine.store("pages").activities.listsList)
 }

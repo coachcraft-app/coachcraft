@@ -40,11 +40,11 @@ interface List {
     id: string;
     name: string;
     accent_color: string;
-    activities: Activity[];
+    activities: string[];   // activity ids
     lastModified: string;
 }
 
-class Sync {
+export class Sync {
     debug: boolean;
     activitiesList: Activity[];
     listsList: List[];
@@ -55,33 +55,33 @@ class Sync {
         this.debug = debug;
     }
 
-    #convertActivityToAPIActivity(activity: Activity): APIActivity {
+    convertActivityToAPIActivity(activity: Activity): APIActivity {
         return {
             id: +activity.id,
             name: activity.name,
             duration: activity.duration,
             description: activity.description,
             imgUrl: activity.img_url,
-            lastModified: activity.lastModified.toString()
+            lastModified: activity.lastModified && activity.lastModified.toString() || new Date(0).toUTCString(),
         };
     }
 
-    #convertAPIActivityToActivity(activity: APIActivity): Activity {
+    convertAPIActivityToActivity(activity: APIActivity): Activity {
         return {
             id: activity.id.toString(),
             name: activity.name,
             duration: activity.duration,
             description: activity.description,
             img_url: activity.imgUrl,
-            lastModified: new Date(activity.lastModified),
+            lastModified: new Date(activity.lastModified || 1),
         }
     }
 
-    #convertListToAPIList(list: List): APIList {
+    convertListToAPIList(list: List): APIList {
         const activities: number[] = []
 
         for (const activity of list.activities) {
-            activities.push(activity.id);
+            activities.push(+activity);
         }
 
         return {
@@ -89,17 +89,15 @@ class Sync {
             name: list.name,
             accentColor: list.accent_color,
             activities: activities,
-            lastModified: list.lastModified,
+            lastModified: list.lastModified || new Date(0).toUTCString(),
         };
     }
 
-    #convertAPIListToList(list: APIList): List {
-        const activities: Activity[] = []
+    convertAPIListToList(list: APIList): List {
+        const activities: string[] = []
 
         for (const activity of list.activities) {
-            activities.push(this.activitiesList.find((a) => {
-                return a.id === activity.toString();
-            }));
+            activities.push(activity.toString())
         }
 
         return {
@@ -107,11 +105,11 @@ class Sync {
             name: list.name,
             accent_color: list.accentColor,
             activities: activities,
-            lastModified: list.lastModified,
+            lastModified: list.lastModified || new Date(0).toUTCString(),
         };
     }
 
-    #getActivitiesModifyDateTime(): Date {
+    getActivitiesModifyDateTime(): Date {
         let newestDate: Date = new Date(0);
         for (const activity of this.activitiesList) {
             if (activity.lastModified) {
@@ -121,11 +119,11 @@ class Sync {
         return newestDate;
     }
 
-    #getListsModifyDateTime(): Date {
+    getListsModifyDateTime(listsList: List[]): Date {
         let newestDate: Date = new Date(0);
         for (const list of this.listsList) {
             if (list.lastModified) {
-                newestDate = (list.lastModified > newestDate) ? list.lastModified : newestDate;
+                newestDate = (new Date(list.lastModified) > newestDate) ? new Date(list.lastModified) : newestDate;
             }
         }
         return newestDate;
@@ -137,7 +135,7 @@ class Sync {
             let response = await fetch((this.debug && "http://localhost:3000" || "") + "/api/activity", {
                 method: 'GET',
                 headers: {
-                    "If-Modified-Since": this.#getActivitiesModifyDateTime().toUTCString(),
+                    "If-Modified-Since": this.getActivitiesModifyDateTime().toUTCString(),
                 }
             });
 
@@ -147,13 +145,14 @@ class Sync {
                 this.activitiesList.length = 0;
 
                 for (const activity of json.activities) {
-                    this.activitiesList.push(this.#convertAPIActivityToActivity(activity));
+                    this.activitiesList.push(this.convertAPIActivityToActivity(activity));
                 }
-            // Current is up to date
-            } else if(response.status === 304) {
+                // Current is up to date
+            } else if (response.status === 304) {
                 return;
             } else {
-                console.error(response.statusText);
+                const json: APIActivitiesResponse = await response.json();
+                console.error(json);
                 return;
             }
 
@@ -161,7 +160,7 @@ class Sync {
             response = await fetch((this.debug && "http://localhost:3000" || "") + "/api/list", {
                 method: 'GET',
                 headers: {
-                    "If-Modified-Since": this.#getListsModifyDateTime(this.listsList).toUTCString(),
+                    "If-Modified-Since": this.getListsModifyDateTime(this.listsList).toUTCString(),
                 }
             });
 
@@ -171,13 +170,14 @@ class Sync {
                 this.listsList.length = 0;
 
                 for (const list of json.lists) {
-                    this.listsList.push(this.#convertAPIListToList(list));
+                    this.listsList.push(this.convertAPIListToList(list));
                 }
                 // Current is up to date
-            } else if(response.status === 304) {
+            } else if (response.status === 304) {
                 return;
             } else {
-                console.error(response.statusText);
+                const json: APIActivitiesResponse = await response.json();
+                console.error(json);
                 return;
             }
         } catch (e: any) {
@@ -194,7 +194,8 @@ class Sync {
             if (response.ok) {
                 await this.sync();
             } else {
-                console.error(response.statusText);
+                const json: APIActivitiesResponse = await response.json();
+                console.error(json);
             }
         } catch (e) {
             console.error(e);
@@ -204,7 +205,8 @@ class Sync {
     async postActivity(activity: Activity): Promise<void> {
         try {
             // Strip out ids, post assigns ids automatically
-            const convertActivity = this.#convertActivityToAPIActivity(activity)
+            const convertActivity = this.convertActivityToAPIActivity(activity)
+            // @ts-ignore
             convertActivity.id = undefined
 
             const response = await fetch((this.debug && "http://localhost:3000" || "") + "/api/activity", {
@@ -219,7 +221,8 @@ class Sync {
             if (response.ok) {
                 await this.sync();
             } else {
-                console.error(response.statusText);
+                const json: APIActivitiesResponse = await response.json();
+                console.error(json);
             }
         } catch (e) {
             console.error(e);
@@ -234,13 +237,14 @@ class Sync {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(this.#convertActivityToAPIActivity(activity)),
+                body: JSON.stringify(this.convertActivityToAPIActivity(activity)),
             });
 
             if (response.ok) {
                 await this.sync();
             } else {
-                console.error(response.statusText);
+                const json: APIActivitiesResponse = await response.json();
+                console.error(json);
             }
         } catch (e) {
             console.error(e);
@@ -256,7 +260,8 @@ class Sync {
             if (response.ok) {
                 await this.sync();
             } else {
-                console.error(response.statusText);
+                const json: APIActivitiesResponse = await response.json();
+                console.error(json);
             }
         } catch (e) {
             console.error(e);
@@ -266,7 +271,8 @@ class Sync {
     async postList(list: List): Promise<void> {
         try {
             // Strip out ids, post assigns ids automatically
-            const convertList = this.#convertListToAPIList(list);
+            const convertList = this.convertListToAPIList(list);
+            //@ts-ignore
             convertList.id = undefined;
 
             const response = await fetch((this.debug && "http://localhost:3000" || "") + "/api/list", {
@@ -281,7 +287,8 @@ class Sync {
             if (response.ok) {
                 await this.sync();
             } else {
-                console.error(response.statusText);
+                const json: APIActivitiesResponse = await response.json();
+                console.error(json);
             }
         } catch (e) {
             console.error(e);
@@ -296,13 +303,14 @@ class Sync {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(this.#convertListToAPIList(list)),
+                body: JSON.stringify(this.convertListToAPIList(list)),
             });
 
             if (response.ok) {
                 await this.sync();
             } else {
-                console.error(response.statusText);
+                const json: APIActivitiesResponse = await response.json();
+                console.error(json);
             }
         } catch (e) {
             console.error(e);
@@ -310,34 +318,12 @@ class Sync {
     }
 }
 
-function main() {
-    let activities: Activity[] = [];
-    let lists: List[] = [];
-    const api = new Sync(activities, lists, true);
-
-    api.sync().then(() => {
-        console.log(activities);
-        console.log(lists);
-    });
-
-    api.postList({id: "1", name: "Test Post List", accent_color: "Lavender", activities: [], lastModified: new Date()})
-        .then(() => {
-            console.log(lists);
-
-            const putList = lists[1];
-            putList.name = "Test Put List";
-            putList.accent_color = "Banana";
-            putList.activities = activities;
-            api.putList(putList).then(() => {
-                console.log(lists);
-
-                api.deleteList(putList.id).then(() => {
-                    console.log(lists);
-                })
-            })
-        });
-
-
-}
-
-main()
+// function main() {
+//     const activities = []
+//     const lists = []
+//     const api = new Sync(activities, lists, true);
+//
+//     api.putList({id: '10', name: 'New List', accent_color: 'Colors', activities: [], lastModified: '2025-06-05T18:08:25.000Z'})
+// }
+//
+// main()

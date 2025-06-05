@@ -75,7 +75,7 @@ export async function getList(req: Request, res: Response, next: NextFunction) {
 
         res.status(200).json({list: list[0]});
     } catch (error) {
-        console.log(error);
+        console.error(error);
         next(new StatusError("Failed to get list", 500));
     }
 }
@@ -116,7 +116,7 @@ export async function postList(req: Request, res: Response, next: NextFunction) 
 
         res.status(201).json({ list: list[0] });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         next(new StatusError("Failed to post list", 500));
     }
 }
@@ -130,17 +130,17 @@ export async function putList(req: Request, res: Response, next: NextFunction) {
         let list : typeof ListTable.$inferSelect[];
         list = await db
             .update(ListTable)
-            .set({name: req.body.name, lastModified: new Date()})
+            .set({name: req.body.name, lastModified: new Date(), accentColor: req.body.accentColor})
             .where(eq(ListTable.id, +req.params.id))
             .returning();
 
-        if (req.body.activities) {
-            // Remove all items from the many-to-many table to completely
-            await db
-                .delete(ActivityTemplateListTable)
-                .where(eq(ActivityTemplateListTable.list, +req.params.id))
 
+        // Remove all items from the many-to-many table to completely
+        await db
+            .delete(ActivityTemplateListTable)
+            .where(eq(ActivityTemplateListTable.list, +req.params.id))
 
+        if (req.body.activities && req.body.activities.length !== 0) {
             // Create a list of ActivityTemplateList rows to insert from list.id from above and activityTemplate from input
             const activityList: typeof ActivityTemplateListTable.$inferInsert[] = []
             req.body.activities.forEach((v: any, i: number) => {
@@ -156,8 +156,6 @@ export async function putList(req: Request, res: Response, next: NextFunction) {
 
             // @ts-ignore
             list[0].activities = activities;
-
-            console.log(JSON.stringify(activities));
         } else {
             // @ts-ignore
             list[0].activities = []

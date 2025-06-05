@@ -12,11 +12,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Node.js.server.executor": "Run",
     "Node.js.sync.ts.executor": "Debug",
+    "last_opened_file_path": "/home/james/projects/SENG3150_software_proj/backend/src/index.ts",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "npm.dev.executor": "Debug",
     "ts.external.directory.path": "/home/james/projects/SENG3150_software_proj/node_modules/typescript/lib"
   }
 }]]></component>
@@ -29,35 +32,54 @@
       <window_info id="Commit" order="1" weight="0.3298828" />
       <window_info id="Structure" order="2" sideWeight="0.17376572" side_tool="true" weight="0.23964843" />
       <window_info id="Pull Requests" order="3" weight="0.3298828" />
-      <window_info active="true" id="Bookmarks" order="4" sideWeight="0.17393675" side_tool="true" visible="true" weight="0.23964843" />
-      <window_info anchor="bottom" id="Database Changes" />
+      <window_info id="Bookmarks" order="4" sideWeight="0.17393675" side_tool="true" weight="0.23964843" />
       <window_info anchor="bottom" id="TypeScript" />
-      <window_info anchor="bottom" id="TODO" />
       <window_info anchor="bottom" id="File Transfer" />
       <window_info anchor="bottom" id="Find" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.20797414" />
       <window_info anchor="bottom" id="Problems" order="1" />
-      <window_info anchor="bottom" id="Problems View" order="2" weight="0.23886494" />
-      <window_info anchor="bottom" id="Terminal" order="3" weight="0.29130745" />
+      <window_info anchor="bottom" id="Problems View" order="2" weight="0.29130745" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.29130745" />
       <window_info anchor="bottom" id="Services" order="4" weight="0.3301006" />
       <window_info anchor="bottom" id="Run" order="5" weight="0.29130745" />
-      <window_info active="true" anchor="bottom" id="Debug" order="6" visible="true" weight="0.29130745" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.29130745" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.29130745" />
+      <window_info anchor="bottom" id="Database Changes" order="8" weight="0.29130745" />
       <window_info anchor="right" id="PlantUML" />
       <window_info anchor="right" id="Endpoints" />
       <window_info anchor="right" id="Coverage" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
       <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
-      <window_info anchor="right" id="Database" order="2" weight="0.18847656" />
+      <window_info active="true" anchor="right" id="Database" order="2" visible="true" weight="0.18847656" />
       <window_info anchor="right" id="Gradle" order="3" weight="0.25" />
       <window_info anchor="right" id="Maven" order="4" weight="0.25" />
     </layout>
   </component>
-  <component name="RunManager">
-    <configuration name="sync.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/web/src/utils/sync.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/web/src/utils">
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="server" type="NodeJSConfigurationType" path-to-js-file="backend/src/index.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
+    <configuration name="sync.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="sync.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/web/src/utils">
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/backend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Node.js.server" />
+      <item itemvalue="Node.js.sync.ts" />
+      <item itemvalue="npm.dev" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
         <item itemvalue="Node.js.sync.ts" />
       </list>
     </recent_temporary>
@@ -70,9 +92,9 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/web/src/utils/sync.ts</url>
-          <line>268</line>
+          <line>80</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="29" />
+          <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

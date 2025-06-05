@@ -6,10 +6,17 @@ meta {
 
 put {
   url: http://localhost:3000/api/list/:id
-  body: none
+  body: json
   auth: inherit
 }
 
 params:path {
-  id: 2
+  id: 6
+}
+
+body:json {
+  {
+    "name": "Warm Up",
+    "activities": [54, 55, 56, 57]
+  }
 }

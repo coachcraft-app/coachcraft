@@ -47,10 +47,10 @@ export async function postActivity(req: Request, res: Response, next: NextFuncti
         req.body.lastModified = new Date();
         req.body.id = undefined;
         const activity = await db.insert(ActivityTemplatesTable).values(req.body).returning();
-        await db.insert(ActivityTemplateListTable).values({activityTemplate: activity[0].id, list: 1});
+        // await db.insert(ActivityTemplateListTable).values({activityTemplate: activity[0].id, list: 1});
         res.status(201).json({ activity });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         next(new StatusError("Failed to post activity", 500));
     }
 }
