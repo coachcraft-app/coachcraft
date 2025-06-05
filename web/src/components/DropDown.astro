@@ -1,11 +1,21 @@
 ---
 import reactify from "../utils/reactify";
-var { options, onOptionSwitch, defaultOption, label } = Astro.props;
+
+// Use either `defaultOption` or `placeHolder`
+//
+// defaultOption: option name String just like the ones in `options`
+// placeHolder: if you don't want a default option, 
+//              but just something that shows on the button before any option is selected
+// label: a label above the button, as a hint to what the dropdown is for
+
+var { options, onOptionSwitch, defaultOption, label, placeHolder, ...rest } =
+  Astro.props;
 
 const x_data = `{
+  defaultOption: "${defaultOption}",
   ${reactify(options, "options")},
   ${reactify(onOptionSwitch, "onOptionSwitch")},
-  label: "",
+  selectedOption: "${placeHolder ? placeHolder : defaultOption}",
   isOpen: false, 
   openedWithKeyboard: false
 }`;
@@ -16,10 +26,11 @@ const x_data = `{
   x-init=`label = "${defaultOption}"`
   class="relative w-full"
   x-on:keydown.esc.window="isOpen = false, openedWithKeyboard = false"
+  {...rest}
 >
   {
-    !label ? (
-      <label class="w-fit pl-0.5 text-sm text-gray-400">{label}</label>
+    label ? (
+      <label class="w-fit pl-0.5 pt-0.5 text-sm text-gray-400">{label}</label>
     ) : (
       <div class="h-5" />
     )
@@ -61,7 +72,7 @@ const x_data = `{
     x-bind:aria-expanded="isOpen || openedWithKeyboard"
   >
     <div class="flex items-center justify-between gap-2">
-      <span x-text="label"></span>
+      <span x-text="selectedOption"></span>
 
       <svg
         aria-hidden="true"
@@ -100,6 +111,27 @@ const x_data = `{
             rounded-lg"
     role="menu"
   >
+    <!-- default option stays fixed at the top of the list -->
+    {
+      defaultOption ? (
+        <div
+        class="bg-surface-alt
+                px-4 py-2
+                text-sm
+                select-none
+                hover:opacity-75
+                cursor-pointer"
+        role="menuitem"
+        x-text="defaultOption"
+        @click=`onOptionSwitch(defaultOption); selectedOption=defaultOption; isOpen = false; openedWithKeyboard = false`
+        tabindex="0"
+      >
+      </div>
+      ) : (
+        ""
+      )
+    }
+    
     <template x-for="option in options">
       <div
         class="bg-surface-alt
@@ -110,7 +142,7 @@ const x_data = `{
               cursor-pointer"
         role="menuitem"
         x-text="option"
-        @click="onOptionSwitch(option); label=option; isOpen = false; openedWithKeyboard = false"
+        @click="onOptionSwitch(option); selectedOption=option; isOpen = false; openedWithKeyboard = false"
         tabindex="0"
       >
       </div>
