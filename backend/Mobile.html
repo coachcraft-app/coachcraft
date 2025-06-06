@@ -10,6 +10,7 @@
             align-items: center;
             height: 100vh;
             font-family: 'Inter', sans-serif;
+            color: white;
         }
         .faker-phone {
             position: relative;
@@ -48,10 +49,33 @@
             box-sizing: border-box;
             width: 100%;
             height: 100%;
-            background: #fff;
+            background: cadetblue;
             overflow: auto;
             position: relative;
             padding: 10px;
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .faker-phone--screen::-webkit-scrollbar {
+            display: none;  /* Safari and Chrome */
+        }
+
+
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            list-style-type: none;
+            background: cornflowerblue;
+            margin-top: 10px;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        h1 {
+            text-align: center;
         }
 
     </style>

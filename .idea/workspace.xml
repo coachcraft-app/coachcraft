@@ -17,20 +17,20 @@
       </list>
     </option>
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Node.js.server.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.sync.ts.executor&quot;: &quot;Debug&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/james/projects/SENG3150_software_proj/backend/src/index.ts&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Debug&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/james/projects/SENG3150_software_proj/node_modules/typescript/lib&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Node.js.server.executor": "Run",
+    "Node.js.sync.ts.executor": "Debug",
+    "last_opened_file_path": "/home/james/projects/SENG3150_software_proj/backend/src/index.ts",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "npm.dev.executor": "Debug",
+    "ts.external.directory.path": "/home/james/projects/SENG3150_software_proj/backend/node_modules/typescript/lib"
   }
-}</component>
+}]]></component>
   <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
     <layout>
       <window_info id="Merge Requests" />
@@ -101,7 +101,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/web/src/utils/sync.ts</url>
           <line>80</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
