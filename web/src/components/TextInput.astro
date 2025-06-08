@@ -1,0 +1,32 @@
+---
+var { label, placeholder, name, value, ...rest } = Astro.props;
+---
+
+<div
+  class="flex
+        w-full
+        flex-col
+        gap-1
+        text-on-surface
+        dark:text-on-surface-dark"
+>
+  <label for="textInputDefault" class="w-fit pl-0.5 text-sm">{label}</label>
+  <input
+    id="textInputDefault"
+    type="text"
+    class="w-full
+        rounded-radius
+        rounded-lg
+        outline-2
+        px-2 py-2
+        text-sm
+        dark:outline-low-contrast-grey
+        dark:focus-visible:outline-3
+        dark:focus-visible:outline-low-contrast-grey-2
+        disabled:cursor-not-allowed disabled:opacity-75"
+    name={name}
+    placeholder={placeholder}
+    x-bind:value={value}
+    {...rest}
+  />
+</div>

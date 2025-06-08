@@ -4,6 +4,7 @@
 @theme {
   /* --color-button-unselected: #262626; */
   --color-low-contrast-grey: #8c8c8c;
+  --color-low-contrast-grey-2: #b2b2b2;
 
   /* web client background color */
   --color-bg-black: #0d0d0d;
@@ -17,4 +18,5 @@
 
 :root {
   color-scheme: dark;
+  font-family: Inter, sans-serif;
 }
