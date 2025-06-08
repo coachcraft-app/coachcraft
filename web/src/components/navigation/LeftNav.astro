@@ -50,6 +50,16 @@ const currentURL = Astro.url.pathname;
         isSelected={currentURL.startsWith("/scheduling")}
       />
       <MenuButton
+        label="Sessions"
+        href="/sessions/"
+        isSelected={currentURL.startsWith("/sessions")}
+      />
+      <MenuButton
+        label="Teams"
+        href="/teams/"
+        isSelected={currentURL.startsWith("/teams")}
+      />
+      <MenuButton
         label="Settings"
         href="/settings/"
         isSelected={currentURL.startsWith("/settings")}

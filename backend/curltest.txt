@@ -1,0 +1,5 @@
+#Test curl GET
+curl --header "Accept: application/json" --request GET http://localhost:3000/api/activity
+
+# Test curl POST
+curl --header "Content-Type: application/json" --request POST --data '{"name":"CURL TEST","description":"CURL TEST","imgUrl":"Hello Curl","duration":"00:01"}' http://localhost:3000/api/activity

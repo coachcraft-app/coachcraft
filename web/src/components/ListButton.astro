@@ -1,22 +1,24 @@
 ---
-var { label, id, isSelected, handleClick } = Astro.props;
+import reactify from "../utils/reactify";
+
+// isSelected should be a function that returns a Boolean
+var { label, id, isSelected, onClick } = Astro.props;
+
+const x_data = `{ 
+  ${reactify(label, "label")}, 
+  ${reactify(id, "id")}, 
+  ${isSelected},
+  ${reactify(onClick, "onClick")}
+}`;
 ---
 
 <div
   x-bind:class="{
-    'bg-low-contrast-grey': isSelected(id), 
-    'bg-neutral-800 dark:text-primary-dark': !isSelected(id) 
+    'bg-low-contrast-grey': isSelected(), 
+    'bg-neutral-800 dark:text-primary-dark': !isSelected()
   }"
-  x-data={"{ " +
-    label +
-    ", " +
-    id +
-    ", " +
-    isSelected +
-    ", " +
-    handleClick +
-    " }"}
-  @click="handleClick(id);"
+  x-data={x_data}
+  @click="onClick(id);"
   class={`
         rounded-lg
         border border-primary

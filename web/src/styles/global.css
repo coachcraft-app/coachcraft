@@ -20,3 +20,41 @@
   color-scheme: dark;
   font-family: Inter, sans-serif;
 }
+
+/* Custom slender scrollbar that appears on hover */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+*:hover {
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+/* Webkit scrollbar styles */
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 2px;
+  transition: background 0.2s ease;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}

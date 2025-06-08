@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="23d02b6f-1638-414c-9ea3-2f9bd6f40fa7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/Mobile.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/curltest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/0000_glorious_sunfire.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/0001_adorable_albert_cleary.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/0002_fantastic_yellow_claw.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/0003_bent_omega_sentinel.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/0004_good_thaddeus_ross.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/0005_previous_vulcan.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/meta/0000_snapshot.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/meta/0001_snapshot.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/meta/0002_snapshot.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/meta/0003_snapshot.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/meta/0004_snapshot.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/meta/0005_snapshot.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/drizzle/meta/_journal.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/handlers/session.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/components/CheckboxDropDown.astro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/pages/sessions.astro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/pages/teams.astro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/stores/pages/activitiesStore.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/stores/schedulingStore.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/stores/sessionsStore.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/stores/teamsStore.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/utils/reactify.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/utils/sync.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/bruno/projectTest/Activities/Delete Activity.bru" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bruno/projectTest/Activities/Delete Activity.bru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/bruno/projectTest/Activities/Get Activity.bru" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bruno/projectTest/Activities/Get Activity.bru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/bruno/projectTest/Activities/Post Activity.bru" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bruno/projectTest/Activities/Post Activity.bru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/bruno/projectTest/Lists/Delete List.bru" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bruno/projectTest/Lists/Delete List.bru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/bruno/projectTest/Lists/Get All List.bru" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bruno/projectTest/Lists/Get All List.bru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/bruno/projectTest/Lists/Get List.bru" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bruno/projectTest/Lists/Get List.bru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/bruno/projectTest/Lists/Post List.bru" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bruno/projectTest/Lists/Post List.bru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/bruno/projectTest/Lists/Put List.bru" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bruno/projectTest/Lists/Put List.bru" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/db/dev.db" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/db/dev.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/db/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/db/schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/handlers/activity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/handlers/activity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/handlers/list.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/handlers/list.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/lib/activity-validator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/lib/activity-validator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/web/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/web/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/alpineEntryPoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/alpineEntryPoint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/components/Button.astro" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/components/Button.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/components/DropDown.astro" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/components/DropDown.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/components/ListButton.astro" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/components/ListButton.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/components/MenuButton.astro" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/components/MenuButton.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/components/TextArea.astro" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/components/TextArea.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/components/TextInput.astro" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/components/TextInput.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/components/navigation/LeftNav.astro" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/components/navigation/LeftNav.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/layouts/MainLayout.astro" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/layouts/MainLayout.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/pages/activities.astro" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/pages/activities.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/pages/scheduling.astro" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/pages/scheduling.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/styles/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/styles/global.css" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "JamesTolputt"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/athNdev/SENG3150_software_proj.git",
+    "accountId": "527d7e27-013b-410b-bdfc-75419a97b7fc"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2yE974HBeYGwEJ3broY0ZHxuEuH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.server.executor": "Run",
+    "Node.js.sync.ts.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Merging main",
+    "last_opened_file_path": "/home/james/projects/SENG3150_software_proj/backend/src/index.ts",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.dev.executor": "Debug",
+    "ts.external.directory.path": "/home/james/projects/SENG3150_software_proj/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
+    <layout>
+      <window_info id="Merge Requests" />
+      <window_info id="Backup and Sync History" />
+      <window_info id="Commit_Guest" show_stripe_button="false" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8260633" visible="true" weight="0.2595703" />
+      <window_info id="Commit" order="1" weight="0.25938967" />
+      <window_info id="Structure" order="2" sideWeight="0.17376572" side_tool="true" weight="0.23964843" />
+      <window_info id="Pull Requests" order="3" weight="0.25938967" />
+      <window_info id="Bookmarks" order="4" sideWeight="0.17393675" side_tool="true" weight="0.23964843" />
+      <window_info anchor="bottom" id="TypeScript" />
+      <window_info anchor="bottom" id="File Transfer" />
+      <window_info anchor="bottom" id="Find" />
+      <window_info anchor="bottom" id="Version Control" order="0" weight="0.20797414" />
+      <window_info anchor="bottom" id="Problems" order="1" />
+      <window_info anchor="bottom" id="Problems View" order="2" weight="0.29130745" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.20725575" />
+      <window_info anchor="bottom" id="Services" order="4" weight="0.3301006" />
+      <window_info anchor="bottom" id="Run" order="5" weight="0.29130745" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.29130745" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.29130745" />
+      <window_info anchor="bottom" id="Database Changes" order="8" weight="0.29130745" />
+      <window_info anchor="right" id="PlantUML" />
+      <window_info anchor="right" id="Endpoints" />
+      <window_info anchor="right" id="Coverage" side_tool="true" />
+      <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
+      <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
+      <window_info anchor="right" id="Database" order="2" weight="0.20383412" />
+      <window_info anchor="right" id="Gradle" order="3" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="4" weight="0.25" />
+    </layout>
+  </component>
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="server" type="NodeJSConfigurationType" path-to-js-file="backend/src/index.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <configuration name="sync.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="sync.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/web/src/utils">
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/backend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Node.js.server" />
+      <item itemvalue="Node.js.sync.ts" />
+      <item itemvalue="npm.dev" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+        <item itemvalue="Node.js.sync.ts" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-WS-251.25410.73" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="23d02b6f-1638-414c-9ea3-2f9bd6f40fa7" name="Changes" comment="" />
+      <created>1749388696809</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749388696809</updated>
+      <workItem from="1749388699323" duration="1235000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/web/src/utils/sync.ts</url>
+          <line>80</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

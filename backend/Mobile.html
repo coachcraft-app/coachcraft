@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mobile</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: white;
+        }
+        .faker-phone {
+            position: relative;
+            background: #2d3436;
+            width: calc(76px * 4);
+            height: calc(138px * 4);
+            padding: 60px 15px 70px;
+            border-radius: 35px;
+            box-sizing: border-box;
+        }
+        .faker-phone::before {
+            content: '';
+            position: absolute;
+            top: 27px;
+            left: 50%;
+            margin-left: -25px;
+            width: 50px;
+            height: 6px;
+            border-radius: 3px;
+            background: #000;
+            opacity: 0.7;
+        }
+        .faker-phone::after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            margin-left: -22px;
+            height: 40px;
+            width: 40px;
+            background: rgba(0, 0, 0, .5);
+            border: 2px solid rgba(0, 0, 0, .8);
+            border-radius: 100%;
+        }
+        .faker-phone--screen {
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+            background: cadetblue;
+            overflow: auto;
+            position: relative;
+            padding: 10px;
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .faker-phone--screen::-webkit-scrollbar {
+            display: none;  /* Safari and Chrome */
+        }
+
+
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            list-style-type: none;
+            background: cornflowerblue;
+            margin-top: 10px;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="faker-phone">
+        <div class="faker-phone--screen">
+            <h1>Activities</h1>
+            <ul id="activities"></ul>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        const activities = document.getElementById("activities");
+        try {
+            const response = fetch("http://localhost:3000/api/activity")
+                .then((r) => {
+                    if (r.ok) {
+                        r.json()
+                            .then((json) => {
+                                console.log(json)
+                                for (const activity of json.activities) {
+                                    console.log(json);
+                                    const li = document.createElement("li")
+                                    li.innerHTML = "<strong>" + activity.name + "</strong>:" + activity.description;
+                                    activities.appendChild(li);
+                                }
+                            });
+                    }
+                })
+        } catch(e) {
+            console.error(e);
+        }
+    </script>
+</body>
+</html>

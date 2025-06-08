@@ -1,0 +1,1 @@
+ALTER TABLE `list` ADD `accentColor` text;

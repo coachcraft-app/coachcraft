@@ -21,6 +21,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("x-powered-by", false);
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 // ----- REST APIS -----
 // /api/activity api
 app.use("/api", activity);
