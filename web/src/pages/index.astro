@@ -1,5 +1,71 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
+import HeaderBar from "../components/navigation/HeaderBar.astro";
+import LeftNav from "../components/navigation/LeftNav.astro";
+import Footer from "../components/navigation/Footer.astro";
+
+import Dashboard from "../components/pages/Dashboard.astro";
+import Activities from "../components/pages/Activities.astro";
+import Notes from "../components/pages/Notes.astro";
+import Scheduling from "../components/pages/Scheduling.astro";
+import Sessions from "../components/pages/Sessions.astro";
+import Teams from "../components/pages/Teams.astro";
+import Settings from "../components/pages/Settings.astro";
+
+import "../styles/global.css";
 ---
 
-<MainLayout title="Dashboard" />
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>CoachCraft</title>
+  </head>
+
+  <body class="bg-bg-black mx-5 my-1" x-data>
+    <HeaderBar />
+
+    <div class="flex gap-4 max-h-[85vh]">
+      <LeftNav />
+      <div class="w-full flex justify-center mt-10">
+        <div class="min-w-[80vw]">
+          <!-- Dashboard Page -->
+          <div x-show="$store.router.isCurrentPage('dashboard')" x-transition>
+            <Dashboard />
+          </div>
+
+          <!-- Activities Page -->
+          <div x-show="$store.router.isCurrentPage('activities')" x-transition>
+            <Activities />
+          </div>
+
+          <!-- Notes Page -->
+          <div x-show="$store.router.isCurrentPage('notes')" x-transition>
+            <Notes />
+          </div>
+
+          <!-- Scheduling Page -->
+          <div x-show="$store.router.isCurrentPage('scheduling')" x-transition>
+            <Scheduling />
+          </div>
+
+          <!-- Sessions Page -->
+          <div x-show="$store.router.isCurrentPage('sessions')" x-transition>
+            <Sessions />
+          </div>
+
+          <!-- Teams Page -->
+          <div x-show="$store.router.isCurrentPage('teams')" x-transition>
+            <Teams />
+          </div>
+
+          <!-- Settings Page -->
+          <div x-show="$store.router.isCurrentPage('settings')" x-transition>
+            <Settings />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <Footer />
+  </body>
+</html>
