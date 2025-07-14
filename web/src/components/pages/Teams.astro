@@ -1,0 +1,159 @@
+---
+import ListButton from "../ListButton.astro";
+import TextInput from "../TextInput.astro";
+import TextArea from "../TextArea.astro";
+import Button from "../Button.astro";
+import Image from "astro/components/Image.astro";
+---
+
+<div x-data class="flex flex-row justify-center">
+  <!-- left panel -->
+  <div
+    class="pr-[2.5vw]
+          min-w-[13vw]
+          overflow-y-auto
+          flex flex-col gap-y-8"
+  >
+    <div class="flex flex-col gap-y-2">
+      <Button
+        type="button"
+        label="Create Team"
+        onClick="$store.pages.teams.createTeam()"
+      />
+    </div>
+
+    <!-- teams list -->
+    <div x-data class="flex flex-col gap-y-3">
+      <div x-data class="flex flex-col gap-y-1">
+        <p class="text-sm text-gray-400">
+          Teams:
+          <span x-text="$store.pages.teams.teamsList.length"></span>
+        </p>
+        <hr class="border-gray-500/50" />
+      </div>
+      <template x-for="team in $store.pages.teams.teamsList" :key="team.id">
+        <ListButton
+          label="team.name"
+          id="team.id"
+          isSelected="isSelected() { return $store.pages.teams.selectedTeam == team.id; }"
+          onClick="$store.pages.teams.onTeamSelection(id)"
+        />
+      </template>
+    </div>
+  </div>
+
+  <!-- right panel -->
+  <div
+    class="pl-[2.5vw]
+          border-l-1
+          border-l-gray-500/50
+          grow
+          max-w-[50vw]"
+  >
+    <!-- placeholder for when no team is selected -->
+    <div
+      x-data
+      x-transition
+      x-show="$store.pages.teams.rightPanelState == 'placeholder'"
+      class="h-full w-full flex items-center justify-center"
+    >
+      <p class="text-gray-400 text-lg select-none">
+        Select or Create a Team to get started.
+      </p>
+    </div>
+
+    <!-- edit team form -->
+    <div
+      class="flex flex-col gap-5"
+      x-data
+      x-transition:enter="transition ease-out duration-400"
+      x-transition:enter-start="opacity-0 scale-85"
+      x-transition:enter-end="opacity-100 scale-100"
+      x-show="$store.pages.teams.rightPanelState == 'edit_team'"
+    >
+      <div>
+        <div
+          class="aspect-[16/5]
+                overflow-hidden
+                rounded-lg
+                brightness-80
+                w-full"
+        >
+          <Image
+            src="/images/activity_img_placeholder.jpg"
+            alt="team logo"
+            width="500"
+            height="200"
+            class="w-full"
+          />
+        </div>
+      </div>
+
+      <form
+        class="flex flex-col gap-5"
+        @submit.prevent="$store.pages.teams.onSaveChanges(event)"
+      >
+        <div class="flex flex-col gap-5">
+          <TextInput
+            name="teamName"
+            label="Team Name"
+            required
+            placeholder="Team Name"
+            value="$store.pages.teams.selectedTeamObj?.name || ''"
+          />
+          <TextArea
+            name="description"
+            label="Description"
+            placeholder="Team description and goals"
+            rows="10"
+            value="$store.pages.teams.selectedTeamObj?.description || ''"
+          />
+
+          <!-- Players List -->
+          <div class="flex flex-col gap-2">
+            <div class="flex justify-between items-center">
+              <label class="text-sm text-gray-400">Players</label>
+              <Button
+                type="button"
+                label="Add Player"
+                width="fit"
+                onClick="$store.pages.teams.addPlayer()"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <template
+                x-for="(player, index) in $store.pages.teams.selectedTeamObj?.players || []"
+                :key="index"
+              >
+                <div class="flex gap-2 items-center">
+                  <TextInput
+                    :name="'player_' + index"
+                    placeholder="Player Name"
+                    :value="player"
+                    @input="$store.pages.teams.updatePlayer(index, $event.target.value)"
+                  />
+                  <Button
+                    type="button"
+                    label="Remove"
+                    width="fit"
+                    onClick="$store.pages.teams.removePlayer(index)"
+                  />
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-5">
+          <Button type="submit" label="Save Changes" width="fit" />
+          <Button
+            type="button"
+            label="Delete Team"
+            width="fit"
+            onClick="$store.pages.teams.onDeleteTeam()"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

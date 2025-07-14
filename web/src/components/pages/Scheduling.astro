@@ -1,0 +1,327 @@
+---
+import TextInput from "../TextInput.astro";
+import TextArea from "../TextArea.astro";
+import Button from "../Button.astro";
+import DropDown from "../DropDown.astro";
+---
+
+<div class="flex h-full" x-data="{ showConfirm: false, sessionToLoad: null }">
+  <!-- Left pane: Current Schedule -->
+  <div
+    class="w-1/2 p-4 border-r border-gray-600"
+    @dragover.prevent="$store.scheduling.handleDragOver($event)"
+    @drop="$store.scheduling.handleDrop($event)"
+  >
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl">Current Schedule</h2>
+    </div>
+
+    <form
+      @submit.prevent="$store.scheduling.saveSession(event)"
+      class="flex flex-col gap-4"
+    >
+      <div class="flex flex-col gap-4">
+        <TextInput
+          name="sessionName"
+          label="Schedule Name"
+          required
+          placeholder="Schedule Name"
+          value="$store.scheduling.sessionName"
+        />
+        <TextInput
+          name="sessionDate"
+          label="Date"
+          required
+          type="date"
+          placeholder="DD-MM-YYYY"
+          value="$store.scheduling.sessionDate"
+        />
+        <div class="flex flex-col gap-1">
+          <label class="w-fit pl-0.5 text-sm text-gray-400">Team</label>
+          <select
+            class="bg-gray-900 text-white border border-white rounded-lg px-2 py-1"
+            x-model="$store.scheduling.selectedTeam"
+          >
+            <template
+              x-for="team in $store.pages.teams.teamsList"
+              :key="team.id"
+            >
+              <option :value="team.id" x-text="team.name"></option>
+            </template>
+          </select>
+        </div>
+        <TextArea
+          name="sessionNotes"
+          label="Notes"
+          placeholder="Add any notes or additional information about this schedule"
+          rows="4"
+          value="$store.scheduling.sessionNotes"
+        />
+      </div>
+
+      <template x-if="!$store.scheduling.sessionActivities.length">
+        <p class="text-gray-400">
+          Drag activities here to assemble your session.
+        </p>
+      </template>
+
+      <ul class="space-y-2">
+        <template
+          x-for="(act, idx) in $store.scheduling.sessionActivities"
+          :key="act.id"
+        >
+          <li class="flex justify-between items-center p-2 bg-gray-700 rounded">
+            <div class="flex items-center gap-2">
+              <div class="flex flex-col">
+                <button
+                  type="button"
+                  class="text-gray-400 hover:text-white"
+                  @click="$store.scheduling.moveActivityUp(idx)"
+                  :disabled="idx === 0"
+                  aria-label="Move activity up">&uarr;</button
+                >
+                <button
+                  type="button"
+                  class="text-gray-400 hover:text-white"
+                  @click="$store.scheduling.moveActivityDown(idx)"
+                  :disabled="idx === $store.scheduling.sessionActivities.length - 1"
+                  aria-label="Move activity down">&darr;</button
+                >
+              </div>
+              <div class="flex flex-col">
+                <span x-text="act.name" class="font-medium"></span>
+                <span x-text="act.duration" class="text-sm text-gray-400"
+                ></span>
+              </div>
+            </div>
+            <Button
+              type="button"
+              label="Remove"
+              width="fit"
+              onClick="$store.scheduling.removeFromSession(idx)"
+            />
+          </li>
+        </template>
+      </ul>
+
+      <Button type="submit" label="Save Session" width="fit" />
+    </form>
+  </div>
+
+  <!-- Right pane: Tabs -->
+  <div class="w-1/2 p-4">
+    <div class="flex border-b border-gray-600">
+      <button
+        class="px-4 py-2"
+        :class="{'border-b-2 border-white': $store.scheduling.selectedTab==='lists'}"
+        @click="$store.scheduling.switchTab('lists')">Lists</button
+      >
+      <button
+        class="px-4 py-2"
+        :class="{'border-b-2 border-white': $store.scheduling.selectedTab==='last'}"
+        @click="$store.scheduling.switchTab('last')">Last Session</button
+      >
+      <button
+        class="px-4 py-2"
+        :class="{'border-b-2 border-white': $store.scheduling.selectedTab==='history'}"
+        @click="$store.scheduling.switchTab('history')">History</button
+      >
+    </div>
+
+    <!-- LISTS TAB -->
+    <div x-show="$store.scheduling.selectedTab==='lists'" class="mt-4">
+      <DropDown
+        options="$store.pages.activities.listsNames"
+        defaultOption="All Activities"
+        onOptionSwitch="$store.pages.activities.onListSwitch(listToSelect)"
+      />
+      <ul class="mt-2 space-y-2">
+        <template
+          x-for="activity in $store.pages.activities.selectedListActivities"
+          :key="activity.id"
+        >
+          <li
+            class="p-2 bg-gray-800 rounded cursor-grab hover:bg-gray-700 transition-colors"
+            draggable="true"
+            @dragstart="$store.scheduling.handleDragStart($event, activity)"
+          >
+            <div class="flex justify-between items-center">
+              <span x-text="activity.name" class="font-medium"></span>
+              <span class="text-sm text-gray-400" x-text="activity.duration"
+              ></span>
+            </div>
+          </li>
+        </template>
+      </ul>
+    </div>
+
+    <!-- LAST SESSION TAB -->
+    <div x-show="$store.scheduling.selectedTab==='last'" class="mt-4">
+      <div class="mb-4">
+        <h3 class="text-lg font-medium">
+          <span x-text="$store.scheduling.lastSession.name"></span>
+        </h3>
+        <div class="text-sm text-gray-400 mt-1">
+          <span x-text="$store.scheduling.lastSession.date"></span>
+        </div>
+        <p
+          class="text-sm text-gray-400 mt-2"
+          x-text="$store.scheduling.lastSession.notes"
+        >
+        </p>
+        <p class="text-sm text-gray-400 mt-2">
+          Team: <span
+            x-text="$store.scheduling.lastSession.team ? $store.pages.teams.teamsList.find(t => t.id === $store.scheduling.lastSession.team)?.name : '---'"
+          ></span>
+        </p>
+      </div>
+      <ul class="space-y-2">
+        <template
+          x-for="id in $store.scheduling.lastSession.activities"
+          :key="id"
+        >
+          <li
+            class="p-2 bg-gray-800 rounded cursor-grab hover:bg-gray-700 transition-colors"
+            draggable="true"
+            @dragstart="$store.scheduling.handleDragStart($event, $store.scheduling.activitiesList.find(a => a.id === id))"
+          >
+            <div class="flex justify-between items-center">
+              <span
+                x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
+              ></span>
+              <span
+                class="text-sm text-gray-400"
+                x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
+              ></span>
+            </div>
+          </li>
+        </template>
+      </ul>
+      <button
+        class="mt-3 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition-colors"
+        @click="sessionToLoad = $store.scheduling.lastSession; showConfirm = true"
+      >
+        Load Session
+      </button>
+      <div
+        x-show="showConfirm"
+        x-cloak
+        class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
+      >
+        <div
+          class="bg-gray-800 p-6 rounded shadow-lg w-full max-w-sm text-center"
+        >
+          <p class="mb-6 text-white">
+            Loading a session will remove current activities. Continue?
+          </p>
+          <div class="flex justify-center gap-4">
+            <button
+              type="button"
+              class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+              @click="$store.scheduling.loadSession(sessionToLoad); showConfirm = false"
+            >
+              Confirm
+            </button>
+            <button
+              type="button"
+              class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+              @click="showConfirm = false"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY TAB -->
+    <div x-show="$store.scheduling.selectedTab==='history'" class="mt-4">
+      <ul class="space-y-2">
+        <template
+          x-for="sess in $store.scheduling.previousSessions"
+          :key="sess.id"
+        >
+          <li
+            class="flex flex-col p-2 bg-gray-800 rounded hover:bg-gray-900 transition-colors cursor-pointer"
+            @click="$store.scheduling.toggleSessionDetails(sess.id)"
+          >
+            <div class="flex justify-between items-center">
+              <div>
+                <span x-text="sess.name" class="font-medium"></span>
+                <span x-text="sess.date" class="text-sm text-gray-400 ml-2"
+                ></span>
+              </div>
+            </div>
+
+            <!-- Expanded Details -->
+            <div
+              x-show="$store.scheduling.expandedSessions[sess.id]"
+              x-transition
+              class="mt-2 pt-2 border-t border-gray-600"
+            >
+              <p x-text="sess.notes" class="text-sm text-gray-400 mb-2"></p>
+              <p class="text-sm text-gray-400 mb-2">
+                Team: <span
+                  x-text="sess.team ? $store.pages.teams.teamsList.find(t => t.id === sess.team)?.name : '---'"
+                ></span>
+              </p>
+              <ul class="space-y-1">
+                <template x-for="id in sess.activities" :key="id">
+                  <li
+                    class="p-2 bg-gray-700 rounded cursor-grab hover:bg-gray-600 transition-colors"
+                    draggable="true"
+                    @dragstart="$store.scheduling.handleDragStart($event, $store.scheduling.activitiesList.find(a => a.id === id))"
+                  >
+                    <div class="flex justify-between items-center">
+                      <span
+                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
+                      ></span>
+                      <span
+                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
+                        class="text-sm text-gray-400"></span>
+                    </div>
+                  </li>
+                </template>
+              </ul>
+              <button
+                class="mt-2 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition-colors"
+                @click="sessionToLoad = sess; showConfirm = true"
+              >
+                Load Session
+              </button>
+            </div>
+          </li>
+        </template>
+      </ul>
+      <div
+        x-show="showConfirm"
+        x-cloak
+        class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
+      >
+        <div
+          class="bg-gray-800 p-6 rounded shadow-lg w-full max-w-sm text-center"
+        >
+          <p class="mb-6 text-white">
+            Loading a session will remove current activities. Continue?
+          </p>
+          <div class="flex justify-center gap-4">
+            <button
+              type="button"
+              class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+              @click="$store.scheduling.loadSession(sessionToLoad); showConfirm = false"
+            >
+              Confirm
+            </button>
+            <button
+              type="button"
+              class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+              @click="showConfirm = false"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
