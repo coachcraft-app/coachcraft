@@ -1,26 +1,28 @@
 ---
-var { label, href, isSelected = false } = Astro.props;
+var { label, page, isSelected = false } = Astro.props;
 ---
 
-<a
+<button
   type="button"
-  href={href}
-  class={`whitespace-nowrap
-        ${isSelected ? "bg-low-contrast-grey" : "bg-transparent"}
-        border border-primary
-        px-4 py-2
-        text-sm font-medium
-        text-primary
-        text-left
-        tracking-wide
-        transition
-        hover:opacity-75
-        focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
-        active:opacity-100 active:outline-offset-0
-        disabled:opacity-75 disabled:cursor-not-allowed
-        dark:border-low-contrast-grey
-        dark:focus-visible:outline-primary-dark
-        rounded-lg`}
+  @click={`$store.router.navigateTo('${page}')`}
+  class="whitespace-nowrap
+      border border-primary
+      px-4 py-2
+      text-sm font-medium
+      text-primary text-left
+      tracking-wide
+      transition hover:opacity-75
+      focus-visible:outline-2
+      focus-visible:outline-offset-2
+      focus-visible:outline-primary
+      active:opacity-100
+      active:outline-offset-0
+      disabled:opacity-75
+      disabled:cursor-not-allowed
+      dark:border-low-contrast-grey
+      dark:focus-visible:outline-primary-dark
+      rounded-lg"
+  x-bind:class={`${isSelected} ? 'bg-low-contrast-grey' : 'bg-transparent'`}
 >
   {label}
-</a>
+</button>
