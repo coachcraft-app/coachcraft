@@ -2,6 +2,7 @@ import collapse from "@alpinejs/collapse";
 import focus from "@alpinejs/focus";
 import mask from "@alpinejs/mask";
 
+import routerStore from "./stores/routerStore.js";
 import activitiesStore from "./stores/pages/activitiesStore.js";
 import schedulingStore from "./stores/pages/schedulingStore.js";
 import teamsStore from "./stores/pages/teamsStore.js";
@@ -16,6 +17,9 @@ export default (Alpine) => {
   Alpine.plugin(mask);
 
   Alpine.store("pages", {});
+
+  // Initialize stores
+  routerStore(Alpine);
   activitiesStore(Alpine);
   schedulingStore(Alpine);
   teamsStore(Alpine);
@@ -23,4 +27,7 @@ export default (Alpine) => {
   dashboardStore(Alpine);
   notesStore(Alpine);
   settingsStore(Alpine);
+
+  // Initialize router
+  Alpine.store("router").init();
 };

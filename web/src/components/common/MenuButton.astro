@@ -4,7 +4,7 @@ var { label, page, isSelected = false } = Astro.props;
 
 <button
   type="button"
-  @click={`$store.router.navigateTo('${page}')`}
+  @click={`$store.router.currentPage = '${page}'`}
   class="whitespace-nowrap
       border border-primary
       px-4 py-2

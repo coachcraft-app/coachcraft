@@ -29,37 +29,37 @@ import "../styles/global.css";
       <div class="w-full flex justify-center mt-10">
         <div class="min-w-[80vw]">
           <!-- Dashboard Page -->
-          <div x-show="$store.router.isCurrentPage('dashboard')" x-transition>
+          <div x-show="$store.router.currentPage === 'dashboard'" x-transition>
             <Dashboard />
           </div>
 
           <!-- Activities Page -->
-          <div x-show="$store.router.isCurrentPage('activities')" x-transition>
+          <div x-show="$store.router.currentPage === 'activities'" x-transition>
             <Activities />
           </div>
 
           <!-- Notes Page -->
-          <div x-show="$store.router.isCurrentPage('notes')" x-transition>
+          <div x-show="$store.router.currentPage === 'notes'" x-transition>
             <Notes />
           </div>
 
           <!-- Scheduling Page -->
-          <div x-show="$store.router.isCurrentPage('scheduling')" x-transition>
+          <div x-show="$store.router.currentPage === 'scheduling'" x-transition>
             <Scheduling />
           </div>
 
           <!-- Sessions Page -->
-          <div x-show="$store.router.isCurrentPage('sessions')" x-transition>
+          <div x-show="$store.router.currentPage === 'sessions'" x-transition>
             <Sessions />
           </div>
 
           <!-- Teams Page -->
-          <div x-show="$store.router.isCurrentPage('teams')" x-transition>
+          <div x-show="$store.router.currentPage === 'teams'" x-transition>
             <Teams />
           </div>
 
           <!-- Settings Page -->
-          <div x-show="$store.router.isCurrentPage('settings')" x-transition>
+          <div x-show="$store.router.currentPage === 'settings'" x-transition>
             <Settings />
           </div>
         </div>

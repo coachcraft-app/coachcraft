@@ -1,7 +1,5 @@
 ---
-import MenuButton from "../MenuButton.astro";
-
-const currentURL = Astro.url.pathname;
+import MenuButton from "../common/MenuButton.astro";
 ---
 
 <div x-data="{ sidebarIsOpen: false }" class="relative">
@@ -31,38 +29,38 @@ const currentURL = Astro.url.pathname;
     <div class="flex flex-col gap-3 overflow-y-auto w-full">
       <MenuButton
         label="Dashboard"
-        href="/"
-        isSelected={currentURL == "/" || ""}
+        page="dashboard"
+        isSelected="$store.router.currentPage === 'dashboard'"
       />
       <MenuButton
         label="Activities"
-        href="/activities/"
-        isSelected={currentURL.startsWith("/activities")}
+        page="activities"
+        isSelected="$store.router.currentPage === 'activities'"
       />
       <MenuButton
         label="Notes"
-        href="/notes/"
-        isSelected={currentURL.startsWith("/notes")}
+        page="notes"
+        isSelected="$store.router.currentPage === 'notes'"
       />
       <MenuButton
         label="Scheduling"
-        href="/scheduling/"
-        isSelected={currentURL.startsWith("/scheduling")}
+        page="scheduling"
+        isSelected="$store.router.currentPage === 'scheduling'"
       />
       <MenuButton
         label="Sessions"
-        href="/sessions/"
-        isSelected={currentURL.startsWith("/sessions")}
+        page="sessions"
+        isSelected="$store.router.currentPage === 'sessions'"
       />
       <MenuButton
         label="Teams"
-        href="/teams/"
-        isSelected={currentURL.startsWith("/teams")}
+        page="teams"
+        isSelected="$store.router.currentPage === 'teams'"
       />
       <MenuButton
         label="Settings"
-        href="/settings/"
-        isSelected={currentURL.startsWith("/settings")}
+        page="settings"
+        isSelected="$store.router.currentPage === 'settings'"
       />
     </div>
   </nav>
