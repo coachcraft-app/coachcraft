@@ -1,15 +1,28 @@
 ---
-var { label, href, isSelected = false } = Astro.props;
+import reactify from "../../utils/reactify";
+
+var { label, width = "full", type, onClick = "" } = Astro.props;
+
+const x_data = `{
+  ${reactify(onClick, "onClick")}
+}`;
 ---
 
-<a
-  type="button"
-  href={href}
+<input
+  type={type}
+  value={label}
+  x-data={x_data}
+  @click="onClick"
   class={`whitespace-nowrap
-        ${isSelected ? "bg-low-contrast-grey" : "bg-transparent"}
+        bg-transparent
+        rounded-radius
+        block
         border border-primary
-        px-4 py-2
+        w-${width}
+        pl-4 pr-4 py-1.5
         text-sm font-medium
+        cursor-pointer
+        select-none
         text-primary
         text-left
         tracking-wide
@@ -21,6 +34,4 @@ var { label, href, isSelected = false } = Astro.props;
         dark:border-low-contrast-grey
         dark:focus-visible:outline-primary-dark
         rounded-lg`}
->
-  {label}
-</a>
+/>

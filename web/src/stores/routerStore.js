@@ -1,0 +1,32 @@
+export default function routerStore(Alpine) {
+  Alpine.store("router", {
+    defaultPage: "dashboard",
+    currentPage: "",
+
+    // Initialize router
+    // uses "hash based routing", allowing for changing the URL manually and having the SPA react to the change
+    init() {
+      // Set initial page based on URL hash or to the default
+      const hash = window.location.hash.slice(1); // removing the # from "#dashboard" || "#settings" etc
+      this.currentPage = hash || this.defaultPage;
+
+      // Listen for hash changes
+      window.addEventListener("hashchange", () => {
+        const hash = window.location.hash.slice(1);
+        this.currentPage = hash || this.defaultPage;
+      });
+
+      // Peg window.location.hash to this.currentPage
+      Alpine.effect(() => {
+        if (this.currentPage) {
+          window.location.hash = this.currentPage;
+
+          // Reactively update document title
+          const title =
+            this.currentPage?.[0]?.toUpperCase() + this.currentPage?.slice(1);
+          document.title = `CoachCraft ${title}`;
+        }
+      });
+    },
+  });
+}
