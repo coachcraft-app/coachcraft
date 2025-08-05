@@ -1,23 +1,8 @@
 {
-  // "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.documentSelectors": ["**/*.{astro,css,md,yaml}"],
-  "tailwindCSS.experimental.configFile": "web/src/styles/global.css",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
 
-  "[astro]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  // provide IntelliSense for TailwindCSS
+  "tailwindCSS.experimental.configFile": "web/src/styles/global.css",
 
   "editor.formatOnSave": true
 }
