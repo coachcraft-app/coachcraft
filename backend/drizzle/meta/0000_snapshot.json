@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "60dff24e-5a01-4203-9d3d-755a6f449e0e",
+  "id": "52920b64-29ed-4a0c-a142-abd59519b401",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "activity": {
@@ -21,8 +21,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "title": {
-          "name": "title",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -42,6 +42,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "img_url": {
+          "name": "img_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "lastModified": {
           "name": "lastModified",
           "type": "integer",
@@ -52,10 +59,10 @@
         }
       },
       "indexes": {
-        "activity_title_unique": {
-          "name": "activity_title_unique",
+        "activity_name_unique": {
+          "name": "activity_name_unique",
           "columns": [
-            "title"
+            "name"
           ],
           "isUnique": true
         }
@@ -155,8 +162,8 @@
           "notNull": true,
           "autoincrement": true
         },
-        "title": {
-          "name": "title",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -176,6 +183,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "img_url": {
+          "name": "img_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "lastModified": {
           "name": "lastModified",
           "type": "integer",
@@ -186,10 +200,10 @@
         }
       },
       "indexes": {
-        "activity_template_title_unique": {
-          "name": "activity_template_title_unique",
+        "activity_template_name_unique": {
+          "name": "activity_template_name_unique",
           "columns": [
-            "title"
+            "name"
           ],
           "isUnique": true
         }
@@ -209,8 +223,15 @@
           "notNull": true,
           "autoincrement": true
         },
-        "title": {
-          "name": "title",
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "accentColor": {
+          "name": "accentColor",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -223,6 +244,38 @@
           "notNull": true,
           "autoincrement": false,
           "default": "(unixepoch())"
+        }
+      },
+      "indexes": {
+        "list_name_unique": {
+          "name": "list_name_unique",
+          "columns": [
+            "name"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "note": {
+      "name": "note",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "text": {
+          "name": "text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -240,6 +293,13 @@
           "primaryKey": true,
           "notNull": true,
           "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         },
         "user": {
           "name": "user",
@@ -262,9 +322,23 @@
           "notNull": true,
           "autoincrement": false,
           "default": "(unixepoch())"
+        },
+        "notes": {
+          "name": "notes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {
+        "session_name_unique": {
+          "name": "session_name_unique",
+          "columns": [
+            "name"
+          ],
+          "isUnique": true
+        },
         "session_date_unique": {
           "name": "session_date_unique",
           "columns": [
@@ -274,12 +348,12 @@
         }
       },
       "foreignKeys": {
-        "session_user_user_id_fk": {
-          "name": "session_user_user_id_fk",
+        "session_notes_note_id_fk": {
+          "name": "session_notes_note_id_fk",
           "tableFrom": "session",
-          "tableTo": "user",
+          "tableTo": "note",
           "columnsFrom": [
-            "user"
+            "notes"
           ],
           "columnsTo": [
             "id"
@@ -291,79 +365,6 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
-    },
-    "user": {
-      "name": "user",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": true
-        },
-        "username": {
-          "name": "username",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "email": {
-          "name": "email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "firstname": {
-          "name": "firstname",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "lastname": {
-          "name": "lastname",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "last_login": {
-          "name": "last_login",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "role": {
-          "name": "role",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'anonymous'"
-        },
-        "lastModified": {
-          "name": "lastModified",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(unixepoch())"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {
-        "role_check": {
-          "name": "role_check",
-          "value": "\"user\".\"role\" in ('coach', 'parent', 'anonymous')"
-        }
-      }
     }
   },
   "views": {},
