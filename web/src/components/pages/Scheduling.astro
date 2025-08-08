@@ -129,7 +129,7 @@ import DropDown from "../common/DropDown.astro";
     </div>
 
     <!-- LISTS TAB -->
-    <div x-show="$store.scheduling.selectedTab==='lists'" class="mt-4">
+    <div x-cloak x-show="$store.scheduling.selectedTab==='lists'" class="mt-4">
       <DropDown
         options="$store.pages.activities.listsNames"
         defaultOption="All Activities"
@@ -156,7 +156,7 @@ import DropDown from "../common/DropDown.astro";
     </div>
 
     <!-- LAST SESSION TAB -->
-    <div x-show="$store.scheduling.selectedTab==='last'" class="mt-4">
+    <div x-cloak x-show="$store.scheduling.selectedTab==='last'" class="mt-4">
       <div class="mb-4">
         <h3 class="text-lg font-medium">
           <span x-text="$store.scheduling.lastSession.name"></span>
@@ -204,6 +204,7 @@ import DropDown from "../common/DropDown.astro";
         Load Session
       </button>
       <div
+        x-cloak
         x-show="showConfirm"
         x-cloak
         class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
@@ -235,7 +236,11 @@ import DropDown from "../common/DropDown.astro";
     </div>
 
     <!-- HISTORY TAB -->
-    <div x-show="$store.scheduling.selectedTab==='history'" class="mt-4">
+    <div
+      x-cloak
+      x-show="$store.scheduling.selectedTab==='history'"
+      class="mt-4"
+    >
       <ul class="space-y-2">
         <template
           x-for="sess in $store.scheduling.previousSessions"
@@ -255,6 +260,7 @@ import DropDown from "../common/DropDown.astro";
 
             <!-- Expanded Details -->
             <div
+              x-cloak
               x-show="$store.scheduling.expandedSessions[sess.id]"
               x-transition
               class="mt-2 pt-2 border-t border-gray-600"
@@ -294,8 +300,8 @@ import DropDown from "../common/DropDown.astro";
         </template>
       </ul>
       <div
-        x-show="showConfirm"
         x-cloak
+        x-show="showConfirm"
         class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
       >
         <div

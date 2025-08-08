@@ -74,6 +74,7 @@ import Image from "astro/components/Image.astro";
     <div
       x-data
       x-transition
+      x-cloak
       x-show="$store.pages.activities.rightPanelState == 'placeholder'"
       class="h-full w-full flex items-center justify-center"
     >
@@ -86,6 +87,7 @@ import Image from "astro/components/Image.astro";
     <div
       x-data
       x-transition
+      x-cloak
       x-show="$store.pages.activities.rightPanelState == 'manage_lists'"
       class="h-full flex flex-col gap-25"
     >
@@ -145,6 +147,7 @@ import Image from "astro/components/Image.astro";
       x-transition:enter="transition ease-out duration-400"
       x-transition:enter-start="opacity-0 scale-85"
       x-transition:enter-end="opacity-100 scale-100"
+      x-cloak
       x-show="$store.pages.activities.rightPanelState == 'edit_activity'"
     >
       <!-- activity image -->
@@ -211,6 +214,7 @@ import Image from "astro/components/Image.astro";
 
         <!-- enlarged image popup -->
         <div
+          x-cloak
           x-show="isEnlarged"
           x-transition:enter="transition ease-out duration-300"
           x-transition:enter-start="opacity-0"

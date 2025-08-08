@@ -54,6 +54,7 @@ import Image from "astro/components/Image.astro";
     <div
       x-data
       x-transition
+      x-cloak
       x-show="$store.pages.teams.rightPanelState == 'placeholder'"
       class="h-full w-full flex items-center justify-center"
     >
@@ -69,6 +70,7 @@ import Image from "astro/components/Image.astro";
       x-transition:enter="transition ease-out duration-400"
       x-transition:enter-start="opacity-0 scale-85"
       x-transition:enter-end="opacity-100 scale-100"
+      x-cloak
       x-show="$store.pages.teams.rightPanelState == 'edit_team'"
     >
       <div>

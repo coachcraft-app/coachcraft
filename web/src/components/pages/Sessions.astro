@@ -24,7 +24,7 @@
     </div>
 
     <!-- Upcoming Sessions -->
-    <div x-show="activeTab === 'upcoming'">
+    <div x-cloak x-show="activeTab === 'upcoming'">
       <ul class="space-y-2">
         <template
           x-for="sess in $store.scheduling.upcomingSessions"
@@ -113,6 +113,7 @@
                     </div>
                     <div
                       class="mt-1 text-sm text-gray-300"
+                      x-cloak
                       x-show="expandedActivitiesUpcoming[sess.id + '-' + id]"
                       x-transition
                       x-text="$store.scheduling.activitiesList.find(a => a.id === id).description"
@@ -128,7 +129,7 @@
     </div>
 
     <!-- Previous Sessions -->
-    <div x-show="activeTab === 'previous'">
+    <div x-cloak x-show="activeTab === 'previous'">
       <ul class="space-y-2">
         <template
           x-for="sess in $store.scheduling.previousSessions"
@@ -208,6 +209,7 @@
                     </div>
                     <div
                       class="mt-1 text-sm text-gray-300"
+                      x-cloak
                       x-show="expandedActivitiesPrevious[sess.id + '-' + id]"
                       x-transition
                       x-text="$store.scheduling.activitiesList.find(a => a.id === id).description"
@@ -225,8 +227,8 @@
 
   <!-- Confirmation -->
   <div
-    x-show="showConfirm"
     x-cloak
+    x-show="showConfirm"
     class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
   >
     <div class="bg-gray-800 p-6 rounded shadow-lg w-full max-w-sm text-center">
@@ -254,8 +256,8 @@
 
   <!-- Delete Confirmation -->
   <div
-    x-show="showDeleteConfirm"
     x-cloak
+    x-show="showDeleteConfirm"
     class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
   >
     <div class="bg-gray-800 p-6 rounded shadow-lg w-full max-w-sm text-center">
