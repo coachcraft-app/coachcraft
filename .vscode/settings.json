@@ -1,8 +1,15 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  "editor.codeActionsOnSave": {
+    // runs eslint on save, dependent on dbaeumer.vscode-eslint extension
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // make VSCode show ESLint rule errors as warnings, since they can be distracting
+  "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
 
   // provide IntelliSense for TailwindCSS
-  "tailwindCSS.experimental.configFile": "web/src/styles/global.css",
-
-  "editor.formatOnSave": true
+  "tailwindCSS.experimental.configFile": "web/src/styles/global.css"
 }
