@@ -4,6 +4,7 @@ import MenuButton from "../common/MenuButton.astro";
 
 <div x-data="{ sidebarIsOpen: false }" class="relative">
   <div
+    x-cloak
     x-show="sidebarIsOpen"
     class="fixed inset-0 z-20 bg-surface-dark/10 backdrop-blur-xs md:hidden"
     aria-hidden="true"
