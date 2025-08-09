@@ -1,5 +1,6 @@
 node_modules
 .idea
 .astro
+.env
 /backend/public
 /web/dist
