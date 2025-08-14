@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "52920b64-29ed-4a0c-a142-abd59519b401",
+  "id": "5dda3b6c-3920-4c1c-8a49-c4f3d1be0847",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "activity": {
@@ -260,8 +260,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "note": {
-      "name": "note",
+    "players": {
+      "name": "players",
       "columns": {
         "id": {
           "name": "id",
@@ -270,16 +270,45 @@
           "notNull": true,
           "autoincrement": true
         },
-        "text": {
-          "name": "text",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "team": {
+          "name": "team",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "lastModified": {
+          "name": "lastModified",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch())"
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "players_team_teams_id_fk": {
+          "name": "players_team_teams_id_fk",
+          "tableFrom": "players",
+          "tableTo": "teams",
+          "columnsFrom": [
+            "team"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
@@ -301,13 +330,6 @@
           "notNull": true,
           "autoincrement": false
         },
-        "user": {
-          "name": "user",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
         "date": {
           "name": "date",
           "type": "integer",
@@ -325,6 +347,13 @@
         },
         "notes": {
           "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "team": {
+          "name": "team",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
@@ -348,12 +377,12 @@
         }
       },
       "foreignKeys": {
-        "session_notes_note_id_fk": {
-          "name": "session_notes_note_id_fk",
+        "session_team_teams_id_fk": {
+          "name": "session_team_teams_id_fk",
           "tableFrom": "session",
-          "tableTo": "note",
+          "tableTo": "teams",
           "columnsFrom": [
-            "notes"
+            "team"
           ],
           "columnsTo": [
             "id"
@@ -362,6 +391,53 @@
           "onUpdate": "cascade"
         }
       },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "teams": {
+      "name": "teams",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lastModified": {
+          "name": "lastModified",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch())"
+        }
+      },
+      "indexes": {
+        "teams_name_unique": {
+          "name": "teams_name_unique",
+          "columns": [
+            "name"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
