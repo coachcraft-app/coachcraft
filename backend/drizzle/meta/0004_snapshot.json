@@ -61,9 +61,7 @@
       "indexes": {
         "activity_name_unique": {
           "name": "activity_name_unique",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         }
       },
@@ -72,12 +70,8 @@
           "name": "activity_session_session_id_fk",
           "tableFrom": "activity",
           "tableTo": "session",
-          "columnsFrom": [
-            "session"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["session"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -125,12 +119,8 @@
           "name": "activity_template_list_activity_template_activity_template_id_fk",
           "tableFrom": "activity_template_list",
           "tableTo": "activity_template",
-          "columnsFrom": [
-            "activity_template"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["activity_template"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
@@ -138,12 +128,8 @@
           "name": "activity_template_list_list_list_id_fk",
           "tableFrom": "activity_template_list",
           "tableTo": "list",
-          "columnsFrom": [
-            "list"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["list"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -202,9 +188,7 @@
       "indexes": {
         "activity_template_name_unique": {
           "name": "activity_template_name_unique",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         }
       },
@@ -288,9 +272,7 @@
       "indexes": {
         "session_date_unique": {
           "name": "session_date_unique",
-          "columns": [
-            "date"
-          ],
+          "columns": ["date"],
           "isUnique": true
         }
       },
@@ -299,12 +281,8 @@
           "name": "session_user_user_id_fk",
           "tableFrom": "session",
           "tableTo": "user",
-          "columnsFrom": [
-            "user"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }

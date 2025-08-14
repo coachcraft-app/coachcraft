@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import "dotenv/config";
 import express, { Request, Response, NextFunction } from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -9,8 +9,8 @@ import { error } from "./middleware/error.ts";
 import { notFound } from "./middleware/not-found.ts";
 
 // Routes
-import user from "./routes/user.ts"
-import activity from "./routes/activity.ts"
+import user from "./routes/user.ts";
+import activity from "./routes/activity.ts";
 import list from "./routes/list.ts";
 
 // Get __dirname for setup because we are using ES6 modules by default
@@ -22,9 +22,12 @@ app.use(express.urlencoded({ extended: true }));
 app.set("x-powered-by", false);
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept",
+  );
+  next();
 });
 
 // ----- REST APIS -----
@@ -40,7 +43,7 @@ app.use(auth);
 app.use("/api", user);
 
 // Serve the public directory
-app.use(express.static(path.join(__dirname, '../public/')));
+app.use(express.static(path.join(__dirname, "../public/")));
 
 // ----- ERRORS -----
 app.use(notFound);

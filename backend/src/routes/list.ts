@@ -1,5 +1,11 @@
-import {Router} from "express";
-import {getAllLists, getList, postList, putList, deleteList} from "../handlers/list.js";
+import { Router } from "express";
+import {
+  getAllLists,
+  getList,
+  postList,
+  putList,
+  deleteList,
+} from "../handlers/list.js";
 
 const list = Router();
 
