@@ -1,4 +1,4 @@
-import { Sync } from "../../utils/sync.js"
+import { Sync } from "../../utils/sync.js";
 
 export default function activitiesStore(Alpine) {
   Alpine.store("pages").activities = {
@@ -254,7 +254,6 @@ export default function activitiesStore(Alpine) {
         (list) => list.name == listToSelect,
       ).id;
     },
-    onManageListsAccentColorPreviewSwitch(colorToPreview) {},
     onManageListsSaveChanges(event) {
       event.preventDefault();
       const listData = Object.fromEntries(new FormData(event.target));
@@ -339,7 +338,7 @@ export default function activitiesStore(Alpine) {
 
         // add to currently selected list, unless "All Activities" is selected
         if (this.selectedList !== "default") {
-          const list = this.listsList
+          this.listsList
             .find((list) => list.id == this.selectedList)
             .activities.unshift(activity.id);
         }
@@ -387,5 +386,8 @@ export default function activitiesStore(Alpine) {
     // fetch data from API
     async fetchData() {},
   };
-  Alpine.store("pages").activities.sync = new Sync(Alpine.store("pages").activities.activitiesList, Alpine.store("pages").activities.listsList)
+  Alpine.store("pages").activities.sync = new Sync(
+    Alpine.store("pages").activities.activitiesList,
+    Alpine.store("pages").activities.listsList,
+  );
 }

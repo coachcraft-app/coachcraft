@@ -16,6 +16,8 @@
   --color-team-red: #eb1c2b;
 }
 
+[x-cloak] { display: none !important; }
+
 :root {
   color-scheme: dark;
   font-family: Inter, sans-serif;
