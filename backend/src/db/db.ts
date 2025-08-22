@@ -1,19 +1,23 @@
-import 'dotenv/config';
-import { BetterSQLite3Database, drizzle } from 'drizzle-orm/better-sqlite3';
-import logger from '../logger.js';
-import * as dbSchema from '../db/schema.js';
-import { inspect } from 'util';
+import "dotenv/config";
+import { BetterSQLite3Database, drizzle } from "drizzle-orm/better-sqlite3";
+import logger from "../logger.js";
+import * as dbSchema from "../db/schema.js";
+import { inspect } from "util";
 
 const db_file: string = process.env.DEV_DB_URL || ":memory:";
 
 if (db_file === ":memory:") {
-    logger.warn(".env property DEV_DB_URL not set! Using impermanent memory as database storage.")
+  logger.warn(
+    ".env property DEV_DB_URL not set! Using impermanent memory as database storage.",
+  );
 }
 
-export const db: BetterSQLite3Database<typeof dbSchema> = drizzle(db_file, { schema: dbSchema });
+export const db: BetterSQLite3Database<typeof dbSchema> = drizzle(db_file, {
+  schema: dbSchema,
+});
 
 const result = await db.query.sessions.findMany({
-    with: {
-        activities: true
-    }
+  with: {
+    activities: true,
+  },
 });
