@@ -1,52 +1,50 @@
-import "dotenv/config";
-import express, { Request, Response, NextFunction } from "express";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import fastify from "fastify";
+import type { FastifyReply, FastifyRequest } from 'fastify';
+import { createYoga, useExecutionCancellation } from "graphql-yoga";
+import { ruruHTML } from "ruru/server";
 
-// Middleware
-import auth from "./middleware/auth.ts";
-import { error } from "./middleware/error.ts";
-import { notFound } from "./middleware/not-found.ts";
+import { schema } from './graphql/schema.js'
+import { createContext } from "./graphql/context.js";
 
-// Routes
-import user from "./routes/user.ts";
-import activity from "./routes/activity.ts";
-import list from "./routes/list.ts";
+import logger from './logger.js';
 
-// Get __dirname for setup because we are using ES6 modules by default
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.set("x-powered-by", false);
+export const app = fastify();
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept",
-  );
-  next();
+export const yoga = createYoga<{
+    req: FastifyRequest,
+    reply: FastifyReply
+}>({
+    schema,
+    // Give database and other variables to resolvers
+    context: createContext,
+    // enable Fastify logging
+    logging: {
+        debug: (...args) => {
+            for (const arg of args) app.log.debug(arg);
+        },
+        info: (...args) => {
+            for (const arg of args) app.log.info(arg);
+        },
+        warn: (...args) => {
+            for (const arg of args) app.log.warn(arg);
+        },
+        error: (...args) => {
+            for (const arg of args) app.log.error(arg);
+        },
+    },
 });
 
-// ----- REST APIS -----
-// /api/activity api
-app.use("/api", activity);
-app.use("/api", list);
+// Yoga needs this to avoid errors with multipart data
+app.addContentTypeParser('multipart/form-data', {}, (_req, _payload, done) => done(null));
 
-// ----- WEB APPLICATION -----
-// Auth0 for web application
-app.use(auth);
-
-// /api/user api secured via Auth0
-app.use("/api", user);
-
-// Serve the public directory
-app.use(express.static(path.join(__dirname, "../public/")));
-
-// ----- ERRORS -----
-app.use(notFound);
-app.use(error);
-
-export default app;
+// add /graphql endpoint
+app.route({
+    url: yoga.graphqlEndpoint,
+    method: ['GET', 'POST', 'OPTIONS'],
+    handler: (req, reply) =>
+    yoga.handleNodeRequestAndResponse(req, reply, {
+        req,
+        reply,
+    }),
+});

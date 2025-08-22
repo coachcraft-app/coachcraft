@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "60dff24e-5a01-4203-9d3d-755a6f449e0e",
+  "id": "5dda3b6c-3920-4c1c-8a49-c4f3d1be0847",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "activity": {
@@ -21,8 +21,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "title": {
-          "name": "title",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -42,6 +42,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "img_url": {
+          "name": "img_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "lastModified": {
           "name": "lastModified",
           "type": "integer",
@@ -52,9 +59,11 @@
         }
       },
       "indexes": {
-        "activity_title_unique": {
-          "name": "activity_title_unique",
-          "columns": ["title"],
+        "activity_name_unique": {
+          "name": "activity_name_unique",
+          "columns": [
+            "name"
+          ],
           "isUnique": true
         }
       },
@@ -63,8 +72,12 @@
           "name": "activity_session_session_id_fk",
           "tableFrom": "activity",
           "tableTo": "session",
-          "columnsFrom": ["session"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "session"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -112,8 +125,12 @@
           "name": "activity_template_list_activity_template_activity_template_id_fk",
           "tableFrom": "activity_template_list",
           "tableTo": "activity_template",
-          "columnsFrom": ["activity_template"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "activity_template"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
@@ -121,8 +138,12 @@
           "name": "activity_template_list_list_list_id_fk",
           "tableFrom": "activity_template_list",
           "tableTo": "list",
-          "columnsFrom": ["list"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "list"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -141,8 +162,8 @@
           "notNull": true,
           "autoincrement": true
         },
-        "title": {
-          "name": "title",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -162,6 +183,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "img_url": {
+          "name": "img_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "lastModified": {
           "name": "lastModified",
           "type": "integer",
@@ -172,9 +200,11 @@
         }
       },
       "indexes": {
-        "activity_template_title_unique": {
-          "name": "activity_template_title_unique",
-          "columns": ["title"],
+        "activity_template_name_unique": {
+          "name": "activity_template_name_unique",
+          "columns": [
+            "name"
+          ],
           "isUnique": true
         }
       },
@@ -193,8 +223,15 @@
           "notNull": true,
           "autoincrement": true
         },
-        "title": {
-          "name": "title",
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "accentColor": {
+          "name": "accentColor",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -209,8 +246,69 @@
           "default": "(unixepoch())"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "list_name_unique": {
+          "name": "list_name_unique",
+          "columns": [
+            "name"
+          ],
+          "isUnique": true
+        }
+      },
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "players": {
+      "name": "players",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "team": {
+          "name": "team",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "lastModified": {
+          "name": "lastModified",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "players_team_teams_id_fk": {
+          "name": "players_team_teams_id_fk",
+          "tableFrom": "players",
+          "tableTo": "teams",
+          "columnsFrom": [
+            "team"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
@@ -225,9 +323,9 @@
           "notNull": true,
           "autoincrement": true
         },
-        "user": {
-          "name": "user",
-          "type": "integer",
+        "name": {
+          "name": "name",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -246,22 +344,49 @@
           "notNull": true,
           "autoincrement": false,
           "default": "(unixepoch())"
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "team": {
+          "name": "team",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {
+        "session_name_unique": {
+          "name": "session_name_unique",
+          "columns": [
+            "name"
+          ],
+          "isUnique": true
+        },
         "session_date_unique": {
           "name": "session_date_unique",
-          "columns": ["date"],
+          "columns": [
+            "date"
+          ],
           "isUnique": true
         }
       },
       "foreignKeys": {
-        "session_user_user_id_fk": {
-          "name": "session_user_user_id_fk",
+        "session_team_teams_id_fk": {
+          "name": "session_team_teams_id_fk",
           "tableFrom": "session",
-          "tableTo": "user",
-          "columnsFrom": ["user"],
-          "columnsTo": ["id"],
+          "tableTo": "teams",
+          "columnsFrom": [
+            "team"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -270,8 +395,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "user": {
-      "name": "user",
+    "teams": {
+      "name": "teams",
       "columns": {
         "id": {
           "name": "id",
@@ -280,48 +405,19 @@
           "notNull": true,
           "autoincrement": true
         },
-        "username": {
-          "name": "username",
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
-        },
-        "email": {
-          "name": "email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "firstname": {
-          "name": "firstname",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "lastname": {
-          "name": "lastname",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "last_login": {
-          "name": "last_login",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "role": {
-          "name": "role",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'anonymous'"
         },
         "lastModified": {
           "name": "lastModified",
@@ -332,16 +428,19 @@
           "default": "(unixepoch())"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "teams_name_unique": {
+          "name": "teams_name_unique",
+          "columns": [
+            "name"
+          ],
+          "isUnique": true
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "checkConstraints": {
-        "role_check": {
-          "name": "role_check",
-          "value": "\"user\".\"role\" in ('coach', 'parent', 'anonymous')"
-        }
-      }
+      "checkConstraints": {}
     }
   },
   "views": {},
