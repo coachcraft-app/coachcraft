@@ -1,13 +1,7 @@
-import 'dotenv/config'
-import { app } from './server.js'
+import app from "./server.ts";
 
-async function main() {
-    try {
-        await app.listen({ port: 3000 });
-    } catch (err) {
-        app.log.error(err);
-        process.exit(1);
-    }
-}
+const PORT = process.env.PORT || 3000;
 
-main()
+app.listen(PORT, () => {
+  console.log(`running server on ${PORT}.`);
+});
