@@ -3,4 +3,5 @@ node_modules
 .astro
 .env
 /backend/public
+/backend/drizzle
 /web/dist
