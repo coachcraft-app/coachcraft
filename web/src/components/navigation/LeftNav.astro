@@ -28,20 +28,11 @@ import MenuButton from "../common/MenuButton.astro";
     aria-label="sidebar navigation"
   >
     <div class="flex flex-col gap-3 overflow-y-auto w-full">
-      <MenuButton
-        label="Dashboard"
-        page="dashboard"
-        isSelected="$store.router.currentPage === 'dashboard'"
-      />
+
       <MenuButton
         label="Activities"
         page="activities"
         isSelected="$store.router.currentPage === 'activities'"
-      />
-      <MenuButton
-        label="Notes"
-        page="notes"
-        isSelected="$store.router.currentPage === 'notes'"
       />
       <MenuButton
         label="Scheduling"
@@ -58,11 +49,7 @@ import MenuButton from "../common/MenuButton.astro";
         page="teams"
         isSelected="$store.router.currentPage === 'teams'"
       />
-      <MenuButton
-        label="Settings"
-        page="settings"
-        isSelected="$store.router.currentPage === 'settings'"
-      />
+
     </div>
   </nav>
 </div>
