@@ -8,7 +8,7 @@ import reactify from "../../utils/reactify";
 //              but just something that shows on the button before any option is selected
 // label: a label above the button, as a hint to what the dropdown is for
 
-var { options, onOptionSwitch, defaultOption, label, placeHolder, ...rest } =
+var { options, onOptionSwitch, defaultOption, label, placeHolder, disabled, ...rest } =
   Astro.props;
 
 const x_data = `{
@@ -40,30 +40,34 @@ const x_data = `{
   <button
     type="button"
     x-on:click="isOpen = ! isOpen;"
-    class="bg-transparent
-                rounded-lg
-                w-full
-                border-2 border-primary
-                px-4 py-2
-                block
-                text-sm font-medium
-                text-primary
-                text-left
-                truncate
-                tracking-wide
-                transition
-                cursor-pointer
-                hover:opacity-75
-                focus-visible:outline-2
-                focus-visible:outline-offset-2
-                focus-visible:outline-primary
-                active:opacity-100
-                active:outline-offset-0
-                disabled:opacity-75
-                disabled:cursor-not-allowed
-                dark:border-low-contrast-grey
-                dark:text-primary-dark
-                dark:focus-visible:outline-primary-dark"
+    disabled={disabled}
+    class="group bg-transparent
+            rounded-lg
+            w-full
+            border-2 border-primary
+            px-4 py-2
+            block
+            text-sm font-medium
+            text-primary
+            text-left
+            truncate
+            tracking-wide
+            transition
+            cursor-pointer
+            hover:opacity-75
+            focus-visible:outline-2
+            focus-visible:outline-offset-2
+            focus-visible:outline-primary
+            
+            active:opacity-100
+            active:outline-offset-0
+
+            disabled:opacity-50
+            disabled:cursor-not-allowed
+            
+            dark:border-low-contrast-grey
+            dark:text-primary-dark
+            dark:focus-visible:outline-primary-dark"
     aria-haspopup="true"
     x-on:keydown.space.prevent="openedWithKeyboard = true"
     x-on:keydown.enter.prevent="openedWithKeyboard = true"
