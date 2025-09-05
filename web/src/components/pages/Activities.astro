@@ -124,6 +124,7 @@ import Image from "astro/components/Image.astro";
               label="Accent Color"
               placeHolder="Accent Color"
               onOptionSwitch="$store.pages.activities.onManageListsAccentColorPreviewSwitch"
+              disabled="true"
             />
           </div>
 
@@ -176,6 +177,7 @@ import Image from "astro/components/Image.astro";
             <!-- edit button -->
             <button
               type="button"
+              disabled="true"
               class="absolute
                    bottom-3
                    right-3
@@ -183,7 +185,7 @@ import Image from "astro/components/Image.astro";
                    h-10
                    cursor-pointer
                    bg-white/90
-                   hover:brightness-90
+                   not-disabled:hover:brightness-90
                    rounded-lg
                    shadow-lg
                    flex
@@ -191,6 +193,7 @@ import Image from "astro/components/Image.astro";
                    justify-center
                    transition-colors
                    duration-200
+                   disabled:opacity-50
                    z-10"
               @click.stop=""
             >
