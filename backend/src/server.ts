@@ -1,7 +1,6 @@
 import fastify from "fastify";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { createYoga, useExecutionCancellation } from "graphql-yoga";
-import { ruruHTML } from "ruru/server";
+import { createYoga } from "graphql-yoga";
 
 import { schema } from "./graphql/schema.js";
 import { createContext } from "./graphql/context.js";
