@@ -9,6 +9,8 @@
   /* web client background color */
   --color-bg-black: #0d0d0d;
 
+  --color-danger: var(--color-red-500);
+
   /* team flag colors */
   --color-team-green: #019445;
   --color-team-yellow: #f3941f;

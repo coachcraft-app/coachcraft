@@ -4,9 +4,9 @@ export default function toastStore(Alpine) {
     notifications: [],
     displayDuration: 8000,
 
-    addNotification({ title = null, message = null }) {
+    addNotification({ title = null, message = null, variant = null }) {
       const id = Date.now();
-      const notification = { id, title, message };
+      const notification = { id, title, message, variant };
 
       // Keep only the most recent 20 notifications
       if (this.notifications.length >= 20) {
