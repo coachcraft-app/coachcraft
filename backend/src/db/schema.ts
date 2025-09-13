@@ -1,5 +1,5 @@
 import { sql, relations } from "drizzle-orm";
-import { sqliteTable, integer, text, check } from "drizzle-orm/sqlite-core";
+import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
 
 // ----- SESSION CREATION -----
 // A user of the application
@@ -28,7 +28,7 @@ export const teams = sqliteTable("teams", {
     .default(sql`(unixepoch())`),
 });
 
-export const teamsRelations = relations(teams, ({ one, many }) => ({
+export const teamsRelations = relations(teams, ({ many }) => ({
   session: many(sessions),
   player: many(players),
 }));
@@ -92,7 +92,7 @@ export const players = sqliteTable("players", {
     .default(sql`(unixepoch())`),
 });
 
-export const playersRelations = relations(players, ({ one, many }) => ({
+export const playersRelations = relations(players, ({ one }) => ({
   team: one(teams, {
     fields: [players.team],
     references: [teams.id],
