@@ -11,14 +11,17 @@ import dashboardStore from "./stores/pages/dashboardStore.js";
 import notesStore from "./stores/pages/notesStore.js";
 import settingsStore from "./stores/pages/settingsStore.js";
 
+import toastStore from "./stores/common/toastStore.js";
+
 export default (Alpine) => {
   Alpine.plugin(collapse);
   Alpine.plugin(focus);
   Alpine.plugin(mask);
 
   Alpine.store("pages", {});
+  Alpine.store("common", {});
 
-  // Initialize stores
+  // Initialize /pages stores
   routerStore(Alpine);
   activitiesStore(Alpine);
   schedulingStore(Alpine);
@@ -27,6 +30,9 @@ export default (Alpine) => {
   dashboardStore(Alpine);
   notesStore(Alpine);
   settingsStore(Alpine);
+
+  // Initialize /commmon stores
+  toastStore(Alpine);
 
   // Initialize router
   Alpine.store("router").init();
