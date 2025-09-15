@@ -1,4 +1,6 @@
-import { cacheExchange, fetchExchange, Client } from "@urql/core";
+import { fetchExchange, Client } from "@urql/core";
+import { cacheExchange } from "@urql/exchange-graphcache";
+import schema from "./schema.json";
 
 // TODO: implement real token storage
 function getToken() {
@@ -7,7 +9,7 @@ function getToken() {
 
 export const urqlClient = new Client({
   url: "http://localhost:4500/graphql",
-  exchanges: [cacheExchange, fetchExchange],
+  exchanges: [cacheExchange({ schema }), fetchExchange],
   fetchOptions: () => {
     const token = getToken();
     return {
