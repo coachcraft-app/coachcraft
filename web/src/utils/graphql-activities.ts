@@ -45,9 +45,9 @@ function convertActivityToGraphQLActivity(activity: Activity): GraphQLActivity {
 }
 
 // SYNC ACTIVITIES
-const ActivitiesQuery = `
-  query {
-    activities {
+const ActivitiesQuery = /* GraphQL */ `
+  query getActivities {
+    activityTemplates {
       id
       name
       duration
@@ -63,7 +63,7 @@ export function subscribeToActivities(activitiesList: Activity[]) {
     // empty the array and repopulate
     activitiesList.length = 0;
     for (const act of GraphQLActivityToActivity(
-      result.data?.activities || [],
+      result.data?.activityTemplates || [],
     )) {
       activitiesList.push(act);
     }
@@ -73,12 +73,12 @@ export function subscribeToActivities(activitiesList: Activity[]) {
 }
 
 // DELETE ACTIVITY MUTATION
-const ActivitiesDelete = `
+const ActivitiesDelete = /* GraphQL */ `
   mutation deleteActivities($id: Int!) {
-  deleteFromActivities(where: {id: {eq: $id}}) {
-    id
+    deleteFromActivityTemplates(where: { id: { eq: $id } }) {
+      id
+    }
   }
-}
 `;
 
 export function deleteActivity(id: number) {
@@ -91,25 +91,32 @@ export function deleteActivity(id: number) {
 }
 
 // POST ACTIVITY MUTATION
-const ActivitiesPost = `
-  mutation insertActivities($activity: ActivitiesInsertInput!) {
-    insertIntoActivities(
-      values: $activity
-      ) {
+const ActivitiesPost = /* GraphQL */ `
+  mutation insertActivities($activity: ActivityTemplatesInsertInput!) {
+    insertIntoActivityTemplatesSingle(values: $activity) {
       id
       name
       duration
       description
       imgUrl
-      lastModified      
+      lastModified
     }
   }
 `;
 
 export function postActivity(activity: Activity) {
+  // Convert to a postable activity
+  const graphqlActivity = convertActivityToGraphQLActivity(activity);
+  const post = {
+    name: graphqlActivity.name,
+    duration: graphqlActivity.duration,
+    description: graphqlActivity.description,
+    imgUrl: graphqlActivity.imgUrl,
+  };
+
   urqlClient
     .mutation(ActivitiesPost, {
-      activity: convertActivityToGraphQLActivity(activity),
+      activity: post,
     })
     .toPromise()
     .then((result) => {
@@ -118,17 +125,20 @@ export function postActivity(activity: Activity) {
 }
 
 // PUT ACTIVITY MUTATION
-const ActivitiesPut = `
-  mutation updateActivities($id: Int!, $activity: ActivitiesUpdateInput!) {
-  updateActivities(where: {id: {eq: $id}}, set: $activity) {
-    id
-    name
-    duration
-    description
-    imgUrl
-    lastModified
+const ActivitiesPut = /* GraphQL */ `
+  mutation updateActivities(
+    $id: Int!
+    $activity: ActivityTemplatesUpdateInput!
+  ) {
+    updateActivityTemplates(where: { id: { eq: $id } }, set: $activity) {
+      id
+      name
+      duration
+      description
+      imgUrl
+      lastModified
+    }
   }
-}
 `;
 
 export function putActivity(activity: Activity) {

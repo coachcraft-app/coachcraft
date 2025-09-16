@@ -13,15 +13,6 @@ export interface Activity {
   lastModified?: Date; //
 }
 
-// Represents a list used in activitiesStore
-export interface List {
-  id: string;
-  name: string;
-  activities: string[]; // activity ids
-  accent_color: string;
-  lastModified?: Date;
-}
-
 export interface GraphQLActivity {
   id: number; // Contains "default" or a string representation of int
   name: string; // Title of activity
@@ -31,18 +22,29 @@ export interface GraphQLActivity {
   lastModified: string; //
 }
 
-export interface GraphQLList {
+// Represents a list used in activitiesStore
+export interface List {
+  id: string;
+  name: string;
+  activities: string[] | void[]; // activity ids
+  accent_color: string;
+  lastModified?: Date;
+}
+
+export type listToActivityTemplate = { activityTemplate: { id: number } }[];
+
+export interface GraphQLListQuery {
   id: number;
   name: string;
-  accentColor: string;
+  listToActivityTemplate?: listToActivityTemplate;
+  accentColor?: string;
   lastModified: string;
-  activities: number[];
 }
 
-export interface APIActivitiesResponse {
-  activities: GraphQLActivity[];
-}
-
-export interface APIListResponse {
-  lists: GraphQLList[];
+export interface GraphQLListPost {
+  id: number;
+  name: string;
+  listToActivityTemplate?: { id: number }[];
+  accentColor?: string;
+  lastModified?: string;
 }
