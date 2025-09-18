@@ -13,6 +13,8 @@ import settingsStore from "./stores/pages/settingsStore.js";
 
 import toastStore from "./stores/common/toastStore.js";
 
+import { userManager, signOutRedirect } from "./utils/oicdCognitoConfig.js";
+
 export default (Alpine) => {
   Alpine.plugin(collapse);
   Alpine.plugin(focus);
@@ -20,6 +22,11 @@ export default (Alpine) => {
 
   Alpine.store("pages", {});
   Alpine.store("common", {});
+
+  Alpine.store("auth", {});
+
+  Alpine.store("auth").userManager = userManager;
+  Alpine.store("auth").signOutRedirect = signOutRedirect;
 
   // Initialize /pages stores
   routerStore(Alpine);
