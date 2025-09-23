@@ -11,6 +11,8 @@ import dashboardStore from "./stores/pages/dashboardStore.js";
 import notesStore from "./stores/pages/notesStore.js";
 import settingsStore from "./stores/pages/settingsStore.js";
 
+import { Sync } from "./utils/sync.js";
+
 import toastStore from "./stores/common/toastStore.js";
 
 export default (Alpine) => {
@@ -30,6 +32,15 @@ export default (Alpine) => {
   dashboardStore(Alpine);
   notesStore(Alpine);
   settingsStore(Alpine);
+
+  // Initialise permanence through graphql
+  Alpine.store(
+    "sync",
+    new Sync(
+      Alpine.store("pages").activities.activitiesList,
+      Alpine.store("pages").activities.listsList,
+    ),
+  );
 
   // Initialize /commmon stores
   toastStore(Alpine);
