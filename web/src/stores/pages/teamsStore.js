@@ -1,7 +1,6 @@
-export default function teamsStore(Alpine) {
-  Alpine.store("pages").teams = {
-    // state
-    teamsList: [
+export class TeamsStore {
+  constructor() {
+    this.teamsList = [
       {
         id: "t1",
         name: "Team A",
@@ -14,79 +13,87 @@ export default function teamsStore(Alpine) {
         description: "Second team",
         players: ["Player 3", "Player 4"],
       },
-    ],
-    selectedTeam: null, // id of selected team
-    rightPanelState: "placeholder",
+    ];
 
-    // getters
-    get selectedTeamObj() {
-      return this.teamsList.find((t) => t.id === this.selectedTeam);
-    },
-    get teamsNames() {
-      return ["---", ...this.teamsList.map((t) => t.name)];
-    },
+    // id of selected team
+    this.selectedTeam = null;
+    this.rightPanelState = "placeholder";
+  }
 
-    // methods
-    createTeam() {
-      const newTeam = {
-        id: `t${this.teamsList.length + 1}`,
-        name: "New Team",
-        description: "",
-        players: [],
-      };
-      this.teamsList.push(newTeam);
-      this.selectedTeam = newTeam.id;
-      this.rightPanelState = "edit_team";
-    },
+  // getters
+  get selectedTeamObj() {
+    return this.teamsList.find((t) => t.id === this.selectedTeam);
+  }
+  get teamsNames() {
+    return ["---", ...this.teamsList.map((t) => t.name)];
+  }
 
-    onTeamSelection(id) {
-      this.selectedTeam = id;
-      this.rightPanelState = "edit_team";
-    },
+  // methods
+  createTeam() {
+    const newTeam = {
+      id: `t${this.teamsList.length + 1}`,
+      name: "New Team",
+      description: "",
+      players: [],
+    };
+    this.teamsList.push(newTeam);
+    this.selectedTeam = newTeam.id;
+    this.rightPanelState = "edit_team";
+  }
 
-    addPlayer() {
-      if (!this.selectedTeamObj) return;
-      this.selectedTeamObj.players.push("");
-    },
+  onTeamSelection(id) {
+    this.selectedTeam = id;
+    this.rightPanelState = "edit_team";
+  }
 
-    updatePlayer(index, value) {
-      if (!this.selectedTeamObj) return;
-      this.selectedTeamObj.players[index] = value;
-    },
+  addPlayer() {
+    if (!this.selectedTeamObj) return;
+    this.selectedTeamObj.players.push("");
+  }
 
-    removePlayer(index) {
-      if (!this.selectedTeamObj) return;
-      this.selectedTeamObj.players.splice(index, 1);
-    },
+  updatePlayer(index, value) {
+    if (!this.selectedTeamObj) return;
+    this.selectedTeamObj.players[index] = value;
+  }
 
-    onSaveChanges(event) {
-      event.preventDefault();
-      const formData = Object.fromEntries(new FormData(event.target));
+  removePlayer(index) {
+    console.log("removed player", index);
+    if (!this.selectedTeamObj) return;
+    this.selectedTeamObj.players.splice(index, 1);
+  }
 
-      if (!formData.teamName) return;
+  onSaveChanges(event) {
+    event.preventDefault();
+    const formData = Object.fromEntries(new FormData(event.target));
 
-      const team = this.selectedTeamObj;
-      if (team) {
-        team.name = formData.teamName;
-        team.description = formData.description || "";
-      }
-    },
+    if (!formData.teamName) return;
 
-    onDeleteTeam() {
-      if (!this.selectedTeam) return;
+    const team = this.selectedTeamObj;
+    if (team) {
+      team.name = formData.teamName;
+      team.description = formData.description || "";
+    }
+  }
 
-      const index = this.teamsList.findIndex((t) => t.id === this.selectedTeam);
-      if (index > -1) {
-        this.teamsList.splice(index, 1);
-        this.selectedTeam = null;
-        this.rightPanelState = "placeholder";
-      }
-    },
+  onDeleteTeam() {
+    if (!this.selectedTeam) return;
 
-    onTeamSelectForSession(teamName) {
-      if (teamName === "---") return null;
-      const team = this.teamsList.find((t) => t.name === teamName);
-      return team ? team.id : null;
-    },
-  };
+    const index = this.teamsList.findIndex((t) => t.id === this.selectedTeam);
+    if (index > -1) {
+      this.teamsList.splice(index, 1);
+      this.selectedTeam = null;
+      this.rightPanelState = "placeholder";
+    }
+  }
+
+  onTeamSelectForSession(teamName) {
+    if (teamName === "---") return null;
+    const team = this.teamsList.find((t) => t.name === teamName);
+    return team ? team.id : null;
+  }
+}
+
+// TODO: move this to alpineEntryPoint.js
+export default function teamsStore(Alpine) {
+  Alpine.store("pages").teams = new TeamsStore();
 }
