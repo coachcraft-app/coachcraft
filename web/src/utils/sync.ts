@@ -33,9 +33,11 @@ export class Sync {
     this.debug = debug;
 
     // Subscribe to changes in activities and lists
-    subscribeToActivities(this.activitiesList);
-    subscribeToLists(this.listsList);
-    subscribeToTeams(this.teamsList);
+    if (!this.debug) {
+      subscribeToActivities(this.activitiesList);
+      subscribeToLists(this.listsList);
+      subscribeToTeams(this.teamsList);
+    }
   }
 
   async sync(): Promise<void> {
@@ -98,38 +100,47 @@ export class Sync {
   }
 
   async deleteActivity(id: string): Promise<void> {
+    if (this.debug) return;
     deleteActivity(+id);
   }
 
   async postActivity(activity: Activity): Promise<void> {
+    if (this.debug) return;
     postActivity(activity);
   }
 
   async putActivity(activity: Activity): Promise<void> {
+    if (this.debug) return;
     putActivity(activity);
   }
 
   async deleteList(id: string): Promise<void> {
+    if (this.debug) return;
     deleteList(id);
   }
 
   async postList(list: List): Promise<void> {
+    if (this.debug) return;
     postList(list);
   }
 
   async putList(list: List): Promise<void> {
+    if (this.debug) return;
     putList(list);
   }
 
   async deleteTeam(id: string): Promise<void> {
+    if (this.debug) return;
     deleteTeam(id);
   }
 
   async postTeam(team: Team): Promise<void> {
+    if (this.debug) return;
     postTeam(team);
   }
 
   async putTeam(team: Team): Promise<void> {
+    if (this.debug) return;
     putTeam(team);
   }
 }
