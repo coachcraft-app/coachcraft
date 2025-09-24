@@ -81,6 +81,8 @@ export class TeamsStore {
       team.name = formData.teamName;
       team.description = formData.description || "";
     }
+
+    this.Alpine.store("sync").putTeam(team);
   }
 
   onDeleteTeam() {

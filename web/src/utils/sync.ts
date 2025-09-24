@@ -22,7 +22,7 @@ import {
   subscribeToTeams,
   deleteTeam,
   postTeam,
-  // putTeam,
+  putTeam,
 } from "./graphql-teams";
 
 export class Sync {
@@ -139,7 +139,7 @@ export class Sync {
     postTeam(team);
   }
 
-  // async putTeam(team: Team): Promise<void> {
-  //   //putTeam(id, name);
-  // }
+  async putTeam(team: Team): Promise<void> {
+    putTeam(team);
+  }
 }
