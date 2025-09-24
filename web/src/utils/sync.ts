@@ -18,7 +18,12 @@ import {
   putList,
 } from "./graphql-lists";
 
-import { subscribeToTeams } from "./graphql-teams";
+import {
+  subscribeToTeams,
+  deleteTeam,
+  // postTeam,
+  // putTeam,
+} from "./graphql-teams";
 
 export class Sync {
   debug: boolean;
@@ -126,9 +131,9 @@ export class Sync {
     putList(list);
   }
 
-  // async deleteTeam(id: string): Promise<void> {
-  //   //deleteTeam(id);
-  // }
+  async deleteTeam(id: string): Promise<void> {
+    deleteTeam(id);
+  }
 
   // async postTeam(team: Team): Promise<void> {
   //   //postTeam(name);

@@ -3,7 +3,9 @@ export class TeamsStore {
   selectedTeam = null;
   rightPanelState = ""; // "placeholder" | "edit_team"
 
-  constructor() {
+  constructor(Alpine) {
+    this.Alpine = Alpine;
+
     this.teamsList = [
       {
         id: "t1",
@@ -82,6 +84,8 @@ export class TeamsStore {
   onDeleteTeam() {
     if (!this.selectedTeam) return;
 
+    this.Alpine.store("sync").deleteTeam(this.selectedTeam);
+
     const index = this.teamsList.findIndex((t) => t.id === this.selectedTeam);
     if (index > -1) {
       this.teamsList.splice(index, 1);
@@ -99,5 +103,5 @@ export class TeamsStore {
 
 // TODO: move this to alpineEntryPoint.js
 export default function teamsStore(Alpine) {
-  Alpine.store("pages").teams = new TeamsStore();
+  Alpine.store("pages").teams = new TeamsStore(Alpine);
 }

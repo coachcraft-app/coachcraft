@@ -46,3 +46,21 @@ export function subscribeToTeams(teamsList: Team[]) {
 
   console.log("Updated teams list", teamsList);
 }
+
+// DELETE TEAM
+const TeamDelete = /* GraphQL */ `
+  mutation deleteTeam($id: Int!) {
+    deleteFromTeams(where: { id: { eq: $id } }) {
+      id
+    }
+  }
+`;
+
+export function deleteTeam(id: string): void {
+  urqlClient
+    .mutation(TeamDelete, { id: +id })
+    .toPromise()
+    .then((result) => {
+      console.log("delete team", result);
+    });
+}
