@@ -45,6 +45,8 @@ export class TeamsStore {
     this.teamsList.push(newTeam);
     this.selectedTeam = newTeam.id;
     this.rightPanelState = "edit_team";
+
+    this.Alpine.store("sync").postTeam(newTeam);
   }
 
   onTeamSelection(id) {

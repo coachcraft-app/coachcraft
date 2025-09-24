@@ -93,7 +93,7 @@ export function deleteList(id: string) {
     });
 }
 
-// POST ACTIVITY MUTATION
+// POST ACTIVITY
 const ListsPost = /* GraphQL */ `
   mutation insertLists($list: ListsInsertInput!) {
     insertIntoListsSingle(values: $list) {

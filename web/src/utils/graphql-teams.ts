@@ -64,3 +64,26 @@ export function deleteTeam(id: string): void {
       console.log("delete team", result);
     });
 }
+
+// POST TEAM
+const TeamPost = /* GraphQL */ `
+  mutation insertTeam($team: TeamsInsertInput!) {
+    insertIntoTeamsSingle(values: $team) {
+      id
+    }
+  }
+`;
+
+export function postTeam(team: Team) {
+  urqlClient
+    .mutation(TeamPost, {
+      team: {
+        name: team.name,
+        description: team.description,
+      },
+    })
+    .toPromise()
+    .then((result) => {
+      console.log("post team", result);
+    });
+}
