@@ -1,8 +1,8 @@
 import type {
-  List,
   GraphQLListQuery as GraphQLListQPost,
   GraphQLListPost,
-} from "./graphql-types";
+} from "../typeDefs/graphqlTypes";
+import type { List } from "../typeDefs/storeTypes";
 import urqlClient from "./urql";
 
 // CONVERSIONS

@@ -2,28 +2,18 @@
  *
  */
 
-import type { Activity, List, Team } from "./graphql-types";
+import type { Activity, List, Team } from "../typeDefs/storeTypes";
 
 import {
   subscribeToActivities,
   deleteActivity,
   postActivity,
   putActivity,
-} from "./graphql-activities";
+} from "./activitiesSync";
 
-import {
-  subscribeToLists,
-  deleteList,
-  postList,
-  putList,
-} from "./graphql-lists";
+import { subscribeToLists, deleteList, postList, putList } from "./listsSync";
 
-import {
-  subscribeToTeams,
-  deleteTeam,
-  postTeam,
-  putTeam,
-} from "./graphql-teams";
+import { subscribeToTeams, deleteTeam, postTeam, putTeam } from "./teamsSync";
 
 export class Sync {
   debug: boolean;

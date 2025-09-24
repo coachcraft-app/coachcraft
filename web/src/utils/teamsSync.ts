@@ -1,4 +1,5 @@
-import type { Team, GraphQLTeam } from "./graphql-types";
+import type { GraphQLTeam } from "../typeDefs/graphqlTypes";
+import type { Team } from "../typeDefs/storeTypes";
 import urqlClient from "./urql";
 
 // CONVERSIONS
