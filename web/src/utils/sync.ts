@@ -119,4 +119,16 @@ export class Sync {
   async putList(list: List): Promise<void> {
     putList(list);
   }
+
+  async deleteTeam(id: string): Promise<void> {
+    //deleteTeam(id);
+  }
+
+  async postTeam(team: Team): Promise<void> {
+    //postTeam(name);
+  }
+
+  async putTeam(team: Team): Promise<void> {
+    //putTeam(id, name);
+  }
 }

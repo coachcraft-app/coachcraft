@@ -3,6 +3,30 @@ export interface ActivityStore {
   listsList: List[];
 }
 
+// Represents a team used in teamsStore
+export interface Team {
+  id: string; // Contains string representation of int
+  name: string; // Name of team
+  description: string; // Description of team
+  players: string[]; // Array of player names
+}
+
+// GraphQL representation of a player
+export interface GraphQLPlayer {
+  id: number; // Contains id integer from database
+  name: string; // Name of player
+  lastModified: string; // ISO 8601 date string
+}
+
+// GraphQL representation of a team
+export interface GraphQLTeam {
+  id: number; // Contains id integer from database
+  name: string; // Name of team
+  description: string; // Description of team
+  lastModified: string; // ISO 8601 date string
+  players: GraphQLPlayer[]; // Array of players
+}
+
 // Represents an activity used in activitiesStore
 export interface Activity {
   id: string; // Contains "default" or a string representation of int
