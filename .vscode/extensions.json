@@ -4,6 +4,8 @@
     "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss",
     "adrianwilczynski.alpine-js-intellisense",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "graphql.vscode-graphql",
+    "graphql.vscode-graphql-syntax"
   ]
 }
