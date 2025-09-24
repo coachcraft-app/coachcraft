@@ -1,1 +1,3756 @@
-{"__schema":{"queryType":{"name":"Query","kind":"OBJECT"},"mutationType":{"name":"Mutation","kind":"OBJECT"},"subscriptionType":null,"types":[{"kind":"OBJECT","name":"ActivitiesSelectItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"session","type":{"kind":"OBJECT","name":"ActivitiesSessionRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"duration","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"imgUrl","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivitiesSessionRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"date","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"notes","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activities","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivitiesSessionRelationActivitiesRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"teams","type":{"kind":"OBJECT","name":"ActivitiesSessionRelationTeamsRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivitiesSessionRelationActivitiesRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"session","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"duration","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"imgUrl","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivitiesSessionRelationTeamsRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"session","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivitiesSessionRelationTeamsRelationSessionRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"player","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivitiesSessionRelationTeamsRelationPlayerRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivitiesSessionRelationTeamsRelationSessionRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"date","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"notes","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivitiesSessionRelationTeamsRelationPlayerRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"OBJECT","name":"ActivitiesSessionRelationTeamsRelationPlayerRelationTeamRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivitiesSessionRelationTeamsRelationPlayerRelationTeamRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivitiesItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"session","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"duration","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"imgUrl","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivityTemplateListSelectItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activityTemplate","type":{"kind":"OBJECT","name":"ActivityTemplateListActivityTemplateRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"list","type":{"kind":"OBJECT","name":"ActivityTemplateListListRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivityTemplateListActivityTemplateRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"duration","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"imgUrl","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activityTemplatesToList","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivityTemplateListActivityTemplateRelationActivityTemplatesToListRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivityTemplateListActivityTemplateRelationActivityTemplatesToListRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activityTemplate","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"list","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivityTemplateListListRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"accentColor","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"listToActivityTemplate","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivityTemplateListListRelationListToActivityTemplateRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivityTemplateListListRelationListToActivityTemplateRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activityTemplate","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"list","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivityTemplateListItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activityTemplate","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"list","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivityTemplatesSelectItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"duration","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"imgUrl","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activityTemplatesToList","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivityTemplatesActivityTemplatesToListRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivityTemplatesActivityTemplatesToListRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activityTemplate","type":{"kind":"OBJECT","name":"ActivityTemplatesActivityTemplatesToListRelationActivityTemplateRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"list","type":{"kind":"OBJECT","name":"ActivityTemplatesActivityTemplatesToListRelationListRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivityTemplatesActivityTemplatesToListRelationActivityTemplateRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"duration","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"imgUrl","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivityTemplatesActivityTemplatesToListRelationListRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"accentColor","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"listToActivityTemplate","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivityTemplatesActivityTemplatesToListRelationListRelationListToActivityTemplateRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivityTemplatesActivityTemplatesToListRelationListRelationListToActivityTemplateRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activityTemplate","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"list","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ActivityTemplatesItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"duration","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"imgUrl","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ListsSelectItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"accentColor","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"listToActivityTemplate","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ListsListToActivityTemplateRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"ListsListToActivityTemplateRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activityTemplate","type":{"kind":"OBJECT","name":"ListsListToActivityTemplateRelationActivityTemplateRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"list","type":{"kind":"OBJECT","name":"ListsListToActivityTemplateRelationListRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ListsListToActivityTemplateRelationActivityTemplateRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"duration","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"imgUrl","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activityTemplatesToList","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ListsListToActivityTemplateRelationActivityTemplateRelationActivityTemplatesToListRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"ListsListToActivityTemplateRelationActivityTemplateRelationActivityTemplatesToListRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activityTemplate","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"list","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ListsListToActivityTemplateRelationListRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"accentColor","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"ListsItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"accentColor","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"PlayersSelectItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"OBJECT","name":"PlayersTeamRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"PlayersTeamRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"session","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"PlayersTeamRelationSessionRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"player","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"PlayersTeamRelationPlayerRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"PlayersTeamRelationSessionRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"date","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"notes","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activities","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"PlayersTeamRelationSessionRelationActivitiesRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"teams","type":{"kind":"OBJECT","name":"PlayersTeamRelationSessionRelationTeamsRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"PlayersTeamRelationSessionRelationActivitiesRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"session","type":{"kind":"OBJECT","name":"PlayersTeamRelationSessionRelationActivitiesRelationSessionRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"duration","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"imgUrl","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"PlayersTeamRelationSessionRelationActivitiesRelationSessionRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"date","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"notes","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"PlayersTeamRelationSessionRelationTeamsRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"PlayersTeamRelationPlayerRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"PlayersItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"SessionsSelectItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"date","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"notes","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activities","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"SessionsActivitiesRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"teams","type":{"kind":"OBJECT","name":"SessionsTeamsRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"SessionsActivitiesRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"session","type":{"kind":"OBJECT","name":"SessionsActivitiesRelationSessionRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"duration","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"imgUrl","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"SessionsActivitiesRelationSessionRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"date","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"notes","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"SessionsTeamsRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"session","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"SessionsTeamsRelationSessionRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"player","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"SessionsTeamsRelationPlayerRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"SessionsTeamsRelationSessionRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"date","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"notes","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"SessionsTeamsRelationPlayerRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"OBJECT","name":"SessionsTeamsRelationPlayerRelationTeamRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"SessionsTeamsRelationPlayerRelationTeamRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"SessionsItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"date","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"notes","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"TeamsSelectItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"session","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"TeamsSessionRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"player","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"TeamsPlayerRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"TeamsSessionRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"date","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"notes","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"activities","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"TeamsSessionRelationActivitiesRelation","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"teams","type":{"kind":"OBJECT","name":"TeamsSessionRelationTeamsRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"TeamsSessionRelationActivitiesRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"session","type":{"kind":"OBJECT","name":"TeamsSessionRelationActivitiesRelationSessionRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"duration","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"imgUrl","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"TeamsSessionRelationActivitiesRelationSessionRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"date","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"notes","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"TeamsSessionRelationTeamsRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"TeamsPlayerRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"team","type":{"kind":"OBJECT","name":"TeamsPlayerRelationTeamRelation","ofType":null},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"TeamsPlayerRelationTeamRelation","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"TeamsItem","fields":[{"name":"id","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"name","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]},{"name":"description","type":{"kind":"SCALAR","name":"Any"},"args":[]},{"name":"lastModified","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}},"args":[]}],"interfaces":[]},{"kind":"OBJECT","name":"Query","fields":[{"name":"activities","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivitiesSelectItem","ofType":null}}}},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"activitiesSingle","type":{"kind":"OBJECT","name":"ActivitiesSelectItem","ofType":null},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"activityTemplateList","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivityTemplateListSelectItem","ofType":null}}}},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"activityTemplateListSingle","type":{"kind":"OBJECT","name":"ActivityTemplateListSelectItem","ofType":null},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"activityTemplates","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivityTemplatesSelectItem","ofType":null}}}},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"activityTemplatesSingle","type":{"kind":"OBJECT","name":"ActivityTemplatesSelectItem","ofType":null},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"lists","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ListsSelectItem","ofType":null}}}},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"listsSingle","type":{"kind":"OBJECT","name":"ListsSelectItem","ofType":null},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"players","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"PlayersSelectItem","ofType":null}}}},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"playersSingle","type":{"kind":"OBJECT","name":"PlayersSelectItem","ofType":null},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"sessions","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"SessionsSelectItem","ofType":null}}}},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"sessionsSingle","type":{"kind":"OBJECT","name":"SessionsSelectItem","ofType":null},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"teams","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"TeamsSelectItem","ofType":null}}}},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"limit","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"teamsSingle","type":{"kind":"OBJECT","name":"TeamsSelectItem","ofType":null},"args":[{"name":"offset","type":{"kind":"SCALAR","name":"Any"}},{"name":"orderBy","type":{"kind":"SCALAR","name":"Any"}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"OBJECT","name":"Mutation","fields":[{"name":"insertIntoActivities","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivitiesItem","ofType":null}}}},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}}}]},{"name":"insertIntoActivitiesSingle","type":{"kind":"OBJECT","name":"ActivitiesItem","ofType":null},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}]},{"name":"updateActivities","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivitiesItem","ofType":null}}}},"args":[{"name":"set","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"deleteFromActivities","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivitiesItem","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"insertIntoActivityTemplateList","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivityTemplateListItem","ofType":null}}}},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}}}]},{"name":"insertIntoActivityTemplateListSingle","type":{"kind":"OBJECT","name":"ActivityTemplateListItem","ofType":null},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}]},{"name":"updateActivityTemplateList","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivityTemplateListItem","ofType":null}}}},"args":[{"name":"set","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"deleteFromActivityTemplateList","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivityTemplateListItem","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"insertIntoActivityTemplates","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivityTemplatesItem","ofType":null}}}},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}}}]},{"name":"insertIntoActivityTemplatesSingle","type":{"kind":"OBJECT","name":"ActivityTemplatesItem","ofType":null},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}]},{"name":"updateActivityTemplates","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivityTemplatesItem","ofType":null}}}},"args":[{"name":"set","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"deleteFromActivityTemplates","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ActivityTemplatesItem","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"insertIntoLists","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ListsItem","ofType":null}}}},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}}}]},{"name":"insertIntoListsSingle","type":{"kind":"OBJECT","name":"ListsItem","ofType":null},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}]},{"name":"updateLists","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ListsItem","ofType":null}}}},"args":[{"name":"set","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"deleteFromLists","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"ListsItem","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"insertIntoPlayers","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"PlayersItem","ofType":null}}}},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}}}]},{"name":"insertIntoPlayersSingle","type":{"kind":"OBJECT","name":"PlayersItem","ofType":null},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}]},{"name":"updatePlayers","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"PlayersItem","ofType":null}}}},"args":[{"name":"set","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"deleteFromPlayers","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"PlayersItem","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"insertIntoSessions","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"SessionsItem","ofType":null}}}},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}}}]},{"name":"insertIntoSessionsSingle","type":{"kind":"OBJECT","name":"SessionsItem","ofType":null},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}]},{"name":"updateSessions","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"SessionsItem","ofType":null}}}},"args":[{"name":"set","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"deleteFromSessions","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"SessionsItem","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"insertIntoTeams","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"TeamsItem","ofType":null}}}},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}}}]},{"name":"insertIntoTeamsSingle","type":{"kind":"OBJECT","name":"TeamsItem","ofType":null},"args":[{"name":"values","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}}]},{"name":"updateTeams","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"TeamsItem","ofType":null}}}},"args":[{"name":"set","type":{"kind":"NON_NULL","ofType":{"kind":"SCALAR","name":"Any"}}},{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]},{"name":"deleteFromTeams","type":{"kind":"NON_NULL","ofType":{"kind":"LIST","ofType":{"kind":"NON_NULL","ofType":{"kind":"OBJECT","name":"TeamsItem","ofType":null}}}},"args":[{"name":"where","type":{"kind":"SCALAR","name":"Any"}}]}],"interfaces":[]},{"kind":"SCALAR","name":"Any"}],"directives":[]}}
+{
+  "__schema": {
+    "queryType": { "name": "Query", "kind": "OBJECT" },
+    "mutationType": { "name": "Mutation", "kind": "OBJECT" },
+    "subscriptionType": null,
+    "types": [
+      {
+        "kind": "OBJECT",
+        "name": "ActivitiesSelectItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "session",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivitiesSessionRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "duration",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "imgUrl",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivitiesSessionRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "date",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "notes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activities",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivitiesSessionRelationActivitiesRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "teams",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivitiesSessionRelationTeamsRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivitiesSessionRelationActivitiesRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "session",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "duration",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "imgUrl",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivitiesSessionRelationTeamsRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "session",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivitiesSessionRelationTeamsRelationSessionRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "player",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivitiesSessionRelationTeamsRelationPlayerRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivitiesSessionRelationTeamsRelationSessionRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "date",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "notes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivitiesSessionRelationTeamsRelationPlayerRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivitiesSessionRelationTeamsRelationPlayerRelationTeamRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivitiesSessionRelationTeamsRelationPlayerRelationTeamRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivitiesItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "session",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "duration",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "imgUrl",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivityTemplateListSelectItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activityTemplate",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivityTemplateListActivityTemplateRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "list",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivityTemplateListListRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivityTemplateListActivityTemplateRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "duration",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "imgUrl",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activityTemplatesToList",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivityTemplateListActivityTemplateRelationActivityTemplatesToListRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivityTemplateListActivityTemplateRelationActivityTemplatesToListRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activityTemplate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "list",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivityTemplateListListRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "accentColor",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "listToActivityTemplate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivityTemplateListListRelationListToActivityTemplateRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivityTemplateListListRelationListToActivityTemplateRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activityTemplate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "list",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivityTemplateListItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activityTemplate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "list",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivityTemplatesSelectItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "duration",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "imgUrl",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activityTemplatesToList",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivityTemplatesActivityTemplatesToListRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivityTemplatesActivityTemplatesToListRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activityTemplate",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivityTemplatesActivityTemplatesToListRelationActivityTemplateRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "list",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivityTemplatesActivityTemplatesToListRelationListRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivityTemplatesActivityTemplatesToListRelationActivityTemplateRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "duration",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "imgUrl",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivityTemplatesActivityTemplatesToListRelationListRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "accentColor",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "listToActivityTemplate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivityTemplatesActivityTemplatesToListRelationListRelationListToActivityTemplateRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivityTemplatesActivityTemplatesToListRelationListRelationListToActivityTemplateRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activityTemplate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "list",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActivityTemplatesItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "duration",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "imgUrl",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ListsSelectItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "accentColor",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "listToActivityTemplate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ListsListToActivityTemplateRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ListsListToActivityTemplateRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activityTemplate",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ListsListToActivityTemplateRelationActivityTemplateRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "list",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ListsListToActivityTemplateRelationListRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ListsListToActivityTemplateRelationActivityTemplateRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "duration",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "imgUrl",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activityTemplatesToList",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ListsListToActivityTemplateRelationActivityTemplateRelationActivityTemplatesToListRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ListsListToActivityTemplateRelationActivityTemplateRelationActivityTemplatesToListRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activityTemplate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "list",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ListsListToActivityTemplateRelationListRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "accentColor",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ListsItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "accentColor",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PlayersSelectItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "OBJECT",
+              "name": "PlayersTeamRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PlayersTeamRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "session",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PlayersTeamRelationSessionRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "player",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PlayersTeamRelationPlayerRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PlayersTeamRelationSessionRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "date",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "notes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activities",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PlayersTeamRelationSessionRelationActivitiesRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "teams",
+            "type": {
+              "kind": "OBJECT",
+              "name": "PlayersTeamRelationSessionRelationTeamsRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PlayersTeamRelationSessionRelationActivitiesRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "session",
+            "type": {
+              "kind": "OBJECT",
+              "name": "PlayersTeamRelationSessionRelationActivitiesRelationSessionRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "duration",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "imgUrl",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PlayersTeamRelationSessionRelationActivitiesRelationSessionRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "date",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "notes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PlayersTeamRelationSessionRelationTeamsRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PlayersTeamRelationPlayerRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PlayersItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SessionsSelectItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "date",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "notes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activities",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "SessionsActivitiesRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "teams",
+            "type": {
+              "kind": "OBJECT",
+              "name": "SessionsTeamsRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SessionsActivitiesRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "session",
+            "type": {
+              "kind": "OBJECT",
+              "name": "SessionsActivitiesRelationSessionRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "duration",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "imgUrl",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SessionsActivitiesRelationSessionRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "date",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "notes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SessionsTeamsRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "session",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "SessionsTeamsRelationSessionRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "player",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "SessionsTeamsRelationPlayerRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SessionsTeamsRelationSessionRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "date",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "notes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SessionsTeamsRelationPlayerRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "OBJECT",
+              "name": "SessionsTeamsRelationPlayerRelationTeamRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SessionsTeamsRelationPlayerRelationTeamRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SessionsItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "date",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "notes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TeamsSelectItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "session",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TeamsSessionRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "player",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TeamsPlayerRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TeamsSessionRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "date",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "notes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "activities",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TeamsSessionRelationActivitiesRelation",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "teams",
+            "type": {
+              "kind": "OBJECT",
+              "name": "TeamsSessionRelationTeamsRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TeamsSessionRelationActivitiesRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "session",
+            "type": {
+              "kind": "OBJECT",
+              "name": "TeamsSessionRelationActivitiesRelationSessionRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "duration",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "imgUrl",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TeamsSessionRelationActivitiesRelationSessionRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "date",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "notes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TeamsSessionRelationTeamsRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TeamsPlayerRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "team",
+            "type": {
+              "kind": "OBJECT",
+              "name": "TeamsPlayerRelationTeamRelation",
+              "ofType": null
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TeamsPlayerRelationTeamRelation",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "TeamsItem",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          },
+          {
+            "name": "description",
+            "type": { "kind": "SCALAR", "name": "Any" },
+            "args": []
+          },
+          {
+            "name": "lastModified",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": { "kind": "SCALAR", "name": "Any" }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Query",
+        "fields": [
+          {
+            "name": "activities",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivitiesSelectItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "activitiesSingle",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivitiesSelectItem",
+              "ofType": null
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "activityTemplateList",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivityTemplateListSelectItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "activityTemplateListSingle",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivityTemplateListSelectItem",
+              "ofType": null
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "activityTemplates",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivityTemplatesSelectItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "activityTemplatesSingle",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivityTemplatesSelectItem",
+              "ofType": null
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "lists",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ListsSelectItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "listsSingle",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ListsSelectItem",
+              "ofType": null
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "players",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PlayersSelectItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "playersSingle",
+            "type": {
+              "kind": "OBJECT",
+              "name": "PlayersSelectItem",
+              "ofType": null
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "sessions",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "SessionsSelectItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "sessionsSingle",
+            "type": {
+              "kind": "OBJECT",
+              "name": "SessionsSelectItem",
+              "ofType": null
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "teams",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TeamsSelectItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              { "name": "limit", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "teamsSingle",
+            "type": {
+              "kind": "OBJECT",
+              "name": "TeamsSelectItem",
+              "ofType": null
+            },
+            "args": [
+              { "name": "offset", "type": { "kind": "SCALAR", "name": "Any" } },
+              {
+                "name": "orderBy",
+                "type": { "kind": "SCALAR", "name": "Any" }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Mutation",
+        "fields": [
+          {
+            "name": "insertIntoActivities",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivitiesItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": { "kind": "SCALAR", "name": "Any" }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "insertIntoActivitiesSingle",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivitiesItem",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              }
+            ]
+          },
+          {
+            "name": "updateActivities",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivitiesItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "set",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "deleteFromActivities",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivitiesItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "insertIntoActivityTemplateList",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivityTemplateListItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": { "kind": "SCALAR", "name": "Any" }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "insertIntoActivityTemplateListSingle",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivityTemplateListItem",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              }
+            ]
+          },
+          {
+            "name": "updateActivityTemplateList",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivityTemplateListItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "set",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "deleteFromActivityTemplateList",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivityTemplateListItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "insertIntoActivityTemplates",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivityTemplatesItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": { "kind": "SCALAR", "name": "Any" }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "insertIntoActivityTemplatesSingle",
+            "type": {
+              "kind": "OBJECT",
+              "name": "ActivityTemplatesItem",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              }
+            ]
+          },
+          {
+            "name": "updateActivityTemplates",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivityTemplatesItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "set",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "deleteFromActivityTemplates",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ActivityTemplatesItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "insertIntoLists",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ListsItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": { "kind": "SCALAR", "name": "Any" }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "insertIntoListsSingle",
+            "type": { "kind": "OBJECT", "name": "ListsItem", "ofType": null },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              }
+            ]
+          },
+          {
+            "name": "updateLists",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ListsItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "set",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "deleteFromLists",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ListsItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "insertIntoPlayers",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PlayersItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": { "kind": "SCALAR", "name": "Any" }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "insertIntoPlayersSingle",
+            "type": { "kind": "OBJECT", "name": "PlayersItem", "ofType": null },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              }
+            ]
+          },
+          {
+            "name": "updatePlayers",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PlayersItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "set",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "deleteFromPlayers",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PlayersItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "insertIntoSessions",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "SessionsItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": { "kind": "SCALAR", "name": "Any" }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "insertIntoSessionsSingle",
+            "type": {
+              "kind": "OBJECT",
+              "name": "SessionsItem",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              }
+            ]
+          },
+          {
+            "name": "updateSessions",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "SessionsItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "set",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "deleteFromSessions",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "SessionsItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "insertIntoTeams",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TeamsItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": { "kind": "SCALAR", "name": "Any" }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "insertIntoTeamsSingle",
+            "type": { "kind": "OBJECT", "name": "TeamsItem", "ofType": null },
+            "args": [
+              {
+                "name": "values",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              }
+            ]
+          },
+          {
+            "name": "updateTeams",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TeamsItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "set",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": { "kind": "SCALAR", "name": "Any" }
+                }
+              },
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          },
+          {
+            "name": "deleteFromTeams",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TeamsItem",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              { "name": "where", "type": { "kind": "SCALAR", "name": "Any" } }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      { "kind": "SCALAR", "name": "Any" }
+    ],
+    "directives": []
+  }
+}
