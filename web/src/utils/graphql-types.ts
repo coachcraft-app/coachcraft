@@ -24,7 +24,7 @@ export interface GraphQLTeam {
   name: string; // Name of team
   description: string; // Description of team
   lastModified: string; // ISO 8601 date string
-  players: GraphQLPlayer[]; // Array of players
+  player: GraphQLPlayer[]; // Array of players
 }
 
 // Represents an activity used in activitiesStore

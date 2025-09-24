@@ -1,4 +1,8 @@
 export class TeamsStore {
+  teamList = [];
+  selectedTeam = null;
+  rightPanelState = ""; // "placeholder" | "edit_team"
+
   constructor() {
     this.teamsList = [
       {

@@ -2,7 +2,7 @@
  *
  */
 
-import type { Activity, List } from "./graphql-types";
+import type { Activity, List, Team } from "./graphql-types";
 
 import {
   subscribeToActivities,
@@ -18,23 +18,29 @@ import {
   putList,
 } from "./graphql-lists";
 
+import { subscribeToTeams } from "./graphql-teams";
+
 export class Sync {
   debug: boolean;
   activitiesList: Activity[];
   listsList: List[];
+  teamsList: Team[];
 
   constructor(
     activitiesList: Activity[],
     listsList: List[],
+    teamsList: Team[],
     debug: boolean = false,
   ) {
     this.activitiesList = activitiesList;
     this.listsList = listsList;
+    this.teamsList = teamsList;
     this.debug = debug;
 
     // Subscribe to changes in activities and lists
     subscribeToActivities(this.activitiesList);
     subscribeToLists(this.listsList);
+    subscribeToTeams(this.teamsList);
   }
 
   async sync(): Promise<void> {
@@ -120,15 +126,15 @@ export class Sync {
     putList(list);
   }
 
-  async deleteTeam(id: string): Promise<void> {
-    //deleteTeam(id);
-  }
+  // async deleteTeam(id: string): Promise<void> {
+  //   //deleteTeam(id);
+  // }
 
-  async postTeam(team: Team): Promise<void> {
-    //postTeam(name);
-  }
+  // async postTeam(team: Team): Promise<void> {
+  //   //postTeam(name);
+  // }
 
-  async putTeam(team: Team): Promise<void> {
-    //putTeam(id, name);
-  }
+  // async putTeam(team: Team): Promise<void> {
+  //   //putTeam(id, name);
+  // }
 }

@@ -39,6 +39,7 @@ export default (Alpine) => {
     new Sync(
       Alpine.store("pages").activities.activitiesList,
       Alpine.store("pages").activities.listsList,
+      Alpine.store("pages").teams.teamsList,
     ),
   );
 
