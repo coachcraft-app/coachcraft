@@ -167,12 +167,22 @@ export default function schedulingStore(Alpine) {
 
       if (!formData.sessionName || !this.sessionActivities.length) return;
 
+      // Create copy of activities from original templates
+      const activityCopies = this.sessionActivities.map((activity) => ({
+        ...activity,
+        // Create ID for the copied activity so it differes from original
+        id: `${activity.id}_session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        // Mark this as a session copy to differentiate from original
+        isSessionCopy: true,
+      }));
+
       const newSession = {
         id: `s${this.upcomingSessions.length + this.previousSessions.length + 1}`,
         name: formData.sessionName,
         date: formData.sessionDate,
         notes: formData.sessionNotes,
-        activities: this.sessionActivities.map((a) => a.id),
+        // Store the activity objects instead ofID
+        activities: activityCopies,
         team: this.selectedTeam,
         attendance: (() => {
           const team = Alpine.store("pages").teams.teamsList.find(
