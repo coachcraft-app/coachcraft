@@ -144,15 +144,17 @@ export default function schedulingStore(Alpine) {
       this.expandedSessions[sessionId] = !this.expandedSessions[sessionId];
     },
 
-    // shows activities in the session
+    // Load activities from a session into the current session beingmade
+    // All sessions store activity objects so they can be directly used
     loadSession(session) {
       if (!session || !session.activities) return;
 
       this.sessionActivities = [];
 
-      session.activities.forEach((id) => {
-        const activity = this.activitiesList.find((a) => a.id === id);
+      // Each activity in the session is complete object so can add directly
+      session.activities.forEach((activity) => {
         if (activity) {
+          // Add a copy of the session activity so editing the loaded activities won't affect the original session
           this.addToSession(activity);
         }
       });
