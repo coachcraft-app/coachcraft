@@ -4,3 +4,4 @@ node_modules
 /backend/public
 /backend/drizzle
 /web/dist
+log.txt
