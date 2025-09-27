@@ -7,7 +7,7 @@ export default defineConfig({
 
   integrations: [
     alpine({
-      entrypoint: "/src/alpineEntryPoint",
+      entrypoint: "/src/main",
     }),
   ],
 
