@@ -18,7 +18,7 @@ import settingsStore from "./stores/pages/settingsStore.js";
 
 import toastStore from "./stores/common/toastStore.js";
 
-export default (Alpine: Alpine) => {
+export default async (Alpine: Alpine) => {
   Alpine.plugin(collapse);
   Alpine.plugin(focus);
   Alpine.plugin(mask);
@@ -41,5 +41,5 @@ export default (Alpine: Alpine) => {
   // Initialize /commmon stores
   toastStore(Alpine);
 
-  initAuth(Alpine, userManager);
+  await initAuth(Alpine, userManager);
 };

@@ -10,6 +10,7 @@ export const userManager = new UserManager({
 
 export async function initAuth(Alpine: Alpine, userManager: UserManager) {
   const authStore: any = Alpine.store("auth");
+  authStore.userManager = userManager;
 
   if (urlHasAuthResponse()) {
     // state 1: redirected from Cognito, with URL response parameters
