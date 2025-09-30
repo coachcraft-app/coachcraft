@@ -5,3 +5,8 @@ node_modules
 /backend/drizzle
 /web/dist
 log.txt
+
+# Coverage reports
+coverage
+/web/coverage
+/web/.nyc_output
