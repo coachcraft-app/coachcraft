@@ -97,26 +97,28 @@
                   </ul>
                 </div>
               </template>
+              <!-- Activities list for upcoming sessions -->
               <ul class="space-y-1">
-                <template x-for="id in sess.activities" :key="id">
+                <template x-for="(activity, activityIndex) in sess.activities" :key="activity.id">
                   <li
                     class="p-2 bg-gray-700 rounded cursor-pointer"
-                    @click="expandedActivitiesUpcoming[sess.id + '-' + id] = !expandedActivitiesUpcoming[sess.id + '-' + id]"
+                    @click="expandedActivitiesUpcoming[sess.id + '-' + activity.id] = !expandedActivitiesUpcoming[sess.id + '-' + activity.id]"
                   >
                     <div class="flex justify-between items-center">
+                      <!-- Display name from the copied activity object -->
+                      <span x-text="activity.name"></span>
+                      <!-- Display duration from copied activity object -->
                       <span
-                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
-                      ></span>
-                      <span
-                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
+                        x-text="activity.duration"
                         class="text-sm text-gray-400"></span>
                     </div>
+                    <!-- Expand description from the copied activity object -->
                     <div
                       class="mt-1 text-sm text-gray-300"
                       x-cloak
-                      x-show="expandedActivitiesUpcoming[sess.id + '-' + id]"
+                      x-show="expandedActivitiesUpcoming[sess.id + '-' + activity.id]"
                       x-transition
-                      x-text="$store.scheduling.activitiesList.find(a => a.id === id).description"
+                      x-text="activity.description"
                     >
                     </div>
                   </li>
@@ -193,26 +195,28 @@
                   </ul>
                 </div>
               </template>
+              <!-- Activities list for previous sessions -->
               <ul class="space-y-1">
-                <template x-for="id in sess.activities" :key="id">
+                <template x-for="(activity, activityIndex) in sess.activities" :key="activity.id">
                   <li
                     class="p-2 bg-gray-700 rounded cursor-pointer"
-                    @click="expandedActivitiesPrevious[sess.id + '-' + id] = !expandedActivitiesPrevious[sess.id + '-' + id]"
+                    @click="expandedActivitiesPrevious[sess.id + '-' + activity.id] = !expandedActivitiesPrevious[sess.id + '-' + activity.id]"
                   >
                     <div class="flex justify-between items-center">
+                      <!-- Display activity name from theactivity object -->
+                      <span x-text="activity.name"></span>
+                      <!-- Display duration from the activity object -->
                       <span
-                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
-                      ></span>
-                      <span
-                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
+                        x-text="activity.duration"
                         class="text-sm text-gray-400"></span>
                     </div>
+                    <!-- Expandable description from the activity object -->
                     <div
                       class="mt-1 text-sm text-gray-300"
                       x-cloak
-                      x-show="expandedActivitiesPrevious[sess.id + '-' + id]"
+                      x-show="expandedActivitiesPrevious[sess.id + '-' + activity.id]"
                       x-transition
-                      x-text="$store.scheduling.activitiesList.find(a => a.id === id).description"
+                      x-text="activity.description"
                     >
                     </div>
                   </li>
