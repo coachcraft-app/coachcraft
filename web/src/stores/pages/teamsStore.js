@@ -1,7 +1,12 @@
-export default function teamsStore(Alpine) {
-  Alpine.store("pages").teams = {
-    // state
-    teamsList: [
+export class TeamsStore {
+  teamList = [];
+  selectedTeam = null;
+  rightPanelState = ""; // "placeholder" | "edit_team"
+
+  constructor(Alpine) {
+    this.Alpine = Alpine;
+
+    this.teamsList = [
       {
         id: "t1",
         name: "Team A",
@@ -14,79 +19,93 @@ export default function teamsStore(Alpine) {
         description: "Second team",
         players: ["Player 3", "Player 4"],
       },
-    ],
-    selectedTeam: null, // id of selected team
-    rightPanelState: "placeholder",
+    ];
 
-    // getters
-    get selectedTeamObj() {
-      return this.teamsList.find((t) => t.id === this.selectedTeam);
-    },
-    get teamsNames() {
-      return ["---", ...this.teamsList.map((t) => t.name)];
-    },
+    // id of selected team
+    this.selectedTeam = null;
+    this.rightPanelState = "placeholder";
+  }
 
-    // methods
-    createTeam() {
-      const newTeam = {
-        id: `t${this.teamsList.length + 1}`,
-        name: "New Team",
-        description: "",
-        players: [],
-      };
-      this.teamsList.push(newTeam);
-      this.selectedTeam = newTeam.id;
-      this.rightPanelState = "edit_team";
-    },
+  // getters
+  get selectedTeamObj() {
+    return this.teamsList.find((t) => t.id === this.selectedTeam);
+  }
+  get teamsNames() {
+    return ["---", ...this.teamsList.map((t) => t.name)];
+  }
 
-    onTeamSelection(id) {
-      this.selectedTeam = id;
-      this.rightPanelState = "edit_team";
-    },
+  // methods
+  createTeam() {
+    const newTeam = {
+      id: `t${this.teamsList.length + 1}`,
+      name: "New Team",
+      description: "",
+      players: [],
+    };
+    this.teamsList.push(newTeam);
+    this.selectedTeam = newTeam.id;
+    this.rightPanelState = "edit_team";
 
-    addPlayer() {
-      if (!this.selectedTeamObj) return;
-      this.selectedTeamObj.players.push("");
-    },
+    this.Alpine.store("sync").postTeam(newTeam);
+  }
 
-    updatePlayer(index, value) {
-      if (!this.selectedTeamObj) return;
-      this.selectedTeamObj.players[index] = value;
-    },
+  onTeamSelection(id) {
+    this.selectedTeam = id;
+    this.rightPanelState = "edit_team";
+  }
 
-    removePlayer(index) {
-      if (!this.selectedTeamObj) return;
-      this.selectedTeamObj.players.splice(index, 1);
-    },
+  addPlayer() {
+    if (!this.selectedTeamObj) return;
+    this.selectedTeamObj.players.push("");
+  }
 
-    onSaveChanges(event) {
-      event.preventDefault();
-      const formData = Object.fromEntries(new FormData(event.target));
+  updatePlayer(index, value) {
+    if (!this.selectedTeamObj) return;
+    this.selectedTeamObj.players[index] = value;
+  }
 
-      if (!formData.teamName) return;
+  removePlayer(index) {
+    console.log("removed player", index);
+    if (!this.selectedTeamObj) return;
+    this.selectedTeamObj.players.splice(index, 1);
+  }
 
-      const team = this.selectedTeamObj;
-      if (team) {
-        team.name = formData.teamName;
-        team.description = formData.description || "";
-      }
-    },
+  onSaveChanges(event) {
+    event.preventDefault();
+    const formData = Object.fromEntries(new FormData(event.target));
 
-    onDeleteTeam() {
-      if (!this.selectedTeam) return;
+    if (!formData.teamName) return;
 
-      const index = this.teamsList.findIndex((t) => t.id === this.selectedTeam);
-      if (index > -1) {
-        this.teamsList.splice(index, 1);
-        this.selectedTeam = null;
-        this.rightPanelState = "placeholder";
-      }
-    },
+    const team = this.selectedTeamObj;
+    if (team) {
+      team.name = formData.teamName;
+      team.description = formData.description || "";
+    }
 
-    onTeamSelectForSession(teamName) {
-      if (teamName === "---") return null;
-      const team = this.teamsList.find((t) => t.name === teamName);
-      return team ? team.id : null;
-    },
-  };
+    this.Alpine.store("sync").putTeam(team);
+  }
+
+  onDeleteTeam() {
+    if (!this.selectedTeam) return;
+
+    this.Alpine.store("sync").deleteTeam(this.selectedTeam);
+
+    const index = this.teamsList.findIndex((t) => t.id === this.selectedTeam);
+    if (index > -1) {
+      this.teamsList.splice(index, 1);
+      this.selectedTeam = null;
+      this.rightPanelState = "placeholder";
+    }
+  }
+
+  onTeamSelectForSession(teamName) {
+    if (teamName === "---") return null;
+    const team = this.teamsList.find((t) => t.name === teamName);
+    return team ? team.id : null;
+  }
+}
+
+// TODO: move this to alpineEntryPoint.js
+export default function teamsStore(Alpine) {
+  Alpine.store("pages").teams = new TeamsStore(Alpine);
 }

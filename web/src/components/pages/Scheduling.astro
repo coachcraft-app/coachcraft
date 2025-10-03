@@ -176,22 +176,23 @@ import DropDown from "../common/DropDown.astro";
         </p>
       </div>
       <ul class="space-y-2">
+        <!-- Last session activities sessions now use full activity objects -->
         <template
-          x-for="id in $store.scheduling.lastSession.activities"
-          :key="id"
+          x-for="(activity, activityIndex) in $store.scheduling.lastSession.activities"
+          :key="activity.id"
         >
           <li
             class="p-2 bg-gray-800 rounded cursor-grab hover:bg-gray-700 transition-colors"
             draggable="true"
-            @dragstart="$store.scheduling.handleDragStart($event, $store.scheduling.activitiesList.find(a => a.id === id))"
+            @dragstart="$store.scheduling.handleDragStart($event, activity)"
           >
             <div class="flex justify-between items-center">
-              <span
-                x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
-              ></span>
+              <!-- Display activity name from the copied activity object -->
+              <span x-text="activity.name"></span>
+              <!-- Disply actvity duration from the copied activity object -->
               <span
                 class="text-sm text-gray-400"
-                x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
+                x-text="activity.duration"
               ></span>
             </div>
           </li>
@@ -271,19 +272,20 @@ import DropDown from "../common/DropDown.astro";
                   x-text="sess.team ? $store.pages.teams.teamsList.find(t => t.id === sess.team)?.name : '---'"
                 ></span>
               </p>
+              <!-- Activities list in history all sessions use full activity objects -->
               <ul class="space-y-1">
-                <template x-for="id in sess.activities" :key="id">
+                <template x-for="(activity, activityIndex) in sess.activities" :key="activity.id">
                   <li
                     class="p-2 bg-gray-700 rounded cursor-grab hover:bg-gray-600 transition-colors"
                     draggable="true"
-                    @dragstart="$store.scheduling.handleDragStart($event, $store.scheduling.activitiesList.find(a => a.id === id))"
+                    @dragstart="$store.scheduling.handleDragStart($event, activity)"
                   >
                     <div class="flex justify-between items-center">
+                      <!-- Display activity name from the copied activity object -->
+                      <span x-text="activity.name"></span>
+                      <!-- Dsplay duration from the copied activity object -->
                       <span
-                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).name"
-                      ></span>
-                      <span
-                        x-text="$store.scheduling.activitiesList.find(a => a.id === id).duration"
+                        x-text="activity.duration"
                         class="text-sm text-gray-400"></span>
                     </div>
                   </li>

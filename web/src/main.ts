@@ -16,6 +16,8 @@ import dashboardStore from "./stores/pages/dashboardStore.js";
 import notesStore from "./stores/pages/notesStore.js";
 import settingsStore from "./stores/pages/settingsStore.js";
 
+import { Sync } from "./utils/sync.js";
+
 import toastStore from "./stores/common/toastStore.js";
 
 export default async (Alpine: Alpine) => {
@@ -37,6 +39,21 @@ export default async (Alpine: Alpine) => {
   dashboardStore(Alpine);
   notesStore(Alpine);
   settingsStore(Alpine);
+
+  // Initialise permanence through graphql
+  const debug = import.meta.env.PUBLIC_BACKEND === "false";
+
+  console.log("Debug mode:", debug);
+
+  Alpine.store(
+    "sync",
+    new Sync(
+      Alpine.store("pages").activities.activitiesList,
+      Alpine.store("pages").activities.listsList,
+      Alpine.store("pages").teams.teamsList,
+      debug,
+    ),
+  );
 
   // Initialize /commmon stores
   toastStore(Alpine);
