@@ -2,11 +2,8 @@ import fastify from "fastify";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { createYoga } from "graphql-yoga";
 
-import { schema } from "./graphql/schema.js";
-import { createContext } from "./graphql/context.js";
-
-import logger from "./logger.js";
-
+import { schema } from "./graphql/schema";
+import { createContext } from "./graphql/context";
 export const app = fastify();
 
 export const yoga = createYoga<{
@@ -35,7 +32,7 @@ export const yoga = createYoga<{
 
 // Yoga needs this to avoid errors with multipart data
 app.addContentTypeParser("multipart/form-data", {}, (_req, _payload, done) =>
-  done(null),
+  done(null)
 );
 
 // add /graphql endpoint
