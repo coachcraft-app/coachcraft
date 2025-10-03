@@ -5,3 +5,4 @@ node_modules
 /backend/drizzle
 /web/dist
 **/log.txt
+**/test-log.txt
