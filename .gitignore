@@ -1,8 +1,19 @@
+# NPM dependencies
 node_modules
+
+# IDE files
 .idea
+
+# Frontend build files
 .astro
+/web/dist
+
+# Backend possible build outputs
 /backend/public
 /backend/drizzle
-/web/dist
+/backend/coverage
+/backend/dist
+
+# Logs
 **/log.txt
 **/test-log.txt
