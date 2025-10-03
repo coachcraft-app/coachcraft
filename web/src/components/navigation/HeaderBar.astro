@@ -88,6 +88,8 @@ var { user_profile_pic } = Astro.props;
       >
         <img
           id="user_profile_pic"
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
           x-bind:src="$store.auth.user.profile.profile"
           alt="User Profile"
           width="50"
