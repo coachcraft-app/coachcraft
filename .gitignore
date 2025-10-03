@@ -15,5 +15,5 @@ node_modules
 /backend/dist
 
 # Logs
-**/log.txt
-**/test-log.txt
+log.txt
+test-log.txt
