@@ -15,10 +15,11 @@ import sessionsStore from "./stores/pages/sessionsStore.js";
 import dashboardStore from "./stores/pages/dashboardStore.js";
 import notesStore from "./stores/pages/notesStore.js";
 import settingsStore from "./stores/pages/settingsStore.js";
+import toastStore from "./stores/common/toastStore.js";
 
 import { Sync } from "./utils/sync.js";
 
-import toastStore from "./stores/common/toastStore.js";
+import type { PagesStore } from "./typeDefs/storeTypes.js";
 
 export default async (Alpine: Alpine) => {
   Alpine.plugin(collapse);
@@ -48,9 +49,9 @@ export default async (Alpine: Alpine) => {
   Alpine.store(
     "sync",
     new Sync(
-      Alpine.store("pages").activities.activitiesList,
-      Alpine.store("pages").activities.listsList,
-      Alpine.store("pages").teams.teamsList,
+      (Alpine.store("pages") as PagesStore).activities.activitiesList,
+      (Alpine.store("pages") as PagesStore).activities.listsList,
+      (Alpine.store("pages") as PagesStore).teams.teamsList,
       debug,
     ),
   );

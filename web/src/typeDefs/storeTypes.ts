@@ -26,3 +26,13 @@ export interface List {
   accent_color: string;
   lastModified?: Date;
 }
+
+export interface PagesStore {
+  activities: {
+    activitiesList: Activity[];
+    listsList: List[];
+  };
+  teams: {
+    teamsList: Team[];
+  };
+}
