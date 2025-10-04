@@ -1,5 +1,6 @@
-import type { Activity, GraphQLActivity } from "../typeDefs/graphqlTypes";
-import urqlClient from "./urql";
+import type { GraphQLActivity } from "../typeDefs/graphqlTypes";
+import type { Activity } from "../typeDefs/storeTypes";
+import urql from "./urql";
 
 // CONVERSIONS
 function hhmmToMinutes(hhmm: string): number {
@@ -59,17 +60,17 @@ const ActivitiesQuery = /* GraphQL */ `
 `;
 
 export function subscribeToActivities(activitiesList: Activity[]) {
-  urqlClient.query(ActivitiesQuery, {}).subscribe((result) => {
-    // empty the array and repopulate
-    activitiesList.length = 0;
-    for (const act of GraphQLActivityToActivity(
-      result.data?.activityTemplates || [],
-    )) {
-      activitiesList.push(act);
-    }
-  });
-
-  console.log(activitiesList);
+  if (urql.urqlClient) {
+    urql.urqlClient.query(ActivitiesQuery, {}).subscribe((result) => {
+      // empty the array and repopulate
+      activitiesList.length = 0;
+      for (const act of GraphQLActivityToActivity(
+        result.data?.activityTemplates || [],
+      )) {
+        activitiesList.push(act);
+      }
+    });
+  }
 }
 
 // DELETE ACTIVITY MUTATION
@@ -82,12 +83,14 @@ const ActivitiesDelete = /* GraphQL */ `
 `;
 
 export function deleteActivity(id: number) {
-  urqlClient
-    .mutation(ActivitiesDelete, { id: id })
-    .toPromise()
-    .then((result) => {
-      console.log("delete", result);
-    });
+  if (urql.urqlClient) {
+    urql.urqlClient
+      .mutation(ActivitiesDelete, { id: id })
+      .toPromise()
+      .then((result) => {
+        console.log("delete", result);
+      });
+  }
 }
 
 // POST ACTIVITY MUTATION
@@ -114,14 +117,16 @@ export function postActivity(activity: Activity) {
     imgUrl: graphqlActivity.imgUrl,
   };
 
-  urqlClient
-    .mutation(ActivitiesPost, {
-      activity: post,
-    })
-    .toPromise()
-    .then((result) => {
-      console.log("post", result);
-    });
+  if (urql.urqlClient) {
+    urql.urqlClient
+      .mutation(ActivitiesPost, {
+        activity: post,
+      })
+      .toPromise()
+      .then((result) => {
+        console.log("post", result);
+      });
+  }
 }
 
 // PUT ACTIVITY MUTATION
@@ -142,13 +147,15 @@ const ActivitiesPut = /* GraphQL */ `
 `;
 
 export function putActivity(activity: Activity) {
-  urqlClient
-    .mutation(ActivitiesPut, {
-      id: +activity.id,
-      activity: convertActivityToGraphQLActivity(activity),
-    })
-    .toPromise()
-    .then((result) => {
-      console.log("put", result);
-    });
+  if (urql.urqlClient) {
+    urql.urqlClient
+      .mutation(ActivitiesPut, {
+        id: +activity.id,
+        activity: convertActivityToGraphQLActivity(activity),
+      })
+      .toPromise()
+      .then((result) => {
+        console.log("put", result);
+      });
+  }
 }

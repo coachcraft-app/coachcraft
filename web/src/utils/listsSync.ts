@@ -3,7 +3,7 @@ import type {
   GraphQLListPost,
 } from "../typeDefs/graphqlTypes";
 import type { List } from "../typeDefs/storeTypes";
-import urqlClient from "./urql";
+import urql from "./urql";
 
 // CONVERSIONS
 function GraphQLListToList(lists: GraphQLListQPost[]): List[] {
@@ -60,15 +60,15 @@ const ListsQuery = /* GraphQL */ `
 `;
 
 export function subscribeToLists(listsList: List[]) {
-  urqlClient.query(ListsQuery, {}).subscribe((result) => {
-    // empty the array and repopulate
-    listsList.length = 0;
-    for (const list of GraphQLListToList(result.data?.lists || [])) {
-      listsList.push(list);
-    }
-  });
-
-  console.log(listsList);
+  if (urql.urqlClient) {
+    urql.urqlClient.query(ListsQuery, {}).subscribe((result) => {
+      // empty the array and repopulate
+      listsList.length = 0;
+      for (const list of GraphQLListToList(result.data?.lists || [])) {
+        listsList.push(list);
+      }
+    });
+  }
 }
 
 // DELETE LIST
@@ -85,12 +85,14 @@ const ListsDelete = /* GraphQL */ `
 `;
 
 export function deleteList(id: string) {
-  urqlClient
-    .mutation(ListsDelete, { id: +id })
-    .toPromise()
-    .then((result) => {
-      console.log("delete", result);
-    });
+  if (urql.urqlClient) {
+    urql.urqlClient
+      .mutation(ListsDelete, { id: +id })
+      .toPromise()
+      .then((result) => {
+        console.log("delete", result);
+      });
+  }
 }
 
 // POST ACTIVITY
@@ -114,14 +116,16 @@ export function postList(list: List) {
     accentColor: graphqlList.accentColor,
   };
 
-  urqlClient
-    .mutation(ListsPost, {
-      list: post,
-    })
-    .toPromise()
-    .then((result) => {
-      console.log("post", result);
-    });
+  if (urql.urqlClient) {
+    urql.urqlClient
+      .mutation(ListsPost, {
+        list: post,
+      })
+      .toPromise()
+      .then((result) => {
+        console.log("post", result);
+      });
+  }
 }
 
 // PUT ACTIVITY MUTATION
@@ -164,30 +168,32 @@ export function putList(list: List) {
     accentColor: graphqlList.accentColor,
   };
 
-  if (list.activities.length == 0) {
-    urqlClient
-      .mutation(ListsPutNoActivities, {
-        id: +list.id,
-        list: base,
-      })
-      .toPromise()
-      .then((result) => {
-        console.log("put", result);
-      });
-  } else {
-    urqlClient
-      .mutation(ListsPut, {
-        id: +list.id,
-        list: base,
-        activities:
-          list.activities.map((activity) => ({
-            activityTemplate: +activity,
-            list: +list.id,
-          })) || [],
-      })
-      .toPromise()
-      .then((result) => {
-        console.log("put", result);
-      });
+  if (urql.urqlClient) {
+    if (list.activities.length == 0) {
+      urql.urqlClient
+        .mutation(ListsPutNoActivities, {
+          id: +list.id,
+          list: base,
+        })
+        .toPromise()
+        .then((result) => {
+          console.log("put", result);
+        });
+    } else {
+      urql.urqlClient
+        .mutation(ListsPut, {
+          id: +list.id,
+          list: base,
+          activities:
+            list.activities.map((activity) => ({
+              activityTemplate: +activity,
+              list: +list.id,
+            })) || [],
+        })
+        .toPromise()
+        .then((result) => {
+          console.log("put", result);
+        });
+    }
   }
 }
