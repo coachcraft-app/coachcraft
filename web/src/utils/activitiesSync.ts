@@ -4,7 +4,7 @@ import urql from "./urql"; // importing a pre-initialised instance of urql
 
 class ActivitiesSync {
   // GraphQL Queries and Mutations
-  private static readonly ACTIVITIES_QUERY = /* GraphQL */ `
+  private static readonly ACTIVITIES_LIST_QUERY = /* GraphQL */ `
     query getActivities {
       activityTemplates {
         id
@@ -16,14 +16,14 @@ class ActivitiesSync {
       }
     }
   `;
-  private static readonly ACTIVITIES_DELETE = /* GraphQL */ `
+  private static readonly DELETE_MUTATION = /* GraphQL */ `
     mutation deleteActivities($id: Int!) {
       deleteFromActivityTemplates(where: { id: { eq: $id } }) {
         id
       }
     }
   `;
-  private static readonly ACTIVITIES_POST = /* GraphQL */ `
+  private static readonly POST_MUTATION = /* GraphQL */ `
     mutation insertActivities($activity: ActivityTemplatesInsertInput!) {
       insertIntoActivityTemplatesSingle(values: $activity) {
         id
@@ -35,7 +35,7 @@ class ActivitiesSync {
       }
     }
   `;
-  private static readonly ACTIVITIES_PUT = /* GraphQL */ `
+  private static readonly PUT_MUTATION = /* GraphQL */ `
     mutation updateActivities(
       $id: Int!
       $activity: ActivityTemplatesUpdateInput!
@@ -91,27 +91,27 @@ class ActivitiesSync {
   }
 
   // Public API methods
-  subscribeToActivities(activitiesList: Activity[]): void {
+  subscribeToActivitiesList(activitiesList: Activity[]): void {
     urql.urqlClient
-      ?.query(ActivitiesSync.ACTIVITIES_QUERY, {})
+      ?.query(ActivitiesSync.ACTIVITIES_LIST_QUERY, {})
       .subscribe((result) => {
         // empty the array and repopulate
         activitiesList.length = 0;
-        for (const act of ActivitiesSync.convertGraphQLActivityToActivity(
+        for (const activity of ActivitiesSync.convertGraphQLActivityToActivity(
           result.data?.activityTemplates || [],
         )) {
-          activitiesList.push(act);
+          activitiesList.push(activity);
         }
       });
   }
-  async deleteActivity(id: number): Promise<void> {
+  async delete(id: number): Promise<void> {
     const result = await urql.urqlClient?.mutation(
-      ActivitiesSync.ACTIVITIES_DELETE,
+      ActivitiesSync.DELETE_MUTATION,
       { id: id },
     );
     console.log("delete activity", result);
   }
-  async postActivity(activity: Activity): Promise<void> {
+  async post(activity: Activity): Promise<void> {
     // Convert to a postable activity
     const graphqlActivity =
       ActivitiesSync.convertActivityToGraphQLActivity(activity);
@@ -123,16 +123,16 @@ class ActivitiesSync {
     };
 
     const result = await urql.urqlClient?.mutation(
-      ActivitiesSync.ACTIVITIES_POST,
+      ActivitiesSync.POST_MUTATION,
       {
         activity: post,
       },
     );
     console.log("post activity", result);
   }
-  async putActivity(activity: Activity): Promise<void> {
+  async put(activity: Activity): Promise<void> {
     const result = await urql.urqlClient?.mutation(
-      ActivitiesSync.ACTIVITIES_PUT,
+      ActivitiesSync.PUT_MUTATION,
       {
         id: +activity.id,
         activity: ActivitiesSync.convertActivityToGraphQLActivity(activity),

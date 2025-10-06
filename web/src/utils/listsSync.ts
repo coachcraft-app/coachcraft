@@ -7,7 +7,7 @@ import urql from "./urql"; // importing a pre-initialised instance of urql
 
 class ListsSync {
   // GraphQL Queries and Mutations
-  private static readonly LISTS_QUERY = /* GraphQL */ `
+  private static readonly LISTS_LIST_QUERY = /* GraphQL */ `
     query getLists {
       lists {
         id
@@ -23,7 +23,7 @@ class ListsSync {
       }
     }
   `;
-  private static readonly LISTS_DELETE = /* GraphQL */ `
+  private static readonly DELETE_MUTATION = /* GraphQL */ `
     mutation deleteLists($id: Int!) {
       deleteFromLists(where: { id: { eq: $id } }) {
         id
@@ -34,7 +34,7 @@ class ListsSync {
       }
     }
   `;
-  private static readonly LISTS_POST = /* GraphQL */ `
+  private static readonly POST_MUTATION = /* GraphQL */ `
     mutation insertLists($list: ListsInsertInput!) {
       insertIntoListsSingle(values: $list) {
         id
@@ -44,7 +44,7 @@ class ListsSync {
       }
     }
   `;
-  private static readonly LISTS_PUT = /* GraphQL */ `
+  private static readonly PUT_MUTATION = /* GraphQL */ `
     mutation updateLists(
       $id: Int!
       $list: ListsUpdateInput!
@@ -64,7 +64,7 @@ class ListsSync {
       }
     }
   `;
-  private static readonly LISTS_PUT_NO_ACTIVITIES = /* GraphQL */ `
+  private static readonly PUT_NO_ACTIVITIES_MUTATION = /* GraphQL */ `
     mutation updateLists($id: Int!, $list: ListsUpdateInput!) {
       updateLists(where: { id: { eq: $id } }, set: $list) {
         id
@@ -106,24 +106,26 @@ class ListsSync {
   }
 
   // Public API methods
-  subscribeToLists(listsList: List[]): void {
-    urql.urqlClient?.query(ListsSync.LISTS_QUERY, {}).subscribe((result) => {
-      // empty the array and repopulate
-      listsList.length = 0;
-      for (const list of ListsSync.convertGraphQLListToList(
-        result.data?.lists || [],
-      )) {
-        listsList.push(list);
-      }
-    });
+  subscribeToListsList(listsList: List[]): void {
+    urql.urqlClient
+      ?.query(ListsSync.LISTS_LIST_QUERY, {})
+      .subscribe((result) => {
+        // empty the array and repopulate
+        listsList.length = 0;
+        for (const list of ListsSync.convertGraphQLListToList(
+          result.data?.lists || [],
+        )) {
+          listsList.push(list);
+        }
+      });
   }
-  async deleteList(id: string): Promise<void> {
-    const result = await urql.urqlClient?.mutation(ListsSync.LISTS_DELETE, {
+  async delete(id: string): Promise<void> {
+    const result = await urql.urqlClient?.mutation(ListsSync.DELETE_MUTATION, {
       id: +id,
     });
     console.log("delete", result);
   }
-  async postList(list: List): Promise<void> {
+  async post(list: List): Promise<void> {
     // Convert to a postable list
     const graphqlList = ListsSync.convertListToGraphQLList(list);
     // Strip out id and lastModified
@@ -132,12 +134,12 @@ class ListsSync {
       accentColor: graphqlList.accentColor,
     };
 
-    const result = await urql.urqlClient?.mutation(ListsSync.LISTS_POST, {
+    const result = await urql.urqlClient?.mutation(ListsSync.POST_MUTATION, {
       list: post,
     });
     console.log("post list", result);
   }
-  async putList(list: List): Promise<void> {
+  async put(list: List): Promise<void> {
     const graphqlList = ListsSync.convertListToGraphQLList(list);
     const base = {
       name: graphqlList.name,
@@ -146,7 +148,7 @@ class ListsSync {
 
     if (list.activities.length == 0) {
       const result = await urql.urqlClient?.mutation(
-        ListsSync.LISTS_PUT_NO_ACTIVITIES,
+        ListsSync.PUT_NO_ACTIVITIES_MUTATION,
         {
           id: +list.id,
           list: base,
@@ -154,7 +156,7 @@ class ListsSync {
       );
       console.log("put list", result);
     } else {
-      const result = await urql.urqlClient?.mutation(ListsSync.LISTS_PUT, {
+      const result = await urql.urqlClient?.mutation(ListsSync.PUT_MUTATION, {
         id: +list.id,
         list: base,
         activities:

@@ -4,7 +4,7 @@ import urql from "./urql"; // importing a pre-initialised instance of urql
 
 class TeamsSync {
   // GraphQL Queries and Mutations
-  private static readonly TEAMS_QUERY = /* GraphQL */ `
+  private static readonly TEAMS_LIST_QUERY = /* GraphQL */ `
     query getTeams {
       teams {
         id
@@ -19,21 +19,21 @@ class TeamsSync {
       }
     }
   `;
-  private static readonly TEAM_DELETE = /* GraphQL */ `
+  private static readonly DELETE_MUTATION = /* GraphQL */ `
     mutation deleteTeam($id: Int!) {
       deleteFromTeams(where: { id: { eq: $id } }) {
         id
       }
     }
   `;
-  private static readonly TEAM_POST = /* GraphQL */ `
+  private static readonly POST_MUTATION = /* GraphQL */ `
     mutation insertTeam($team: TeamsInsertInput!) {
       insertIntoTeamsSingle(values: $team) {
         id
       }
     }
   `;
-  private static readonly TEAM_PUT = /* GraphQL */ `
+  private static readonly PUT_MUTATION = /* GraphQL */ `
     mutation updateTeam(
       $id: Int!
       $team: TeamsUpdateInput!
@@ -55,7 +55,7 @@ class TeamsSync {
       }
     }
   `;
-  private static readonly TEAM_PUT_NO_PLAYERS = /* GraphQL */ `
+  private static readonly PUT_NO_PLAYERS_MUTATION = /* GraphQL */ `
     mutation updateTeam($id: Int!, $team: TeamsUpdateInput!) {
       updateTeams(set: $team, where: { id: { eq: $id } }) {
         id
@@ -81,25 +81,27 @@ class TeamsSync {
   }
 
   // Public API methods
-  subscribeToTeams(teamsList: Team[]): void {
-    urql.urqlClient?.query(TeamsSync.TEAMS_QUERY, {}).subscribe((result) => {
-      // empty the array and repopulate
-      teamsList.length = 0;
-      for (const team of TeamsSync.convertGraphQLTeamToTeam(
-        result.data?.teams || [],
-      )) {
-        teamsList.push(team);
-      }
-    });
+  subscribeToTeamsList(teamsList: Team[]): void {
+    urql.urqlClient
+      ?.query(TeamsSync.TEAMS_LIST_QUERY, {})
+      .subscribe((result) => {
+        // empty the array and repopulate
+        teamsList.length = 0;
+        for (const team of TeamsSync.convertGraphQLTeamToTeam(
+          result.data?.teams || [],
+        )) {
+          teamsList.push(team);
+        }
+      });
   }
-  async deleteTeam(id: string): Promise<void> {
-    const result = await urql.urqlClient?.mutation(TeamsSync.TEAM_DELETE, {
+  async delete(id: string): Promise<void> {
+    const result = await urql.urqlClient?.mutation(TeamsSync.DELETE_MUTATION, {
       id: +id,
     });
     console.log("delete team", result);
   }
-  async postTeam(team: Team): Promise<void> {
-    const result = await urql.urqlClient?.mutation(TeamsSync.TEAM_POST, {
+  async post(team: Team): Promise<void> {
+    const result = await urql.urqlClient?.mutation(TeamsSync.POST_MUTATION, {
       team: {
         name: team.name,
         description: team.description,
@@ -107,9 +109,9 @@ class TeamsSync {
     });
     console.log("post team", result);
   }
-  async putTeam(team: Team): Promise<void> {
+  async put(team: Team): Promise<void> {
     if (team.players.length > 0) {
-      const result = await urql.urqlClient?.mutation(TeamsSync.TEAM_PUT, {
+      const result = await urql.urqlClient?.mutation(TeamsSync.PUT_MUTATION, {
         id: +team.id,
         team: {
           name: team.name,
@@ -124,7 +126,7 @@ class TeamsSync {
     } else {
       // No players
       const result = await urql.urqlClient?.mutation(
-        TeamsSync.TEAM_PUT_NO_PLAYERS,
+        TeamsSync.PUT_NO_PLAYERS_MUTATION,
         {
           id: +team.id,
           team: {
