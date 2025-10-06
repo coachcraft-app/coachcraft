@@ -58,17 +58,14 @@ const ListsQuery = /* GraphQL */ `
     }
   }
 `;
-
-export function subscribeToLists(listsList: List[]) {
-  if (urql.urqlClient) {
-    urql.urqlClient.query(ListsQuery, {}).subscribe((result) => {
-      // empty the array and repopulate
-      listsList.length = 0;
-      for (const list of GraphQLListToList(result.data?.lists || [])) {
-        listsList.push(list);
-      }
-    });
-  }
+export function subscribeToLists(listsList: List[]): void {
+  urql.urqlClient?.query(ListsQuery, {}).subscribe((result) => {
+    // empty the array and repopulate
+    listsList.length = 0;
+    for (const list of GraphQLListToList(result.data?.lists || [])) {
+      listsList.push(list);
+    }
+  });
 }
 
 // DELETE LIST
@@ -83,16 +80,9 @@ const ListsDelete = /* GraphQL */ `
     }
   }
 `;
-
-export function deleteList(id: string) {
-  if (urql.urqlClient) {
-    urql.urqlClient
-      .mutation(ListsDelete, { id: +id })
-      .toPromise()
-      .then((result) => {
-        console.log("delete", result);
-      });
-  }
+export async function deleteList(id: string): Promise<void> {
+  const result = await urql.urqlClient?.mutation(ListsDelete, { id: +id });
+  console.log("delete", result);
 }
 
 // POST ACTIVITY
@@ -106,8 +96,7 @@ const ListsPost = /* GraphQL */ `
     }
   }
 `;
-
-export function postList(list: List) {
+export async function postList(list: List): Promise<void> {
   // Convert to a postable list
   const graphqlList = convertListToGraphQLList(list);
   // Strip out id and lastModified
@@ -116,16 +105,10 @@ export function postList(list: List) {
     accentColor: graphqlList.accentColor,
   };
 
-  if (urql.urqlClient) {
-    urql.urqlClient
-      .mutation(ListsPost, {
-        list: post,
-      })
-      .toPromise()
-      .then((result) => {
-        console.log("post", result);
-      });
-  }
+  const result = await urql.urqlClient?.mutation(ListsPost, {
+    list: post,
+  });
+  console.log("post list", result);
 }
 
 // PUT ACTIVITY MUTATION
@@ -149,7 +132,6 @@ const ListsPut = /* GraphQL */ `
     }
   }
 `;
-
 const ListsPutNoActivities = /* GraphQL */ `
   mutation updateLists($id: Int!, $list: ListsUpdateInput!) {
     updateLists(where: { id: { eq: $id } }, set: $list) {
@@ -160,40 +142,29 @@ const ListsPutNoActivities = /* GraphQL */ `
     }
   }
 `;
-
-export function putList(list: List) {
+export async function putList(list: List): Promise<void> {
   const graphqlList = convertListToGraphQLList(list);
   const base = {
     name: graphqlList.name,
     accentColor: graphqlList.accentColor,
   };
 
-  if (urql.urqlClient) {
-    if (list.activities.length == 0) {
-      urql.urqlClient
-        .mutation(ListsPutNoActivities, {
-          id: +list.id,
-          list: base,
-        })
-        .toPromise()
-        .then((result) => {
-          console.log("put", result);
-        });
-    } else {
-      urql.urqlClient
-        .mutation(ListsPut, {
-          id: +list.id,
-          list: base,
-          activities:
-            list.activities.map((activity) => ({
-              activityTemplate: +activity,
-              list: +list.id,
-            })) || [],
-        })
-        .toPromise()
-        .then((result) => {
-          console.log("put", result);
-        });
-    }
+  if (list.activities.length == 0) {
+    const result = await urql.urqlClient?.mutation(ListsPutNoActivities, {
+      id: +list.id,
+      list: base,
+    });
+    console.log("put list", result);
+  } else {
+    const result = await urql.urqlClient?.mutation(ListsPut, {
+      id: +list.id,
+      list: base,
+      activities:
+        list.activities.map((activity) => ({
+          activityTemplate: +activity,
+          list: +list.id,
+        })) || [],
+    });
+    console.log("put list", result);
   }
 }

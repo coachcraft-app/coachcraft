@@ -58,19 +58,16 @@ const ActivitiesQuery = /* GraphQL */ `
     }
   }
 `;
-
-export function subscribeToActivities(activitiesList: Activity[]) {
-  if (urql.urqlClient) {
-    urql.urqlClient.query(ActivitiesQuery, {}).subscribe((result) => {
-      // empty the array and repopulate
-      activitiesList.length = 0;
-      for (const act of GraphQLActivityToActivity(
-        result.data?.activityTemplates || [],
-      )) {
-        activitiesList.push(act);
-      }
-    });
-  }
+export function subscribeToActivities(activitiesList: Activity[]): void {
+  urql.urqlClient?.query(ActivitiesQuery, {}).subscribe((result) => {
+    // empty the array and repopulate
+    activitiesList.length = 0;
+    for (const act of GraphQLActivityToActivity(
+      result.data?.activityTemplates || [],
+    )) {
+      activitiesList.push(act);
+    }
+  });
 }
 
 // DELETE ACTIVITY MUTATION
@@ -81,16 +78,9 @@ const ActivitiesDelete = /* GraphQL */ `
     }
   }
 `;
-
-export function deleteActivity(id: number) {
-  if (urql.urqlClient) {
-    urql.urqlClient
-      .mutation(ActivitiesDelete, { id: id })
-      .toPromise()
-      .then((result) => {
-        console.log("delete", result);
-      });
-  }
+export async function deleteActivity(id: number): Promise<void> {
+  const result = await urql.urqlClient?.mutation(ActivitiesDelete, { id: id });
+  console.log("delete activity", result);
 }
 
 // POST ACTIVITY MUTATION
@@ -106,8 +96,7 @@ const ActivitiesPost = /* GraphQL */ `
     }
   }
 `;
-
-export function postActivity(activity: Activity) {
+export async function postActivity(activity: Activity): Promise<void> {
   // Convert to a postable activity
   const graphqlActivity = convertActivityToGraphQLActivity(activity);
   const post = {
@@ -117,16 +106,10 @@ export function postActivity(activity: Activity) {
     imgUrl: graphqlActivity.imgUrl,
   };
 
-  if (urql.urqlClient) {
-    urql.urqlClient
-      .mutation(ActivitiesPost, {
-        activity: post,
-      })
-      .toPromise()
-      .then((result) => {
-        console.log("post", result);
-      });
-  }
+  const result = await urql.urqlClient?.mutation(ActivitiesPost, {
+    activity: post,
+  });
+  console.log("post activity", result);
 }
 
 // PUT ACTIVITY MUTATION
@@ -145,17 +128,10 @@ const ActivitiesPut = /* GraphQL */ `
     }
   }
 `;
-
-export function putActivity(activity: Activity) {
-  if (urql.urqlClient) {
-    urql.urqlClient
-      .mutation(ActivitiesPut, {
-        id: +activity.id,
-        activity: convertActivityToGraphQLActivity(activity),
-      })
-      .toPromise()
-      .then((result) => {
-        console.log("put", result);
-      });
-  }
+export async function putActivity(activity: Activity): Promise<void> {
+  const result = await urql.urqlClient?.mutation(ActivitiesPut, {
+    id: +activity.id,
+    activity: convertActivityToGraphQLActivity(activity),
+  });
+  console.log("put activity", result);
 }

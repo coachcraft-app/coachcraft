@@ -33,19 +33,14 @@ const TeamsQuery = /* GraphQL */ `
     }
   }
 `;
-
-export function subscribeToTeams(teamsList: Team[]) {
-  if (urql.urqlClient) {
-    urql.urqlClient.query(TeamsQuery, {}).subscribe((result) => {
-      console.log("Teams subscription graphql result", result);
-
-      // empty the array and repopulate
-      teamsList.length = 0;
-      for (const team of GraphQLTeamToTeam(result.data?.teams || [])) {
-        teamsList.push(team);
-      }
-    });
-  }
+export function subscribeToTeams(teamsList: Team[]): void {
+  urql.urqlClient?.query(TeamsQuery, {}).subscribe((result) => {
+    // empty the array and repopulate
+    teamsList.length = 0;
+    for (const team of GraphQLTeamToTeam(result.data?.teams || [])) {
+      teamsList.push(team);
+    }
+  });
 }
 
 // DELETE TEAM
@@ -56,16 +51,9 @@ const TeamDelete = /* GraphQL */ `
     }
   }
 `;
-
-export function deleteTeam(id: string): void {
-  if (urql.urqlClient) {
-    urql.urqlClient
-      .mutation(TeamDelete, { id: +id })
-      .toPromise()
-      .then((result) => {
-        console.log("delete team", result);
-      });
-  }
+export async function deleteTeam(id: string): Promise<void> {
+  const result = await urql.urqlClient?.mutation(TeamDelete, { id: +id });
+  console.log("delete team", result);
 }
 
 // POST TEAM
@@ -76,21 +64,14 @@ const TeamPost = /* GraphQL */ `
     }
   }
 `;
-
-export function postTeam(team: Team) {
-  if (urql.urqlClient) {
-    urql.urqlClient
-      .mutation(TeamPost, {
-        team: {
-          name: team.name,
-          description: team.description,
-        },
-      })
-      .toPromise()
-      .then((result) => {
-        console.log("post team", result);
-      });
-  }
+export async function postTeam(team: Team): Promise<void> {
+  const result = await urql.urqlClient?.mutation(TeamPost, {
+    team: {
+      name: team.name,
+      description: team.description,
+    },
+  });
+  console.log("post team", result);
 }
 
 // PUT TEAM
@@ -116,7 +97,6 @@ const TeamPut = /* GraphQL */ `
     }
   }
 `;
-
 const TeamPutNoPlayers = /* GraphQL */ `
   mutation updateTeam($id: Int!, $team: TeamsUpdateInput!) {
     updateTeams(set: $team, where: { id: { eq: $id } }) {
@@ -131,44 +111,29 @@ const TeamPutNoPlayers = /* GraphQL */ `
     }
   }
 `;
-
-export function putTeam(team: Team) {
+export async function putTeam(team: Team): Promise<void> {
   if (team.players.length > 0) {
-    if (urql.urqlClient) {
-      urql.urqlClient
-        .mutation(TeamPut, {
-          id: +team.id,
-          team: {
-            name: team.name,
-            description: team.description,
-          },
-          players: team.players.map((player) => ({
-            name: player,
-            team: +team.id,
-          })),
-        })
-        .toPromise()
-        .then((result) => {
-          console.log("put team", result);
-        });
-    }
-
-    return;
-  }
-
-  // No players
-  if (urql.urqlClient) {
-    urql.urqlClient
-      .mutation(TeamPutNoPlayers, {
-        id: +team.id,
-        team: {
-          name: team.name,
-          description: team.description,
-        },
-      })
-      .toPromise()
-      .then((result) => {
-        console.log("put team", result);
-      });
+    const result = await urql.urqlClient?.mutation(TeamPut, {
+      id: +team.id,
+      team: {
+        name: team.name,
+        description: team.description,
+      },
+      players: team.players.map((player) => ({
+        name: player,
+        team: +team.id,
+      })),
+    });
+    console.log("put team", result);
+  } else {
+    // No players
+    const result = await urql.urqlClient?.mutation(TeamPutNoPlayers, {
+      id: +team.id,
+      team: {
+        name: team.name,
+        description: team.description,
+      },
+    });
+    console.log("put team", result);
   }
 }
