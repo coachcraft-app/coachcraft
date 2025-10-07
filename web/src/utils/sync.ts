@@ -1,146 +1,42 @@
-/**
- *
- */
+import { ActivitiesSync, ActivitiesListsSync } from "./activitiesSync";
+import TeamsSync from "./teamsSync";
 
-import type { Activity, List, Team } from "../typeDefs/storeTypes";
+import alpineInstance from "./alpineInstance";
+import type { PagesStore } from "../typeDefs/storeTypes";
 
-import {
-  subscribeToActivities,
-  deleteActivity,
-  postActivity,
-  putActivity,
-} from "./activitiesSync";
+class Sync {
+  bypassSync: boolean;
+  activities: {
+    activity: ActivitiesSync;
+    list: ActivitiesListsSync;
+  };
+  teams: TeamsSync;
 
-import { subscribeToLists, deleteList, postList, putList } from "./listsSync";
+  constructor(bypassSync: boolean = false) {
+    this.bypassSync = bypassSync;
+    const activity = new ActivitiesSync();
+    const list = new ActivitiesListsSync();
+    this.activities = {
+      activity,
+      list,
+    };
+    this.teams = new TeamsSync();
 
-import { subscribeToTeams, deleteTeam, postTeam, putTeam } from "./teamsSync";
+    const pagesStore: PagesStore = alpineInstance.instance.store(
+      "pages",
+    ) as PagesStore;
 
-export class Sync {
-  debug: boolean;
-  activitiesList: Activity[];
-  listsList: List[];
-  teamsList: Team[];
+    // Subscribe to updates to activitiesList, listsLists, teamsList
+    if (!this.bypassSync) {
+      const activitiesList = pagesStore.activities?.activitiesList;
+      const listsList = pagesStore.activities?.listsList;
+      const teamsList = pagesStore.teams?.teamsList;
 
-  constructor(
-    activitiesList: Activity[],
-    listsList: List[],
-    teamsList: Team[],
-    debug: boolean = false,
-  ) {
-    this.activitiesList = activitiesList;
-    this.listsList = listsList;
-    this.teamsList = teamsList;
-    this.debug = debug;
-
-    // Subscribe to changes in activities and lists
-    if (!this.debug) {
-      subscribeToActivities(this.activitiesList);
-      subscribeToLists(this.listsList);
-      subscribeToTeams(this.teamsList);
+      this.activities.activity.subscribeToActivitiesList(activitiesList);
+      this.activities.list.subscribeToListsList(listsList);
+      this.teams.subscribeToTeamsList(teamsList);
     }
   }
-
-  async sync(): Promise<void> {
-    // try {
-    // Activities
-    // let response; // = await fetch(
-    //   ((this.debug && "http://localhost:3000") || "") + "/api/activity",
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       "If-Modified-Since":
-    //         this.getActivitiesModifyDateTime().toUTCString(),
-    //     },
-    //   },
-    // );
-    // if (response.ok) {
-    //   const json: APIActivitiesResponse = await response.json();
-    //   // clear array
-    //   this.activitiesList.length = 0;
-    //   for (const activity of json.activities) {
-    //     this.activitiesList.push(this.convertAPIActivityToActivity(activity));
-    //   }
-    //   // Current is up to date
-    // } else if (response.status === 304) {
-    //   return;
-    // } else {
-    //   const json: APIActivitiesResponse = await response.json();
-    //   console.error(json);
-    //   return;
-    // }
-    // Lists
-    //   response = await fetch(
-    //     ((this.debug && "http://localhost:3000") || "") + "/api/list",
-    //     {
-    //       method: "GET",
-    //       headers: {
-    //         "If-Modified-Since":
-    //           this.getLatestListsModifyDateTime().toUTCString(),
-    //       },
-    //     },
-    //   );
-    //   if (response.ok) {
-    //     const json: APIListResponse = await response.json();
-    //     // clear array
-    //     this.listsList.length = 0;
-    //     for (const list of json.lists) {
-    //       this.listsList.push(this.convertAPIListToList(list));
-    //     }
-    //     // Current is up to date
-    //   } else if (response.status === 304) {
-    //     return;
-    //   } else {
-    //     const json: APIActivitiesResponse = await response.json();
-    //     console.error(json);
-    //     return;
-    //   }
-    // } catch (e) {
-    //   console.error(e);
-    // }
-  }
-
-  async deleteActivity(id: string): Promise<void> {
-    if (this.debug) return;
-    deleteActivity(+id);
-  }
-
-  async postActivity(activity: Activity): Promise<void> {
-    if (this.debug) return;
-    postActivity(activity);
-  }
-
-  async putActivity(activity: Activity): Promise<void> {
-    if (this.debug) return;
-    putActivity(activity);
-  }
-
-  async deleteList(id: string): Promise<void> {
-    if (this.debug) return;
-    deleteList(id);
-  }
-
-  async postList(list: List): Promise<void> {
-    if (this.debug) return;
-    postList(list);
-  }
-
-  async putList(list: List): Promise<void> {
-    if (this.debug) return;
-    putList(list);
-  }
-
-  async deleteTeam(id: string): Promise<void> {
-    if (this.debug) return;
-    deleteTeam(id);
-  }
-
-  async postTeam(team: Team): Promise<void> {
-    if (this.debug) return;
-    postTeam(team);
-  }
-
-  async putTeam(team: Team): Promise<void> {
-    if (this.debug) return;
-    putTeam(team);
-  }
 }
+
+export default Sync;
