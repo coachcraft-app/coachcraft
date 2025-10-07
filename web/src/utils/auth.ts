@@ -1,4 +1,5 @@
-import { UserManager } from "oidc-client-ts";
+import { User, UserManager } from "oidc-client-ts";
+import type { AuthStore } from "../typeDefs/storeTypes";
 import type { Alpine } from "alpinejs";
 
 export const userManager = new UserManager({
@@ -9,12 +10,13 @@ export const userManager = new UserManager({
 });
 
 export async function initAuth(Alpine: Alpine, userManager: UserManager) {
-  const authStore: any = Alpine.store("auth");
+  const authStore: AuthStore = Alpine.store("auth") as AuthStore;
   authStore.userManager = userManager;
 
   if (urlHasAuthResponse()) {
     // state 1: redirected from Cognito, with URL response parameters
-    authStore.user = await userManager.signinCallback();
+    const user = await userManager.signinCallback();
+    if (user) authStore.user = user;
 
     // remove the AUTH response parameters from the URL without reload
     window.history.replaceState(
