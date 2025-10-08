@@ -1,63 +1,22 @@
-import { userManager, initAuth } from "./utils/auth";
+import alpine from "./utils/alpine.js";
+import auth from "./utils/auth.ts";
+import urql from "./utils/urql.ts";
+import sync from "./utils/sync.js";
 
 import type { Alpine } from "alpinejs";
-import collapse from "@alpinejs/collapse";
-import focus from "@alpinejs/focus";
-import mask from "@alpinejs/mask";
-
-import routerStore from "./stores/routerStore.js";
-import authStore from "./stores/authStore.js";
-
-import activitiesStore from "./stores/pages/activitiesStore.js";
-import schedulingStore from "./stores/pages/schedulingStore.js";
-import teamsStore from "./stores/pages/teamsStore.js";
-import sessionsStore from "./stores/pages/sessionsStore.js";
-import dashboardStore from "./stores/pages/dashboardStore.js";
-import notesStore from "./stores/pages/notesStore.js";
-import settingsStore from "./stores/pages/settingsStore.js";
-import toastStore from "./stores/common/toastStore.js";
-
-import { Sync } from "./utils/sync.js";
-
-import type { PagesStore } from "./typeDefs/storeTypes.js";
 
 export default async (Alpine: Alpine) => {
-  Alpine.plugin(collapse);
-  Alpine.plugin(focus);
-  Alpine.plugin(mask);
+  console.log("Prod mode", import.meta.env.PROD);
 
-  Alpine.store("pages", {});
-  Alpine.store("common", {});
+  // init Alpine plugins, stores and the global Alpine object
+  alpine.getInstance(Alpine);
 
-  routerStore(Alpine);
-  authStore(Alpine);
+  // configure Cognito OIDC, prompt user for logging in
+  auth.getInstance().initAuthFlow();
 
-  // Initialize /pages stores
-  activitiesStore(Alpine);
-  schedulingStore(Alpine);
-  teamsStore(Alpine);
-  sessionsStore(Alpine);
-  dashboardStore(Alpine);
-  notesStore(Alpine);
-  settingsStore(Alpine);
+  // GraphQL client (backend API)
+  await urql.init();
 
-  // Initialise permanence through graphql
-  const debug = import.meta.env.PUBLIC_BACKEND === "false";
-
-  console.log("Debug mode:", debug);
-
-  Alpine.store(
-    "sync",
-    new Sync(
-      (Alpine.store("pages") as PagesStore).activities.activitiesList,
-      (Alpine.store("pages") as PagesStore).activities.listsList,
-      (Alpine.store("pages") as PagesStore).teams.teamsList,
-      debug,
-    ),
-  );
-
-  // Initialize /commmon stores
-  toastStore(Alpine);
-
-  await initAuth(Alpine, userManager);
+  // sync state lists with backend, if in prod mode
+  if (import.meta.env.PROD) sync.subscribeToStateLists();
 };
