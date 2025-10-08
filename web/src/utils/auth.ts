@@ -1,41 +1,64 @@
 import { User, UserManager } from "oidc-client-ts";
+import alpine from "./alpine";
 import type { AuthStore } from "../typeDefs/storeTypes";
-import type { Alpine } from "alpinejs";
 
-export const userManager = new UserManager({
-  authority: import.meta.env.PUBLIC_COGNITO_PROD_USER_POOL,
-  client_id: import.meta.env.PUBLIC_COGNITO_PROD_APP_CLIENT_ID,
-  redirect_uri: import.meta.env.PUBLIC_COGNITO_POST_AUTH_REDIRECT_URL,
-  scope: import.meta.env.PUBLIC_COGNITO_USER_DATA_SCOPE,
-});
+/**
+ * `auth` is a singleton class
+ *  for accessing, use `getInstance(): auth`
+ */
+export class auth {
+  private static instance: auth;
+  private userManager: UserManager;
 
-export async function initAuth(Alpine: Alpine, userManager: UserManager) {
-  const authStore: AuthStore = Alpine.store("auth") as AuthStore;
-  authStore.userManager = userManager;
+  /**
+   * private contructor to disallow instantiation
+   * with the `new` keyword
+   */
+  private constructor() {
+    this.userManager = new UserManager({
+      authority: import.meta.env.PUBLIC_COGNITO_PROD_USER_POOL,
+      client_id: import.meta.env.PUBLIC_COGNITO_PROD_APP_CLIENT_ID,
+      redirect_uri: import.meta.env.PUBLIC_COGNITO_POST_AUTH_REDIRECT_URL,
+      scope: import.meta.env.PUBLIC_COGNITO_USER_DATA_SCOPE,
+    });
+  }
 
-  if (urlHasAuthResponse()) {
-    // state 1: redirected from Cognito, with URL response parameters
-    const user = await userManager.signinCallback();
-    if (user) authStore.user = user;
+  /**
+   * Proxy for constructor
+   *
+   * @returns auth
+   */
+  public static getInstance(): auth {
+    if (!auth.instance) auth.instance = new auth();
+    return auth.instance;
+  }
 
-    // remove the AUTH response parameters from the URL without reload
-    window.history.replaceState(
-      {},
-      document.title,
-      window.location.pathname + window.location.hash,
+  public getUserManager(): UserManager {
+    if (!this.userManager) throw new Error("");
+
+    return this.userManager;
+  }
+
+  public async initAuthFlow(): Promise<void> {
+    const globalAlpine = alpine.getInstance().getGlobalAlpine();
+    const authStore = globalAlpine.store("auth") as AuthStore;
+
+    // store UserManager in Alpine's auth store
+    // to be accessed in .astro files
+    authStore.userManager = this.userManager;
+
+    // attempt to get User
+    const user: User | null = await this.userManager.getUser();
+
+    // attempt to get URL parameters
+    const urlParams: URLSearchParams = new URLSearchParams(
+      window.location.search,
     );
-  } else if (!(await userManager.getUser())) {
-    // state 2: no cached user, redirect to cognito
-    userManager.signinRedirect();
-  } else {
-    // state 3: cached user exists, check for expiry
-    const user = await userManager.getUser();
-    if (user && !user.expired) authStore.user = user;
+    const urlHasAuthResponse =
+      (urlParams.has("code") && urlParams.has("state")) ||
+      urlParams.has("error");
+
   }
 }
 
-function urlHasAuthResponse() {
-  const params = new URLSearchParams(window.location.search);
-
-  return (params.has("code") && params.has("state")) || params.has("error");
-}
+export default auth;
