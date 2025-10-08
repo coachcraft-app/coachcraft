@@ -1,7 +1,7 @@
 import { ActivitiesSync, ActivitiesListsSync } from "./activitiesSync";
 import TeamsSync from "./teamsSync";
 
-import alpineInstance from "./alpineInstance";
+import alpineSingleton from "./alpineSingleton";
 import type { PagesStore } from "../typeDefs/storeTypes";
 
 /**
@@ -30,9 +30,9 @@ class Sync {
    * Sync activitiesList, listsList, teamsList to the server
    */
   static subscribeToStateLists(): void {
-    const pagesStore: PagesStore = alpineInstance.instance.store(
-      "pages",
-    ) as PagesStore;
+    const pagesStore: PagesStore = alpineSingleton
+      .getAlpine()
+      .store("pages") as PagesStore;
 
     // Subscribe to updates to activitiesList, listsLists, teamsList
     const activitiesList = pagesStore.activities?.activitiesList;
