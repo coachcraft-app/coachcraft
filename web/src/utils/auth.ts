@@ -58,6 +58,40 @@ export class auth {
       (urlParams.has("code") && urlParams.has("state")) ||
       urlParams.has("error");
 
+    // determine the current state of authentication and redirect user
+    if (user) {
+      if (!user.expired) {
+        // state 1: cached user exists and is valid
+        authStore.user = user as User;
+      } else {
+        // state 2: cached user expired, redirect to Cognito
+
+        await this.userManager.removeUser();
+        this.userManager.signinRedirect();
+      }
+    } else if (urlHasAuthResponse) {
+      // state 3: redirected from Cognito, with URL response parameters
+
+      const user: User | undefined = await this.userManager.signinCallback();
+      if (user) {
+        authStore.user = user as User;
+
+        // clear URL response parameters from the URL
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname + window.location.hash,
+        );
+      } else {
+        // signinCallback return undefined, redirect back to Cognito
+
+        this.userManager.signinRedirect();
+      }
+    } else {
+      // state 4: no cached user or URL parameters, redirect to cognito
+
+      this.userManager.signinRedirect();
+    }
   }
 }
 
