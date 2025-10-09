@@ -1,7 +1,7 @@
-import alpine from "./utils/alpine.js";
-import oidc from "./utils/oidc.ts";
-import urql from "./utils/urql.ts";
-import sync from "./utils/sync.js";
+import alpine from "./libs/alpine.js";
+import oidc from "./libs/oidc.js";
+import urql from "./libs/graphql/urql";
+import sync from "./libs/graphql/sync/sync";
 
 import type { Alpine } from "alpinejs";
 

@@ -1,5 +1,5 @@
-import type { PagesStore, Session } from "../../typeDefs/storeTypes";
-import alpine from "../../utils/alpine";
+import type { PagesStore, Session } from "../../typedefs/storeTypes";
+import alpine from "../../libs/alpine";
 
 export default class sessions {
   /**

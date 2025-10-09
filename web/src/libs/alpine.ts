@@ -2,10 +2,10 @@ import collapse from "@alpinejs/collapse";
 import focus from "@alpinejs/focus";
 import mask from "@alpinejs/mask";
 
-import activities from "../stores/pages/activities";
-import scheduling from "../stores/pages/scheduling";
-import teams from "../stores/pages/teams";
-import sessions from "../stores/pages/sessions";
+import activities from "../stores/views/activities";
+import scheduling from "../stores/views/scheduling";
+import teams from "../stores/views/teams";
+import sessions from "../stores/views/sessions";
 import toast from "../stores/common/toast";
 
 import auth from "../stores/auth";

@@ -15,7 +15,7 @@ class urql {
 
   private constructor(accessToken: string) {
     this.urqlClient = new Client({
-      url: "http://localhost:4500/graphql",
+      url: import.meta.env.API_SERVER_URL,
       exchanges: [cacheExchange({ schema }), fetchExchange],
       fetchOptions: () => {
         const token = accessToken;

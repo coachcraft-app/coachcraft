@@ -5,8 +5,8 @@ import type {
   Session,
   SessionActivity,
   Team,
-} from "../../typeDefs/storeTypes";
-import alpine from "../../utils/alpine";
+} from "../../typedefs/storeTypes";
+import alpine from "../../libs/alpine";
 
 export default class scheduling {
   // state

@@ -1,4 +1,4 @@
-import alpine from "../utils/alpine";
+import alpine from "../libs/alpine";
 
 export default class router {
   public defaultPage: string = "activities";

@@ -1,9 +1,9 @@
-import sync from "../../utils/sync";
 import type {
   Activity,
   ActivitiesList,
   ActivitiesListAccentColors,
-} from "../../typeDefs/storeTypes";
+} from "../../typedefs/storeTypes";
+import sync from "../../libs/graphql/sync/sync";
 
 export default class activities {
   // state

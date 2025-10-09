@@ -1,5 +1,5 @@
-import type activities from "../stores/pages/activities";
-import type scheduling from "../stores/pages/scheduling";
+import type activities from "../stores/views/activities";
+import type scheduling from "../stores/views/scheduling";
 import type toast from "../stores/common/toast";
 
 export type Player = string;
