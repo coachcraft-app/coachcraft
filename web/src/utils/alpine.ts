@@ -4,7 +4,7 @@ import mask from "@alpinejs/mask";
 
 import activities from "../stores/pages/activities";
 import scheduling from "../stores/pages/scheduling";
-import teamsStore from "../stores/pages/teamsStore.js";
+import teams from "../stores/pages/teams";
 import sessions from "../stores/pages/sessions";
 import toastStore from "../stores/common/toastStore.js";
 
@@ -41,9 +41,7 @@ class alpine {
 
     pagesStore.activities = new activities();
     pagesStore.scheduling = new scheduling();
-
-    teamsStore(this.globalAlpine);
-
+    pagesStore.teams = new teams();
     pagesStore.sessions = new sessions();
 
     // initialize /common stores
