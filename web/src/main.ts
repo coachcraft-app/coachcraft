@@ -1,5 +1,5 @@
 import alpine from "./utils/alpine.js";
-import auth from "./utils/auth.ts";
+import oidc from "./utils/oidc.ts";
 import urql from "./utils/urql.ts";
 import sync from "./utils/sync.js";
 
@@ -13,8 +13,8 @@ export default async (Alpine: Alpine) => {
   // init Alpine plugins, stores and the global Alpine object
   alpine.getInstance(Alpine);
 
-  // configure Cognito OIDC, prompt user for logging in
-  await auth.getInstance().initAuthFlow();
+  // configure OIDC client, prompt user for logging in
+  await oidc.getInstance().initAuthFlow();
 
   // GraphQL client (backend API)
   await urql.getInstance();
