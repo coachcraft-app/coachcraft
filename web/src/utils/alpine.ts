@@ -8,7 +8,7 @@ import teams from "../stores/pages/teams";
 import sessions from "../stores/pages/sessions";
 import toastStore from "../stores/common/toastStore.js";
 
-import authStore from "../stores/authStore.js";
+import auth from "../stores/auth.js";
 import routerStore from "../stores/routerStore.js";
 
 import type { Alpine, Stores } from "alpinejs";
@@ -48,7 +48,7 @@ class alpine {
     this.globalAlpine.store("common", {});
     toastStore(this.globalAlpine);
 
-    authStore(this.globalAlpine);
+    this.globalAlpine.store("auth", new auth());
 
     routerStore(this.globalAlpine);
     const router: any = this.globalAlpine.store("router");
