@@ -16,7 +16,7 @@ const db_file: string = process.env["DEV_DB_URL"] || ":memory:";
 
 if (db_file === ":memory:") {
   logger.warn(
-    ".env property DEV_DB_URL not set! Using impermanent memory as database storage."
+    ".env property DEV_DB_URL not set! Using impermanent memory as database storage.",
   );
 }
 
