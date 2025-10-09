@@ -1,3 +1,12 @@
+/**
+ * SQLite to Drizzle schema
+ *
+ * This handles creation of typing and the internal schema the
+ * drizzle instances will use. Relations are used as
+ * drizzle-graphql requires them for the conversion to graphql
+ * @module
+ */
+
 import { sql, relations } from "drizzle-orm";
 import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
 
@@ -116,7 +125,7 @@ export const activityTemplateRelations = relations(
   activityTemplates,
   ({ many }) => ({
     activityTemplatesToList: many(activityTemplateList),
-  }),
+  })
 );
 
 // A list (or category) of activity templates for organisation
@@ -161,5 +170,5 @@ export const activityTemplateListRelations = relations(
       fields: [activityTemplateList.list],
       references: [lists.id],
     }),
-  }),
+  })
 );
