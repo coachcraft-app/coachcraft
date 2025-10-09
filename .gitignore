@@ -1,12 +1,19 @@
+# NPM dependencies
 node_modules
+
+# IDE config
 .idea
-.astro
+
+# Build artifacts / test reports
+dist
+coverage
+# Frontend build artifacts
+/web/.astro
+
+# Backend build artifacts
 /backend/public
 /backend/drizzle
-/web/dist
-log.txt
 
-# Coverage reports
-coverage
-/web/coverage
-/web/.nyc_output
+# Logs
+log.txt
+test-log.txt
