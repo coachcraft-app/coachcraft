@@ -3,7 +3,6 @@ import { cacheExchange } from "@urql/exchange-graphcache";
 import schema from "./schema.json";
 import Alpine from "alpinejs";
 
-import type { AuthStore } from "../typeDefs/storeTypes";
 import type { User } from "oidc-client-ts";
 
 /**
@@ -30,7 +29,7 @@ class urql {
   public static async getInstance(): Promise<urql> {
     // if this is the first call to getInstance()
     if (!urql.instance) {
-      const authStore: AuthStore = Alpine.store("auth") as AuthStore;
+      const authStore: any = Alpine.store("auth");
       const userManager = authStore.userManager;
       const User: User | null = await userManager.getUser();
       const accessToken: string | undefined = User?.access_token;

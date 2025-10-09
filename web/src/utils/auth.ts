@@ -1,6 +1,5 @@
 import { User, UserManager } from "oidc-client-ts";
 import alpine from "./alpine";
-import type { AuthStore } from "../typeDefs/storeTypes";
 
 /**
  * `auth` is a singleton class
@@ -41,7 +40,7 @@ export class auth {
 
   public async initAuthFlow(): Promise<void> {
     const globalAlpine = alpine.getInstance().getGlobalAlpine();
-    const authStore = globalAlpine.store("auth") as AuthStore;
+    const authStore: any = globalAlpine.store("auth");
 
     authStore.userManager = this.userManager;
 

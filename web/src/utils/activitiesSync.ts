@@ -3,7 +3,6 @@ import type {
   GraphQLListQuery as GraphQLListQPost,
   GraphQLListPost,
 } from "../typeDefs/graphqlTypes";
-import type { Activity, List } from "../typeDefs/storeTypes";
 import urql from "./urql"; // importing a pre-initialised instance of urql
 
 export class ActivitiesSync {
@@ -67,7 +66,7 @@ export class ActivitiesSync {
   }
   private static convertGraphQLActivityToActivity(
     activities: GraphQLActivity[],
-  ): Activity[] {
+  ): object[] {
     return activities.map(
       ({ id, name, duration, description, imgUrl, lastModified }) => ({
         id: id.toString(),
@@ -80,7 +79,7 @@ export class ActivitiesSync {
     );
   }
   private static convertActivityToGraphQLActivity(
-    activity: Activity,
+    activity: any,
   ): GraphQLActivity {
     return {
       id: +activity.id,
@@ -95,7 +94,7 @@ export class ActivitiesSync {
   }
 
   // Public API methods
-  async subscribeToActivitiesList(activitiesList: Activity[]): Promise<void> {
+  async subscribeToActivitiesList(activitiesList: any[]): Promise<void> {
     (await urql.getInstance())
       .getUrqlClient()
       .query(ActivitiesSync.ACTIVITIES_LIST_QUERY, {})
@@ -115,7 +114,7 @@ export class ActivitiesSync {
       .mutation(ActivitiesSync.DELETE_MUTATION, { id: id });
     console.log("delete activity", result);
   }
-  async post(activity: Activity): Promise<void> {
+  async post(activity: any): Promise<void> {
     // Convert to a postable activity
     const graphqlActivity =
       ActivitiesSync.convertActivityToGraphQLActivity(activity);
@@ -133,7 +132,7 @@ export class ActivitiesSync {
       });
     console.log("post activity", result);
   }
-  async put(activity: Activity): Promise<void> {
+  async put(activity: any): Promise<void> {
     const result = (await urql.getInstance())
       .getUrqlClient()
       .mutation(ActivitiesSync.PUT_MUTATION, {
@@ -215,7 +214,7 @@ export class ActivitiesListsSync {
   `;
 
   // Utilities
-  private static convertGraphQLListToList(lists: GraphQLListQPost[]): List[] {
+  private static convertGraphQLListToList(lists: GraphQLListQPost[]): object[] {
     return lists.map(
       ({ id, name, listToActivityTemplate, accentColor, lastModified }) => ({
         id: id.toString(),
@@ -231,12 +230,12 @@ export class ActivitiesListsSync {
       }),
     );
   }
-  private static convertListToGraphQLList(list: List): GraphQLListPost {
+  private static convertListToGraphQLList(list: any): GraphQLListPost {
     return {
       id: +list.id,
       name: list.name,
       accentColor: list.accent_color,
-      listToActivityTemplate: list.activities.map((activity) => ({
+      listToActivityTemplate: list.activities.map((activity: string) => ({
         id: +activity,
       })),
       lastModified:
@@ -245,7 +244,7 @@ export class ActivitiesListsSync {
   }
 
   // Public API methods
-  async subscribeToListsList(listsList: List[]): Promise<void> {
+  async subscribeToListsList(listsList: any[]): Promise<void> {
     (await urql.getInstance())
       .getUrqlClient()
       .query(ActivitiesListsSync.LISTS_LIST_QUERY, {})
@@ -267,7 +266,7 @@ export class ActivitiesListsSync {
       });
     console.log("delete", result);
   }
-  async post(list: List): Promise<void> {
+  async post(list: any): Promise<void> {
     // Convert to a postable list
     const graphqlList = ActivitiesListsSync.convertListToGraphQLList(list);
     // Strip out id and lastModified
@@ -283,7 +282,7 @@ export class ActivitiesListsSync {
       });
     console.log("post list", result);
   }
-  async put(list: List): Promise<void> {
+  async put(list: any): Promise<void> {
     const graphqlList = ActivitiesListsSync.convertListToGraphQLList(list);
     const base = {
       name: graphqlList.name,
@@ -305,7 +304,7 @@ export class ActivitiesListsSync {
           id: +list.id,
           list: base,
           activities:
-            list.activities.map((activity) => ({
+            list.activities.map((activity: object) => ({
               activityTemplate: +activity,
               list: +list.id,
             })) || [],

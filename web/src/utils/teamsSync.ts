@@ -1,5 +1,4 @@
 import type { GraphQLTeam } from "../typeDefs/graphqlTypes";
-import type { Team } from "../typeDefs/storeTypes";
 import urql from "./urql"; // importing a pre-initialised instance of urql
 
 class TeamsSync {
@@ -71,7 +70,7 @@ class TeamsSync {
   `;
 
   // Utilities
-  private static convertGraphQLTeamToTeam(teams: GraphQLTeam[]): Team[] {
+  private static convertGraphQLTeamToTeam(teams: GraphQLTeam[]): object[] {
     return teams.map(({ id, name, description, player }) => ({
       id: id.toString(),
       name,
@@ -81,7 +80,7 @@ class TeamsSync {
   }
 
   // Public API methods
-  async subscribeToTeamsList(teamsList: Team[]): Promise<void> {
+  async subscribeToTeamsList(teamsList: any[]): Promise<void> {
     (await urql.getInstance())
       .getUrqlClient()
       .query(TeamsSync.TEAMS_LIST_QUERY, {})
@@ -103,7 +102,7 @@ class TeamsSync {
       });
     console.log("delete team", result);
   }
-  async post(team: Team): Promise<void> {
+  async post(team: any): Promise<void> {
     const result = (await urql.getInstance())
       .getUrqlClient()
       .mutation(TeamsSync.POST_MUTATION, {
@@ -114,7 +113,7 @@ class TeamsSync {
       });
     console.log("post team", result);
   }
-  async put(team: Team): Promise<void> {
+  async put(team: any): Promise<void> {
     if (team.players.length > 0) {
       const result = (await urql.getInstance())
         .getUrqlClient()
@@ -124,7 +123,7 @@ class TeamsSync {
             name: team.name,
             description: team.description,
           },
-          players: team.players.map((player) => ({
+          players: team.players.map((player: object) => ({
             name: player,
             team: +team.id,
           })),
