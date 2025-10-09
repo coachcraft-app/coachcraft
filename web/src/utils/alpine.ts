@@ -2,7 +2,7 @@ import collapse from "@alpinejs/collapse";
 import focus from "@alpinejs/focus";
 import mask from "@alpinejs/mask";
 
-import activitiesStore from "../stores/pages/activitiesStore.js";
+import activitiesStore from "../stores/pages/activities.ts";
 import schedulingStore from "../stores/pages/schedulingStore.js";
 import teamsStore from "../stores/pages/teamsStore.js";
 import sessionsStore from "../stores/pages/sessionsStore.js";
@@ -11,7 +11,7 @@ import toastStore from "../stores/common/toastStore.js";
 import authStore from "../stores/authStore.js";
 import routerStore from "../stores/routerStore.js";
 
-import type { Alpine } from "alpinejs";
+import type { Alpine, Stores } from "alpinejs";
 
 /**
  * `alpine` is a singleton class
@@ -19,7 +19,7 @@ import type { Alpine } from "alpinejs";
  */
 class alpine {
   private static instance: alpine;
-  private globalAlpine: Alpine | undefined;
+  private globalAlpine: Alpine;
 
   /**
    * private contructor to disallow instantiation
@@ -37,7 +37,9 @@ class alpine {
 
     // initialize /pages stores
     this.globalAlpine.store("pages", {});
-    activitiesStore(this.globalAlpine);
+    const pagesStore: Stores = this.globalAlpine.store("pages") as Stores;
+
+    pagesStore.activities = new activitiesStore();
     schedulingStore(this.globalAlpine);
     teamsStore(this.globalAlpine);
     sessionsStore(this.globalAlpine);

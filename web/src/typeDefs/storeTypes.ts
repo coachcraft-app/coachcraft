@@ -17,20 +17,23 @@ export interface Activity {
   img_url: string; //
   lastModified?: Date; //
 }
-
 // Represents a list used in activitiesStore
-export interface List {
+export interface ActivitiesList {
   id: string;
   name: string;
-  activities: string[] | void[]; // activity ids
+  activities: string[]; // activity ids
   accent_color: string;
   lastModified?: Date;
+}
+export interface ActivitiesListAccentColors {
+  name: string;
+  hex: string;
 }
 
 export interface PagesStore {
   activities: {
     activitiesList: Activity[];
-    listsList: List[];
+    listsList: ActivitiesList[];
   };
   teams: {
     teamsList: Team[];
