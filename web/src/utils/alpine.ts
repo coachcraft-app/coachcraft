@@ -45,8 +45,9 @@ class alpine {
     pagesStore.sessions = new sessions();
 
     // initialize /common stores
-    this.globalAlpine.store("common", {});
-    toast(this.globalAlpine);
+    this.globalAlpine.store("common", {
+      toast: new toast(),
+    });
 
     this.globalAlpine.store("auth", new auth());
 

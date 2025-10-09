@@ -1,5 +1,6 @@
 import type activities from "../stores/pages/activities";
 import type scheduling from "../stores/pages/scheduling";
+import type toast from "../stores/common/toast";
 
 export type Player = string;
 
@@ -41,6 +42,10 @@ export interface PagesStore {
   };
 }
 
+export interface CommonStore {
+  toast: toast;
+}
+
 export interface SessionActivity extends Activity {
   isSessionCopy?: boolean;
   originalTemplateId?: string;
@@ -54,4 +59,11 @@ export interface Session {
   activities: SessionActivity[];
   team?: string;
   attendance?: { [key: string]: boolean };
+}
+
+export interface ToastNotification {
+  id: number | undefined;
+  title: string;
+  message: string;
+  variant: "info" | "danger";
 }
