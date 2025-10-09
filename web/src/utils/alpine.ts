@@ -9,7 +9,7 @@ import sessions from "../stores/pages/sessions";
 import toastStore from "../stores/common/toastStore.js";
 
 import auth from "../stores/auth.js";
-import routerStore from "../stores/routerStore.js";
+import routerStore from "../stores/router.js";
 
 import type { Alpine, Stores } from "alpinejs";
 
