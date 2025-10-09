@@ -95,9 +95,10 @@ export class ActivitiesSync {
   }
 
   // Public API methods
-  subscribeToActivitiesList(activitiesList: Activity[]): void {
-    urql.urqlClient
-      ?.query(ActivitiesSync.ACTIVITIES_LIST_QUERY, {})
+  async subscribeToActivitiesList(activitiesList: Activity[]): Promise<void> {
+    (await urql.getInstance())
+      .getUrqlClient()
+      .query(ActivitiesSync.ACTIVITIES_LIST_QUERY, {})
       .subscribe((result) => {
         // empty the array and repopulate
         activitiesList.length = 0;
@@ -109,10 +110,9 @@ export class ActivitiesSync {
       });
   }
   async delete(id: number): Promise<void> {
-    const result = await urql.urqlClient?.mutation(
-      ActivitiesSync.DELETE_MUTATION,
-      { id: id },
-    );
+    const result = (await urql.getInstance())
+      .getUrqlClient()
+      .mutation(ActivitiesSync.DELETE_MUTATION, { id: id });
     console.log("delete activity", result);
   }
   async post(activity: Activity): Promise<void> {
@@ -126,22 +126,20 @@ export class ActivitiesSync {
       imgUrl: graphqlActivity.imgUrl,
     };
 
-    const result = await urql.urqlClient?.mutation(
-      ActivitiesSync.POST_MUTATION,
-      {
+    const result = (await urql.getInstance())
+      .getUrqlClient()
+      .mutation(ActivitiesSync.POST_MUTATION, {
         activity: post,
-      },
-    );
+      });
     console.log("post activity", result);
   }
   async put(activity: Activity): Promise<void> {
-    const result = await urql.urqlClient?.mutation(
-      ActivitiesSync.PUT_MUTATION,
-      {
+    const result = (await urql.getInstance())
+      .getUrqlClient()
+      .mutation(ActivitiesSync.PUT_MUTATION, {
         id: +activity.id,
         activity: ActivitiesSync.convertActivityToGraphQLActivity(activity),
-      },
-    );
+      });
     console.log("put activity", result);
   }
 }
@@ -247,9 +245,10 @@ export class ActivitiesListsSync {
   }
 
   // Public API methods
-  subscribeToListsList(listsList: List[]): void {
-    urql.urqlClient
-      ?.query(ActivitiesListsSync.LISTS_LIST_QUERY, {})
+  async subscribeToListsList(listsList: List[]): Promise<void> {
+    (await urql.getInstance())
+      .getUrqlClient()
+      .query(ActivitiesListsSync.LISTS_LIST_QUERY, {})
       .subscribe((result) => {
         // empty the array and repopulate
         listsList.length = 0;
@@ -261,12 +260,11 @@ export class ActivitiesListsSync {
       });
   }
   async delete(id: string): Promise<void> {
-    const result = await urql.urqlClient?.mutation(
-      ActivitiesListsSync.DELETE_MUTATION,
-      {
+    const result = (await urql.getInstance())
+      .getUrqlClient()
+      .mutation(ActivitiesListsSync.DELETE_MUTATION, {
         id: +id,
-      },
-    );
+      });
     console.log("delete", result);
   }
   async post(list: List): Promise<void> {
@@ -278,12 +276,11 @@ export class ActivitiesListsSync {
       accentColor: graphqlList.accentColor,
     };
 
-    const result = await urql.urqlClient?.mutation(
-      ActivitiesListsSync.POST_MUTATION,
-      {
+    const result = (await urql.getInstance())
+      .getUrqlClient()
+      .mutation(ActivitiesListsSync.POST_MUTATION, {
         list: post,
-      },
-    );
+      });
     console.log("post list", result);
   }
   async put(list: List): Promise<void> {
@@ -294,18 +291,17 @@ export class ActivitiesListsSync {
     };
 
     if (list.activities.length == 0) {
-      const result = await urql.urqlClient?.mutation(
-        ActivitiesListsSync.PUT_NO_ACTIVITIES_MUTATION,
-        {
+      const result = (await urql.getInstance())
+        .getUrqlClient()
+        .mutation(ActivitiesListsSync.PUT_NO_ACTIVITIES_MUTATION, {
           id: +list.id,
           list: base,
-        },
-      );
+        });
       console.log("put list", result);
     } else {
-      const result = await urql.urqlClient?.mutation(
-        ActivitiesListsSync.PUT_MUTATION,
-        {
+      const result = (await urql.getInstance())
+        .getUrqlClient()
+        .mutation(ActivitiesListsSync.PUT_MUTATION, {
           id: +list.id,
           list: base,
           activities:
@@ -313,8 +309,7 @@ export class ActivitiesListsSync {
               activityTemplate: +activity,
               list: +list.id,
             })) || [],
-        },
-      );
+        });
       console.log("put list", result);
     }
   }

@@ -29,19 +29,18 @@ class Sync {
   /**
    * Sync activitiesList, listsList, teamsList to the server
    */
-  static subscribeToStateLists(): void {
-    const pagesStore: PagesStore = alpineSingleton
-      .getAlpine()
-      .store("pages") as PagesStore;
+  static async subscribeToStateLists(): Promise<void> {
+    const globalAlpine = alpine.getInstance().getGlobalAlpine();
+    const pagesStore: any = globalAlpine.store("pages");
 
     // Subscribe to updates to activitiesList, listsLists, teamsList
     const activitiesList = pagesStore.activities?.activitiesList;
     const listsList = pagesStore.activities?.listsList;
     const teamsList = pagesStore.teams?.teamsList;
 
-    Sync.activities.activity.subscribeToActivitiesList(activitiesList);
-    Sync.activities.list.subscribeToListsList(listsList);
-    Sync.teams.subscribeToTeamsList(teamsList);
+    await Sync.activities.activity.subscribeToActivitiesList(activitiesList);
+    await Sync.activities.list.subscribeToListsList(listsList);
+    await Sync.teams.subscribeToTeamsList(teamsList);
   }
 }
 

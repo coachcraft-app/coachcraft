@@ -15,8 +15,8 @@ export default async (Alpine: Alpine) => {
   auth.getInstance().initAuthFlow();
 
   // GraphQL client (backend API)
-  await urql.init();
+  await urql.getInstance();
 
   // sync state lists with backend, if in prod mode
-  if (import.meta.env.PROD) sync.subscribeToStateLists();
+  if (import.meta.env.PROD) await sync.subscribeToStateLists();
 };

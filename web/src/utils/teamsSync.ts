@@ -81,9 +81,10 @@ class TeamsSync {
   }
 
   // Public API methods
-  subscribeToTeamsList(teamsList: Team[]): void {
-    urql.urqlClient
-      ?.query(TeamsSync.TEAMS_LIST_QUERY, {})
+  async subscribeToTeamsList(teamsList: Team[]): Promise<void> {
+    (await urql.getInstance())
+      .getUrqlClient()
+      .query(TeamsSync.TEAMS_LIST_QUERY, {})
       .subscribe((result) => {
         // empty the array and repopulate
         teamsList.length = 0;
@@ -95,46 +96,51 @@ class TeamsSync {
       });
   }
   async delete(id: string): Promise<void> {
-    const result = await urql.urqlClient?.mutation(TeamsSync.DELETE_MUTATION, {
-      id: +id,
-    });
+    const result = (await urql.getInstance())
+      .getUrqlClient()
+      .mutation(TeamsSync.DELETE_MUTATION, {
+        id: +id,
+      });
     console.log("delete team", result);
   }
   async post(team: Team): Promise<void> {
-    const result = await urql.urqlClient?.mutation(TeamsSync.POST_MUTATION, {
-      team: {
-        name: team.name,
-        description: team.description,
-      },
-    });
-    console.log("post team", result);
-  }
-  async put(team: Team): Promise<void> {
-    if (team.players.length > 0) {
-      const result = await urql.urqlClient?.mutation(TeamsSync.PUT_MUTATION, {
-        id: +team.id,
+    const result = (await urql.getInstance())
+      .getUrqlClient()
+      .mutation(TeamsSync.POST_MUTATION, {
         team: {
           name: team.name,
           description: team.description,
         },
-        players: team.players.map((player) => ({
-          name: player,
-          team: +team.id,
-        })),
       });
-      console.log("put team", result);
-    } else {
-      // No players
-      const result = await urql.urqlClient?.mutation(
-        TeamsSync.PUT_NO_PLAYERS_MUTATION,
-        {
+    console.log("post team", result);
+  }
+  async put(team: Team): Promise<void> {
+    if (team.players.length > 0) {
+      const result = (await urql.getInstance())
+        .getUrqlClient()
+        .mutation(TeamsSync.PUT_MUTATION, {
           id: +team.id,
           team: {
             name: team.name,
             description: team.description,
           },
-        },
-      );
+          players: team.players.map((player) => ({
+            name: player,
+            team: +team.id,
+          })),
+        });
+      console.log("put team", result);
+    } else {
+      // No players
+      const result = (await urql.getInstance())
+        .getUrqlClient()
+        .mutation(TeamsSync.PUT_NO_PLAYERS_MUTATION, {
+          id: +team.id,
+          team: {
+            name: team.name,
+            description: team.description,
+          },
+        });
       console.log("put team", result);
     }
   }
