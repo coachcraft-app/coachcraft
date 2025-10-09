@@ -6,7 +6,7 @@ import activities from "../stores/pages/activities";
 import scheduling from "../stores/pages/scheduling";
 import teams from "../stores/pages/teams";
 import sessions from "../stores/pages/sessions";
-import toastStore from "../stores/common/toastStore.js";
+import toast from "../stores/common/toast";
 
 import auth from "../stores/auth";
 import router from "../stores/router";
@@ -46,7 +46,7 @@ class alpine {
 
     // initialize /common stores
     this.globalAlpine.store("common", {});
-    toastStore(this.globalAlpine);
+    toast(this.globalAlpine);
 
     this.globalAlpine.store("auth", new auth());
 
