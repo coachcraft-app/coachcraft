@@ -39,3 +39,18 @@ export interface PagesStore {
     teamsList: Team[];
   };
 }
+
+export interface SessionActivity extends Activity {
+  isSessionCopy?: boolean;
+  originalTemplateId?: string;
+}
+
+export interface Session {
+  id: string;
+  name: string;
+  date: string;
+  notes: string;
+  activities: SessionActivity[];
+  team?: string;
+  attendance?: { [key: string]: boolean };
+}
