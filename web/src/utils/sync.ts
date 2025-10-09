@@ -1,8 +1,7 @@
 import { ActivitiesSync, ActivitiesListsSync } from "./activitiesSync";
 import TeamsSync from "./teamsSync";
 
-import alpineSingleton from "./alpineSingleton";
-import type { PagesStore } from "../typeDefs/storeTypes";
+import alpine from "./alpine";
 
 /**
  * Sync statically exposes modular sync libs (activitiesSync, teamsSync, etc.)
