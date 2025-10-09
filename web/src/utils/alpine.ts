@@ -11,7 +11,7 @@ import toast from "../stores/common/toast";
 import auth from "../stores/auth";
 import router from "../stores/router";
 
-import type { Alpine, Stores } from "alpinejs";
+import type { Alpine } from "alpinejs";
 
 /**
  * `alpine` is a singleton class
@@ -36,13 +36,12 @@ class alpine {
     this.globalAlpine.plugin(mask);
 
     // initialize /pages stores
-    this.globalAlpine.store("pages", {});
-    const pagesStore: Stores = this.globalAlpine.store("pages") as Stores;
-
-    pagesStore.activities = new activities();
-    pagesStore.scheduling = new scheduling();
-    pagesStore.teams = new teams();
-    pagesStore.sessions = new sessions();
+    this.globalAlpine.store("pages", {
+      activities: new activities(),
+      scheduling: new scheduling(),
+      teams: new teams(),
+      sessions: new sessions(),
+    });
 
     // initialize /common stores
     this.globalAlpine.store("common", {
