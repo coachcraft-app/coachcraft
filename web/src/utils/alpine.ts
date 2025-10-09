@@ -15,7 +15,7 @@ import type { Alpine } from "alpinejs";
 
 /**
  * `alpine` is a singleton class
- *  for accessing, use `getInstance(): alpine`
+ *  for accessing/initialising, use `getInstance(alpineObj?: Alpine): alpine`
  */
 class alpine {
   private static instance: alpine;
@@ -87,8 +87,9 @@ class alpine {
   public getGlobalAlpine(): Alpine {
     if (!this.globalAlpine)
       throw new Error(
-        "The Alpine instance has not been initialised yet. Use set() first.",
+        "The alpine singleton class has not been initialised yet. Use alpine.getInstance(alpineObj?: Alpine) first.",
       );
+
     return this.globalAlpine;
   }
 }

@@ -4,7 +4,7 @@ import type { AuthStore } from "../typeDefs/storeTypes";
 
 /**
  * `auth` is a singleton class
- *  for accessing, use `getInstance(): auth`
+ *  for accessing/initialising, use `getInstance(): auth`
  */
 export class auth {
   private static instance: auth;
@@ -43,14 +43,10 @@ export class auth {
     const globalAlpine = alpine.getInstance().getGlobalAlpine();
     const authStore = globalAlpine.store("auth") as AuthStore;
 
-    // store UserManager in Alpine's auth store
-    // to be accessed in .astro files
     authStore.userManager = this.userManager;
 
-    // attempt to get User
     const user: User | null = await this.userManager.getUser();
 
-    // attempt to get URL parameters
     const urlParams: URLSearchParams = new URLSearchParams(
       window.location.search,
     );
@@ -62,6 +58,7 @@ export class auth {
     if (user) {
       if (!user.expired) {
         // state 1: cached user exists and is valid
+
         authStore.user = user as User;
       } else {
         // state 2: cached user expired, redirect to Cognito
@@ -83,7 +80,7 @@ export class auth {
           window.location.pathname + window.location.hash,
         );
       } else {
-        // signinCallback return undefined, redirect back to Cognito
+        // error, signinCallback returns undefined, redirect back to Cognito
 
         this.userManager.signinRedirect();
       }
