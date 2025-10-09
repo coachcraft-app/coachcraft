@@ -6,10 +6,10 @@
  * pass through the $store vars as String props from X.
  * Then in Y, call reactify() on them in the code-fences and pass them to x-data.
  *
- * @param {String} $storeObj - The $store object as String, for ex. "$store.x.y"
- * @param {String} objName - String "y" in "$store.x.y(arg)"" || "$store.x.y()"" || "$store.x.y"
+ * @param $storeObj - The $store object as String, for ex. "$store.x.y"
+ * @param objName - String "y" in "$store.x.y(arg)"" || "$store.x.y()"" || "$store.x.y"
  */
-export default ($storeObj, objName) => {
+export default ($storeObj: string, objName: string): string => {
   //
   //  How the SIGNATURE_ARG_REGEX regex works -
   //
