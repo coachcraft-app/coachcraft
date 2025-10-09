@@ -8,11 +8,13 @@ import type { Alpine } from "alpinejs";
 export default async (Alpine: Alpine) => {
   console.log("Prod mode", import.meta.env.PROD);
 
+  // SPA initialisation sequence
+
   // init Alpine plugins, stores and the global Alpine object
   alpine.getInstance(Alpine);
 
   // configure Cognito OIDC, prompt user for logging in
-  auth.getInstance().initAuthFlow();
+  await auth.getInstance().initAuthFlow();
 
   // GraphQL client (backend API)
   await urql.getInstance();
