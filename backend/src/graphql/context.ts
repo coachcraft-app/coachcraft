@@ -11,12 +11,14 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 import { db } from "../db/db";
 import * as schema from "../db/schema";
 
+/** The state given to graphql resolvers */
 export type GraphQLContext = {
   req: FastifyRequest;
   reply: FastifyReply;
   db: BetterSQLite3Database<typeof schema>;
 };
 
+/** Function passed to Yoga that gives database access to resolvers */
 export async function createContext(): Promise<Partial<GraphQLContext>> {
   return { db };
 }

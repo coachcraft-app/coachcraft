@@ -12,10 +12,10 @@ import { createYoga } from "graphql-yoga";
 
 import { schema } from "./graphql/schema";
 import { createContext } from "./graphql/context";
-// Server instance
+/** Server instance */
 export const app = fastify();
 
-// Yoga instance
+/** Yoga instance */
 export const yoga = createYoga<{
   req: FastifyRequest;
   reply: FastifyReply;
