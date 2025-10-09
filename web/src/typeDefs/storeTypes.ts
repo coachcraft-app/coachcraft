@@ -1,3 +1,6 @@
+import type activities from "../stores/pages/activities";
+import type scheduling from "../stores/pages/scheduling";
+
 export type Player = string;
 
 // Represents a team used in teamsStore
@@ -31,10 +34,8 @@ export interface ActivitiesListAccentColors {
 }
 
 export interface PagesStore {
-  activities: {
-    activitiesList: Activity[];
-    listsList: ActivitiesList[];
-  };
+  activities: activities;
+  scheduling: scheduling;
   teams: {
     teamsList: Team[];
   };
