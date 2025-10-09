@@ -7,11 +7,11 @@ import type {
 
 export default class activities {
   // state
-  private listsList: ActivitiesList[] = [];
+  public listsList: ActivitiesList[] = [];
 
-  private activitiesList: Activity[] = [];
+  public activitiesList: Activity[] = [];
 
-  private listAccentColors: ActivitiesListAccentColors[] = [];
+  public listAccentColors: ActivitiesListAccentColors[] = [];
 
   private selectedList: string = "default";
   private selectedActivity: string = "";
