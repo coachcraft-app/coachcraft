@@ -25,7 +25,6 @@ export default function schedulingStore(Alpine) {
             description:
               "Players pair up with one ball between them. The player without the ball starts running while the player with the ball counts to 3, then dribbles to try and catch their partner. Switch roles after each round. Focuses on acceleration, change of direction, and dribbling speed.",
             img_url: "",
-            isSessionCopy: true,
             originalTemplateId: "1",
           },
           {
@@ -35,7 +34,6 @@ export default function schedulingStore(Alpine) {
             description:
               "Progressive warm-up routine including jogging, high knees, butt kicks, side shuffles, karaoke steps, dynamic stretching, and light ball work. Set up in lanes 15-20 yards long. Ensure all major muscle groups are activated. Finish with short passing sequences to transition into technical work.",
             img_url: "",
-            isSessionCopy: true,
             originalTemplateId: "4",
           },
           {
@@ -45,7 +43,6 @@ export default function schedulingStore(Alpine) {
             description:
               "Players form a circle with 1-2 players in the middle. Outer players pass the ball around while inside players try to intercept. If successful, the player who lost the ball switches to the middle. Focus on quick, accurate passing and communication. Increase difficulty by adding a second ball.",
             img_url: "",
-            isSessionCopy: true,
             originalTemplateId: "2",
           },
         ],
@@ -64,7 +61,6 @@ export default function schedulingStore(Alpine) {
             description:
               "Set up multiple 'gates' (two cones 1-2 yards apart) throughout the playing area. Players pair up, with one attacker and one defender. Attackers score by dribbling through as many gates as possible in 60 seconds while defenders try to win the ball. Switch roles and compare scores. Develops close control and shielding.",
             img_url: "",
-            isSessionCopy: true,
             originalTemplateId: "5",
           },
           {
@@ -74,7 +70,6 @@ export default function schedulingStore(Alpine) {
             description:
               "Players dribble freely in a marked area. Coach calls out commands like 'stop', 'change direction', 'use left foot only', 'outside of foot only', etc. Players must immediately respond while maintaining ball control. Great for developing listening skills and technical ability under pressure.",
             img_url: "",
-            isSessionCopy: true,
             originalTemplateId: "3",
           },
           {
@@ -84,7 +79,6 @@ export default function schedulingStore(Alpine) {
             description:
               "Create a 30x20 yard grid with goals at each end. Divide players into attackers and defenders. Attackers start with the ball and must dribble past defenders to score in the opposite goal. Defenders can only win the ball in their defensive half. If successful, they transition to attack. Emphasizes 1v1 attacking moves and finishing.",
             img_url: "",
-            isSessionCopy: true,
             originalTemplateId: "7",
           },
         ],
@@ -172,8 +166,6 @@ export default function schedulingStore(Alpine) {
         ...activity,
         // Create ID for the copied activity so it differes from original
         id: `${activity.id}_session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        // Mark this as a session copy to differentiate from original
-        isSessionCopy: true,
       }));
 
       const newSession = {
