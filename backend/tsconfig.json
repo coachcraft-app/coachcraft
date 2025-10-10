@@ -11,7 +11,7 @@
     "target": "esnext",
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "jest"],
+    "types": ["node"],
 
     // Other Outputs
     "sourceMap": true,

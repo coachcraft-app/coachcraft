@@ -1,3 +1,12 @@
+/**
+ * SQLite to Drizzle schema
+ *
+ * This handles creation of typing and the internal schema the
+ * drizzle instances will use. Relations are used as
+ * drizzle-graphql requires them for the conversion to graphql
+ * @module
+ */
+
 import { sql, relations } from "drizzle-orm";
 import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
 
@@ -18,7 +27,7 @@ import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
 //     check("role_check", sql`${table.role} in ('coach', 'parent', 'anonymous')`)
 // ]);
 
-// A sports team
+/** A sports team */
 export const teams = sqliteTable("teams", {
   id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
   name: text().notNull().unique(),
@@ -28,12 +37,13 @@ export const teams = sqliteTable("teams", {
     .default(sql`(unixepoch())`),
 });
 
+/** Relation between teams, their sessions and players */
 export const teamsRelations = relations(teams, ({ many }) => ({
   session: many(sessions),
   player: many(players),
 }));
 
-// A scheduled sports session
+/** A scheduled sports session */
 export const sessions = sqliteTable("session", {
   id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
   name: text().notNull().unique(),
@@ -50,7 +60,7 @@ export const sessions = sqliteTable("session", {
     .notNull(),
 });
 
-// Relations needed for findMany/First/etc.
+/** Relations needed for findMany/First/etc. */
 export const sessionsRelations = relations(sessions, ({ one, many }) => ({
   activities: many(activities),
   teams: one(teams, {
@@ -59,7 +69,7 @@ export const sessionsRelations = relations(sessions, ({ one, many }) => ({
   }),
 }));
 
-// Activities that are part of a session
+/** Activities that are part of a session */
 export const activities = sqliteTable("activity", {
   id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
   session: integer({ mode: "number" })
@@ -74,6 +84,7 @@ export const activities = sqliteTable("activity", {
     .default(sql`(unixepoch())`),
 });
 
+/** Relations between a scheduled activity and its session */
 export const activitiesRelations = relations(activities, ({ one }) => ({
   session: one(sessions, {
     fields: [activities.session],
@@ -81,6 +92,7 @@ export const activitiesRelations = relations(activities, ({ one }) => ({
   }),
 }));
 
+/** A sports player */
 export const players = sqliteTable("players", {
   id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
   name: text().notNull(),
@@ -92,6 +104,7 @@ export const players = sqliteTable("players", {
     .default(sql`(unixepoch())`),
 });
 
+/** Relation between a player and their team */
 export const playersRelations = relations(players, ({ one }) => ({
   team: one(teams, {
     fields: [players.team],
@@ -100,7 +113,7 @@ export const playersRelations = relations(players, ({ one }) => ({
 }));
 
 // ----- ACTIVITY TEMPLATE CREATION -----
-// Activities that can be added to a session
+/** Activities that can be added to a session */
 export const activityTemplates = sqliteTable("activity_template", {
   id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
   name: text().notNull().unique(),
@@ -112,6 +125,7 @@ export const activityTemplates = sqliteTable("activity_template", {
     .default(sql`(unixepoch())`),
 });
 
+/** Realtion between a activity template and their category lists */
 export const activityTemplateRelations = relations(
   activityTemplates,
   ({ many }) => ({
@@ -119,7 +133,7 @@ export const activityTemplateRelations = relations(
   }),
 );
 
-// A list (or category) of activity templates for organisation
+/** A list (or category) of activity templates for organisation */
 export const lists = sqliteTable("list", {
   id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
   name: text().notNull().unique(),
@@ -129,11 +143,12 @@ export const lists = sqliteTable("list", {
     .default(sql`(unixepoch())`),
 });
 
+/** Relation between a list/category and its contained activities */
 export const listRelations = relations(lists, ({ many }) => ({
   listToActivityTemplate: many(activityTemplateList),
 }));
 
-// The many-to-many link between activities and lists
+/** The many-to-many link between activities and lists */
 export const activityTemplateList = sqliteTable("activity_template_list", {
   id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
   activityTemplate: integer("activity_template", { mode: "number" })
@@ -150,6 +165,7 @@ export const activityTemplateList = sqliteTable("activity_template_list", {
     .default(sql`(unixepoch())`),
 });
 
+/** Relates the many-to-one relation of list and activity templates */
 export const activityTemplateListRelations = relations(
   activityTemplateList,
   ({ one }) => ({
