@@ -1,4 +1,5 @@
-import type { Activity, GraphQLActivity } from "../typeDefs/graphqlTypes";
+import type { GraphQLActivity } from "../typeDefs/graphqlTypes";
+import type { Activity } from "../typeDefs/storeTypes";
 import urqlClient from "./urql";
 
 // CONVERSIONS
