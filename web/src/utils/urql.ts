@@ -29,6 +29,7 @@ class urql {
   public static async getInstance(): Promise<urql> {
     // if this is the first call to getInstance()
     if (!urql.instance) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const authStore: any = Alpine.store("auth");
       const userManager = authStore.userManager;
       const User: User | null = await userManager.getUser();

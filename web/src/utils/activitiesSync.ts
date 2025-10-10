@@ -2,7 +2,7 @@ import type {
   GraphQLActivity,
   GraphQLListQuery as GraphQLListQPost,
   GraphQLListPost,
-} from "../typeDefs/graphqlTypes";
+} from "../typedefs/graphqlTypes";
 import urql from "./urql"; // importing a pre-initialised instance of urql
 
 export class ActivitiesSync {
@@ -78,6 +78,7 @@ export class ActivitiesSync {
       }),
     );
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private static convertActivityToGraphQLActivity(
     activity: any,
   ): GraphQLActivity {
@@ -94,6 +95,7 @@ export class ActivitiesSync {
   }
 
   // Public API methods
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async subscribeToActivitiesList(activitiesList: any[]): Promise<void> {
     (await urql.getInstance())
       .getUrqlClient()
@@ -114,6 +116,7 @@ export class ActivitiesSync {
       .mutation(ActivitiesSync.DELETE_MUTATION, { id: id });
     console.log("delete activity", result);
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async post(activity: any): Promise<void> {
     // Convert to a postable activity
     const graphqlActivity =
@@ -132,6 +135,7 @@ export class ActivitiesSync {
       });
     console.log("post activity", result);
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async put(activity: any): Promise<void> {
     const result = (await urql.getInstance())
       .getUrqlClient()
@@ -230,6 +234,7 @@ export class ActivitiesListsSync {
       }),
     );
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private static convertListToGraphQLList(list: any): GraphQLListPost {
     return {
       id: +list.id,
@@ -244,6 +249,7 @@ export class ActivitiesListsSync {
   }
 
   // Public API methods
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async subscribeToListsList(listsList: any[]): Promise<void> {
     (await urql.getInstance())
       .getUrqlClient()
@@ -266,6 +272,7 @@ export class ActivitiesListsSync {
       });
     console.log("delete", result);
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async post(list: any): Promise<void> {
     // Convert to a postable list
     const graphqlList = ActivitiesListsSync.convertListToGraphQLList(list);
@@ -282,6 +289,7 @@ export class ActivitiesListsSync {
       });
     console.log("post list", result);
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async put(list: any): Promise<void> {
     const graphqlList = ActivitiesListsSync.convertListToGraphQLList(list);
     const base = {

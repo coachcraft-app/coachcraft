@@ -30,6 +30,7 @@ class Sync {
    */
   static async subscribeToStateLists(): Promise<void> {
     const globalAlpine = alpine.getInstance().getGlobalAlpine();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const pagesStore: any = globalAlpine.store("pages");
 
     // Subscribe to updates to activitiesList, listsLists, teamsList

@@ -80,6 +80,7 @@ class TeamsSync {
   }
 
   // Public API methods
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async subscribeToTeamsList(teamsList: any[]): Promise<void> {
     (await urql.getInstance())
       .getUrqlClient()
@@ -102,6 +103,7 @@ class TeamsSync {
       });
     console.log("delete team", result);
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async post(team: any): Promise<void> {
     const result = (await urql.getInstance())
       .getUrqlClient()
@@ -113,6 +115,7 @@ class TeamsSync {
       });
     console.log("post team", result);
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async put(team: any): Promise<void> {
     if (team.players.length > 0) {
       const result = (await urql.getInstance())

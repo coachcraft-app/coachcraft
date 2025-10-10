@@ -40,6 +40,7 @@ export class auth {
 
   public async initAuthFlow(): Promise<void> {
     const globalAlpine = alpine.getInstance().getGlobalAlpine();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const authStore: any = globalAlpine.store("auth");
 
     authStore.userManager = this.userManager;

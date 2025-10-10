@@ -49,6 +49,7 @@ class alpine {
     authStore(this.globalAlpine);
 
     routerStore(this.globalAlpine);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const router: any = this.globalAlpine.store("router");
     router.init();
   }
