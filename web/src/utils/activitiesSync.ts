@@ -78,8 +78,8 @@ export class ActivitiesSync {
       }),
     );
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private static convertActivityToGraphQLActivity(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     activity: any,
   ): GraphQLActivity {
     return {
