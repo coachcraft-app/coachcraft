@@ -4,7 +4,7 @@
 
 <div
   class="flex h-full"
-  x-data="{ activeTab: 'upcoming', showConfirm: false, sessionToComplete: null, expandedActivitiesUpcoming: {}, expandedActivitiesPrevious: {}, showDeleteConfirm: false, sessionToDelete: null }"
+  x-data="{ sessions: $store.pages.sessions, scheduling: $store.pages.scheduling, teams: $store.pages.teams, activeTab: 'upcoming', showConfirm: false, sessionToComplete: null, expandedActivitiesUpcoming: {}, expandedActivitiesPrevious: {}, showDeleteConfirm: false, sessionToDelete: null }"
 >
   <div class="w-full p-4">
     <div class="flex justify-between items-center mb-4">
@@ -27,7 +27,7 @@
     <div x-cloak x-show="activeTab === 'upcoming'">
       <ul class="space-y-2">
         <template
-          x-for="sess in $store.scheduling.upcomingSessions"
+          x-for="sess in scheduling.upcomingSessions"
           :key="sess.id"
         >
           <li
@@ -64,12 +64,12 @@
                   class="w-full p-2 bg-gray-700 rounded text-sm text-white"
                   rows="3"
                   x-text="sess.notes"
-                  @input="$store.sessions.updateNotes(sess.id, $event.target.value)"
+                  @input="sessions.updateNotes(sess.id, $event.target.value)"
                 ></textarea>
               </div>
               <p class="text-sm text-gray-400 mb-2">
                 Team: <span
-                  x-text="sess.team ? $store.pages.teams.teamsList.find(t => t.id === sess.team)?.name : '---'"
+                  x-text="sess.team ? teams.teamsList.find(t => t.id === sess.team)?.name : '---'"
                 ></span>
               </p>
               <template x-if="sess.team">
@@ -79,7 +79,7 @@
                   </p>
                   <ul class="space-y-1">
                     <template
-                      x-for="player in ($store.pages.teams.teamsList.find(t => t.id === sess.team)?.players || [])"
+                      x-for="player in (teams.teamsList.find(t => t.id === sess.team)?.players || [])"
                       :key="player"
                     >
                       <li
@@ -90,7 +90,7 @@
                           type="checkbox"
                           class="accent-green-500 w-4 h-4"
                           :checked="sess.attendance && sess.attendance[player]"
-                          @change="$store.sessions.toggleAttendance(sess.id, player)"
+                          @change="sessions.toggleAttendance(sess.id, player)"
                         />
                       </li>
                     </template>
@@ -134,7 +134,7 @@
     <div x-cloak x-show="activeTab === 'previous'">
       <ul class="space-y-2">
         <template
-          x-for="sess in $store.scheduling.previousSessions"
+          x-for="sess in scheduling.previousSessions"
           :key="sess.id"
         >
           <li
@@ -162,12 +162,12 @@
                   class="w-full p-2 bg-gray-700 rounded text-sm text-white"
                   rows="3"
                   x-text="sess.notes"
-                  @input="$store.sessions.updateNotes(sess.id, $event.target.value)"
+                  @input="sessions.updateNotes(sess.id, $event.target.value)"
                 ></textarea>
               </div>
               <p class="text-sm text-gray-400 mb-2">
                 Team: <span
-                  x-text="sess.team ? $store.pages.teams.teamsList.find(t => t.id === sess.team)?.name : '---'"
+                  x-text="sess.team ? teams.teamsList.find(t => t.id === sess.team)?.name : '---'"
                 ></span>
               </p>
               <template x-if="sess.team">
@@ -177,7 +177,7 @@
                   </p>
                   <ul class="space-y-1">
                     <template
-                      x-for="player in ($store.pages.teams.teamsList.find(t => t.id === sess.team)?.players || [])"
+                      x-for="player in (teams.teamsList.find(t => t.id === sess.team)?.players || [])"
                       :key="player"
                     >
                       <li
@@ -188,7 +188,7 @@
                           type="checkbox"
                           class="accent-green-500 w-4 h-4"
                           :checked="sess.attendance && sess.attendance[player]"
-                          @change="$store.sessions.toggleAttendance(sess.id, player)"
+                          @change="sessions.toggleAttendance(sess.id, player)"
                         />
                       </li>
                     </template>
@@ -243,7 +243,7 @@
         <button
           type="button"
           class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
-          @click="$store.sessions.completeSession(sessionToComplete); showConfirm = false"
+          @click="sessions.completeSession(sessionToComplete); showConfirm = false"
         >
           Confirm
         </button>
@@ -273,7 +273,7 @@
         <button
           type="button"
           class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
-          @click="$store.scheduling.deleteSession(sessionToDelete); showDeleteConfirm = false"
+          @click="scheduling.deleteSession(sessionToDelete); showDeleteConfirm = false"
         >
           Delete
         </button>

@@ -1,8 +1,8 @@
 export default function sessionsStore(Alpine) {
-  Alpine.store("sessions", {
+  Alpine.store("pages").sessions = {
     // mark session as complete
     completeSession(sessionId) {
-      const schedulingStore = Alpine.store("scheduling");
+      const schedulingStore = Alpine.store("pages").scheduling;
       const sessionIndex = schedulingStore.upcomingSessions.findIndex(
         (s) => s.id === sessionId,
       );
@@ -15,7 +15,7 @@ export default function sessionsStore(Alpine) {
 
     // Update session notes
     updateNotes(sessionId, newNotes) {
-      const schedulingStore = Alpine.store("scheduling");
+      const schedulingStore = Alpine.store("pages").scheduling;
 
       // find in upcoming sessions
       const upcomingIndex = schedulingStore.upcomingSessions.findIndex(
@@ -36,7 +36,7 @@ export default function sessionsStore(Alpine) {
     },
 
     toggleAttendance(sessionId, player) {
-      const schedulingStore = Alpine.store("scheduling");
+      const schedulingStore = Alpine.store("pages").scheduling;
       let session =
         schedulingStore.upcomingSessions.find((s) => s.id === sessionId) ||
         schedulingStore.previousSessions.find((s) => s.id === sessionId);
@@ -44,5 +44,5 @@ export default function sessionsStore(Alpine) {
       if (!session.attendance) session.attendance = {};
       session.attendance[player] = !session.attendance[player];
     },
-  });
+  };
 }
