@@ -11,5 +11,8 @@
   "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
 
   // provide IntelliSense for TailwindCSS
-  "tailwindCSS.experimental.configFile": "web/src/styles/global.css"
+  "tailwindCSS.experimental.configFile": "web/src/styles/global.css",
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  }
 }
