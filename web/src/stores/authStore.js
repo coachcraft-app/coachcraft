@@ -1,6 +1,8 @@
 export default function authStore(Alpine) {
   Alpine.store("auth", {
-    user: undefined,
+    user: {
+      profile: { profile: "/images/profile_icon.png" },
+    },
     userManager: undefined,
   });
 }
