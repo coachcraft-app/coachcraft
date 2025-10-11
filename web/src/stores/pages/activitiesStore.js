@@ -94,7 +94,7 @@ export default function activitiesStore(Alpine) {
             (activityId) => activityId != this.selectedActivity,
           );
         }
-        Alpine.store("sync").putList(list);
+        // Alpine.store("sync").putList(list);
       });
     },
     onSaveChanges(event) {
@@ -122,7 +122,7 @@ export default function activitiesStore(Alpine) {
       });
 
       // Sync to backend
-      Alpine.store("sync").deleteActivity(this.selectedActivity);
+      // Alpine.store("sync").deleteActivity(this.selectedActivity);
 
       // Cleanup
       this.selectedActivity = "";
@@ -156,7 +156,7 @@ export default function activitiesStore(Alpine) {
         listToUpdate.name = listData.listName;
         // TODO: save list accent color
         // sync with backend
-        Alpine.store("sync").putList(listToUpdate);
+        // Alpine.store("sync").putList(listToUpdate);
       } else {
         // save new list
         const newList = {
@@ -168,7 +168,7 @@ export default function activitiesStore(Alpine) {
 
         this.listsList.shift(); // remove newListTemplate
         this.listsList.unshift(newList); // add the new list to the top
-        Alpine.store("sync").postList(newList);
+        // Alpine.store("sync").postList(newList);
       }
     },
     onCreateNewList() {
@@ -191,7 +191,7 @@ export default function activitiesStore(Alpine) {
           (list) => list.id != this.manageListsSelectedList,
         );
 
-        Alpine.store("sync").deleteList(this.manageListsSelectedList);
+        // Alpine.store("sync").deleteList(this.manageListsSelectedList);
       }
     },
 
@@ -208,7 +208,7 @@ export default function activitiesStore(Alpine) {
         activityToUpdate.description = activityData.description;
 
         // Sync to backend
-        Alpine.store("sync").putActivity(activityToUpdate);
+        // Alpine.store("sync").putActivity(activityToUpdate);
       } else {
         // save as new activtiy
 
@@ -231,7 +231,7 @@ export default function activitiesStore(Alpine) {
         }
 
         this.selectedActivity = activity.id;
-        Alpine.store("sync").postActivity(activity);
+        // Alpine.store("sync").postActivity(activity);
       }
     },
     createActivity() {

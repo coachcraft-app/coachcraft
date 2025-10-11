@@ -33,7 +33,7 @@ export class TeamsStore {
     this.selectedTeam = newTeam.id;
     this.rightPanelState = "edit_team";
 
-    this.Alpine.store("sync").postTeam(newTeam);
+    // this.Alpine.store("sync").postTeam(newTeam);
   }
 
   onTeamSelection(id) {
@@ -69,13 +69,13 @@ export class TeamsStore {
       team.description = formData.description || "";
     }
 
-    this.Alpine.store("sync").putTeam(team);
+    // this.Alpine.store("sync").putTeam(team);
   }
 
   onDeleteTeam() {
     if (!this.selectedTeam) return;
 
-    this.Alpine.store("sync").deleteTeam(this.selectedTeam);
+    // this.Alpine.store("sync").deleteTeam(this.selectedTeam);
 
     const index = this.teamsList.findIndex((t) => t.id === this.selectedTeam);
     if (index > -1) {
