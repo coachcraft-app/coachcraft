@@ -13,12 +13,19 @@ export default async (Alpine: Alpine) => {
   // init Alpine plugins, stores and the global Alpine object
   alpine.getInstance(Alpine);
 
-  // configure Cognito OIDC, prompt user for logging in
-  await auth.getInstance().initAuthFlow();
+  // Only configure Cognito OIDC and backend connections in production mode
+  if (import.meta.env.PROD) {
+    // configure Cognito OIDC, prompt user for logging in
+    await auth.getInstance().initAuthFlow();
 
-  // GraphQL client (backend API)
-  await urql.getInstance();
+    // GraphQL client (backend API)
+    await urql.getInstance();
 
-  // sync state lists with backend, if in prod mode
-  if (import.meta.env.PROD) await sync.subscribeToStateLists();
+    // sync state lists with backend
+    await sync.subscribeToStateLists();
+  } else {
+    console.log(
+      "Development mode: Skipping Cognito and Urql initialization for testing",
+    );
+  }
 };
