@@ -34,21 +34,39 @@ export interface ActivitiesListAccentColors {
   hex: string;
 }
 
+export interface Session {
+  id: string;
+  name: string;
+  date: string;
+  notes: string;
+  activities: Activity[];
+}
+
 export interface PagesStore {
-  activities: activities;
-  scheduling: scheduling;
+  activities: {
+    activitiesList: Activity[];
+    listsList: ActivitiesList[];
+  };
   teams: {
     teamsList: Team[];
+  };
+  scheduling: {
+    sessionName: ""; //name of the schedule
+    sessionDate: ""; //date of the schedule
+    sessionNotes: ""; //notes for the schedule
+    sessionActivities: Activity[]; //array of activities dropped in
+    selectedTeam: null; //id of selected team
+    listsList: ActivitiesList[];
+    activitiesList: Activity[];
+    upcomingSessions: Session[]; // sessions that haven't been completed yet
+    previousSessions: Session[];
+    selectedTab: "lists"; // which tab is currently shown
+    expandedSessions: Session[]; // shows which history sessions are expanded
   };
 }
 
 export interface CommonStore {
   toast: toast;
-}
-
-export interface SessionActivity extends Activity {
-  isSessionCopy?: boolean;
-  originalTemplateId?: string;
 }
 
 export interface Session {
@@ -59,6 +77,10 @@ export interface Session {
   activities: SessionActivity[];
   team?: string;
   attendance?: { [key: string]: boolean };
+}
+export interface SessionActivity extends Activity {
+  isSessionCopy?: boolean;
+  originalTemplateId?: string;
 }
 
 export interface ToastNotification {
