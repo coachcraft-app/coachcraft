@@ -2,6 +2,7 @@ import alpine from "./utils/alpine.js";
 import auth from "./utils/auth.ts";
 import urql from "./utils/urql.ts";
 import sync from "./utils/sync.js";
+import loadDummyData from "./dummyData/dummyData.ts";
 
 import type { Alpine } from "alpinejs";
 
@@ -24,6 +25,7 @@ export default async (Alpine: Alpine) => {
     // sync state lists with backend
     await sync.subscribeToStateLists();
   } else {
+    loadDummyData();
     console.log(
       "Development mode: Skipping Cognito and Urql initialization for testing",
     );
