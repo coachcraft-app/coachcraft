@@ -6,20 +6,7 @@ export class TeamsStore {
   constructor(Alpine) {
     this.Alpine = Alpine;
 
-    this.teamsList = [
-      {
-        id: "t1",
-        name: "Team A",
-        description: "First team",
-        players: ["Player 1", "Player 2"],
-      },
-      {
-        id: "t2",
-        name: "Team B",
-        description: "Second team",
-        players: ["Player 3", "Player 4"],
-      },
-    ];
+    this.teamsList = [];
 
     // id of selected team
     this.selectedTeam = null;
@@ -46,7 +33,7 @@ export class TeamsStore {
     this.selectedTeam = newTeam.id;
     this.rightPanelState = "edit_team";
 
-    this.Alpine.store("sync").postTeam(newTeam);
+    // this.Alpine.store("sync").postTeam(newTeam);
   }
 
   onTeamSelection(id) {
@@ -82,13 +69,13 @@ export class TeamsStore {
       team.description = formData.description || "";
     }
 
-    this.Alpine.store("sync").putTeam(team);
+    // this.Alpine.store("sync").putTeam(team);
   }
 
   onDeleteTeam() {
     if (!this.selectedTeam) return;
 
-    this.Alpine.store("sync").deleteTeam(this.selectedTeam);
+    // this.Alpine.store("sync").deleteTeam(this.selectedTeam);
 
     const index = this.teamsList.findIndex((t) => t.id === this.selectedTeam);
     if (index > -1) {

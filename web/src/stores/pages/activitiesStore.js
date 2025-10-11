@@ -1,120 +1,9 @@
 export default function activitiesStore(Alpine) {
   Alpine.store("pages").activities = {
     // state
-    listsList: [
-      {
-        id: "0",
-        name: "Warm Up",
-        activities: ["1", "2", "3", "4"],
-        accent_color: "Lavender",
-      },
-      {
-        id: "1",
-        name: "Dribbling Drills",
-        activities: ["5", "6", "7", "8"],
-        accent_color: "Sage",
-      },
-      {
-        id: "2",
-        name: "Assorted",
-        activities: ["1", "5", "4", "7"],
-        accent_color: "Basil",
-      },
-    ],
-
-    activitiesList: [
-      {
-        id: "1",
-        name: "Catch Me If You Can",
-        duration: "00:30",
-        description:
-          "Players pair up with one ball between them. The player without the ball starts running while the player with the ball counts to 3, then dribbles to try and catch their partner. Switch roles after each round. Focuses on acceleration, change of direction, and dribbling speed.",
-        img_url: "",
-      },
-      {
-        id: "2",
-        name: "Circle Passing",
-        duration: "00:45",
-        description:
-          "Players form a circle with 1-2 players in the middle. Outer players pass the ball around while inside players try to intercept. If successful, the player who lost the ball switches to the middle. Focus on quick, accurate passing and communication. Increase difficulty by adding a second ball.",
-        img_url: "",
-      },
-      {
-        id: "3",
-        name: "Dribbling Commands",
-        duration: "00:30",
-        description:
-          "Players dribble freely in a marked area. Coach calls out commands like 'stop', 'change direction', 'use left foot only', 'outside of foot only', etc. Players must immediately respond while maintaining ball control. Great for developing listening skills and technical ability under pressure.",
-        img_url: "",
-      },
-      {
-        id: "4",
-        name: "Dynamic Soccer Warm Up",
-        duration: "01:00",
-        description:
-          "Progressive warm-up routine including jogging, high knees, butt kicks, side shuffles, karaoke steps, dynamic stretching, and light ball work. Set up in lanes 15-20 yards long. Ensure all major muscle groups are activated. Finish with short passing sequences to transition into technical work.",
-        img_url: "",
-      },
-      {
-        id: "5",
-        name: "1-on-1 Gate Dribbling",
-        duration: "01:00",
-        description:
-          "Set up multiple 'gates' (two cones 1-2 yards apart) throughout the playing area. Players pair up, with one attacker and one defender. Attackers score by dribbling through as many gates as possible in 60 seconds while defenders try to win the ball. Switch roles and compare scores. Develops close control and shielding.",
-        img_url: "",
-      },
-      {
-        id: "6",
-        name: "1-on-1-on-1 Dribbling",
-        duration: "01:00",
-        description:
-          "Three players work in a triangle formation with one ball. The player with the ball attempts to dribble toward either of the other two players, who defend. If a defender wins the ball, they become the attacker. Play in a confined space to increase difficulty. Focuses on quick decision-making and protecting the ball.",
-        img_url: "",
-      },
-      {
-        id: "7",
-        name: "Dribble Attack",
-        duration: "01:00",
-        description:
-          "Create a 30x20 yard grid with goals at each end. Divide players into attackers and defenders. Attackers start with the ball and must dribble past defenders to score in the opposite goal. Defenders can only win the ball in their defensive half. If successful, they transition to attack. Emphasizes 1v1 attacking moves and finishing.",
-        img_url: "",
-      },
-      {
-        id: "8",
-        name: "Dribble Knockout",
-        duration: "01:00",
-        description:
-          "All players dribble within a defined area while trying to knock other players' balls out of bounds. If your ball goes out, you perform a quick fitness activity (5 push-ups, 10 jumping jacks) before rejoining. Last player remaining wins. Gradually reduce the playing area to increase difficulty. Builds ball control under pressure.",
-        img_url: "",
-      },
-    ],
-
-    listAccentColors: [
-      {
-        name: "Blueberry",
-        hex: "",
-      },
-      {
-        name: "Lavender",
-        hex: "",
-      },
-      {
-        name: "Sage",
-        hex: "",
-      },
-      {
-        name: "Basil",
-        hex: "",
-      },
-      {
-        name: "Flamingo",
-        hex: "",
-      },
-      {
-        name: "Banana",
-        hex: "",
-      },
-    ],
+    activitiesList: [],
+    listsList: [],
+    listAccentColors: [],
 
     selectedList: "default",
     selectedActivity: "",
@@ -205,7 +94,7 @@ export default function activitiesStore(Alpine) {
             (activityId) => activityId != this.selectedActivity,
           );
         }
-        Alpine.store("sync").putList(list);
+        // Alpine.store("sync").putList(list);
       });
     },
     onSaveChanges(event) {
@@ -233,7 +122,7 @@ export default function activitiesStore(Alpine) {
       });
 
       // Sync to backend
-      Alpine.store("sync").deleteActivity(this.selectedActivity);
+      // Alpine.store("sync").deleteActivity(this.selectedActivity);
 
       // Cleanup
       this.selectedActivity = "";
@@ -267,7 +156,7 @@ export default function activitiesStore(Alpine) {
         listToUpdate.name = listData.listName;
         // TODO: save list accent color
         // sync with backend
-        Alpine.store("sync").putList(listToUpdate);
+        // Alpine.store("sync").putList(listToUpdate);
       } else {
         // save new list
         const newList = {
@@ -279,7 +168,7 @@ export default function activitiesStore(Alpine) {
 
         this.listsList.shift(); // remove newListTemplate
         this.listsList.unshift(newList); // add the new list to the top
-        Alpine.store("sync").postList(newList);
+        // Alpine.store("sync").postList(newList);
       }
     },
     onCreateNewList() {
@@ -302,7 +191,7 @@ export default function activitiesStore(Alpine) {
           (list) => list.id != this.manageListsSelectedList,
         );
 
-        Alpine.store("sync").deleteList(this.manageListsSelectedList);
+        // Alpine.store("sync").deleteList(this.manageListsSelectedList);
       }
     },
 
@@ -319,7 +208,7 @@ export default function activitiesStore(Alpine) {
         activityToUpdate.description = activityData.description;
 
         // Sync to backend
-        Alpine.store("sync").putActivity(activityToUpdate);
+        // Alpine.store("sync").putActivity(activityToUpdate);
       } else {
         // save as new activtiy
 
@@ -342,7 +231,7 @@ export default function activitiesStore(Alpine) {
         }
 
         this.selectedActivity = activity.id;
-        Alpine.store("sync").postActivity(activity);
+        // Alpine.store("sync").postActivity(activity);
       }
     },
     createActivity() {

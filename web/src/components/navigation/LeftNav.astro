@@ -2,7 +2,7 @@
 import MenuButton from "../common/MenuButton.astro";
 ---
 
-<div x-data="{ sidebarIsOpen: false }" class="relative">
+<div x-data="{ sidebarIsOpen: false, router: $store.router }" class="relative">
   <div
     x-cloak
     x-show="sidebarIsOpen"
@@ -32,22 +32,22 @@ import MenuButton from "../common/MenuButton.astro";
       <MenuButton
         label="Activities"
         page="activities"
-        isSelected="$store.router.currentPage === 'activities'"
+        isSelected="router.currentPage === 'activities'"
       />
       <MenuButton
         label="Scheduling"
         page="scheduling"
-        isSelected="$store.router.currentPage === 'scheduling'"
+        isSelected="router.currentPage === 'scheduling'"
       />
       <MenuButton
         label="Sessions"
         page="sessions"
-        isSelected="$store.router.currentPage === 'sessions'"
+        isSelected="router.currentPage === 'sessions'"
       />
       <MenuButton
         label="Teams"
         page="teams"
-        isSelected="$store.router.currentPage === 'teams'"
+        isSelected="router.currentPage === 'teams'"
       />
 
     </div>

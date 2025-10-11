@@ -20,7 +20,7 @@
 -->
 
 <!-- Notifications -->
-<div x-on:notify.window="$store.common.toast.addNotification({ title: $event.detail.title, message: $event.detail.message, variant: $event.detail.variant })">
+<div x-data="{ toast: $store.common.toast }" x-on:notify.window="toast.addNotification({ title: $event.detail.title, message: $event.detail.message, variant: $event.detail.variant })">
 
     <div 
         x-on:mouseenter="$dispatch('pause-auto-dismiss')" 
@@ -41,7 +41,7 @@
             md:top-[unset] 
             md:max-w-sm">
     
-        <template x-for="(notification, index) in $store.common.toast.notifications" x-bind:key="notification.id">
+        <template x-for="(notification, index) in toast.notifications" x-bind:key="notification.id">
             <!-- root div holds all of the notifications  -->
             <div>
                 <!-- Info Notification  -->
@@ -58,8 +58,8 @@
                             dark:text-on-surface-dark" 
                         role="alert" 
                         x-on:pause-auto-dismiss.window="clearTimeout(timeout)" 
-                        x-on:resume-auto-dismiss.window=" timeout = setTimeout(() => {(isVisible = false), $store.common.toast.removeNotification(notification.id) }, $store.common.toast.displayDuration)" 
-                        x-init="$nextTick(() => { isVisible = true }), (timeout = setTimeout(() => { isVisible = false, $store.common.toast.removeNotification(notification.id)}, $store.common.toast.displayDuration))" x-transition:enter="transition duration-300 ease-out" x-transition:enter-end="translate-y-0" x-transition:enter-start="translate-y-8" x-transition:leave="transition duration-300 ease-in" x-transition:leave-end="-translate-x-24 opacity-0 md:translate-x-24" x-transition:leave-start="translate-x-0 opacity-100">
+                        x-on:resume-auto-dismiss.window=" timeout = setTimeout(() => {(isVisible = false), toast.removeNotification(notification.id) }, toast.displayDuration)" 
+                        x-init="$nextTick(() => { isVisible = true }), (timeout = setTimeout(() => { isVisible = false, toast.removeNotification(notification.id)}, toast.displayDuration))" x-transition:enter="transition duration-300 ease-out" x-transition:enter-end="translate-y-0" x-transition:enter-start="translate-y-8" x-transition:leave="transition duration-300 ease-in" x-transition:leave-end="-translate-x-24 opacity-0 md:translate-x-24" x-transition:leave-start="translate-x-0 opacity-100">
                         
                         <div class="flex 
                                     w-full 
@@ -88,7 +88,7 @@
                                 type="button" 
                                 class="ml-auto cursor-pointer" 
                                 aria-label="dismiss notification" 
-                                x-on:click="(isVisible = false), $store.common.toast.removeNotification(notification.id)">
+                                x-on:click="(isVisible = false), toast.removeNotification(notification.id)">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" class="size-5 shrink-0" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
@@ -104,16 +104,15 @@
                         x-cloak 
                         x-show="isVisible" 
                         class="pointer-events-auto 
-                            relative 
-                            rounded-lg 
-                            border border-danger 
-                            bg-surface text-on-surface 
+                            relative
+                            bg-surface 
+                            text-on-surface 
                             dark:bg-surface-dark 
                             dark:text-on-surface-dark" 
                         role="alert" 
                         x-on:pause-auto-dismiss.window="clearTimeout(timeout)" 
-                        x-on:resume-auto-dismiss.window=" timeout = setTimeout(() => {(isVisible = false), removeNotification(notification.id) }, displayDuration)" 
-                        x-init="$nextTick(() => { isVisible = true }), (timeout = setTimeout(() => { isVisible = false, removeNotification(notification.id)}, displayDuration))" 
+                        x-on:resume-auto-dismiss.window=" timeout = setTimeout(() => {(isVisible = false), toast.removeNotification(notification.id) }, toast.displayDuration)" 
+                        x-init="$nextTick(() => { isVisible = true }), (timeout = setTimeout(() => { isVisible = false, toast.removeNotification(notification.id)}, toast.displayDuration))" 
                         x-transition:enter="transition duration-300 ease-out" 
                         x-transition:enter-end="translate-y-0" 
                         x-transition:enter-start="translate-y-8" 
@@ -121,7 +120,14 @@
                         x-transition:leave-end="-translate-x-24 opacity-0 md:translate-x-24" 
                         x-transition:leave-start="translate-x-0 opacity-100">
                         
-                        <div class="flex w-full items-center gap-2.5 bg-danger/10 rounded-radius p-4 transition-all duration-300">
+                        <div class="flex 
+                                    w-full 
+                                    items-center 
+                                    gap-2.5 
+                                    bg-transparent 
+                                    p-2
+                                    transition-all 
+                                    duration-300">
 
                             <!-- Icon -->
                             <div class="rounded-full bg-danger/15 p-0.5 text-danger" aria-hidden="true">
@@ -137,8 +143,12 @@
                             </div>
 
                             <!--Dismiss Button -->
-                            <button type="button" class="ml-auto" aria-label="dismiss notification" x-on:click="(isVisible = false), removeNotification(notification.id)">
-                                <svg xmlns="http://www.w3.org/2000/svg viewBox="0 0 24 24 stroke="currentColor" fill="none" stroke-width="2" class="size-5 shrink-0" aria-hidden="true">
+                            <button 
+                                type="button" 
+                                class="ml-auto cursor-pointer" 
+                                aria-label="dismiss notification" 
+                                x-on:click="(isVisible = false), toast.removeNotification(notification.id)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" class="size-5 shrink-0" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
                             </button>
@@ -148,4 +158,4 @@
             </div>
         </template>
     </div>
-</div>    
+</div>
