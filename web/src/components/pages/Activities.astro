@@ -8,7 +8,7 @@ import CheckboxDropDown from "../common/CheckboxDropDown.astro";
 import Image from "astro/components/Image.astro";
 ---
 
-<div x-data class="flex flex-row justify-center max-h-full">
+<div x-data="{ activities: $store.pages.activities }" class="flex flex-row justify-center max-h-full">
   <!-- left panel -->
   <div
     class="pr-[2.5vw]
@@ -23,18 +23,18 @@ import Image from "astro/components/Image.astro";
       <Button
         type="button"
         label="Manage Lists"
-        onClick="$store.pages.activities.onManageLists()"
+        onClick="activities.onManageLists()"
       />
       <Button
         type="button"
         label="Create Activity"
-        onClick="$store.pages.activities.createActivity()"
+        onClick="activities.createActivity()"
       />
 
       <DropDown
-        options="$store.pages.activities.listsNames"
+        options="activities.listsNames"
         defaultOption="All Activities"
-        onOptionSwitch="$store.pages.activities.onListSwitch(listToSelect)"
+        onOptionSwitch="activities.onListSwitch(listToSelect)"
       />
     </div>
 
@@ -43,20 +43,20 @@ import Image from "astro/components/Image.astro";
       <div x-data class="flex flex-col gap-y-1">
         <p class="text-sm text-gray-400">
           Activities:
-          <span x-text="$store.pages.activities.selectedListActivities.length"
+          <span x-text="activities.selectedListActivities.length"
           ></span>
         </p>
         <hr class="border-gray-500/50" />
       </div>
       <template
-        x-for="activity in $store.pages.activities.selectedListActivities"
+        x-for="activity in activities.selectedListActivities"
         :key="activity.id"
       >
         <ListButton
           label="activity.name"
           id="activity.id"
-          isSelected="isSelected() { return $store.pages.activities.selectedActivity == activity.id; }"
-          onClick="$store.pages.activities.onActivitySelection(id)"
+          isSelected="isSelected() { return activities.selectedActivity == activity.id; }"
+          onClick="activities.onActivitySelection(id)"
         />
       </template>
     </div>
@@ -75,7 +75,7 @@ import Image from "astro/components/Image.astro";
       x-data
       x-transition
       x-cloak
-      x-show="$store.pages.activities.rightPanelState == 'placeholder'"
+      x-show="activities.rightPanelState == 'placeholder'"
       class="h-full w-full flex items-center justify-center"
     >
       <p class="text-gray-400 text-lg select-none">
@@ -88,28 +88,28 @@ import Image from "astro/components/Image.astro";
       x-data
       x-transition
       x-cloak
-      x-show="$store.pages.activities.rightPanelState == 'manage_lists'"
+      x-show="activities.rightPanelState == 'manage_lists'"
       class="h-full flex flex-col gap-25"
     >
       <div class="flex gap-5">
         <DropDown
-          options="$store.pages.activities.listsNames"
+          options="activities.listsNames"
           label="Select List"
           placeHolder="Select List"
-          onOptionSwitch="$store.pages.activities.onManageListsListSwitch(listToSelect)"
+          onOptionSwitch="activities.onManageListsListSwitch(listToSelect)"
         />
         <Button
           type="button"
           width="fit"
           label="Create New List"
-          onClick="$store.pages.activities.onCreateNewList()"
+          onClick="activities.onCreateNewList()"
         />
       </div>
 
       <div>
         <form
           class="flex flex-col gap-5"
-          @submit.prevent="$store.pages.activities.onManageListsSaveChanges(event)"
+          @submit.prevent="activities.onManageListsSaveChanges(event)"
         >
           <div class="flex items-center gap-5">
             <TextInput
@@ -117,13 +117,13 @@ import Image from "astro/components/Image.astro";
               label="List Name"
               required
               placeholder="List"
-              value="$store.pages.activities.manageListsSelectedListObj?.name || ''"
+              value="activities.manageListsSelectedListObj?.name || ''"
             />
             <DropDown
-              options="$store.pages.activities.listAccentColorNames"
+              options="activities.listAccentColorNames"
               label="Accent Color"
               placeHolder="Accent Color"
-              onOptionSwitch="$store.pages.activities.onManageListsAccentColorPreviewSwitch"
+              onOptionSwitch="activities.onManageListsAccentColorPreviewSwitch"
               disabled="true"
             />
           </div>
@@ -134,7 +134,7 @@ import Image from "astro/components/Image.astro";
               type="button"
               width="fit"
               label="Delete List"
-              onClick="$store.pages.activities.onDeleteList()"
+              onClick="activities.onDeleteList()"
             />
           </div>
         </form>
@@ -149,7 +149,7 @@ import Image from "astro/components/Image.astro";
       x-transition:enter-start="opacity-0 scale-85"
       x-transition:enter-end="opacity-100 scale-100"
       x-cloak
-      x-show="$store.pages.activities.rightPanelState == 'edit_activity'"
+      x-show="activities.rightPanelState == 'edit_activity'"
     >
       <!-- activity image -->
       <div x-data="{isEnlarged: false}">
@@ -289,7 +289,7 @@ import Image from "astro/components/Image.astro";
 
       <form
         class="flex flex-col gap-5"
-        @submit.prevent="$store.pages.activities.onSaveChanges(event)"
+        @submit.prevent="activities.onSaveChanges(event)"
       >
         <div
           class="flex
@@ -304,14 +304,14 @@ import Image from "astro/components/Image.astro";
               label="Activity Name"
               required
               placeholder="Activity"
-              value="$store.pages.activities.selectedActivityObj?.name || ''"
+              value="activities.selectedActivityObj?.name || ''"
             />
             <TextInput
               name="duration"
               label="Duration"
               required
               placeholder="HH:MM"
-              value="$store.pages.activities.selectedActivityObj?.duration || ''"
+              value="activities.selectedActivityObj?.duration || ''"
               x-mask="99:99"
             />
             <TextArea
@@ -319,7 +319,7 @@ import Image from "astro/components/Image.astro";
               label="Description"
               placeholder="Brief description such as sets, laps, plan, etc."
               rows="10"
-              value="$store.pages.activities.selectedActivityObj?.description || ''"
+              value="activities.selectedActivityObj?.description || ''"
             />
           </div>
 
@@ -327,9 +327,9 @@ import Image from "astro/components/Image.astro";
           <div class="grow xl:max-w-1/2">
             <CheckboxDropDown
               label="Containing Lists"
-              items="$store.pages.activities.listsNames"
-              checkedItems="$store.pages.activities.containingListsNames"
-              onUpdate="$store.pages.activities.onContainingListsUpdate(containingList)"
+              items="activities.listsNames"
+              checkedItems="activities.containingListsNames"
+              onUpdate="activities.onContainingListsUpdate(containingList)"
             />
           </div>
         </div>
@@ -340,13 +340,13 @@ import Image from "astro/components/Image.astro";
             type="button"
             label="Reset Changes"
             width="fit"
-            onClick="$store.pages.activities.onResetChanges()"
+            onClick="activities.onResetChanges()"
           />
           <Button
             type="button"
             label="Delete Activity"
             width="fit"
-            onClick="$store.pages.activities.onDeleteActivity()"
+            onClick="activities.onDeleteActivity()"
           />
         </div>
       </form>

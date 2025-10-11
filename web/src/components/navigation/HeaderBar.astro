@@ -66,7 +66,7 @@ var { user_profile_pic } = Astro.props;
 
     <!-- profile button -->
     <li
-      x-data="{ userDropDownIsOpen: false, openWithKeyboard: false, imageIsLoading: true }"
+      x-data="{ auth: $store.auth, userDropDownIsOpen: false, openWithKeyboard: false, imageIsLoading: true }"
       x-on:keydown.esc.window="userDropDownIsOpen = false, openWithKeyboard = false"
       class="hidden
             sm:relative
@@ -95,7 +95,7 @@ var { user_profile_pic } = Astro.props;
           id="user_profile_pic"
           crossorigin="anonymous"
           referrerpolicy="no-referrer"
-          x-bind:src="$store.auth.user.profile.profile"
+          x-bind:src="auth.user.profile.profile"
           alt="User Profile"
           width="50"
           height="50"
@@ -137,15 +137,15 @@ var { user_profile_pic } = Astro.props;
         <li class="border-b border-outline dark:border-low-contrast-grey">
           <div class="flex flex-col px-4 py-2">
             <span
-              class="text-sm font-medium text-on-surface-strong dark:text-on-surface-dark-strong" x-text="$store.auth.user.profile.given_name"
+              class="text-sm font-medium text-on-surface-strong dark:text-on-surface-dark-strong" x-text="auth.user.profile.given_name"
               ></span
             >
-            <span class="text-xs text-on-surface dark:text-on-surface-dark" x-text="$store.auth.user.profile.email"></span>
+            <span class="text-xs text-on-surface dark:text-on-surface-dark" x-text="auth.user.profile.email"></span>
           </div>
         </li>
         <li>
           <a
-            x-on:click="$store.auth.userManager.signoutRedirect()"
+            x-on:click="auth.userManager.signoutRedirect()"
             class="block
                   bg-surface-alt
                   px-4 py-2

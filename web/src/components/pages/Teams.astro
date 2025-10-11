@@ -6,7 +6,7 @@ import Button from "../common/Button.astro";
 import Image from "astro/components/Image.astro";
 ---
 
-<div x-data class="flex flex-row justify-center">
+<div x-data="{ teams: $store.pages.teams }" class="flex flex-row justify-center">
   <!-- left panel -->
   <div
     class="pr-[2.5vw]
@@ -18,7 +18,7 @@ import Image from "astro/components/Image.astro";
       <Button
         type="button"
         label="Create Team"
-        onClick="$store.pages.teams.createTeam()"
+        onClick="teams.createTeam()"
       />
     </div>
 
@@ -27,16 +27,16 @@ import Image from "astro/components/Image.astro";
       <div x-data class="flex flex-col gap-y-1">
         <p class="text-sm text-gray-400">
           Teams:
-          <span x-text="$store.pages.teams.teamsList.length"></span>
+          <span x-text="teams.teamsList.length"></span>
         </p>
         <hr class="border-gray-500/50" />
       </div>
-      <template x-for="team in $store.pages.teams.teamsList" :key="team.id">
+      <template x-for="team in teams.teamsList" :key="team.id">
         <ListButton
           label="team.name"
           id="team.id"
-          isSelected="isSelected() { return $store.pages.teams.selectedTeam == team.id; }"
-          onClick="$store.pages.teams.onTeamSelection(id)"
+          isSelected="isSelected() { return teams.selectedTeam == team.id; }"
+          onClick="teams.onTeamSelection(id)"
         />
       </template>
     </div>
@@ -55,7 +55,7 @@ import Image from "astro/components/Image.astro";
       x-data
       x-transition
       x-cloak
-      x-show="$store.pages.teams.rightPanelState == 'placeholder'"
+      x-show="teams.rightPanelState == 'placeholder'"
       class="h-full w-full flex items-center justify-center"
     >
       <p class="text-gray-400 text-lg select-none">
@@ -71,7 +71,7 @@ import Image from "astro/components/Image.astro";
       x-transition:enter-start="opacity-0 scale-85"
       x-transition:enter-end="opacity-100 scale-100"
       x-cloak
-      x-show="$store.pages.teams.rightPanelState == 'edit_team'"
+      x-show="teams.rightPanelState == 'edit_team'"
     >
       <div>
         <div
@@ -93,7 +93,7 @@ import Image from "astro/components/Image.astro";
 
       <form
         class="flex flex-col gap-5"
-        @submit.prevent="$store.pages.teams.onSaveChanges(event)"
+        @submit.prevent="teams.onSaveChanges(event)"
       >
         <div class="flex flex-col gap-5">
           <TextInput
@@ -101,14 +101,14 @@ import Image from "astro/components/Image.astro";
             label="Team Name"
             required
             placeholder="Team Name"
-            value="$store.pages.teams.selectedTeamObj?.name || ''"
+            value="teams.selectedTeamObj?.name || ''"
           />
           <TextArea
             name="description"
             label="Description"
             placeholder="Team description and goals"
             rows="10"
-            value="$store.pages.teams.selectedTeamObj?.description || ''"
+            value="teams.selectedTeamObj?.description || ''"
           />
 
           <!-- Players List -->
@@ -119,12 +119,12 @@ import Image from "astro/components/Image.astro";
                 type="button"
                 label="Add Player"
                 width="fit"
-                onClick="$store.pages.teams.addPlayer()"
+                onClick="teams.addPlayer()"
               />
             </div>
             <div class="flex flex-col gap-2">
               <template
-                x-for="(player, index) in $store.pages.teams.selectedTeamObj?.players || []"
+                x-for="(player, index) in teams.selectedTeamObj?.players || []"
                 :key="index"
               >
                 <div class="flex gap-2 items-center">
@@ -132,13 +132,13 @@ import Image from "astro/components/Image.astro";
                     :name="'player_' + index"
                     placeholder="Player Name"
                     :value="player"
-                    @input="$store.pages.teams.updatePlayer(index, $event.target.value)"
+                    @input="teams.updatePlayer(index, $event.target.value)"
                   />
                   <Button
                     type="button"
                     label="Remove"
                     width="fit"
-                    onClick="$store.pages.teams.removePlayer(index)"
+                    onClick="teams.removePlayer(index)"
                   />
                 </div>
               </template>
@@ -152,7 +152,7 @@ import Image from "astro/components/Image.astro";
             type="button"
             label="Delete Team"
             width="fit"
-            onClick="$store.pages.teams.onDeleteTeam()"
+            onClick="teams.onDeleteTeam()"
           />
         </div>
       </form>
