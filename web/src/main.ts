@@ -11,20 +11,22 @@ export default async (Alpine: Alpine) => {
 
   // SPA initialisation sequence
 
-  // init Alpine plugins, stores and the global Alpine object
+  // init Alpine plugins, register stores, init global Alpine object
   alpine.getInstance(Alpine);
 
   if (import.meta.env.PROD) {
-    // configure OIDC client, prompt user for logging in
+    // configure OIDC client, prompt for login / retrieve credentials
     await oidc.getInstance().initAuthFlow();
 
-    // GraphQL client (backend API)
+    // init GraphQL client (backend API)
     await urql.getInstance();
 
     // sync state lists with backend
     await sync.subscribeToStateLists();
   } else {
+    // inject dummy data into state if disconnected from backend
     loadDummyData();
+
     console.log(
       "Development mode: Skipping Cognito and Urql initialization for testing",
     );
