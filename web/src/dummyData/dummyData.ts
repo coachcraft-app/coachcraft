@@ -1,4 +1,4 @@
-import alpine from "../utils/alpine.js";
+import alpine from "../libs/alpine";
 import dummyActivities from "./activities.json";
 import dummyScheduling from "./scheduling.json";
 import dummyTeams from "./teams.json";
