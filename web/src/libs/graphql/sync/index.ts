@@ -1,7 +1,7 @@
 import { ActivitiesSync, ActivitiesListsSync } from "./activitiesSync";
 import TeamsSync from "./teamsSync";
 
-import alpine from "../../alpine";
+import alpine from "@/libs/alpine";
 
 /**
  * Sync statically exposes modular sync libs (activitiesSync, teamsSync, etc.)
