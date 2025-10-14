@@ -4,20 +4,18 @@ import type {
   ActivitiesListAccentColors,
 } from "@/typedefs/storeTypes";
 
-export default class activities {
-  // state
-  public listsList: ActivitiesList[] = [];
 import sync from "@/libs/graphql/sync";
 
+export default class activities {
+  // public state
+  public activitiesListsList: ActivitiesList[] = [];
   public activitiesList: Activity[] = [];
-
-  public listAccentColors: ActivitiesListAccentColors[] = [];
+  public activitiesListAccentColors: ActivitiesListAccentColors[] = [];
 
   private selectedList: string = "default";
   private selectedActivity: string = "";
   private rightPanelState: "placeholder" | "edit_activity" | "manage_lists" =
     "placeholder";
-
   private manageListsSelectedList: string = "default";
 
   /**
@@ -30,7 +28,7 @@ import sync from "@/libs/graphql/sync";
       return this.activitiesList;
     }
 
-    const selectedActivitiyIDs = this.listsList.find(
+    const selectedActivitiyIDs = this.activitiesListsList.find(
       (list) => list.id == this.selectedList,
     )?.activities;
 
@@ -49,16 +47,18 @@ import sync from "@/libs/graphql/sync";
   }
   public get listsNames() {
     const listsNames: string[] = [];
-    this.listsList.forEach((list) => listsNames.push(list.name));
+    this.activitiesList.forEach((list) => listsNames.push(list.name));
     return listsNames;
   }
   public get listAccentColorNames() {
     const listAccentColors: string[] = [];
-    this.listAccentColors.forEach((color) => listAccentColors.push(color.name));
+    this.activitiesListAccentColors.forEach((color) =>
+      listAccentColors.push(color.name),
+    );
     return listAccentColors;
   }
   public get manageListsSelectedListObj() {
-    return this.listsList.find(
+    return this.activitiesListsList.find(
       (list) => list.id == this.manageListsSelectedList,
     );
   }
@@ -66,7 +66,7 @@ import sync from "@/libs/graphql/sync";
     // get all lists that this.selectedActivity belongs to
 
     const containingLists: string[] = [];
-    this.listsList.forEach((list) => {
+    this.activitiesListsList.forEach((list) => {
       if (list.activities.includes(this.selectedActivity)) {
         containingLists.push(list.name);
       }
@@ -79,8 +79,8 @@ import sync from "@/libs/graphql/sync";
       this.selectedList = "default";
     } else {
       this.selectedList =
-        this.listsList.find((list) => list.name == listToSelect)?.id ||
-        "default";
+        this.activitiesListsList.find((list) => list.name == listToSelect)
+          ?.id || "default";
     }
     this.selectedActivity = "";
     this.rightPanelState = "placeholder";
@@ -98,7 +98,7 @@ import sync from "@/libs/graphql/sync";
   public onContainingListsUpdate(containingList: string[]) {
     // update the lists to which this.selectedActivity belongs
 
-    this.listsList.forEach((list: ActivitiesList) => {
+    this.activitiesListsList.forEach((list: ActivitiesList) => {
       if (containingList.includes(list.name)) {
         if (!list.activities.includes(this.selectedActivity)) {
           list.activities.push(this.selectedActivity);
@@ -133,7 +133,7 @@ import sync from "@/libs/graphql/sync";
       (activity) => activity.id != this.selectedActivity,
     );
 
-    this.listsList.forEach((list) => {
+    this.activitiesListsList.forEach((list) => {
       list.activities.filter(
         (activity_id) => activity_id != this.selectedActivity,
       );
@@ -156,7 +156,8 @@ import sync from "@/libs/graphql/sync";
   }
   public onManageListsListSwitch(listToSelect: string) {
     this.manageListsSelectedList =
-      this.listsList.find((list) => list.name == listToSelect)?.id || "default";
+      this.activitiesListsList.find((list) => list.name == listToSelect)?.id ||
+      "default";
   }
   public onManageListsSaveChanges(event: Event) {
     event.preventDefault();
@@ -169,7 +170,7 @@ import sync from "@/libs/graphql/sync";
       this.manageListsSelectedList != "default"
     ) {
       // update existing list
-      const listToUpdate = this.listsList.find(
+      const listToUpdate = this.activitiesListsList.find(
         (list) => list.id == this.manageListsSelectedList,
       );
       if (listToUpdate) {
@@ -187,8 +188,8 @@ import sync from "@/libs/graphql/sync";
         accent_color: "Colors", // TODO: grab accent color
       };
 
-      this.listsList.shift(); // remove newListTemplate
-      this.listsList.unshift(newList); // add the new list to the top
+      this.activitiesListsList.shift(); // remove newListTemplate
+      this.activitiesListsList.unshift(newList); // add the new list to the top
       sync.activities.list.post(newList);
     }
   }
@@ -200,15 +201,17 @@ import sync from "@/libs/graphql/sync";
       accent_color: "Colors",
     };
 
-    if (!this.listsList.find((list) => list.id == newListTemplate.id)) {
+    if (
+      !this.activitiesListsList.find((list) => list.id == newListTemplate.id)
+    ) {
       // proceed only if new list draft doesn't already exist
-      this.listsList.unshift(newListTemplate);
+      this.activitiesListsList.unshift(newListTemplate);
       this.manageListsSelectedList = "new";
     }
   }
   public onDeleteList() {
     if (this.manageListsSelectedList != "default") {
-      this.listsList = this.listsList.filter(
+      this.activitiesListsList = this.activitiesListsList.filter(
         (list) => list.id != this.manageListsSelectedList,
       );
 
@@ -248,7 +251,7 @@ import sync from "@/libs/graphql/sync";
 
       // add to currently selected list, unless "All Activities" is selected
       if (this.selectedList !== "default") {
-        this.listsList
+        this.activitiesListsList
           .find((list) => list.id == this.selectedList)
           ?.activities.unshift(activity.id);
       }
@@ -276,7 +279,7 @@ import sync from "@/libs/graphql/sync";
     } else {
       // if a new activity draft exists in another list,
       // detach it and create a new one
-      const containingList = this.listsList.find((list) =>
+      const containingList = this.activitiesListsList.find((list) =>
         list.activities.includes(newActivityTemplate.id),
       );
       if (containingList) {
@@ -287,7 +290,7 @@ import sync from "@/libs/graphql/sync";
     }
 
     // assign new activity draft to currently selected list
-    this.listsList
+    this.activitiesListsList
       .find((list) => list.id == this.selectedList)
       ?.activities.push(newActivityTemplate.id);
 
