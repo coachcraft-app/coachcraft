@@ -16,7 +16,7 @@ export default async (Alpine: Alpine) => {
 
   if (import.meta.env.PROD) {
     // configure OIDC client, prompt for login / retrieve credentials
-    await oidc.getInstance().initAuthFlow();
+    await oidc.getInstance().initOidcFlow();
 
     // init GraphQL client (backend API)
     await urql.getInstance();
