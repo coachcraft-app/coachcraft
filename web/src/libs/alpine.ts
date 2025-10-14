@@ -67,7 +67,6 @@ class alpine {
 
     this.globalAlpine.store("auth", authStore);
     this.globalAlpine.store("router", routerStore);
-
   }
 
   /**
