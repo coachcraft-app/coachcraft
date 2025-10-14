@@ -5,9 +5,10 @@
  * @module
  */
 
+import "dotenv/config";
 import { app } from "./server";
 
-function main() {
+async function main() {
   const PORT = (process.env["PORT"] && parseInt(process.env["PORT"])) || 3000;
 
   app.listen({ port: PORT }, () => {
