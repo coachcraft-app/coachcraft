@@ -1,12 +1,12 @@
 import { User, UserManager } from "oidc-client-ts";
-import alpine from "./alpine";
+import alpine from "@/libs/alpine";
 
 /**
- * `auth` is a singleton class
- *  for accessing/initialising, use `getInstance(): auth`
+ * `oidc` is a singleton class
+ *  for accessing/initialising, use `getInstance(): oidc`
  */
-export class auth {
-  private static instance: auth;
+export class oidc {
+  private static instance: oidc;
   private userManager: UserManager;
 
   /**
@@ -25,11 +25,12 @@ export class auth {
   /**
    * Proxy for constructor
    *
-   * @returns auth
+   * @returns oidc
    */
-  public static getInstance(): auth {
-    if (!auth.instance) auth.instance = new auth();
-    return auth.instance;
+  public static getInstance(): oidc {
+    console.log("oidc", oidc.instance);
+    if (!oidc.instance) oidc.instance = new oidc();
+    return oidc.instance;
   }
 
   public getUserManager(): UserManager {
@@ -38,19 +39,19 @@ export class auth {
     return this.userManager;
   }
 
-  public async initAuthFlow(): Promise<void> {
+  public async initOidcFlow(): Promise<void> {
     const globalAlpine = alpine.getInstance().getGlobalAlpine();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const authStore: any = globalAlpine.store("auth");
+    const oidcStore: any = globalAlpine.store("oidc");
 
-    authStore.userManager = this.userManager;
+    oidcStore.userManager = this.userManager;
 
     const user: User | null = await this.userManager.getUser();
 
     const urlParams: URLSearchParams = new URLSearchParams(
       window.location.search,
     );
-    const urlHasAuthResponse =
+    const urlHasOidcResponse =
       (urlParams.has("code") && urlParams.has("state")) ||
       urlParams.has("error");
 
@@ -59,19 +60,19 @@ export class auth {
       if (!user.expired) {
         // state 1: cached user exists and is valid
 
-        authStore.user = user as User;
+        oidcStore.user = user as User;
       } else {
         // state 2: cached user expired, redirect to Cognito
 
         await this.userManager.removeUser();
         this.userManager.signinRedirect();
       }
-    } else if (urlHasAuthResponse) {
+    } else if (urlHasOidcResponse) {
       // state 3: redirected from Cognito, with URL response parameters
 
       const user: User | undefined = await this.userManager.signinCallback();
       if (user) {
-        authStore.user = user as User;
+        oidcStore.user = user as User;
 
         // clear URL response parameters from the URL
         window.history.replaceState(
@@ -92,4 +93,4 @@ export class auth {
   }
 }
 
-export default auth;
+export default oidc;
