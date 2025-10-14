@@ -3,7 +3,7 @@ import type { Team } from "@/typedefs/storeTypes";
 import sync from "@/libs/graphql/sync";
 
 export default class teams {
-  // state
+  // public state
   public teamsList: Team[] = [];
   public selectedTeam: string | null = null;
   public rightPanelState: "placeholder" | "edit_team" = "placeholder";
@@ -11,26 +11,7 @@ export default class teams {
   /**
    * empty constructor for instantiation
    */
-  public constructor() {
-    this.teamsList = [
-      {
-        id: "t1",
-        name: "Team A",
-        description: "First team",
-        players: ["Player 1", "Player 2"],
-      },
-      {
-        id: "t2",
-        name: "Team B",
-        description: "Second team",
-        players: ["Player 3", "Player 4"],
-      },
-    ];
-
-    // id of selected team
-    this.selectedTeam = null;
-    this.rightPanelState = "placeholder";
-  }
+  public constructor() {}
 
   // getters
   public get selectedTeamObj() {
