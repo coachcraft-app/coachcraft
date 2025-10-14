@@ -3,11 +3,10 @@ import type {
   Session,
   SessionActivity,
   Team,
-import alpine from "../../libs/alpine";
 } from "@/typedefs/storeTypes";
 
 export default class scheduling {
-  // state
+  // public state
   public sessionName: string = "";
   public sessionDate: string = "";
   public sessionNotes: string = "";
@@ -18,12 +17,16 @@ export default class scheduling {
   public selectedTab: "lists" | "last" | "history" = "lists";
   public expandedSessions: { [key: string]: boolean } = {};
 
-  /**
-   * empty constructor for instantiation
-   */
-  public constructor() {}
+  private activitiesList: Activity[];
+  private teamsList: Team[];
 
-  // ----------------getters-------------
+  /**
+   * constructor
+   */
+  public constructor(activitiesList: Activity[], teamsList: Team[]) {
+    this.activitiesList = activitiesList;
+    this.teamsList = teamsList;
+  }
 
   public get lastSession(): Session | { activities: [] } {
     if (this.previousSessions[0]) {
@@ -32,20 +35,6 @@ export default class scheduling {
       return { activities: [] };
     }
   }
-
-  private get pagesStore() {
-    return alpine.getInstance().getGlobalAlpine().store("pages") as PagesStore;
-  }
-
-  public get listsList(): ActivitiesList[] {
-    return this.pagesStore.activities.listsList;
-  }
-
-  public get activitiesList(): Activity[] {
-    return this.pagesStore.activities.activitiesList;
-  }
-
-  // ----------------METHODS---------------
 
   public addToSession(activity: Activity) {
     if (!this.sessionActivities.find((a) => a.id === activity.id)) {
@@ -125,7 +114,7 @@ export default class scheduling {
       activities: activityCopies,
       team: this.selectedTeam || undefined,
       attendance: (() => {
-        const team = this.pagesStore.teams.teamsList.find(
+        const team = this.teamsList.find(
           (t: Team) => t.id === this.selectedTeam,
         );
         if (!team) return {};

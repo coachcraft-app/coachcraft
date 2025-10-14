@@ -15,7 +15,8 @@ import type { Alpine } from "alpinejs";
 
 /**
  * `alpine` is a singleton class
- *  for accessing/initialising, use `getInstance(alpineObj?: Alpine): alpine`
+ *
+ * For accessing/initialising, use `getInstance(alpineObj?: Alpine): alpine`
  */
 class alpine {
   private static instance: alpine;
@@ -35,22 +36,38 @@ class alpine {
     this.globalAlpine.plugin(focus);
     this.globalAlpine.plugin(mask);
 
-    // initialize /pages stores
+    // initialize stores classes
+    const activitiesStore = new activities();
+    const teamsStore = new teams();
+    const schedulingStore = new scheduling(
+      activitiesStore.activitiesList,
+      teamsStore.teamsList,
+    );
+    const sessionsStore = new sessions(
+      schedulingStore.upcomingSessions,
+      schedulingStore.previousSessions,
+    );
+
+    const toastStore = new toast();
+    const authStore = new auth();
+    const routerStore = new router();
+
+    // nest pages/views stores classes within the overarching "pages" store
     this.globalAlpine.store("pages", {
-      activities: new activities(),
-      scheduling: new scheduling(),
-      teams: new teams(),
-      sessions: new sessions(),
+      activities: activitiesStore,
+      scheduling: schedulingStore,
+      teams: teamsStore,
+      sessions: sessionsStore,
     });
 
-    // initialize /common stores
+    // nest common stores classes within the overarching "common" store
     this.globalAlpine.store("common", {
-      toast: new toast(),
+      toast: toastStore,
     });
 
-    this.globalAlpine.store("auth", new auth());
+    this.globalAlpine.store("auth", authStore);
+    this.globalAlpine.store("router", routerStore);
 
-    this.globalAlpine.store("router", new router());
   }
 
   /**
