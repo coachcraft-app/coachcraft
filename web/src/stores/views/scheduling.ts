@@ -1,12 +1,10 @@
 import type {
   Activity,
-  ActivitiesList,
-  PagesStore,
   Session,
   SessionActivity,
   Team,
-} from "../../typedefs/storeTypes";
 import alpine from "../../libs/alpine";
+} from "@/typedefs/storeTypes";
 
 export default class scheduling {
   // state

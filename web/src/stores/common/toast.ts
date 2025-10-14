@@ -1,4 +1,4 @@
-import type { ToastNotification } from "../../typedefs/storeTypes";
+import type { ToastNotification } from "@/typedefs/storeTypes";
 
 export default class toast {
   // state
