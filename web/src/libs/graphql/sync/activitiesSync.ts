@@ -2,8 +2,8 @@ import type {
   GraphQLActivity,
   GraphQLListQuery as GraphQLListQPost,
   GraphQLListPost,
-} from "../../../typedefs/graphqlTypes";
-import urql from "../urql"; // importing a pre-initialised instance of urql
+} from "@/typedefs/graphqlTypes";
+import urql from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
 
 export class ActivitiesSync {
   // GraphQL Queries and Mutations

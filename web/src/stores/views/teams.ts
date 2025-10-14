@@ -1,5 +1,6 @@
-import type { Team } from "../../typedefs/storeTypes";
-import sync from "../../libs/graphql/sync/sync";
+import type { Team } from "@/typedefs/storeTypes";
+
+import sync from "@/libs/graphql/sync";
 
 export default class teams {
   // state

@@ -1,5 +1,5 @@
-import type { GraphQLTeam } from "../../../typedefs/graphqlTypes";
-import urql from "../urql"; // importing a pre-initialised instance of urql
+import type { GraphQLTeam } from "@/typedefs/graphqlTypes";
+import urql from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
 
 class TeamsSync {
   // GraphQL Queries and Mutations

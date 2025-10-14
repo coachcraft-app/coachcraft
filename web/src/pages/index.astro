@@ -1,16 +1,15 @@
 ---
-import HeaderBar from "../components/navigation/HeaderBar.astro";
-import LeftNav from "../components/navigation/LeftNav.astro";
-import Footer from "../components/navigation/Footer.astro";
+import HeaderBar from "@/components/navigation/HeaderBar.astro";
+import LeftNav from "@/components/navigation/LeftNav.astro";
 
-import Toast from "../components/common/Toast.astro";
+import Toast from "@/components/common/Toast.astro";
 
-import Activities from "../components/views/Activities.astro";
-import Scheduling from "../components/views/Scheduling.astro";
-import Sessions from "../components/views/Sessions.astro";
-import Teams from "../components/views/Teams.astro";
+import Activities from "@/components/views/Activities.astro";
+import Scheduling from "@/components/views/Scheduling.astro";
+import Sessions from "@/components/views/Sessions.astro";
+import Teams from "@/components/views/Teams.astro";
 
-import "../styles/global.css";
+import "@/styles/global.css";
 ---
 
 <html lang="en">
@@ -68,6 +67,5 @@ import "../styles/global.css";
 
     <Toast />
 
-    <Footer />
   </body>
 </html>

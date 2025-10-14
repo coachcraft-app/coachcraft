@@ -1,8 +1,8 @@
-import alpine from "./libs/alpine.js";
-import oidc from "./libs/oidc.js";
-import urql from "./libs/graphql/urql";
-import sync from "./libs/graphql/sync/sync";
-import loadDummyData from "./dummyData/dummyData.ts";
+import alpine from "@/libs/alpine";
+import oidc from "@/libs/oidc";
+import urql from "@/libs/graphql/urql";
+import sync from "@/libs/graphql/sync";
+import loadDummyData from "@/dummyData";
 
 import type { Alpine } from "alpinejs";
 
