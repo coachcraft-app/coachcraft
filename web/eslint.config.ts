@@ -1,9 +1,8 @@
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config({
+export default tseslint.config(...tseslint.configs.recommended, {
   files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
-  extends: [tseslint.configs.recommended],
   languageOptions: {
     parserOptions: {
       project: true,
