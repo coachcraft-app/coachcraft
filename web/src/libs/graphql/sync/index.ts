@@ -1,3 +1,9 @@
+import type {
+  ActivitiesList,
+  Activity,
+  PagesStore,
+  Team,
+} from "@/typedefs/storeTypes";
 import { ActivitiesSync, ActivitiesListsSync } from "./activitiesSync";
 import TeamsSync from "./teamsSync";
 
@@ -30,13 +36,14 @@ class Sync {
    */
   static async subscribeToStateLists(): Promise<void> {
     const globalAlpine = alpine.getInstance().getGlobalAlpine();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const pagesStore: any = globalAlpine.store("pages");
 
-    // Subscribe to updates to activitiesList, listsLists, teamsList
-    const activitiesList = pagesStore.activities?.activitiesList;
-    const listsList = pagesStore.activities?.listsList;
-    const teamsList = pagesStore.teams?.teamsList;
+    const pagesStore: PagesStore = globalAlpine.store("pages") as PagesStore;
+
+    // Subscribe to updates to activitiesList, activitiesListsList, teamsList
+    const activitiesList: Activity[] = pagesStore.activities.activitiesList;
+    const activitiesListsList: ActivitiesList[] =
+      pagesStore.activities.activitiesListsList;
+    const teamsList: Team[] = pagesStore.teams.teamsList;
 
     await Sync.activities.activity.subscribeToActivitiesList(activitiesList);
     await Sync.activities.list.subscribeToActivitiesListsList(
