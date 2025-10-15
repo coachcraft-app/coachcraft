@@ -39,7 +39,9 @@ class Sync {
     const teamsList = pagesStore.teams?.teamsList;
 
     await Sync.activities.activity.subscribeToActivitiesList(activitiesList);
-    await Sync.activities.list.subscribeToListsList(listsList);
+    await Sync.activities.list.subscribeToActivitiesListsList(
+      activitiesListsList,
+    );
     await Sync.teams.subscribeToTeamsList(teamsList);
   }
 }

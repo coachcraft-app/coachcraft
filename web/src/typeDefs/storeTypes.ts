@@ -10,7 +10,7 @@ export interface Auth {
 export interface PagesStore {
   activities: {
     activitiesList: Activity[];
-    listsList: ActivitiesList[];
+    activitiesListsList: ActivitiesList[];
   };
   teams: {
     teamsList: Team[];
@@ -21,8 +21,6 @@ export interface PagesStore {
     sessionNotes: ""; //notes for the schedule
     sessionActivities: Activity[]; //array of activities dropped in
     selectedTeam: null; //id of selected team
-    listsList: ActivitiesList[];
-    activitiesList: Activity[];
     upcomingSessions: Session[]; // sessions that haven't been completed yet
     previousSessions: Session[];
     selectedTab: "lists"; // which tab is currently shown

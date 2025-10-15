@@ -10,7 +10,6 @@ export default function loadDummyData() {
   const globalAlpine = alpine.getInstance().getGlobalAlpine();
 
   const auth: Auth = globalAlpine.store("auth") as Auth;
-  console.log("auth", auth);
   auth.user = {
     profile: {
       profile: dummyAuth.profile_picture_url,
@@ -36,13 +35,15 @@ export default function loadDummyData() {
     toStorageString: () => "", // Mock function
   };
 
+  console.log("auth store", globalAlpine.store("auth"));
+
   // auth.user.profile.profile = dummyAuth.profile_picture_url;
   // auth.user.profile.given_name = dummyAuth.given_name;
   // auth.user.profile.email = dummyAuth.email;
 
   const pages: PagesStore = globalAlpine.store("pages") as PagesStore;
   pages.activities.activitiesList = dummyActivities.activitiesList;
-  pages.activities.listsList = dummyActivities.listsList;
+  pages.activities.activitiesListsList = dummyActivities.activitiesListsList;
   pages.teams.teamsList = dummyTeams.teamsList;
   pages.scheduling.previousSessions = dummyScheduling.previousSessions;
 }
