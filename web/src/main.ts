@@ -5,16 +5,22 @@ import sync from "@/libs/graphql/sync";
 import loadDummyData from "@/dummyData";
 
 import type { Alpine } from "alpinejs";
+import type activities from "./stores/views/activities";
+import type teams from "./stores/views/teams";
 
-export default async (Alpine: Alpine) => {
-  console.log("Mode", import.meta.env.MODE);
+export default async (alpineObj: Alpine) => {
+  console.log("Mode:", import.meta.env.MODE);
 
   // SPA initialisation sequence
 
   // init Alpine plugins, register stores, init global Alpine object
-  alpine.getInstance(Alpine);
+  alpine.getInstance(alpineObj);
 
-  // alpine.getInstance().getGlobalAlpine().start();
+  const globalAlpine = alpine.getInstance().getGlobalAlpine();
+  const activitiesStore: activities = globalAlpine.store(
+    "activities",
+  ) as activities;
+  const teamsStore: teams = globalAlpine.store("teams") as teams;
 
   if (import.meta.env.MODE === "production") {
     // configure OIDC client, prompt for login / retrieve credentials
@@ -24,7 +30,11 @@ export default async (Alpine: Alpine) => {
     await urql.getInstance();
 
     // sync state lists with backend
-    await sync.subscribeToStateLists();
+    await sync.subscribeToStateLists(
+      activitiesStore.activitiesList,
+      activitiesStore.activitiesListsList,
+      teamsStore.teamsList,
+    );
   } else {
     // inject dummy data into state if disconnected from backend
     loadDummyData();
