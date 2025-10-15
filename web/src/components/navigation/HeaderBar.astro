@@ -64,7 +64,7 @@ import { Image } from "astro:assets";
           id="user_profile_pic"
           crossorigin="anonymous"
           referrerpolicy="no-referrer"
-          x-bind:src="auth.user?.profile?.profile"
+          x-bind:src="auth.userProfilePic"
           alt="User Profile"
           width="50"
           height="50"
@@ -106,10 +106,10 @@ import { Image } from "astro:assets";
         <li class="border-b border-outline dark:border-low-contrast-grey">
           <div class="flex flex-col px-4 py-2">
             <span
-              class="text-sm font-medium text-on-surface-strong dark:text-on-surface-dark-strong" x-text="auth.user?.profile?.given_name"
+              class="text-sm font-medium text-on-surface-strong dark:text-on-surface-dark-strong" x-text="auth.givenName"
               ></span
             >
-            <span class="text-xs text-on-surface dark:text-on-surface-dark" x-text="auth.user?.profile?.email"></span>
+            <span class="text-xs text-on-surface dark:text-on-surface-dark" x-text="auth.userEmail"></span>
           </div>
         </li>
         <li>
