@@ -1,37 +1,6 @@
 ---
 import { Image } from "astro:assets";
-var { user_profile_pic } = Astro.props;
 ---
-
-<!-- Fetch user information and set profile picture -->
-<script>
-  async function getUser() {
-    try {
-      const response = await fetch("/api/user");
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error: any) {
-      console.error(error.message);
-    }
-  }
-
-  async function changeProfilePicture() {
-    const user = await getUser();
-    const user_profile_pic = document.getElementById("user_profile_pic");
-
-    if (user_profile_pic) {
-      user_profile_pic.setAttribute("referrerpolicy", "no-referrer");
-      user_profile_pic.setAttribute("src", user.picture);
-    }
-  }
-
-  // As the header is always visible, should only need to do this on page-load not every
-  // swap
-  document.addEventListener("astro:page-load", changeProfilePicture);
-</script>
 
 <!-- navigation implementation goes here -->
 <nav
