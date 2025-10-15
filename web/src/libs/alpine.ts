@@ -66,7 +66,15 @@ class alpine {
     });
 
     this.globalAlpine.store("auth", authStore);
+
     this.globalAlpine.store("router", routerStore);
+    this.globalAlpine.effect(() => {
+      const page = (this.globalAlpine.store("router") as router).currentPage;
+      const current = window.location.hash.slice(1);
+      if (page && page !== current) {
+        window.location.hash = page;
+      }
+    });
   }
 
   /**

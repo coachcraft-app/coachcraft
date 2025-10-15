@@ -1,5 +1,3 @@
-import alpine from "../libs/alpine";
-
 export default class router {
   public defaultPage: string = "activities";
   public currentPage: string = "";
@@ -17,19 +15,9 @@ export default class router {
     // Listen for hash changes
     window.addEventListener("hashchange", () => {
       const hash = window.location.hash.slice(1);
-      this.currentPage = hash || this.defaultPage;
-    });
-
-    // Peg window.location.hash to this.currentPage
-    const Alpine = alpine.getInstance().getGlobalAlpine();
-    Alpine.effect(() => {
-      if (this.currentPage) {
-        window.location.hash = this.currentPage;
-
-        // Reactively update document title
-        const title =
-          this.currentPage?.[0]?.toUpperCase() + this.currentPage?.slice(1);
-        document.title = `CoachCraft ${title}`;
+      const target = hash || this.defaultPage;
+      if (target !== this.currentPage) {
+        this.currentPage = target;
       }
     });
   }
