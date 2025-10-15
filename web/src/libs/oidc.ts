@@ -28,7 +28,6 @@ export class oidc {
    * @returns oidc
    */
   public static getInstance(): oidc {
-    console.log("oidc", oidc.instance);
     if (!oidc.instance) oidc.instance = new oidc();
     return oidc.instance;
   }
@@ -42,9 +41,9 @@ export class oidc {
   public async initOidcFlow(): Promise<void> {
     const globalAlpine = alpine.getInstance().getGlobalAlpine();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const oidcStore: any = globalAlpine.store("oidc");
+    const authStore: any = globalAlpine.store("auth");
 
-    oidcStore.userManager = this.userManager;
+    authStore.userManager = this.userManager;
 
     const user: User | null = await this.userManager.getUser();
 
@@ -60,7 +59,7 @@ export class oidc {
       if (!user.expired) {
         // state 1: cached user exists and is valid
 
-        oidcStore.user = user as User;
+        authStore.user = user as User;
       } else {
         // state 2: cached user expired, redirect to Cognito
 
@@ -72,7 +71,7 @@ export class oidc {
 
       const user: User | undefined = await this.userManager.signinCallback();
       if (user) {
-        oidcStore.user = user as User;
+        authStore.user = user as User;
 
         // clear URL response parameters from the URL
         window.history.replaceState(
