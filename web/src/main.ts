@@ -7,14 +7,16 @@ import loadDummyData from "@/dummyData";
 import type { Alpine } from "alpinejs";
 
 export default async (Alpine: Alpine) => {
-  console.log("Prod mode", import.meta.env.PROD);
+  console.log("Mode", import.meta.env.MODE);
 
   // SPA initialisation sequence
 
   // init Alpine plugins, register stores, init global Alpine object
   alpine.getInstance(Alpine);
 
-  if (import.meta.env.PROD) {
+  // alpine.getInstance().getGlobalAlpine().start();
+
+  if (import.meta.env.MODE === "production") {
     // configure OIDC client, prompt for login / retrieve credentials
     await oidc.getInstance().initOidcFlow();
 
