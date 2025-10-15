@@ -52,13 +52,10 @@ class alpine {
     const authStore = new auth();
     const routerStore = new router();
 
-    // nest pages/views stores classes within the overarching "pages" store
-    this.globalAlpine.store("pages", {
-      activities: activitiesStore,
-      scheduling: schedulingStore,
-      teams: teamsStore,
-      sessions: sessionsStore,
-    });
+    this.globalAlpine.store("activities", activitiesStore);
+    this.globalAlpine.store("scheduling", schedulingStore);
+    this.globalAlpine.store("teams", teamsStore);
+    this.globalAlpine.store("sessions", sessionsStore);
 
     // nest common stores classes within the overarching "common" store
     this.globalAlpine.store("common", {

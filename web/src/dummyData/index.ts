@@ -4,7 +4,10 @@ import dummyActivities from "./activities.json";
 import dummyScheduling from "./scheduling.json";
 import dummyTeams from "./teams.json";
 
-import type { PagesStore, Auth } from "@/typedefs/storeTypes";
+import type { Auth } from "@/typedefs/storeTypes";
+import type activities from "@/stores/views/activities";
+import type teams from "@/stores/views/teams";
+import type scheduling from "@/stores/views/scheduling";
 
 export default function loadDummyData() {
   const globalAlpine = alpine.getInstance().getGlobalAlpine();
@@ -41,9 +44,13 @@ export default function loadDummyData() {
   // auth.user.profile.given_name = dummyAuth.given_name;
   // auth.user.profile.email = dummyAuth.email;
 
-  const pages: PagesStore = globalAlpine.store("pages") as PagesStore;
-  pages.activities.activitiesList = dummyActivities.activitiesList;
-  pages.activities.activitiesListsList = dummyActivities.activitiesListsList;
-  pages.teams.teamsList = dummyTeams.teamsList;
-  pages.scheduling.previousSessions = dummyScheduling.previousSessions;
+  const activities: activities = globalAlpine.store("activities") as activities;
+  activities.activitiesList = dummyActivities.activitiesList;
+  activities.activitiesListsList = dummyActivities.activitiesListsList;
+
+  const teams: teams = globalAlpine.store("teams") as teams;
+  teams.teamsList = dummyTeams.teamsList;
+
+  const scheduling: scheduling = globalAlpine.store("scheduling") as scheduling;
+  scheduling.previousSessions = dummyScheduling.previousSessions;
 }

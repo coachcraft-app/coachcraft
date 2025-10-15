@@ -1,6 +1,8 @@
 import { User, UserManager } from "oidc-client-ts";
 import alpine from "@/libs/alpine";
 
+import type auth from "@/stores/auth";
+
 /**
  * `oidc` is a singleton class
  *  for accessing/initialising, use `getInstance(): oidc`
@@ -40,10 +42,8 @@ export class oidc {
 
   public async initOidcFlow(): Promise<void> {
     const globalAlpine = alpine.getInstance().getGlobalAlpine();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const authStore: any = globalAlpine.store("auth");
 
-    authStore.userManager = this.userManager;
+    const authStore: auth = globalAlpine.store("auth") as auth;
 
     const user: User | null = await this.userManager.getUser();
 
@@ -59,7 +59,9 @@ export class oidc {
       if (!user.expired) {
         // state 1: cached user exists and is valid
 
-        authStore.user = user as User;
+        authStore.userProfilePic = user.profile.profile;
+        authStore.givenName = user.profile.given_name;
+        authStore.userEmail = user.profile.email;
       } else {
         // state 2: cached user expired, redirect to Cognito
 
@@ -71,7 +73,9 @@ export class oidc {
 
       const user: User | undefined = await this.userManager.signinCallback();
       if (user) {
-        authStore.user = user as User;
+        authStore.userProfilePic = user.profile.profile;
+        authStore.givenName = user.profile.given_name;
+        authStore.userEmail = user.profile.email;
 
         // clear URL response parameters from the URL
         window.history.replaceState(

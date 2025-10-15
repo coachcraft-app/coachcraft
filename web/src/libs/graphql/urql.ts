@@ -1,9 +1,9 @@
 import { fetchExchange, Client } from "@urql/core";
 import { cacheExchange } from "@urql/exchange-graphcache";
 import schema from "./schema.json";
-import alpine from "@/libs/alpine";
+import oidc from "../oidc";
 
-import type { User } from "oidc-client-ts";
+import type { User, UserManager } from "oidc-client-ts";
 
 /**
  * `urql` is a singleton class
@@ -29,14 +29,9 @@ class urql {
   public static async getInstance(): Promise<urql> {
     // if this is the first call to getInstance()
     if (!urql.instance) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const authStore: any = alpine
-        .getInstance()
-        .getGlobalAlpine()
-        .store("auth");
-      const userManager = authStore.userManager;
-      const User: User | null = await userManager.getUser();
-      const accessToken: string | undefined = User?.access_token;
+      const userManager: UserManager = oidc.getInstance().getUserManager();
+      const user: User | null = await userManager.getUser();
+      const accessToken: string | undefined = user?.access_token;
 
       // app fails to load without accessToken
       if (accessToken) urql.instance = new urql(accessToken);

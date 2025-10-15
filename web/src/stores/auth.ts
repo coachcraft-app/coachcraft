@@ -1,8 +1,7 @@
-import { User, UserManager } from "oidc-client-ts";
-
 export default class auth {
-  public user: User | undefined = undefined;
-  public userManager: UserManager | undefined = undefined;
+  public userProfilePic: string | undefined;
+  public givenName: string | undefined;
+  public userEmail: string | undefined;
 
   /**
    * empty constructor for instantiation
