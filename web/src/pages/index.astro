@@ -1,19 +1,15 @@
 ---
-import HeaderBar from "../components/navigation/HeaderBar.astro";
-import LeftNav from "../components/navigation/LeftNav.astro";
-import Footer from "../components/navigation/Footer.astro";
+import HeaderBar from "@/components/navigation/HeaderBar.astro";
+import LeftNav from "@/components/navigation/LeftNav.astro";
 
-import Toast from "../components/common/Toast.astro";
+import Toast from "@/components/common/Toast.astro";
 
-import Dashboard from "../components/pages/Dashboard.astro";
-import Activities from "../components/pages/Activities.astro";
-import Notes from "../components/pages/Notes.astro";
-import Scheduling from "../components/pages/Scheduling.astro";
-import Sessions from "../components/pages/Sessions.astro";
-import Teams from "../components/pages/Teams.astro";
-import Settings from "../components/pages/Settings.astro";
+import Activities from "@/components/views/Activities.astro";
+import Scheduling from "@/components/views/Scheduling.astro";
+import Sessions from "@/components/views/Sessions.astro";
+import Teams from "@/components/views/Teams.astro";
 
-import "../styles/global.css";
+import "@/styles/global.css";
 ---
 
 <html lang="en">
@@ -30,15 +26,6 @@ import "../styles/global.css";
       <LeftNav />
       <div class="w-full flex justify-center mt-10">
         <div class="min-w-[80vw]">
-          <!-- Dashboard Page -->
-          <div
-            x-cloak
-            x-show="$store.router.currentPage === 'dashboard'"
-            x-transition
-          >
-            <Dashboard />
-          </div>
-
           <!-- Activities Page -->
           <div
             x-cloak
@@ -46,15 +33,6 @@ import "../styles/global.css";
             x-transition
           >
             <Activities />
-          </div>
-
-          <!-- Notes Page -->
-          <div
-            x-cloak
-            x-show="$store.router.currentPage === 'notes'"
-            x-transition
-          >
-            <Notes />
           </div>
 
           <!-- Scheduling Page -->
@@ -83,21 +61,11 @@ import "../styles/global.css";
           >
             <Teams />
           </div>
-
-          <!-- Settings Page -->
-          <div
-            x-cloak
-            x-show="$store.router.currentPage === 'settings'"
-            x-transition
-          >
-            <Settings />
-          </div>
         </div>
       </div>
     </div>
 
     <Toast />
 
-    <Footer />
   </body>
 </html>

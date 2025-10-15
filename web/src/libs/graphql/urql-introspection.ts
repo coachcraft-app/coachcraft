@@ -5,7 +5,7 @@ import {
   minifyIntrospectionQuery,
 } from "@urql/introspection";
 
-fetch("http://localhost:4500/graphql", {
+fetch(import.meta.env.API_SERVER_URL, {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({

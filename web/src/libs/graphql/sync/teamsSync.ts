@@ -1,5 +1,6 @@
-import type { GraphQLTeam } from "../typedefs/graphqlTypes";
-import urql from "./urql";
+import type { GraphQLTeam } from "@/typedefs/graphqlTypes";
+import urql from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
+import type { Team } from "@/typedefs/storeTypes";
 
 class TeamsSync {
   // GraphQL Queries and Mutations
@@ -70,7 +71,7 @@ class TeamsSync {
   `;
 
   // Utilities
-  private static convertGraphQLTeamToTeam(teams: GraphQLTeam[]): object[] {
+  private static convertGraphQLTeamToTeam(teams: GraphQLTeam[]): Team[] {
     return teams.map(({ id, name, description, player }) => ({
       id: id.toString(),
       name,
@@ -80,8 +81,7 @@ class TeamsSync {
   }
 
   // Public API methods
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async subscribeToTeamsList(teamsList: any[]): Promise<void> {
+  async subscribeToTeamsList(teamsList: Team[]): Promise<void> {
     (await urql.getInstance())
       .getUrqlClient()
       .query(TeamsSync.TEAMS_LIST_QUERY, {})
@@ -103,8 +103,7 @@ class TeamsSync {
       });
     console.log("delete team", result);
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async post(team: any): Promise<void> {
+  async post(team: Team): Promise<void> {
     const result = (await urql.getInstance())
       .getUrqlClient()
       .mutation(TeamsSync.POST_MUTATION, {
@@ -115,8 +114,7 @@ class TeamsSync {
       });
     console.log("post team", result);
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async put(team: any): Promise<void> {
+  async put(team: Team): Promise<void> {
     if (team.players.length > 0) {
       const result = (await urql.getInstance())
         .getUrqlClient()
@@ -126,7 +124,7 @@ class TeamsSync {
             name: team.name,
             description: team.description,
           },
-          players: team.players.map((player: object) => ({
+          players: team.players.map((player) => ({
             name: player,
             team: +team.id,
           })),

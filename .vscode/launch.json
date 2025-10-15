@@ -1,0 +1,58 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Astro Dev (prod mode)",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/web",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "astro",
+        "dev",
+        "--mode",
+        "production",
+        "--host",
+        "--port",
+        "3000"
+      ],
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
+      "autoAttachChildProcesses": true,
+      "env": {
+        "NODE_OPTIONS": "--enable-source-maps",
+        "FORCE_COLOR": "1"
+      },
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ]
+    },
+    {
+      "name": "Browser: http://localhost:3000",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/web",
+      "sourceMaps": true,
+      "smartStep": true,
+      "trace": false,
+      "urlFilter": "http://localhost:3000/*",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/src/*",
+        "webpack:/*": "${webRoot}/*",
+        "vite:/*": "${webRoot}/*",
+        "/src/*": "${webRoot}/src/*"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Astro Dev (prod mode) + attached Browser",
+      "configurations": [
+        "Astro Dev (prod mode)",
+        "Browser: http://localhost:3000"
+      ]
+    }
+  ]
+}

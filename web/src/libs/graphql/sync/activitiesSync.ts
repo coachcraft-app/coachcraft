@@ -2,8 +2,9 @@ import type {
   GraphQLActivity,
   GraphQLListQuery as GraphQLListQPost,
   GraphQLListPost,
-} from "../typedefs/graphqlTypes";
-import urql from "./urql";
+} from "@/typedefs/graphqlTypes";
+import type { ActivitiesList, Activity } from "@/typedefs/storeTypes";
+import urql from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
 
 export class ActivitiesSync {
   // GraphQL Queries and Mutations
@@ -66,7 +67,7 @@ export class ActivitiesSync {
   }
   private static convertGraphQLActivityToActivity(
     activities: GraphQLActivity[],
-  ): object[] {
+  ): Activity[] {
     return activities.map(
       ({ id, name, duration, description, imgUrl, lastModified }) => ({
         id: id.toString(),
@@ -79,8 +80,7 @@ export class ActivitiesSync {
     );
   }
   private static convertActivityToGraphQLActivity(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    activity: any,
+    activity: Activity,
   ): GraphQLActivity {
     return {
       id: +activity.id,
@@ -95,8 +95,7 @@ export class ActivitiesSync {
   }
 
   // Public API methods
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async subscribeToActivitiesList(activitiesList: any[]): Promise<void> {
+  async subscribeToActivitiesList(activitiesList: Activity[]): Promise<void> {
     (await urql.getInstance())
       .getUrqlClient()
       .query(ActivitiesSync.ACTIVITIES_LIST_QUERY, {})
@@ -116,8 +115,7 @@ export class ActivitiesSync {
       .mutation(ActivitiesSync.DELETE_MUTATION, { id: id });
     console.log("delete activity", result);
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async post(activity: any): Promise<void> {
+  async post(activity: Activity): Promise<void> {
     // Convert to a postable activity
     const graphqlActivity =
       ActivitiesSync.convertActivityToGraphQLActivity(activity);
@@ -135,8 +133,7 @@ export class ActivitiesSync {
       });
     console.log("post activity", result);
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async put(activity: any): Promise<void> {
+  async put(activity: Activity): Promise<void> {
     const result = (await urql.getInstance())
       .getUrqlClient()
       .mutation(ActivitiesSync.PUT_MUTATION, {
@@ -218,7 +215,9 @@ export class ActivitiesListsSync {
   `;
 
   // Utilities
-  private static convertGraphQLListToList(lists: GraphQLListQPost[]): object[] {
+  private static convertGraphQLListToList(
+    lists: GraphQLListQPost[],
+  ): ActivitiesList[] {
     return lists.map(
       ({ id, name, listToActivityTemplate, accentColor, lastModified }) => ({
         id: id.toString(),
@@ -234,8 +233,9 @@ export class ActivitiesListsSync {
       }),
     );
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private static convertListToGraphQLList(list: any): GraphQLListPost {
+  private static convertListToGraphQLList(
+    list: ActivitiesList,
+  ): GraphQLListPost {
     return {
       id: +list.id,
       name: list.name,
@@ -249,18 +249,20 @@ export class ActivitiesListsSync {
   }
 
   // Public API methods
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async subscribeToListsList(listsList: any[]): Promise<void> {
+  async subscribeToActivitiesListsList(
+    activitiesListsList: ActivitiesList[],
+  ): Promise<void> {
     (await urql.getInstance())
       .getUrqlClient()
       .query(ActivitiesListsSync.LISTS_LIST_QUERY, {})
       .subscribe((result) => {
         // empty the array and repopulate
-        listsList.length = 0;
+        activitiesListsList.length = 0;
+
         for (const list of ActivitiesListsSync.convertGraphQLListToList(
           result.data?.lists || [],
         )) {
-          listsList.push(list);
+          activitiesListsList.push(list);
         }
       });
   }
@@ -272,8 +274,7 @@ export class ActivitiesListsSync {
       });
     console.log("delete", result);
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async post(list: any): Promise<void> {
+  async post(list: ActivitiesList): Promise<void> {
     // Convert to a postable list
     const graphqlList = ActivitiesListsSync.convertListToGraphQLList(list);
     // Strip out id and lastModified
@@ -289,8 +290,7 @@ export class ActivitiesListsSync {
       });
     console.log("post list", result);
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async put(list: any): Promise<void> {
+  async put(list: ActivitiesList): Promise<void> {
     const graphqlList = ActivitiesListsSync.convertListToGraphQLList(list);
     const base = {
       name: graphqlList.name,
@@ -312,7 +312,7 @@ export class ActivitiesListsSync {
           id: +list.id,
           list: base,
           activities:
-            list.activities.map((activity: object) => ({
+            list.activities.map((activity) => ({
               activityTemplate: +activity,
               list: +list.id,
             })) || [],

@@ -2,24 +2,25 @@ import collapse from "@alpinejs/collapse";
 import focus from "@alpinejs/focus";
 import mask from "@alpinejs/mask";
 
-import activitiesStore from "../stores/pages/activitiesStore.js";
-import schedulingStore from "../stores/pages/schedulingStore.js";
-import teamsStore from "../stores/pages/teamsStore.js";
-import sessionsStore from "../stores/pages/sessionsStore.js";
-import toastStore from "../stores/common/toastStore.js";
+import activities from "@/stores/views/activities";
+import scheduling from "@/stores/views/scheduling";
+import teams from "@/stores/views/teams";
+import sessions from "@/stores/views/sessions";
+import toast from "@/stores/common/toast";
 
-import authStore from "../stores/authStore.js";
-import routerStore from "../stores/routerStore.js";
+import auth from "@/stores/auth";
+import router from "@/stores/router";
 
 import type { Alpine } from "alpinejs";
 
 /**
  * `alpine` is a singleton class
- *  for accessing/initialising, use `getInstance(alpineObj?: Alpine): alpine`
+ *
+ * For accessing/initialising, use `getInstance(alpineObj?: Alpine): alpine`
  */
 class alpine {
   private static instance: alpine;
-  private globalAlpine: Alpine | undefined;
+  private globalAlpine: Alpine;
 
   /**
    * private contructor to disallow instantiation
@@ -35,23 +36,42 @@ class alpine {
     this.globalAlpine.plugin(focus);
     this.globalAlpine.plugin(mask);
 
-    // initialize /pages stores
-    this.globalAlpine.store("pages", {});
-    activitiesStore(this.globalAlpine);
-    schedulingStore(this.globalAlpine);
-    teamsStore(this.globalAlpine);
-    sessionsStore(this.globalAlpine);
+    // initialize stores classes
+    const activitiesStore = new activities();
+    const teamsStore = new teams();
+    const schedulingStore = new scheduling(
+      activitiesStore.activitiesList,
+      teamsStore.teamsList,
+    );
+    const sessionsStore = new sessions(
+      schedulingStore.upcomingSessions,
+      schedulingStore.previousSessions,
+    );
 
-    // initialize /common stores
-    this.globalAlpine.store("common", {});
-    toastStore(this.globalAlpine);
+    const toastStore = new toast();
+    const authStore = new auth();
+    const routerStore = new router();
 
-    authStore(this.globalAlpine);
+    this.globalAlpine.store("activities", activitiesStore);
+    this.globalAlpine.store("scheduling", schedulingStore);
+    this.globalAlpine.store("teams", teamsStore);
+    this.globalAlpine.store("sessions", sessionsStore);
 
-    routerStore(this.globalAlpine);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const router: any = this.globalAlpine.store("router");
-    router.init();
+    // nest common stores classes within the overarching "common" store
+    this.globalAlpine.store("common", {
+      toast: toastStore,
+    });
+
+    this.globalAlpine.store("auth", authStore);
+
+    this.globalAlpine.store("router", routerStore);
+    this.globalAlpine.effect(() => {
+      const page = (this.globalAlpine.store("router") as router).currentPage;
+      const current = window.location.hash.slice(1);
+      if (page && page !== current) {
+        window.location.hash = page;
+      }
+    });
   }
 
   /**

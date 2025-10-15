@@ -1,14 +1,15 @@
 ---
-import ListButton from "../common/ListButton.astro";
-import TextInput from "../common/TextInput.astro";
-import TextArea from "../common/TextArea.astro";
-import Button from "../common/Button.astro";
-import DropDown from "../common/DropDown.astro";
-import CheckboxDropDown from "../common/CheckboxDropDown.astro";
+import ListButton from "@/components/common/ListButton.astro";
+import TextInput from "@/components/common/TextInput.astro";
+import TextArea from "@/components/common/TextArea.astro";
+import Button from "@/components/common/Button.astro";
+import DropDown from "@/components/common/DropDown.astro";
+import CheckboxDropDown from "@/components/common/CheckboxDropDown.astro";
+
 import Image from "astro/components/Image.astro";
 ---
 
-<div x-data="{ activities: $store.pages.activities }" class="flex flex-row justify-center max-h-full">
+<div x-data="{ activities: $store.activities }" class="flex flex-row justify-center max-h-full">
   <!-- left panel -->
   <div
     class="pr-[2.5vw]
