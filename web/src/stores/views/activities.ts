@@ -7,7 +7,7 @@ import type {
   Activity,
   ActivitiesList,
   ActivitiesListAccentColors,
-} from "@/typedefs/storeTypes";
+} from "@/typeDefs/storeTypes";
 
 import { Sync } from "@/libs/graphql/sync";
 

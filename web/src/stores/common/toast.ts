@@ -3,7 +3,7 @@
  * @module
  */
 
-import type { ToastNotification } from "@/typedefs/storeTypes";
+import type { ToastNotification } from "@/typeDefs/storeTypes";
 
 /**
  * Toast store class to manage toast notifications
