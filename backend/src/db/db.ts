@@ -6,7 +6,6 @@
  * @module
  */
 
-import "dotenv/config";
 import { BetterSQLite3Database, drizzle } from "drizzle-orm/better-sqlite3";
 import logger from "../logger";
 import * as dbSchema from "../db/schema";
