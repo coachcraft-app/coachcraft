@@ -1,15 +1,22 @@
+/**
+ * This module sets up Alpine.js with plugins and state management stores.
+ *
+ * It uses the singleton pattern to ensure only one instance of Alpine is created and used throughout the application.
+ * It registers several Alpine.js plugins and initializes various state management stores for activities, scheduling, teams, sessions, authentication, routing, and toast notifications.
+ * @module
+ */
 import collapse from "@alpinejs/collapse";
 import focus from "@alpinejs/focus";
 import mask from "@alpinejs/mask";
 
-import activities from "@/stores/views/activities";
-import scheduling from "@/stores/views/scheduling";
-import teams from "@/stores/views/teams";
-import sessions from "@/stores/views/sessions";
-import toast from "@/stores/common/toast";
+import ActivitiesView from "@/stores/views/activities";
+import SchedulingView from "@/stores/views/scheduling";
+import TeamsView from "@/stores/views/teams";
+import SessionsView from "@/stores/views/sessions";
+import Toast from "@/stores/common/toast";
 
 import auth from "@/stores/auth";
-import router from "@/stores/router";
+import Router from "@/stores/router";
 
 import type { Alpine } from "alpinejs";
 
@@ -18,7 +25,7 @@ import type { Alpine } from "alpinejs";
  *
  * For accessing/initialising, use `getInstance(alpineObj?: Alpine): alpine`
  */
-class alpine {
+export class alpine {
   private static instance: alpine;
   private globalAlpine: Alpine;
 
@@ -26,7 +33,7 @@ class alpine {
    * private contructor to disallow instantiation
    * with the `new` keyword
    *
-   * @argument alpineObj - to be assigned as the globally accessible alpine object
+   * @param alpineObj - to be assigned as the globally accessible alpine object
    */
   private constructor(alpineObj: Alpine) {
     this.globalAlpine = alpineObj;
@@ -37,20 +44,20 @@ class alpine {
     this.globalAlpine.plugin(mask);
 
     // initialize stores classes
-    const activitiesStore = new activities();
-    const teamsStore = new teams();
-    const schedulingStore = new scheduling(
+    const activitiesStore = new ActivitiesView();
+    const teamsStore = new TeamsView();
+    const schedulingStore = new SchedulingView(
       activitiesStore.activitiesList,
       teamsStore.teamsList,
     );
-    const sessionsStore = new sessions(
+    const sessionsStore = new SessionsView(
       schedulingStore.upcomingSessions,
       schedulingStore.previousSessions,
     );
 
-    const toastStore = new toast();
+    const toastStore = new Toast();
     const authStore = new auth();
-    const routerStore = new router();
+    const routerStore = new Router();
 
     this.globalAlpine.store("activities", activitiesStore);
     this.globalAlpine.store("scheduling", schedulingStore);
@@ -66,7 +73,7 @@ class alpine {
 
     this.globalAlpine.store("router", routerStore);
     this.globalAlpine.effect(() => {
-      const page = (this.globalAlpine.store("router") as router).currentPage;
+      const page = (this.globalAlpine.store("router") as Router).currentPage;
       const current = window.location.hash.slice(1);
       if (page && page !== current) {
         window.location.hash = page;
@@ -77,7 +84,7 @@ class alpine {
   /**
    * Proxy for constructor
    *
-   * @argument alpineObj - to be assigned as the globally accessible alpine object,
+   * @param alpineObj - to be assigned as the globally accessible alpine object,
    * only needs to be supplied when getInstance() is first called
    *
    * @returns The global instance of alpineSingleton,
