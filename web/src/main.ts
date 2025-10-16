@@ -1,3 +1,11 @@
+/**
+ * Main entry point for SPA
+ * Initializes Alpine.js, OIDC authentication, and GraphQL client
+ * in that order
+ * Also handles loading dummy data in development mode
+ * @module
+ */
+
 import alpine from "@/libs/alpine";
 import oidc from "@/libs/oidc";
 import urql from "@/libs/graphql/urql";
@@ -5,10 +13,16 @@ import sync from "@/libs/graphql/sync";
 import loadDummyData from "@/dummyData";
 
 import type { Alpine } from "alpinejs";
-import type activities from "./stores/views/activities";
-import type teams from "./stores/views/teams";
+import type ActivitiesView from "./stores/views/activities";
+import type TeamsView from "./stores/views/teams";
 
-export default async (alpineObj: Alpine) => {
+/**
+ * This is the entry point for the SPA.
+ * It sets up Alpine.js, OIDC authentication, and the GraphQL client (urql).
+ * In development mode, it skips OIDC and urql initialization and loads dummy data instead.
+ * @param alpineObj The Alpine instance created automatically by astro
+ */
+export async function main(alpineObj: Alpine) {
   console.log("Mode:", import.meta.env.MODE);
 
   // SPA initialisation sequence
@@ -17,10 +31,10 @@ export default async (alpineObj: Alpine) => {
   alpine.getInstance(alpineObj);
 
   const globalAlpine = alpine.getInstance().getGlobalAlpine();
-  const activitiesStore: activities = globalAlpine.store(
+  const activitiesStore: ActivitiesView = globalAlpine.store(
     "activities",
-  ) as activities;
-  const teamsStore: teams = globalAlpine.store("teams") as teams;
+  ) as ActivitiesView;
+  const teamsStore: TeamsView = globalAlpine.store("teams") as TeamsView;
 
   if (import.meta.env.MODE === "production") {
     // configure OIDC client, prompt for login / retrieve credentials
@@ -43,4 +57,6 @@ export default async (alpineObj: Alpine) => {
       "Development mode: Skipping Cognito and Urql initialization for testing",
     );
   }
-};
+}
+
+export default main;
