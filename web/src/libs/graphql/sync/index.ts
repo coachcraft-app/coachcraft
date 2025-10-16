@@ -4,7 +4,7 @@
  * @module
  */
 
-import type { ActivitiesList, Activity, Team } from "@/typedefs/storeTypes";
+import type { ActivitiesList, Activity, Team } from "@/typeDefs/storeTypes";
 
 import { ActivitiesSync, ActivitiesListsSync } from "./activitiesSync";
 import { TeamsSync } from "./teamsSync";

@@ -9,8 +9,8 @@ import type {
   GraphQLActivity,
   GraphQLListQuery as GraphQLListQPost,
   GraphQLListPost,
-} from "@/typedefs/graphqlTypes";
-import type { ActivitiesList, Activity } from "@/typedefs/storeTypes";
+} from "@/typeDefs/graphqlTypes";
+import type { ActivitiesList, Activity } from "@/typeDefs/storeTypes";
 import { urql } from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
 
 /**

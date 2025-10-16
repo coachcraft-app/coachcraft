@@ -5,7 +5,7 @@
  * @module
  */
 
-import type { Team } from "@/typedefs/storeTypes";
+import type { Team } from "@/typeDefs/storeTypes";
 
 import { Sync } from "@/libs/graphql/sync";
 
