@@ -1,6 +1,15 @@
-import type { ToastNotification } from "@/typedefs/storeTypes";
+/**
+ * Toast store to manage toast notifications
+ * @module
+ */
 
-export default class toast {
+import type { ToastNotification } from "@/typeDefs/storeTypes";
+
+/**
+ * Toast store class to manage toast notifications
+ * @class
+ */
+export class Toast {
   // state
   public notifications: ToastNotification[] = [];
   public displayDuration: number = 8000;
@@ -10,6 +19,10 @@ export default class toast {
    */
   public constructor() {}
 
+  /**
+   * Creates a toast notification and adds it to the notifications stack
+   * @param toastNotification - The notification to add
+   */
   public addNotification({ title, message, variant }: ToastNotification) {
     const id = Date.now();
     const notification: ToastNotification = {
@@ -28,6 +41,10 @@ export default class toast {
     this.notifications.push(notification);
   }
 
+  /**
+   * Removes a toast notification from the notifications stack
+   * @param id The id of the notification, which is a Date
+   */
   public removeNotification(id: number) {
     setTimeout(() => {
       this.notifications = this.notifications.filter(

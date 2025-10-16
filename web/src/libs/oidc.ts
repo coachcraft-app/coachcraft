@@ -1,9 +1,19 @@
-import { User, UserManager } from "oidc-client-ts";
-import alpine from "@/libs/alpine";
+/**
+ * oidc is a singleton class
+ *
+ * Handles OIDC authentication with AWS Cognito
+ * @module
+ */
 
-import type auth from "@/stores/auth";
+import { User, UserManager } from "oidc-client-ts";
+import { alpine } from "@/libs/alpine";
+
+import type { auth } from "@/stores/auth";
 
 /**
+ * Handles OIDC authentication with AWS Cognito
+ * used to create tokens for authenticating GraphQL requests
+ *
  * `oidc` is a singleton class
  *  for accessing/initialising, use `getInstance(): oidc`
  */
@@ -34,12 +44,21 @@ export class oidc {
     return oidc.instance;
   }
 
+  /**
+   * Returns a UserManager instance used to signin/signout users
+   * @returns userManager
+   */
   public getUserManager(): UserManager {
     if (!this.userManager) throw new Error("");
 
     return this.userManager;
   }
 
+  /**
+   * Initialises the OIDC authentication flow
+   *
+   * Determines the current authentication state, and redirects the user accordingly
+   */
   public async initOidcFlow(): Promise<void> {
     const globalAlpine = alpine.getInstance().getGlobalAlpine();
 
@@ -95,5 +114,3 @@ export class oidc {
     }
   }
 }
-
-export default oidc;

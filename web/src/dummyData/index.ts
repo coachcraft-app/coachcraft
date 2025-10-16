@@ -1,15 +1,25 @@
-import alpine from "@/libs/alpine";
+/**
+ * Loads dummy data into Alpine.js stores for development and testing purposes.
+ * Used in main.ts when not in production mode.
+ * @module
+ */
+
+import { alpine } from "@/libs/alpine";
 import dummyAuth from "./auth.json";
 import dummyActivities from "./activities.json";
 import dummyScheduling from "./scheduling.json";
 import dummyTeams from "./teams.json";
 
-import type { Auth } from "@/typedefs/storeTypes";
-import type activities from "@/stores/views/activities";
-import type teams from "@/stores/views/teams";
-import type scheduling from "@/stores/views/scheduling";
+import type { Auth } from "@/typeDefs/storeTypes";
+import type { ActivitiesView } from "@/stores/views/activities";
+import type { TeamsView } from "@/stores/views/teams";
+import type { SchedulingView } from "@/stores/views/scheduling";
 
-export default function loadDummyData() {
+/**
+ * Loads dummy data into Alpine.js stores for development and testing purposes.
+ * Used in main.ts when not in production mode.
+ */
+export function loadDummyData() {
   const globalAlpine = alpine.getInstance().getGlobalAlpine();
 
   const auth: Auth = globalAlpine.store("auth") as Auth;
@@ -44,13 +54,31 @@ export default function loadDummyData() {
   // auth.user.profile.given_name = dummyAuth.given_name;
   // auth.user.profile.email = dummyAuth.email;
 
-  const activities: activities = globalAlpine.store("activities") as activities;
-  activities.activitiesList = dummyActivities.activitiesList;
-  activities.activitiesListsList = dummyActivities.activitiesListsList;
+  const activities: ActivitiesView = globalAlpine.store(
+    "activities",
+  ) as ActivitiesView;
 
-  const teams: teams = globalAlpine.store("teams") as teams;
-  teams.teamsList = dummyTeams.teamsList;
+  activities.activitiesList.length = 0;
+  for (const activity of dummyActivities.activitiesList) {
+    activities.activitiesList.unshift(activity);
+  }
 
-  const scheduling: scheduling = globalAlpine.store("scheduling") as scheduling;
-  scheduling.previousSessions = dummyScheduling.previousSessions;
+  activities.activitiesListsList.length = 0;
+  for (const list of dummyActivities.activitiesListsList) {
+    activities.activitiesListsList.unshift(list);
+  }
+
+  const teams: TeamsView = globalAlpine.store("teams") as TeamsView;
+  teams.teamsList.length = 0;
+  for (const team of dummyTeams.teamsList) {
+    teams.teamsList.unshift(team);
+  }
+
+  const scheduling: SchedulingView = globalAlpine.store(
+    "scheduling",
+  ) as SchedulingView;
+  scheduling.previousSessions.length = 0;
+  for (const session of dummyScheduling.previousSessions) {
+    scheduling.previousSessions.unshift(session);
+  }
 }

@@ -1,11 +1,22 @@
+/**
+ * ActivitiesSync and ActivitiesListsSync handle the synchronization of activities and activity lists
+ * between the frontend Alpine.js stores and the backend via GraphQL.
+ * They provide methods to subscribe to data changes, and to perform CRUD operations.
+ * @module
+ */
+
 import type {
   GraphQLActivity,
   GraphQLListQuery as GraphQLListQPost,
   GraphQLListPost,
-} from "@/typedefs/graphqlTypes";
-import type { ActivitiesList, Activity } from "@/typedefs/storeTypes";
-import urql from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
+} from "@/typeDefs/graphqlTypes";
+import type { ActivitiesList, Activity } from "@/typeDefs/storeTypes";
+import { urql } from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
 
+/**
+ * ActivitiesSync handles synchronization of individual activities.
+ * It provides methods to subscribe to the activities list, and to perform CRUD operations.
+ */
 export class ActivitiesSync {
   // GraphQL Queries and Mutations
   private static readonly ACTIVITIES_LIST_QUERY = /* GraphQL */ `
@@ -94,7 +105,10 @@ export class ActivitiesSync {
     };
   }
 
-  // Public API methods
+  /**
+   * Subscribe activities store to mutations in frontend
+   * @param activitiesList Array of activities from activityStore in Alpine.js
+   */
   async subscribeToActivitiesList(activitiesList: Activity[]): Promise<void> {
     (await urql.getInstance())
       .getUrqlClient()
@@ -109,12 +123,22 @@ export class ActivitiesSync {
         }
       });
   }
+
+  /**
+   * Deletes an activity by ID from the backend
+   * @param id ID of activity to delete
+   */
   async delete(id: number): Promise<void> {
     const result = (await urql.getInstance())
       .getUrqlClient()
       .mutation(ActivitiesSync.DELETE_MUTATION, { id: id });
     console.log("delete activity", result);
   }
+
+  /**
+   * Creates a new activity on the backend
+   * @param activity Activity object with new data
+   */
   async post(activity: Activity): Promise<void> {
     // Convert to a postable activity
     const graphqlActivity =
@@ -133,6 +157,11 @@ export class ActivitiesSync {
       });
     console.log("post activity", result);
   }
+
+  /**
+   * Updates an existing activity on the backend
+   * @param activity Activity object with updated data
+   */
   async put(activity: Activity): Promise<void> {
     const result = (await urql.getInstance())
       .getUrqlClient()
@@ -144,6 +173,10 @@ export class ActivitiesSync {
   }
 }
 
+/**
+ * ActivitiesListsSync handles synchronization of activity lists.
+ * It provides methods to subscribe to the activity lists, and to perform CRUD operations.
+ */
 export class ActivitiesListsSync {
   // GraphQL Queries and Mutations
   private static readonly LISTS_LIST_QUERY = /* GraphQL */ `
@@ -248,7 +281,10 @@ export class ActivitiesListsSync {
     };
   }
 
-  // Public API methods
+  /**
+   * Subscribe activities store to mutations of lists in frontend
+   * @param activitiesListsList Array of activity lists from activity store in Alpine.js
+   */
   async subscribeToActivitiesListsList(
     activitiesListsList: ActivitiesList[],
   ): Promise<void> {
@@ -266,6 +302,11 @@ export class ActivitiesListsSync {
         }
       });
   }
+
+  /**
+   * Deletes an activity list by ID from the backend
+   * @param id ID of activity list to delete
+   */
   async delete(id: string): Promise<void> {
     const result = (await urql.getInstance())
       .getUrqlClient()
@@ -274,6 +315,11 @@ export class ActivitiesListsSync {
       });
     console.log("delete", result);
   }
+
+  /**
+   * Creates a new activity list on the backend
+   * @param list list with new data
+   */
   async post(list: ActivitiesList): Promise<void> {
     // Convert to a postable list
     const graphqlList = ActivitiesListsSync.convertListToGraphQLList(list);
@@ -290,6 +336,11 @@ export class ActivitiesListsSync {
       });
     console.log("post list", result);
   }
+
+  /**
+   * Updates an existing activity list on the backend
+   * @param list list with updated data
+   */
   async put(list: ActivitiesList): Promise<void> {
     const graphqlList = ActivitiesListsSync.convertListToGraphQLList(list);
     const base = {

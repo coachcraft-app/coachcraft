@@ -1,7 +1,21 @@
-import type { Session } from "@/typedefs/storeTypes";
+/**
+ * SessionsView class
+ * Holds state and methods for managing sessions view
+ * @class
+ */
 
-export default class sessions {
+import type { Session } from "@/typeDefs/storeTypes";
+
+/**
+ * SessionsView class
+ * Holds state and methods for managing sessions view
+ * Shows upcoming and previous sessions and their activities
+ * @class
+ */
+export class SessionsView {
+  /** List of upcoming sessions (date is more than Date.now()) */
   private upcomingSessions: Session[];
+  /** List of previous sessions (date is less than Date.now()) */
   private previousSessions: Session[];
 
   /**
@@ -12,7 +26,10 @@ export default class sessions {
     this.previousSessions = previousSessions;
   }
 
-  // mark session as complete
+  /**
+   * Event handler to mark a session as completed
+   * @param sessionId Session ID to mark as completed
+   */
   public completeSession(sessionId: string) {
     const sessionIndex = this.upcomingSessions.findIndex(
       (s: Session) => s.id === sessionId,
@@ -24,7 +41,11 @@ export default class sessions {
     this.previousSessions.unshift(completedSession);
   }
 
-  // Update session notes
+  /**
+   * Event handler to update notes for a session
+   * @param sessionId Session ID to update notes for
+   * @param newNotes New notes content
+   */
   public updateNotes(sessionId: string, newNotes: string) {
     // find in upcoming sessions
     const upcomingIndex = this.upcomingSessions.findIndex(
@@ -44,6 +65,11 @@ export default class sessions {
     }
   }
 
+  /**
+   * Event handler for toggling attendance for a player in a session
+   * @param sessionId Session ID
+   * @param player Player name
+   */
   public toggleAttendance(sessionId: string, player: string) {
     const session =
       this.upcomingSessions.find((s: Session) => s.id === sessionId) ||
