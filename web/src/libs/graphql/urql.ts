@@ -8,7 +8,7 @@
 import { fetchExchange, Client } from "@urql/core";
 import { cacheExchange } from "@urql/exchange-graphcache";
 import schema from "./schema.json";
-import oidc from "../oidc";
+import { oidc } from "../oidc";
 
 import type { User, UserManager } from "oidc-client-ts";
 
@@ -69,5 +69,3 @@ export class urql {
     return this.urqlClient;
   }
 }
-
-export default urql;

@@ -4,16 +4,16 @@
  * @module
  */
 
-import alpine from "@/libs/alpine";
+import { alpine } from "@/libs/alpine";
 import dummyAuth from "./auth.json";
 import dummyActivities from "./activities.json";
 import dummyScheduling from "./scheduling.json";
 import dummyTeams from "./teams.json";
 
 import type { Auth } from "@/typeDefs/storeTypes";
-import type ActivitiesView from "@/stores/views/activities";
-import type TeamsView from "@/stores/views/teams";
-import type SchedulingView from "@/stores/views/scheduling";
+import type { ActivitiesView } from "@/stores/views/activities";
+import type { TeamsView } from "@/stores/views/teams";
+import type { SchedulingView } from "@/stores/views/scheduling";
 
 /**
  * Loads dummy data into Alpine.js stores for development and testing purposes.
@@ -68,5 +68,3 @@ export function loadDummyData() {
   ) as SchedulingView;
   scheduling.previousSessions = dummyScheduling.previousSessions;
 }
-
-export default loadDummyData;

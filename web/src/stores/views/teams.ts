@@ -7,7 +7,7 @@
 
 import type { Team } from "@/typeDefs/storeTypes";
 
-import sync from "@/libs/graphql/sync";
+import { Sync } from "@/libs/graphql/sync";
 
 /**
  * TeamsView class
@@ -59,7 +59,7 @@ export class TeamsView {
     this.selectedTeam = newTeam.id;
     this.rightPanelState = "edit_team";
 
-    sync.teams.post(newTeam);
+    Sync.teams.post(newTeam);
   }
 
   /**
@@ -119,7 +119,7 @@ export class TeamsView {
     }
 
     if (team) {
-      sync.teams.put(team);
+      Sync.teams.put(team);
     }
   }
 
@@ -130,7 +130,7 @@ export class TeamsView {
   public onDeleteTeam() {
     if (!this.selectedTeam) return;
 
-    sync.teams.delete(this.selectedTeam);
+    Sync.teams.delete(this.selectedTeam);
 
     const index = this.teamsList.findIndex((t) => t.id === this.selectedTeam);
     if (index > -1) {
@@ -150,5 +150,3 @@ export class TeamsView {
     return team ? team.id : null;
   }
 }
-
-export default TeamsView;

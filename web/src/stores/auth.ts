@@ -18,5 +18,3 @@ export class auth {
    */
   public constructor() {}
 }
-
-export default auth;

@@ -9,7 +9,7 @@ import type {
   ActivitiesListAccentColors,
 } from "@/typeDefs/storeTypes";
 
-import sync from "@/libs/graphql/sync";
+import { Sync } from "@/libs/graphql/sync";
 
 /**
  * Activities View class to manage state for the Activities view
@@ -171,7 +171,7 @@ export class ActivitiesView {
           (activityId) => activityId != this.selectedActivity,
         );
       }
-      sync.activities.list.put(list);
+      Sync.activities.list.put(list);
     });
   }
 
@@ -218,7 +218,7 @@ export class ActivitiesView {
     });
 
     // Sync to backend
-    sync.activities.activity.delete(Number(this.selectedActivity));
+    Sync.activities.activity.delete(Number(this.selectedActivity));
 
     // Cleanup
     this.selectedActivity = "";
@@ -275,7 +275,7 @@ export class ActivitiesView {
         listToUpdate.name = listData.listName as string;
         // TODO: save list accent color
         // sync with backend
-        sync.activities.list.put(listToUpdate);
+        Sync.activities.list.put(listToUpdate);
       }
     } else {
       // save new list
@@ -288,7 +288,7 @@ export class ActivitiesView {
 
       this.activitiesListsList.shift(); // remove newListTemplate
       this.activitiesListsList.unshift(newList); // add the new list to the top
-      sync.activities.list.post(newList);
+      Sync.activities.list.post(newList);
     }
   }
 
@@ -327,7 +327,7 @@ export class ActivitiesView {
         (list) => list.id != this.manageListsSelectedList,
       );
 
-      sync.activities.list.delete(this.manageListsSelectedList);
+      Sync.activities.list.delete(this.manageListsSelectedList);
     }
   }
 
@@ -353,7 +353,7 @@ export class ActivitiesView {
         activityToUpdate.description = activityData.description as string;
 
         // Sync to backend
-        sync.activities.activity.put(activityToUpdate);
+        Sync.activities.activity.put(activityToUpdate);
       }
     } else {
       // save as new activtiy
@@ -377,7 +377,7 @@ export class ActivitiesView {
       }
 
       this.selectedActivity = activity.id;
-      sync.activities.activity.post(activity);
+      Sync.activities.activity.post(activity);
     }
   }
 
@@ -426,5 +426,3 @@ export class ActivitiesView {
     this.rightPanelState = "edit_activity";
   }
 }
-
-export default ActivitiesView;

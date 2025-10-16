@@ -7,7 +7,7 @@
 import type { ActivitiesList, Activity, Team } from "@/typeDefs/storeTypes";
 
 import { ActivitiesSync, ActivitiesListsSync } from "./activitiesSync";
-import TeamsSync from "./teamsSync";
+import { TeamsSync } from "./teamsSync";
 
 /**
  * Sync statically exposes modular sync libs (activitiesSync, teamsSync, etc.)
@@ -43,5 +43,3 @@ export class Sync {
     await Sync.teams.subscribeToTeamsList(teamsList);
   }
 }
-
-export default Sync;

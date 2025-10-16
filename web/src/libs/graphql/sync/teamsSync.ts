@@ -5,7 +5,7 @@
  */
 
 import type { GraphQLTeam } from "@/typeDefs/graphqlTypes";
-import urql from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
+import { urql } from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
 import type { Team } from "@/typeDefs/storeTypes";
 
 /**
@@ -173,5 +173,3 @@ export class TeamsSync {
     }
   }
 }
-
-export default TeamsSync;

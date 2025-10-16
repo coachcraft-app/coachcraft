@@ -236,5 +236,3 @@ export class SchedulingView {
     }
   }
 }
-
-export default SchedulingView;

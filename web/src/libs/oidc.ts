@@ -6,9 +6,9 @@
  */
 
 import { User, UserManager } from "oidc-client-ts";
-import alpine from "@/libs/alpine";
+import { alpine } from "@/libs/alpine";
 
-import type auth from "@/stores/auth";
+import type { auth } from "@/stores/auth";
 
 /**
  * Handles OIDC authentication with AWS Cognito
@@ -114,5 +114,3 @@ export class oidc {
     }
   }
 }
-
-export default oidc;

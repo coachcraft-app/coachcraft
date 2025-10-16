@@ -11,7 +11,7 @@ import type {
   GraphQLListPost,
 } from "@/typeDefs/graphqlTypes";
 import type { ActivitiesList, Activity } from "@/typeDefs/storeTypes";
-import urql from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
+import { urql } from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
 
 /**
  * ActivitiesSync handles synchronization of individual activities.

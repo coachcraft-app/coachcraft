@@ -6,11 +6,11 @@
  * @module
  */
 
-import alpine from "@/libs/alpine";
-import oidc from "@/libs/oidc";
-import urql from "@/libs/graphql/urql";
-import sync from "@/libs/graphql/sync";
-import loadDummyData from "@/dummyData";
+import { alpine } from "@/libs/alpine";
+import { oidc } from "@/libs/oidc";
+import { urql } from "@/libs/graphql/urql";
+import { Sync } from "@/libs/graphql/sync";
+import { loadDummyData } from "@/dummyData";
 
 import type { Alpine } from "alpinejs";
 import type ActivitiesView from "./stores/views/activities";
@@ -44,7 +44,7 @@ export async function main(alpineObj: Alpine) {
     await urql.getInstance();
 
     // sync state lists with backend
-    await sync.subscribeToStateLists(
+    await Sync.subscribeToStateLists(
       activitiesStore.activitiesList,
       activitiesStore.activitiesListsList,
       teamsStore.teamsList,

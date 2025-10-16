@@ -9,14 +9,14 @@ import collapse from "@alpinejs/collapse";
 import focus from "@alpinejs/focus";
 import mask from "@alpinejs/mask";
 
-import ActivitiesView from "@/stores/views/activities";
-import SchedulingView from "@/stores/views/scheduling";
-import TeamsView from "@/stores/views/teams";
-import SessionsView from "@/stores/views/sessions";
-import Toast from "@/stores/common/toast";
+import { ActivitiesView } from "@/stores/views/activities";
+import { SchedulingView } from "@/stores/views/scheduling";
+import { TeamsView } from "@/stores/views/teams";
+import { SessionsView } from "@/stores/views/sessions";
+import { Toast } from "@/stores/common/toast";
 
-import auth from "@/stores/auth";
-import Router from "@/stores/router";
+import { auth } from "@/stores/auth";
+import { Router } from "@/stores/router";
 
 import type { Alpine } from "alpinejs";
 
@@ -121,5 +121,3 @@ export class alpine {
     return this.globalAlpine;
   }
 }
-
-export default alpine;

@@ -79,5 +79,3 @@ export class SessionsView {
     session.attendance[player] = !session.attendance[player];
   }
 }
-
-export default SessionsView;
