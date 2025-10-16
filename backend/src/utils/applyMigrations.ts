@@ -10,9 +10,13 @@ import path from "path";
 import { execSync } from "child_process";
 import { db } from "../db/db";
 
+/**
+ * Apply drizzle-kit migrations in a directory to a Drizzle instance
+ * @param migrationsDir The directory that stores drizzle-kit migrations
+ */
 export function applyMigrationsFromDir(
   // Default to "drizzle/migrations" directory in project root
-  migrationsDir = path.resolve(process.cwd(), "drizzle", "migrations"),
+  migrationsDir = path.resolve(process.cwd(), "drizzle", "migrations")
 ): void {
   // Check if directory exists
   if (!fs.existsSync(migrationsDir)) return;
@@ -32,6 +36,10 @@ export function applyMigrationsFromDir(
   }
 }
 
+/**
+ * Apply drizzle-kit migrations to a drizzle instance by first generating them
+ * @param config { drizzle.config.ts path, drizzle/migrations path }
+ */
 export function applyMigrationsUsingDrizzleKit({
   // Allow overriding config path and output dir
   config = path.resolve(process.cwd(), "drizzle.config.ts"),

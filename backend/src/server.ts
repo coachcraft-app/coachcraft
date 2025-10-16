@@ -42,7 +42,7 @@ export const yoga = createYoga<{
 
 // Yoga needs this to avoid errors with multipart data
 app.addContentTypeParser("multipart/form-data", {}, (_req, _payload, done) =>
-  done(null),
+  done(null)
 );
 
 // add /graphql endpoint

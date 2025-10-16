@@ -8,7 +8,10 @@
 import "dotenv/config";
 import { app } from "./server";
 
-async function main() {
+/**
+ * Entrypoint into the backend server
+ */
+export async function main() {
   const PORT = (process.env["PORT"] && parseInt(process.env["PORT"])) || 3000;
 
   app.listen({ port: PORT }, () => {
