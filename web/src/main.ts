@@ -13,8 +13,8 @@ import { Sync } from "@/libs/graphql/sync";
 import { loadDummyData } from "@/dummyData";
 
 import type { Alpine } from "alpinejs";
-import type ActivitiesView from "./stores/views/activities";
-import type TeamsView from "./stores/views/teams";
+import type { ActivitiesView } from "./stores/views/activities";
+import type { TeamsView } from "./stores/views/teams";
 
 /**
  * This is the entry point for the SPA.
