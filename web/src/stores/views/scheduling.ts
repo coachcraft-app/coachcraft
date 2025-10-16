@@ -10,7 +10,7 @@ import type {
   Session,
   SessionActivity,
   Team,
-} from "@/typeDefs/storeTypes";
+} from "@/typedefs/storeTypes";
 
 /**
  * SchedulingView class
