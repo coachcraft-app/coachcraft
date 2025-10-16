@@ -12,7 +12,7 @@ import { db } from "../db/db";
 
 export function applyMigrationsFromDir(
   // Default to "drizzle/migrations" directory in project root
-  migrationsDir = path.resolve(process.cwd(), "drizzle", "migrations")
+  migrationsDir = path.resolve(process.cwd(), "drizzle", "migrations"),
 ): void {
   // Check if directory exists
   if (!fs.existsSync(migrationsDir)) return;
