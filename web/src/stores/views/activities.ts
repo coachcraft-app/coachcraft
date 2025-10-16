@@ -1,12 +1,23 @@
+/**
+ * Activities View
+ * Manages state for the Activities view
+ */
+
 import type {
   Activity,
   ActivitiesList,
   ActivitiesListAccentColors,
-} from "@/typedefs/storeTypes";
+} from "@/typeDefs/storeTypes";
 
 import sync from "@/libs/graphql/sync";
 
-export default class activities {
+/**
+ * Activities View class to manage state for the Activities view
+ * Handles activities and activity lists
+ * Has event handlers for user interactions
+ * @class
+ */
+export class ActivitiesView {
   // public state
   public activitiesListsList: ActivitiesList[] = [];
   public activitiesList: Activity[] = [];
@@ -23,6 +34,11 @@ export default class activities {
    */
   public constructor() {}
 
+  /**
+   * Returns the list of activities for the currently selected list
+   * or all activities if "All Activities" is selected
+   * @returns {Activity[]} The list of activities for the selected list
+   */
   public get selectedListActivities() {
     if (this.selectedList == "default") {
       return this.activitiesList;
@@ -40,16 +56,32 @@ export default class activities {
       selectedActivitiyIDs.includes(activity.id),
     );
   }
+
+  /**
+   * Returns the currently selected activity object
+   * or undefined if no activity is selected
+   * @returns {Activity | undefined} The selected activity object
+   */
   public get selectedActivityObj() {
     return this.activitiesList.find(
       (activity) => activity.id == this.selectedActivity,
     );
   }
+
+  /**
+   * Returns an array of names of all activity lists
+   * @returns {string[]} The names of all activity lists
+   */
   public get listsNames() {
     const listsNames: string[] = [];
     this.activitiesList.forEach((list) => listsNames.push(list.name));
     return listsNames;
   }
+
+  /**
+   * Returns an array of names of all available accent colors for activity lists
+   * @returns {string[]} The names of all available accent colors for activity lists
+   */
   public get listAccentColorNames() {
     const listAccentColors: string[] = [];
     this.activitiesListAccentColors.forEach((color) =>
@@ -57,11 +89,22 @@ export default class activities {
     );
     return listAccentColors;
   }
+
+  /**
+   * Returns the currently selected list object in the Manage Lists panel
+   * or undefined if no list is selected
+   * @returns {ActivitiesList | undefined} The selected list object
+   */
   public get manageListsSelectedListObj() {
     return this.activitiesListsList.find(
       (list) => list.id == this.manageListsSelectedList,
     );
   }
+
+  /**
+   * Returns an array of names of all lists containing the currently selected activity
+   * @returns {string[]} The names of all lists containing the selected activity
+   */
   public get containingListsNames() {
     // get all lists that this.selectedActivity belongs to
 
@@ -74,6 +117,10 @@ export default class activities {
     return containingLists;
   }
 
+  /**
+   * Event handler for switching between activity lists
+   * @param listToSelect The name of the list to select
+   */
   public onListSwitch(listToSelect: string) {
     if (listToSelect == "All Activities") {
       this.selectedList = "default";
@@ -85,6 +132,15 @@ export default class activities {
     this.selectedActivity = "";
     this.rightPanelState = "placeholder";
   }
+
+  /**
+   * Event handler for selecting/deselecting an activity
+   * @remarks
+   * If the activity is already selected, it will be deselected
+   * and the right panel will switch to the placeholder state
+   * If a new activity is selected, the right panel will switch to the edit_activity state
+   * @param id The id of the activity to select
+   */
   public onActivitySelection(id: string) {
     // if the activity is already selected, just deselect it
     if (this.selectedActivity == id) {
@@ -95,6 +151,11 @@ export default class activities {
       this.rightPanelState = "edit_activity";
     }
   }
+
+  /**
+   * Event handler for updating which lists holds the currently selected activity
+   * @param containingList The names of the lists to which the selected activity should belong
+   */
   public onContainingListsUpdate(containingList: string[]) {
     // update the lists to which this.selectedActivity belongs
 
@@ -113,6 +174,11 @@ export default class activities {
       sync.activities.list.put(list);
     });
   }
+
+  /**
+   * Event handler for saving changes to an activity
+   * @param event The form submission event
+   */
   public onSaveChanges(event: Event) {
     event.preventDefault();
     const activityData = Object.fromEntries(
@@ -120,6 +186,11 @@ export default class activities {
     );
     this.saveActivity(activityData);
   }
+
+  /**
+   * Event handler for resetting changes to an activity
+   * re-selects the currently selected activity to reset any unsaved changes
+   */
   public onResetChanges() {
     // store current selection
     const currentSelection = this.selectedActivity;
@@ -128,6 +199,13 @@ export default class activities {
     this.selectedActivity = "";
     this.selectedActivity = currentSelection;
   }
+
+  /**
+   * Event handler for deleting the currently selected activity
+   * removes the activity from all lists and syncs with the backend
+   * @remarks
+   * After deletion, clears the selected activity and switches to the placeholder state
+   */
   public onDeleteActivity() {
     this.activitiesList = this.activitiesList.filter(
       (activity) => activity.id != this.selectedActivity,
@@ -146,6 +224,13 @@ export default class activities {
     this.selectedActivity = "";
     this.rightPanelState = "placeholder";
   }
+
+  /**
+   * Event handler for toggling the Manage Lists panel
+   * @remarks
+   * If the panel is being opened, clears any selected activity
+   * If the panel is being closed, switches to the placeholder state
+   */
   public onManageLists() {
     if (this.rightPanelState != "manage_lists") {
       this.selectedActivity = "";
@@ -154,11 +239,24 @@ export default class activities {
       this.rightPanelState = "placeholder";
     }
   }
+
+  /**
+   * Event handler for switching between lists in the Manage Lists panel
+   * @param listToSelect The name of the list to select
+   */
   public onManageListsListSwitch(listToSelect: string) {
     this.manageListsSelectedList =
       this.activitiesListsList.find((list) => list.name == listToSelect)?.id ||
       "default";
   }
+
+  /**
+   * Event handler for saving changes to a list in the Manage Lists panel
+   * @param event The form submission event
+   * @remarks
+   * If an existing list is being edited, updates the list name and syncs with the backend
+   * If a new list is being created, adds the new list to the top of the lists array and syncs with the backend
+   */
   public onManageListsSaveChanges(event: Event) {
     event.preventDefault();
     const listData = Object.fromEntries(
@@ -193,6 +291,13 @@ export default class activities {
       sync.activities.list.post(newList);
     }
   }
+
+  /**
+   * Event handler for creating a new list in the Manage Lists panel
+   * @remarks
+   * Adds a new list draft to the top of the lists array and selects it
+   * If a new list draft already exists, does nothing
+   */
   public onCreateNewList() {
     const newListTemplate: ActivitiesList = {
       id: "new",
@@ -209,6 +314,13 @@ export default class activities {
       this.manageListsSelectedList = "new";
     }
   }
+
+  /**
+   * Event handler for deleting a list in the Manage Lists panel
+   * @remarks
+   * Removes the selected list from the lists array and syncs with the backend
+   * Does nothing if the default list is selected
+   */
   public onDeleteList() {
     if (this.manageListsSelectedList != "default") {
       this.activitiesListsList = this.activitiesListsList.filter(
@@ -219,6 +331,14 @@ export default class activities {
     }
   }
 
+  /**
+   * Saves changes to an activity, either updating an existing activity or creating a new one
+   * @param activityData The data of the activity to save
+   * @remarks
+   * If updating an existing activity, finds the activity by ID and updates its properties
+   * If creating a new activity, creates a new activity object and adds it to the top of the activities array
+   * Syncs changes with the backend
+   */
   public saveActivity(activityData: { [k: string]: FormDataEntryValue }) {
     if (this.selectedActivity != "new") {
       // update an existing activity
@@ -260,6 +380,14 @@ export default class activities {
       sync.activities.activity.post(activity);
     }
   }
+
+  /**
+   * Event handler for creating a new activity
+   * @remarks
+   * If no new activity draft exists, creates a new activity draft and assigns it to the currently selected list
+   * If a new activity draft already exists in another list, detaches it from that list and creates a new one
+   * Switches the right panel to the edit_activity state and selects the new activity draft
+   */
   public createActivity() {
     const newActivityTemplate: Activity = {
       id: "new",
@@ -298,3 +426,5 @@ export default class activities {
     this.rightPanelState = "edit_activity";
   }
 }
+
+export default ActivitiesView;
