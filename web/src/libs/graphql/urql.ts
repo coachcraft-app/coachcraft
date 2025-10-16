@@ -1,3 +1,10 @@
+/**
+ * URQL singleton class
+ *
+ * It handles GraphQL requests to the backend API server.
+ * @module
+ */
+
 import { fetchExchange, Client } from "@urql/core";
 import { cacheExchange } from "@urql/exchange-graphcache";
 import schema from "./schema.json";
@@ -6,10 +13,13 @@ import oidc from "../oidc";
 import type { User, UserManager } from "oidc-client-ts";
 
 /**
+ * Handles the GraphQL requests to the backend API server.
+ * It initialises the urql client with the OIDC access token for authentication.
+ *
  * `urql` is a singleton class
  * for accessing/initialising, use `getInstance(): Promise<urql>`
  */
-class urql {
+export class urql {
   private static instance: urql;
   private urqlClient: Client | undefined;
 
@@ -26,6 +36,10 @@ class urql {
     });
   }
 
+  /**
+   * Creates or returns the single global instance of urql
+   * @returns urql instance
+   */
   public static async getInstance(): Promise<urql> {
     // if this is the first call to getInstance()
     if (!urql.instance) {
@@ -42,6 +56,10 @@ class urql {
     return urql.instance;
   }
 
+  /**
+   * Returns used to make GraphQL requests
+   * @returns urqlClient
+   */
   public getUrqlClient(): Client {
     if (!this.urqlClient)
       throw new Error(

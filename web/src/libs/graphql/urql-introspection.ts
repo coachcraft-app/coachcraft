@@ -1,3 +1,9 @@
+/**
+ * Generates the GraphQL schema.json file for urql's cacheExchange
+ * by introspecting the GraphQL API server.
+ * @module
+ */
+
 import { getIntrospectionQuery } from "graphql";
 import * as fs from "fs";
 import {
