@@ -8,6 +8,7 @@ node_modules
 dist
 coverage
 /docs
+/reports
 
 # Frontend build artifacts
 /web/.astro
