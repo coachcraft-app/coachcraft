@@ -1,0 +1,1044 @@
+<svg version="1.1" baseProfile="full" width="13563.5" height="774.0" viewBox="0 0 13563.5 774" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+<desc >#.interface: fill=lightblue
+#.enumeration: fill=lightgreen
+#.type: fill=lightgray
+
+[alpine|-static instance: alpine;-globalAlpine: Alpine|+static getInstance(): alpine;+getGlobalAlpine(): Alpine]
+[alpine]  -  [alpine]
+[oidc|-static instance: oidc;-userManager: UserManager|+static getInstance(): oidc;+getUserManager(): UserManager;+initOidcFlow(): Promise&lt;void&gt;]
+[oidc]  -  [oidc]
+[auth|+userProfilePic: string \| undefined;+givenName: string \| undefined;+userEmail: string \| undefined|]
+[router|+defaultPage: string;+currentPage: string|]
+[&lt;interface&gt;GraphQLPlayer|+id: number;+name: string;+lastModified: string|]
+[&lt;interface&gt;GraphQLTeam|+id: number;+name: string;+description: string;+lastModified: string;+player: GraphQLPlayer\[\]|]
+[&lt;interface&gt;GraphQLActivity|+id: number;+name: string;+duration: number;+description: string;+imgUrl: string;+lastModified: string|]
+[&lt;interface&gt;GraphQLListQuery|+id: number;+name: string;+listToActivityTemplate?: listToActivityTemplate;+accentColor?: string;+lastModified: string|]
+[&lt;interface&gt;GraphQLListPost|+id: number;+name: string;+listToActivityTemplate?: { id: number; }\[\];+accentColor?: string;+lastModified?: string|]
+[&lt;interface&gt;Auth|+user: User;+userManage: UserManager|]
+[&lt;interface&gt;PagesStore|+activities: { activitiesList: Activity\[\]; activitiesListsList: ActivitiesList\[\]; };+teams: { teamsList: Team\[\]; };+scheduling: { sessionName: &quot;&quot;; sessionDate: &quot;&quot;; sessionNotes: &quot;&quot;; sessionActivities: Activity\[\]; selectedTeam: null; upcomingSessions: Session\[\]; previousSessions: Session\[\]; selectedTab: &quot;lists&quot;; expandedSessions: Session\[\]; }|]
+[&lt;interface&gt;Activity|+id: string;+name: string;+duration: string;+description: string;+img_url: string;+lastModified?: Date|]
+[&lt;interface&gt;ActivitiesList|+id: string;+name: string;+activities: string\[\];+accent_color: string;+lastModified?: Date|]
+[&lt;interface&gt;ActivitiesListAccentColors|+name: string;+hex: string|]
+[&lt;interface&gt;Team|+id: string;+name: string;+description: string;+players: string\[\]|]
+[&lt;interface&gt;Session|+id: string;+name: string;+date: string;+notes: string;+activities: SessionActivity\[\];+team?: string;+attendance?: { \[key: string\]: boolean; }|]
+[&lt;interface&gt;SessionActivity|+isSessionCopy?: boolean;+originalTemplateId?: string|]
+[&lt;interface&gt;ToastNotification|+id: number \| undefined;+title: string;+message: string;+variant: &quot;info&quot; \| &quot;danger&quot;|]
+[Activity]&lt;:--[SessionActivity]
+[urql|-static instance: urql;-urqlClient: Client \| undefined|+static getInstance(): Promise&lt;urql&gt;;+getUrqlClient(): Client]
+[urql]  -  [urql]
+[toast|+notifications: ToastNotification\[\];+displayDuration: number|+addNotification(): void;+removeNotification(): void]
+[activities|+activitiesListsList: ActivitiesList\[\];+activitiesList: Activity\[\];+activitiesListAccentColors: ActivitiesListAccentColors\[\];-selectedList: string;-selectedActivity: string;-rightPanelState: &quot;placeholder&quot; \| &quot;edit_activity&quot; \| &quot;manage_lists&quot;;-manageListsSelectedList: string|+onListSwitch(): void;+onActivitySelection(): void;+onContainingListsUpdate(): void;+onSaveChanges(): void;+onResetChanges(): void;+onDeleteActivity(): void;+onManageLists(): void;+onManageListsListSwitch(): void;+onManageListsSaveChanges(): void;+onCreateNewList(): void;+onDeleteList(): void;+saveActivity(): void;+createActivity(): void]
+[scheduling|+sessionName: string;+sessionDate: string;+sessionNotes: string;+sessionActivities: SessionActivity\[\];+selectedTeam: string \| null;+upcomingSessions: Session\[\];+previousSessions: Session\[\];+selectedTab: &quot;lists&quot; \| &quot;last&quot; \| &quot;history&quot;;+expandedSessions: { \[key: string\]: boolean; };-activitiesList: Activity\[\];-teamsList: Team\[\]|+addToSession(): void;+removeFromSession(): void;+handleDragStart(): void;+handleDragOver(): void;+handleDrop(): void;+switchTab(): void;+toggleSessionDetails(): void;+loadSession(): void;+saveSession(): void;+moveActivityUp(): void;+moveActivityDown(): void;+deleteSession(): void]
+[sessions|-upcomingSessions: Session\[\];-previousSessions: Session\[\]|+completeSession(): void;+updateNotes(): void;+toggleAttendance(): void]
+[teams|+teamsList: Team\[\];+selectedTeam: string \| null;+rightPanelState: &quot;placeholder&quot; \| &quot;edit_team&quot;|+createTeam(): void;+onTeamSelection(): void;+addPlayer(): void;+updatePlayer(): void;+removePlayer(): void;+onSaveChanges(): void;+onDeleteTeam(): void;+onTeamSelectForSession(): string \| null]
+[ActivitiesSync|-static ACTIVITIES_LIST_QUERY: &quot;\n    query getActivities {\n      activityTemplates {\n        id\n        name\n        duration\n        description\n        imgUrl\n        lastModified\n      }\n    }\n  &quot;;-static DELETE_MUTATION: &quot;\n    mutation deleteActivities($id: Int!) {\n      deleteFromActivityTemplates(where: { id: { eq: $id } }) {\n        id\n      }\n    }\n  &quot;;-static POST_MUTATION: &quot;\n    mutation insertActivities($activity: ActivityTemplatesInsertInput!) {\n      insertIntoActivityTemplatesSingle(values: $activity) {\n        id\n        name\n        duration\n        description\n        imgUrl\n        lastModified\n      }\n    }\n  &quot;;-static PUT_MUTATION: &quot;\n    mutation updateActivities(\n      $id: Int!\n      $activity: ActivityTemplatesUpdateInput!\n    ) {\n      updateActivityTemplates(where: { id: { eq: $id } }, set: $activity) {\n        id\n        name\n        duration\n        description\n        imgUrl\n        lastModified\n      }\n    }\n  &quot;|-static hhmmToMinutes(): number;-static minutesToHHMM(): string;-static convertGraphQLActivityToActivity(): Activity\[\];-static convertActivityToGraphQLActivity(): GraphQLActivity;+subscribeToActivitiesList(): Promise&lt;void&gt;;+delete(): Promise&lt;void&gt;;+post(): Promise&lt;void&gt;;+put(): Promise&lt;void&gt;]
+[ActivitiesListsSync|-static LISTS_LIST_QUERY: &quot;\n    query getLists {\n      lists {\n        id\n        name\n        listToActivityTemplate {\n          id\n          activityTemplate {\n            id\n          }\n        }\n        accentColor\n        lastModified\n      }\n    }\n  &quot;;-static DELETE_MUTATION: &quot;\n    mutation deleteLists($id: Int!) {\n      deleteFromLists(where: { id: { eq: $id } }) {\n        id\n      }\n\n      deleteFromActivityTemplateList(where: { list: { eq: $id } }) {\n        id\n      }\n    }\n  &quot;;-static POST_MUTATION: &quot;\n    mutation insertLists($list: ListsInsertInput!) {\n      insertIntoListsSingle(values: $list) {\n        id\n        name\n        accentColor\n        lastModified\n      }\n    }\n  &quot;;-static PUT_MUTATION: &quot;\n    mutation updateLists(\n      $id: Int!\n      $list: ListsUpdateInput!\n      $activities: \[ActivityTemplateListInsertInput!\]!\n    ) {\n      updateLists(where: { id: { eq: $id } }, set: $list) {\n        id\n        name\n        accentColor\n        lastModified\n      }\n      deleteFromActivityTemplateLi...;-static PUT_NO_ACTIVITIES_MUTATION: &quot;\n    mutation updateLists($id: Int!, $list: ListsUpdateInput!) {\n      updateLists(where: { id: { eq: $id } }, set: $list) {\n        id\n        name\n        accentColor\n        lastModified\n      }\n    }\n  &quot;|-static convertGraphQLListToList(): ActivitiesList\[\];-static convertListToGraphQLList(): GraphQLListPost;+subscribeToActivitiesListsList(): Promise&lt;void&gt;;+delete(): Promise&lt;void&gt;;+post(): Promise&lt;void&gt;;+put(): Promise&lt;void&gt;]
+[Sync|+static activities: { activity: ActivitiesSync; list: ActivitiesListsSync; };+static teams: TeamsSync|+static subscribeToStateLists(): Promise&lt;void&gt;]
+[Sync]  -  [TeamsSync]
+[TeamsSync|-static TEAMS_LIST_QUERY: &quot;\n    query getTeams {\n      teams {\n        id\n        name\n        description\n        lastModified\n        player {\n          id\n          name\n          lastModified\n        }\n      }\n    }\n  &quot;;-static DELETE_MUTATION: &quot;\n    mutation deleteTeam($id: Int!) {\n      deleteFromTeams(where: { id: { eq: $id } }) {\n        id\n      }\n    }\n  &quot;;-static POST_MUTATION: &quot;\n    mutation insertTeam($team: TeamsInsertInput!) {\n      insertIntoTeamsSingle(values: $team) {\n        id\n      }\n    }\n  &quot;;-static PUT_MUTATION: &quot;\n    mutation updateTeam(\n      $id: Int!\n      $team: TeamsUpdateInput!\n      $players: \[PlayersInsertInput!\]!\n    ) {\n      updateTeams(set: $team, where: { id: { eq: $id } }) {\n        id\n        name\n        description\n        lastModified\n      }\n\n      deleteFromPlayers(where: { team: { eq: $id ...;-static PUT_NO_PLAYERS_MUTATION: &quot;\n    mutation updateTeam($id: Int!, $team: TeamsUpdateInput!) {\n      updateTeams(set: $team, where: { id: { eq: $id } }) {\n        id\n        name\n        description\n        lastModified\n      }\n\n      deleteFromPlayers(where: { team: { eq: $id } }) {\n        id\n      }\n    }\n  &quot;|-static convertGraphQLTeamToTeam(): Team\[\];+subscribeToTeamsList(): Promise&lt;void&gt;;+delete(): Promise&lt;void&gt;;+post(): Promise&lt;void&gt;;+put(): Promise&lt;void&gt;]</desc>
+<g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="normal" font-style="normal">
+<g font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
+<g stroke="transparent" fill="transparent">
+<rect x="0.0" y="0.0" height="774.0" width="13563.5" stroke="none"></rect>
+</g>
+<g transform="translate(8, 8)" fill="#33322E">
+<g transform="translate(20, 20)" fill="#33322E" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal">
+<path d="M236.0 175.0 L266 162 L273.5 162 L273.5 162 L281 226 L281 226 L273.5 290 L273.5 290 L266 290 L266 290 L236 277.02702702702703 L236.0 277.0 " fill="none"></path>
+<path d="M613.0 166.0 L643 153.5 L650.5 153.5 L650.5 153.5 L658 226 L658 226 L650.5 298.5 L650.5 298.5 L643 298.5 L643 298.5 L613 285.96397694524495 L613.0 286.0 " fill="none"></path>
+<g stroke-dasharray="6 6">
+<path d="M3410.0 315.8 L3410 472 L3410 561 L3410.0 561.0 " fill="none"></path>
+</g>
+<path d="M3415.3 315.8 L3410.0 315.8 L3404.7 315.8 L3410.0 302.5 Z"></path>
+<path d="M5135.0 172.6 L5165 162 L5172.5 162 L5172.5 162 L5180 226 L5180 226 L5172.5 290 L5172.5 290 L5165 290 L5165 290 L5135 279.3922651933702 L5135.0 279.4 " fill="none"></path>
+<path d="M12247.5 298.5 L12247.5 472 L12247.5 492 L12247.5 492.0 " fill="none"></path>
+<g data-name="alpine">
+<g fill="#eee8d5" stroke="#33322E" data-name="alpine">
+<rect x="0.0" y="162.0" height="128.0" width="236.0" data-name="alpine"></rect>
+<path d="M0.0 194.0 L236.0 194.0" fill="none" data-name="alpine"></path>
+<path d="M0.0 242.0 L236.0 242.0" fill="none" data-name="alpine"></path>
+</g>
+<g transform="translate(0, 162)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="alpine" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="alpine" data-compartment="0">
+<a id="..\web\src\libs\alpine.ts.alpine" xlink:href="..\web\src\libs\alpine.ts"><text x="110.0" y="14.1" stroke="none" text-anchor="middle" data-name="alpine" data-compartment="0">alpine</text></a>
+
+</g>
+</g>
+<g transform="translate(0, 194)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="alpine" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="alpine" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="alpine" data-compartment="1">-static instance: alpine</text>
+<text x="0.0" y="30.3" stroke="none" data-name="alpine" data-compartment="1">-globalAlpine: Alpine</text>
+
+</g>
+</g>
+<g transform="translate(0, 242)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="alpine" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="alpine" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="alpine" data-compartment="2">+static getInstance(): alpine</text>
+<text x="0.0" y="30.3" stroke="none" data-name="alpine" data-compartment="2">+getGlobalAlpine(): Alpine</text>
+
+</g>
+</g>
+</g>
+<g data-name="oidc">
+<g fill="#eee8d5" stroke="#33322E" data-name="oidc">
+<rect x="326.0" y="153.5" height="145.0" width="287.0" data-name="oidc"></rect>
+<path d="M326.0 185.5 L613.0 185.5" fill="none" data-name="oidc"></path>
+<path d="M326.0 233.5 L613.0 233.5" fill="none" data-name="oidc"></path>
+</g>
+<g transform="translate(326, 153.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="oidc" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="oidc" data-compartment="0">
+<a id="..\web\src\libs\oidc.ts.oidc" xlink:href="..\web\src\libs\oidc.ts"><text x="135.5" y="14.1" stroke="none" text-anchor="middle" data-name="oidc" data-compartment="0">oidc</text></a>
+
+</g>
+</g>
+<g transform="translate(326, 185.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="oidc" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="oidc" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="oidc" data-compartment="1">-static instance: oidc</text>
+<text x="0.0" y="30.3" stroke="none" data-name="oidc" data-compartment="1">-userManager: UserManager</text>
+
+</g>
+</g>
+<g transform="translate(326, 233.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="oidc" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="oidc" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="oidc" data-compartment="2">+static getInstance(): oidc</text>
+<text x="0.0" y="30.3" stroke="none" data-name="oidc" data-compartment="2">+getUserManager(): UserManager</text>
+<text x="0.0" y="46.5" stroke="none" data-name="oidc" data-compartment="2">+initOidcFlow(): Promise&lt;void&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="auth">
+<g fill="#eee8d5" stroke="#33322E" data-name="auth">
+<rect x="703.0" y="173.5" height="105.0" width="283.0" data-name="auth"></rect>
+<path d="M703.0 205.5 L986.0 205.5" fill="none" data-name="auth"></path>
+<path d="M703.0 270.5 L986.0 270.5" fill="none" data-name="auth"></path>
+</g>
+<g transform="translate(703, 173.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="auth" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="auth" data-compartment="0">
+<a id="..\web\src\stores\auth.ts.auth" xlink:href="..\web\src\stores\auth.ts"><text x="133.5" y="14.1" stroke="none" text-anchor="middle" data-name="auth" data-compartment="0">auth</text></a>
+
+</g>
+</g>
+<g transform="translate(703, 205.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="auth" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="auth" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="auth" data-compartment="1">+userProfilePic: string | undefined</text>
+<text x="0.0" y="30.3" stroke="none" data-name="auth" data-compartment="1">+givenName: string | undefined</text>
+<text x="0.0" y="46.5" stroke="none" data-name="auth" data-compartment="1">+userEmail: string | undefined</text>
+
+</g>
+</g>
+<g transform="translate(703, 270.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="auth" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="auth" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="router">
+<g fill="#eee8d5" stroke="#33322E" data-name="router">
+<rect x="1026.0" y="182.0" height="88.0" width="177.0" data-name="router"></rect>
+<path d="M1026.0 214.0 L1203.0 214.0" fill="none" data-name="router"></path>
+<path d="M1026.0 262.0 L1203.0 262.0" fill="none" data-name="router"></path>
+</g>
+<g transform="translate(1026, 182)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="router" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="router" data-compartment="0">
+<a id="..\web\src\stores\router.ts.router" xlink:href="..\web\src\stores\router.ts"><text x="80.5" y="14.1" stroke="none" text-anchor="middle" data-name="router" data-compartment="0">router</text></a>
+
+</g>
+</g>
+<g transform="translate(1026, 214)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="router" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="router" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="router" data-compartment="1">+defaultPage: string</text>
+<text x="0.0" y="30.3" stroke="none" data-name="router" data-compartment="1">+currentPage: string</text>
+
+</g>
+</g>
+<g transform="translate(1026, 262)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="router" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="router" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="GraphQLPlayer">
+<g fill="lightblue" stroke="#33322E" data-name="GraphQLPlayer">
+<rect x="1243.0" y="173.5" height="105.0" width="175.0" data-name="GraphQLPlayer"></rect>
+<path d="M1243.0 205.5 L1418.0 205.5" fill="none" data-name="GraphQLPlayer"></path>
+<path d="M1243.0 270.5 L1418.0 270.5" fill="none" data-name="GraphQLPlayer"></path>
+</g>
+<g transform="translate(1243, 173.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLPlayer" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GraphQLPlayer" data-compartment="0">
+<a id="..\web\src\typeDefs\graphqlTypes.ts.GraphQLPlayer" xlink:href="..\web\src\typeDefs\graphqlTypes.ts"><text x="79.5" y="14.1" stroke="none" text-anchor="middle" data-name="GraphQLPlayer" data-compartment="0">GraphQLPlayer</text></a>
+
+</g>
+</g>
+<g transform="translate(1243, 205.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLPlayer" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GraphQLPlayer" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="GraphQLPlayer" data-compartment="1">+id: number</text>
+<text x="0.0" y="30.3" stroke="none" data-name="GraphQLPlayer" data-compartment="1">+name: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="GraphQLPlayer" data-compartment="1">+lastModified: string</text>
+
+</g>
+</g>
+<g transform="translate(1243, 270.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLPlayer" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GraphQLPlayer" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="GraphQLTeam">
+<g fill="lightblue" stroke="#33322E" data-name="GraphQLTeam">
+<rect x="1458.0" y="157.5" height="137.0" width="217.0" data-name="GraphQLTeam"></rect>
+<path d="M1458.0 189.5 L1675.0 189.5" fill="none" data-name="GraphQLTeam"></path>
+<path d="M1458.0 286.5 L1675.0 286.5" fill="none" data-name="GraphQLTeam"></path>
+</g>
+<g transform="translate(1458, 157.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLTeam" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GraphQLTeam" data-compartment="0">
+<a id="..\web\src\typeDefs\graphqlTypes.ts.GraphQLTeam" xlink:href="..\web\src\typeDefs\graphqlTypes.ts"><text x="100.5" y="14.1" stroke="none" text-anchor="middle" data-name="GraphQLTeam" data-compartment="0">GraphQLTeam</text></a>
+
+</g>
+</g>
+<g transform="translate(1458, 189.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLTeam" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GraphQLTeam" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="GraphQLTeam" data-compartment="1">+id: number</text>
+<text x="0.0" y="30.3" stroke="none" data-name="GraphQLTeam" data-compartment="1">+name: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="GraphQLTeam" data-compartment="1">+description: string</text>
+<text x="0.0" y="62.7" stroke="none" data-name="GraphQLTeam" data-compartment="1">+lastModified: string</text>
+<text x="0.0" y="78.9" stroke="none" data-name="GraphQLTeam" data-compartment="1">+player: GraphQLPlayer[]</text>
+
+</g>
+</g>
+<g transform="translate(1458, 286.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLTeam" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GraphQLTeam" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="GraphQLActivity">
+<g fill="lightblue" stroke="#33322E" data-name="GraphQLActivity">
+<rect x="1715.0" y="149.5" height="153.0" width="175.0" data-name="GraphQLActivity"></rect>
+<path d="M1715.0 181.5 L1890.0 181.5" fill="none" data-name="GraphQLActivity"></path>
+<path d="M1715.0 294.5 L1890.0 294.5" fill="none" data-name="GraphQLActivity"></path>
+</g>
+<g transform="translate(1715, 149.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLActivity" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GraphQLActivity" data-compartment="0">
+<a id="..\web\src\typeDefs\graphqlTypes.ts.GraphQLActivity" xlink:href="..\web\src\typeDefs\graphqlTypes.ts"><text x="79.5" y="14.1" stroke="none" text-anchor="middle" data-name="GraphQLActivity" data-compartment="0">GraphQLActivity</text></a>
+
+</g>
+</g>
+<g transform="translate(1715, 181.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLActivity" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GraphQLActivity" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="GraphQLActivity" data-compartment="1">+id: number</text>
+<text x="0.0" y="30.3" stroke="none" data-name="GraphQLActivity" data-compartment="1">+name: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="GraphQLActivity" data-compartment="1">+duration: number</text>
+<text x="0.0" y="62.7" stroke="none" data-name="GraphQLActivity" data-compartment="1">+description: string</text>
+<text x="0.0" y="78.9" stroke="none" data-name="GraphQLActivity" data-compartment="1">+imgUrl: string</text>
+<text x="0.0" y="95.1" stroke="none" data-name="GraphQLActivity" data-compartment="1">+lastModified: string</text>
+
+</g>
+</g>
+<g transform="translate(1715, 294.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLActivity" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GraphQLActivity" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="GraphQLListQuery">
+<g fill="lightblue" stroke="#33322E" data-name="GraphQLListQuery">
+<rect x="1930.0" y="157.5" height="137.0" width="388.0" data-name="GraphQLListQuery"></rect>
+<path d="M1930.0 189.5 L2318.0 189.5" fill="none" data-name="GraphQLListQuery"></path>
+<path d="M1930.0 286.5 L2318.0 286.5" fill="none" data-name="GraphQLListQuery"></path>
+</g>
+<g transform="translate(1930, 157.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLListQuery" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GraphQLListQuery" data-compartment="0">
+<a id="..\web\src\typeDefs\graphqlTypes.ts.GraphQLListQuery" xlink:href="..\web\src\typeDefs\graphqlTypes.ts"><text x="186.0" y="14.1" stroke="none" text-anchor="middle" data-name="GraphQLListQuery" data-compartment="0">GraphQLListQuery</text></a>
+
+</g>
+</g>
+<g transform="translate(1930, 189.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLListQuery" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GraphQLListQuery" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="GraphQLListQuery" data-compartment="1">+id: number</text>
+<text x="0.0" y="30.3" stroke="none" data-name="GraphQLListQuery" data-compartment="1">+name: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="GraphQLListQuery" data-compartment="1">+listToActivityTemplate?: listToActivityTemplate</text>
+<text x="0.0" y="62.7" stroke="none" data-name="GraphQLListQuery" data-compartment="1">+accentColor?: string</text>
+<text x="0.0" y="78.9" stroke="none" data-name="GraphQLListQuery" data-compartment="1">+lastModified: string</text>
+
+</g>
+</g>
+<g transform="translate(1930, 286.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLListQuery" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GraphQLListQuery" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="GraphQLListPost">
+<g fill="lightblue" stroke="#33322E" data-name="GraphQLListPost">
+<rect x="2358.0" y="149.5" height="153.0" width="312.0" data-name="GraphQLListPost"></rect>
+<path d="M2358.0 181.5 L2670.0 181.5" fill="none" data-name="GraphQLListPost"></path>
+<path d="M2358.0 294.5 L2670.0 294.5" fill="none" data-name="GraphQLListPost"></path>
+</g>
+<g transform="translate(2358, 149.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLListPost" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GraphQLListPost" data-compartment="0">
+<a id="..\web\src\typeDefs\graphqlTypes.ts.GraphQLListPost" xlink:href="..\web\src\typeDefs\graphqlTypes.ts"><text x="148.0" y="14.1" stroke="none" text-anchor="middle" data-name="GraphQLListPost" data-compartment="0">GraphQLListPost</text></a>
+
+</g>
+</g>
+<g transform="translate(2358, 181.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLListPost" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GraphQLListPost" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="GraphQLListPost" data-compartment="1">+id: number</text>
+<text x="0.0" y="30.3" stroke="none" data-name="GraphQLListPost" data-compartment="1">+name: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="GraphQLListPost" data-compartment="1">+listToActivityTemplate?: { id: number</text>
+<text x="0.0" y="62.7" stroke="none" data-name="GraphQLListPost" data-compartment="1">}[]</text>
+<text x="0.0" y="78.9" stroke="none" data-name="GraphQLListPost" data-compartment="1">+accentColor?: string</text>
+<text x="0.0" y="95.1" stroke="none" data-name="GraphQLListPost" data-compartment="1">+lastModified?: string</text>
+
+</g>
+</g>
+<g transform="translate(2358, 294.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GraphQLListPost" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GraphQLListPost" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="Auth">
+<g fill="lightblue" stroke="#33322E" data-name="Auth">
+<rect x="2710.0" y="182.0" height="88.0" width="242.0" data-name="Auth"></rect>
+<path d="M2710.0 214.0 L2952.0 214.0" fill="none" data-name="Auth"></path>
+<path d="M2710.0 262.0 L2952.0 262.0" fill="none" data-name="Auth"></path>
+</g>
+<g transform="translate(2710, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Auth" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Auth" data-compartment="0">
+<a id="..\web\src\typeDefs\storeTypes.ts.Auth" xlink:href="..\web\src\typeDefs\storeTypes.ts"><text x="113.0" y="14.1" stroke="none" text-anchor="middle" data-name="Auth" data-compartment="0">Auth</text></a>
+
+</g>
+</g>
+<g transform="translate(2710, 214)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Auth" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Auth" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Auth" data-compartment="1">+user: User</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Auth" data-compartment="1">+userManage: UserManager</text>
+
+</g>
+</g>
+<g transform="translate(2710, 262)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Auth" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Auth" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="PagesStore">
+<g fill="lightblue" stroke="#33322E" data-name="PagesStore">
+<rect x="2992.0" y="76.5" height="299.0" width="289.0" data-name="PagesStore"></rect>
+<path d="M2992.0 108.5 L3281.0 108.5" fill="none" data-name="PagesStore"></path>
+<path d="M2992.0 367.5 L3281.0 367.5" fill="none" data-name="PagesStore"></path>
+</g>
+<g transform="translate(2992, 76.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PagesStore" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="PagesStore" data-compartment="0">
+<a id="..\web\src\typeDefs\storeTypes.ts.PagesStore" xlink:href="..\web\src\typeDefs\storeTypes.ts"><text x="136.5" y="14.1" stroke="none" text-anchor="middle" data-name="PagesStore" data-compartment="0">PagesStore</text></a>
+
+</g>
+</g>
+<g transform="translate(2992, 108.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PagesStore" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="PagesStore" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="PagesStore" data-compartment="1">+activities: { activitiesList: Activity[]</text>
+<text x="0.0" y="30.3" stroke="none" data-name="PagesStore" data-compartment="1">activitiesListsList: ActivitiesList[]</text>
+<text x="0.0" y="46.5" stroke="none" data-name="PagesStore" data-compartment="1">}</text>
+<text x="0.0" y="62.7" stroke="none" data-name="PagesStore" data-compartment="1">+teams: { teamsList: Team[]</text>
+<text x="0.0" y="78.9" stroke="none" data-name="PagesStore" data-compartment="1">}</text>
+<text x="0.0" y="95.1" stroke="none" data-name="PagesStore" data-compartment="1">+scheduling: { sessionName: &quot;&quot;</text>
+<text x="0.0" y="111.3" stroke="none" data-name="PagesStore" data-compartment="1">sessionDate: &quot;&quot;</text>
+<text x="0.0" y="127.5" stroke="none" data-name="PagesStore" data-compartment="1">sessionNotes: &quot;&quot;</text>
+<text x="0.0" y="143.7" stroke="none" data-name="PagesStore" data-compartment="1">sessionActivities: Activity[]</text>
+<text x="0.0" y="159.9" stroke="none" data-name="PagesStore" data-compartment="1">selectedTeam: null</text>
+<text x="0.0" y="176.1" stroke="none" data-name="PagesStore" data-compartment="1">upcomingSessions: Session[]</text>
+<text x="0.0" y="192.3" stroke="none" data-name="PagesStore" data-compartment="1">previousSessions: Session[]</text>
+<text x="0.0" y="208.5" stroke="none" data-name="PagesStore" data-compartment="1">selectedTab: &quot;lists&quot;</text>
+<text x="0.0" y="224.7" stroke="none" data-name="PagesStore" data-compartment="1">expandedSessions: Session[]</text>
+<text x="0.0" y="240.9" stroke="none" data-name="PagesStore" data-compartment="1">}</text>
+
+</g>
+</g>
+<g transform="translate(2992, 367.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PagesStore" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="PagesStore" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="Activity">
+<g fill="lightblue" stroke="#33322E" data-name="Activity">
+<rect x="3321.0" y="149.5" height="153.0" width="178.0" data-name="Activity"></rect>
+<path d="M3321.0 181.5 L3499.0 181.5" fill="none" data-name="Activity"></path>
+<path d="M3321.0 294.5 L3499.0 294.5" fill="none" data-name="Activity"></path>
+</g>
+<g transform="translate(3321, 149.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Activity" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Activity" data-compartment="0">
+<a id="..\web\src\typeDefs\storeTypes.ts.Activity" xlink:href="..\web\src\typeDefs\storeTypes.ts"><text x="81.0" y="14.1" stroke="none" text-anchor="middle" data-name="Activity" data-compartment="0">Activity</text></a>
+
+</g>
+</g>
+<g transform="translate(3321, 181.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Activity" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Activity" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Activity" data-compartment="1">+id: string</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Activity" data-compartment="1">+name: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Activity" data-compartment="1">+duration: string</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Activity" data-compartment="1">+description: string</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Activity" data-compartment="1">+img_url: string</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Activity" data-compartment="1">+lastModified?: Date</text>
+
+</g>
+</g>
+<g transform="translate(3321, 294.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Activity" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Activity" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="ActivitiesList">
+<g fill="lightblue" stroke="#33322E" data-name="ActivitiesList">
+<rect x="3539.0" y="157.5" height="137.0" width="182.0" data-name="ActivitiesList"></rect>
+<path d="M3539.0 189.5 L3721.0 189.5" fill="none" data-name="ActivitiesList"></path>
+<path d="M3539.0 286.5 L3721.0 286.5" fill="none" data-name="ActivitiesList"></path>
+</g>
+<g transform="translate(3539, 157.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ActivitiesList" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ActivitiesList" data-compartment="0">
+<a id="..\web\src\typeDefs\storeTypes.ts.ActivitiesList" xlink:href="..\web\src\typeDefs\storeTypes.ts"><text x="83.0" y="14.1" stroke="none" text-anchor="middle" data-name="ActivitiesList" data-compartment="0">ActivitiesList</text></a>
+
+</g>
+</g>
+<g transform="translate(3539, 189.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ActivitiesList" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ActivitiesList" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="ActivitiesList" data-compartment="1">+id: string</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ActivitiesList" data-compartment="1">+name: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ActivitiesList" data-compartment="1">+activities: string[]</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ActivitiesList" data-compartment="1">+accent_color: string</text>
+<text x="0.0" y="78.9" stroke="none" data-name="ActivitiesList" data-compartment="1">+lastModified?: Date</text>
+
+</g>
+</g>
+<g transform="translate(3539, 286.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ActivitiesList" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ActivitiesList" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="ActivitiesListAccentColors">
+<g fill="lightblue" stroke="#33322E" data-name="ActivitiesListAccentColors">
+<rect x="3761.0" y="182.0" height="88.0" width="219.0" data-name="ActivitiesListAccentColors"></rect>
+<path d="M3761.0 214.0 L3980.0 214.0" fill="none" data-name="ActivitiesListAccentColors"></path>
+<path d="M3761.0 262.0 L3980.0 262.0" fill="none" data-name="ActivitiesListAccentColors"></path>
+</g>
+<g transform="translate(3761, 182)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ActivitiesListAccentColors" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ActivitiesListAccentColors" data-compartment="0">
+<a id="..\web\src\typeDefs\storeTypes.ts.ActivitiesListAccentColors" xlink:href="..\web\src\typeDefs\storeTypes.ts"><text x="101.5" y="14.1" stroke="none" text-anchor="middle" data-name="ActivitiesListAccentColors" data-compartment="0">ActivitiesListAccentColors</text></a>
+
+</g>
+</g>
+<g transform="translate(3761, 214)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ActivitiesListAccentColors" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ActivitiesListAccentColors" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="ActivitiesListAccentColors" data-compartment="1">+name: string</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ActivitiesListAccentColors" data-compartment="1">+hex: string</text>
+
+</g>
+</g>
+<g transform="translate(3761, 262)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ActivitiesListAccentColors" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ActivitiesListAccentColors" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="Team">
+<g fill="lightblue" stroke="#33322E" data-name="Team">
+<rect x="4020.0" y="165.5" height="121.0" width="167.0" data-name="Team"></rect>
+<path d="M4020.0 197.5 L4187.0 197.5" fill="none" data-name="Team"></path>
+<path d="M4020.0 278.5 L4187.0 278.5" fill="none" data-name="Team"></path>
+</g>
+<g transform="translate(4020, 165.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Team" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Team" data-compartment="0">
+<a id="..\web\src\typeDefs\storeTypes.ts.Team" xlink:href="..\web\src\typeDefs\storeTypes.ts"><text x="75.5" y="14.1" stroke="none" text-anchor="middle" data-name="Team" data-compartment="0">Team</text></a>
+
+</g>
+</g>
+<g transform="translate(4020, 197.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Team" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Team" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Team" data-compartment="1">+id: string</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Team" data-compartment="1">+name: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Team" data-compartment="1">+description: string</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Team" data-compartment="1">+players: string[]</text>
+
+</g>
+</g>
+<g transform="translate(4020, 278.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Team" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Team" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="Session">
+<g fill="lightblue" stroke="#33322E" data-name="Session">
+<rect x="4227.0" y="133.0" height="186.0" width="312.0" data-name="Session"></rect>
+<path d="M4227.0 165.0 L4539.0 165.0" fill="none" data-name="Session"></path>
+<path d="M4227.0 311.0 L4539.0 311.0" fill="none" data-name="Session"></path>
+</g>
+<g transform="translate(4227, 133)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Session" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Session" data-compartment="0">
+<a id="..\web\src\typeDefs\storeTypes.ts.Session" xlink:href="..\web\src\typeDefs\storeTypes.ts"><text x="148.0" y="14.1" stroke="none" text-anchor="middle" data-name="Session" data-compartment="0">Session</text></a>
+
+</g>
+</g>
+<g transform="translate(4227, 165)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Session" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Session" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Session" data-compartment="1">+id: string</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Session" data-compartment="1">+name: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Session" data-compartment="1">+date: string</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Session" data-compartment="1">+notes: string</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Session" data-compartment="1">+activities: SessionActivity[]</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Session" data-compartment="1">+team?: string</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Session" data-compartment="1">+attendance?: { [key: string]: boolean</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Session" data-compartment="1">}</text>
+
+</g>
+</g>
+<g transform="translate(4227, 311)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Session" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Session" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="SessionActivity">
+<g fill="lightblue" stroke="#33322E" data-name="SessionActivity">
+<rect x="3292.0" y="561.0" height="88.0" width="236.0" data-name="SessionActivity"></rect>
+<path d="M3292.0 593.0 L3528.0 593.0" fill="none" data-name="SessionActivity"></path>
+<path d="M3292.0 641.0 L3528.0 641.0" fill="none" data-name="SessionActivity"></path>
+</g>
+<g transform="translate(3292, 561)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SessionActivity" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SessionActivity" data-compartment="0">
+<a id="..\web\src\typeDefs\storeTypes.ts.SessionActivity" xlink:href="..\web\src\typeDefs\storeTypes.ts"><text x="110.0" y="14.1" stroke="none" text-anchor="middle" data-name="SessionActivity" data-compartment="0">SessionActivity</text></a>
+
+</g>
+</g>
+<g transform="translate(3292, 593)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SessionActivity" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SessionActivity" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="SessionActivity" data-compartment="1">+isSessionCopy?: boolean</text>
+<text x="0.0" y="30.3" stroke="none" data-name="SessionActivity" data-compartment="1">+originalTemplateId?: string</text>
+
+</g>
+</g>
+<g transform="translate(3292, 641)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SessionActivity" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="SessionActivity" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="ToastNotification">
+<g fill="lightblue" stroke="#33322E" data-name="ToastNotification">
+<rect x="4579.0" y="165.5" height="121.0" width="214.0" data-name="ToastNotification"></rect>
+<path d="M4579.0 197.5 L4793.0 197.5" fill="none" data-name="ToastNotification"></path>
+<path d="M4579.0 278.5 L4793.0 278.5" fill="none" data-name="ToastNotification"></path>
+</g>
+<g transform="translate(4579, 165.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ToastNotification" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ToastNotification" data-compartment="0">
+<a id="..\web\src\typeDefs\storeTypes.ts.ToastNotification" xlink:href="..\web\src\typeDefs\storeTypes.ts"><text x="99.0" y="14.1" stroke="none" text-anchor="middle" data-name="ToastNotification" data-compartment="0">ToastNotification</text></a>
+
+</g>
+</g>
+<g transform="translate(4579, 197.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ToastNotification" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ToastNotification" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="ToastNotification" data-compartment="1">+id: number | undefined</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ToastNotification" data-compartment="1">+title: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ToastNotification" data-compartment="1">+message: string</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ToastNotification" data-compartment="1">+variant: &quot;info&quot; | &quot;danger&quot;</text>
+
+</g>
+</g>
+<g transform="translate(4579, 278.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ToastNotification" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ToastNotification" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="urql">
+<g fill="#eee8d5" stroke="#33322E" data-name="urql">
+<rect x="4833.0" y="162.0" height="128.0" width="302.0" data-name="urql"></rect>
+<path d="M4833.0 194.0 L5135.0 194.0" fill="none" data-name="urql"></path>
+<path d="M4833.0 242.0 L5135.0 242.0" fill="none" data-name="urql"></path>
+</g>
+<g transform="translate(4833, 162)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="urql" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="urql" data-compartment="0">
+<a id="..\web\src\libs\graphql\urql.ts.urql" xlink:href="..\web\src\libs\graphql\urql.ts"><text x="143.0" y="14.1" stroke="none" text-anchor="middle" data-name="urql" data-compartment="0">urql</text></a>
+
+</g>
+</g>
+<g transform="translate(4833, 194)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="urql" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="urql" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="urql" data-compartment="1">-static instance: urql</text>
+<text x="0.0" y="30.3" stroke="none" data-name="urql" data-compartment="1">-urqlClient: Client | undefined</text>
+
+</g>
+</g>
+<g transform="translate(4833, 242)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="urql" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="urql" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="urql" data-compartment="2">+static getInstance(): Promise&lt;urql&gt;</text>
+<text x="0.0" y="30.3" stroke="none" data-name="urql" data-compartment="2">+getUrqlClient(): Client</text>
+
+</g>
+</g>
+</g>
+<g data-name="toast">
+<g fill="#eee8d5" stroke="#33322E" data-name="toast">
+<rect x="5225.0" y="162.0" height="128.0" width="273.0" data-name="toast"></rect>
+<path d="M5225.0 194.0 L5498.0 194.0" fill="none" data-name="toast"></path>
+<path d="M5225.0 242.0 L5498.0 242.0" fill="none" data-name="toast"></path>
+</g>
+<g transform="translate(5225, 162)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="toast" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="toast" data-compartment="0">
+<a id="..\web\src\stores\common\toast.ts.toast" xlink:href="..\web\src\stores\common\toast.ts"><text x="128.5" y="14.1" stroke="none" text-anchor="middle" data-name="toast" data-compartment="0">toast</text></a>
+
+</g>
+</g>
+<g transform="translate(5225, 194)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="toast" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="toast" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="toast" data-compartment="1">+notifications: ToastNotification[]</text>
+<text x="0.0" y="30.3" stroke="none" data-name="toast" data-compartment="1">+displayDuration: number</text>
+
+</g>
+</g>
+<g transform="translate(5225, 242)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="toast" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="toast" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="toast" data-compartment="2">+addNotification(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="toast" data-compartment="2">+removeNotification(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="activities">
+<g fill="#eee8d5" stroke="#33322E" data-name="activities">
+<rect x="5538.0" y="32.0" height="388.0" width="511.0" data-name="activities"></rect>
+<path d="M5538.0 64.0 L6049.0 64.0" fill="none" data-name="activities"></path>
+<path d="M5538.0 193.0 L6049.0 193.0" fill="none" data-name="activities"></path>
+</g>
+<g transform="translate(5538, 32)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="activities" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="activities" data-compartment="0">
+<a id="..\web\src\stores\views\activities.ts.activities" xlink:href="..\web\src\stores\views\activities.ts"><text x="247.5" y="14.1" stroke="none" text-anchor="middle" data-name="activities" data-compartment="0">activities</text></a>
+
+</g>
+</g>
+<g transform="translate(5538, 64)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="activities" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="activities" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="activities" data-compartment="1">+activitiesListsList: ActivitiesList[]</text>
+<text x="0.0" y="30.3" stroke="none" data-name="activities" data-compartment="1">+activitiesList: Activity[]</text>
+<text x="0.0" y="46.5" stroke="none" data-name="activities" data-compartment="1">+activitiesListAccentColors: ActivitiesListAccentColors[]</text>
+<text x="0.0" y="62.7" stroke="none" data-name="activities" data-compartment="1">-selectedList: string</text>
+<text x="0.0" y="78.9" stroke="none" data-name="activities" data-compartment="1">-selectedActivity: string</text>
+<text x="0.0" y="95.1" stroke="none" data-name="activities" data-compartment="1">-rightPanelState: &quot;placeholder&quot; | &quot;edit_activity&quot; | &quot;manage_lists&quot;</text>
+<text x="0.0" y="111.3" stroke="none" data-name="activities" data-compartment="1">-manageListsSelectedList: string</text>
+
+</g>
+</g>
+<g transform="translate(5538, 193)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="activities" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="activities" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="activities" data-compartment="2">+onListSwitch(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="activities" data-compartment="2">+onActivitySelection(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="activities" data-compartment="2">+onContainingListsUpdate(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="activities" data-compartment="2">+onSaveChanges(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="activities" data-compartment="2">+onResetChanges(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="activities" data-compartment="2">+onDeleteActivity(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="activities" data-compartment="2">+onManageLists(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="activities" data-compartment="2">+onManageListsListSwitch(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="activities" data-compartment="2">+onManageListsSaveChanges(): void</text>
+<text x="0.0" y="159.9" stroke="none" data-name="activities" data-compartment="2">+onCreateNewList(): void</text>
+<text x="0.0" y="176.1" stroke="none" data-name="activities" data-compartment="2">+onDeleteList(): void</text>
+<text x="0.0" y="192.3" stroke="none" data-name="activities" data-compartment="2">+saveActivity(): void</text>
+<text x="0.0" y="208.5" stroke="none" data-name="activities" data-compartment="2">+createActivity(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="scheduling">
+<g fill="#eee8d5" stroke="#33322E" data-name="scheduling">
+<rect x="6089.0" y="0.0" height="452.0" width="364.0" data-name="scheduling"></rect>
+<path d="M6089.0 32.0 L6453.0 32.0" fill="none" data-name="scheduling"></path>
+<path d="M6089.0 242.0 L6453.0 242.0" fill="none" data-name="scheduling"></path>
+</g>
+<g transform="translate(6089, 0)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="scheduling" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="scheduling" data-compartment="0">
+<a id="..\web\src\stores\views\scheduling.ts.scheduling" xlink:href="..\web\src\stores\views\scheduling.ts"><text x="174.0" y="14.1" stroke="none" text-anchor="middle" data-name="scheduling" data-compartment="0">scheduling</text></a>
+
+</g>
+</g>
+<g transform="translate(6089, 32)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="scheduling" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="scheduling" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="scheduling" data-compartment="1">+sessionName: string</text>
+<text x="0.0" y="30.3" stroke="none" data-name="scheduling" data-compartment="1">+sessionDate: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="scheduling" data-compartment="1">+sessionNotes: string</text>
+<text x="0.0" y="62.7" stroke="none" data-name="scheduling" data-compartment="1">+sessionActivities: SessionActivity[]</text>
+<text x="0.0" y="78.9" stroke="none" data-name="scheduling" data-compartment="1">+selectedTeam: string | null</text>
+<text x="0.0" y="95.1" stroke="none" data-name="scheduling" data-compartment="1">+upcomingSessions: Session[]</text>
+<text x="0.0" y="111.3" stroke="none" data-name="scheduling" data-compartment="1">+previousSessions: Session[]</text>
+<text x="0.0" y="127.5" stroke="none" data-name="scheduling" data-compartment="1">+selectedTab: &quot;lists&quot; | &quot;last&quot; | &quot;history&quot;</text>
+<text x="0.0" y="143.7" stroke="none" data-name="scheduling" data-compartment="1">+expandedSessions: { [key: string]: boolean</text>
+<text x="0.0" y="159.9" stroke="none" data-name="scheduling" data-compartment="1">}</text>
+<text x="0.0" y="176.1" stroke="none" data-name="scheduling" data-compartment="1">-activitiesList: Activity[]</text>
+<text x="0.0" y="192.3" stroke="none" data-name="scheduling" data-compartment="1">-teamsList: Team[]</text>
+
+</g>
+</g>
+<g transform="translate(6089, 242)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="scheduling" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="scheduling" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="scheduling" data-compartment="2">+addToSession(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="scheduling" data-compartment="2">+removeFromSession(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="scheduling" data-compartment="2">+handleDragStart(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="scheduling" data-compartment="2">+handleDragOver(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="scheduling" data-compartment="2">+handleDrop(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="scheduling" data-compartment="2">+switchTab(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="scheduling" data-compartment="2">+toggleSessionDetails(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="scheduling" data-compartment="2">+loadSession(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="scheduling" data-compartment="2">+saveSession(): void</text>
+<text x="0.0" y="159.9" stroke="none" data-name="scheduling" data-compartment="2">+moveActivityUp(): void</text>
+<text x="0.0" y="176.1" stroke="none" data-name="scheduling" data-compartment="2">+moveActivityDown(): void</text>
+<text x="0.0" y="192.3" stroke="none" data-name="scheduling" data-compartment="2">+deleteSession(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="sessions">
+<g fill="#eee8d5" stroke="#33322E" data-name="sessions">
+<rect x="6493.0" y="153.5" height="145.0" width="254.0" data-name="sessions"></rect>
+<path d="M6493.0 185.5 L6747.0 185.5" fill="none" data-name="sessions"></path>
+<path d="M6493.0 233.5 L6747.0 233.5" fill="none" data-name="sessions"></path>
+</g>
+<g transform="translate(6493, 153.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="sessions" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="sessions" data-compartment="0">
+<a id="..\web\src\stores\views\sessions.ts.sessions" xlink:href="..\web\src\stores\views\sessions.ts"><text x="119.0" y="14.1" stroke="none" text-anchor="middle" data-name="sessions" data-compartment="0">sessions</text></a>
+
+</g>
+</g>
+<g transform="translate(6493, 185.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="sessions" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="sessions" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="sessions" data-compartment="1">-upcomingSessions: Session[]</text>
+<text x="0.0" y="30.3" stroke="none" data-name="sessions" data-compartment="1">-previousSessions: Session[]</text>
+
+</g>
+</g>
+<g transform="translate(6493, 233.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="sessions" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="sessions" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="sessions" data-compartment="2">+completeSession(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="sessions" data-compartment="2">+updateNotes(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="sessions" data-compartment="2">+toggleAttendance(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="teams">
+<g fill="#eee8d5" stroke="#33322E" data-name="teams">
+<rect x="6787.0" y="104.5" height="243.0" width="367.0" data-name="teams"></rect>
+<path d="M6787.0 136.5 L7154.0 136.5" fill="none" data-name="teams"></path>
+<path d="M6787.0 201.5 L7154.0 201.5" fill="none" data-name="teams"></path>
+</g>
+<g transform="translate(6787, 104.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="teams" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="teams" data-compartment="0">
+<a id="..\web\src\stores\views\teams.ts.teams" xlink:href="..\web\src\stores\views\teams.ts"><text x="175.5" y="14.1" stroke="none" text-anchor="middle" data-name="teams" data-compartment="0">teams</text></a>
+
+</g>
+</g>
+<g transform="translate(6787, 136.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="teams" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="teams" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="teams" data-compartment="1">+teamsList: Team[]</text>
+<text x="0.0" y="30.3" stroke="none" data-name="teams" data-compartment="1">+selectedTeam: string | null</text>
+<text x="0.0" y="46.5" stroke="none" data-name="teams" data-compartment="1">+rightPanelState: &quot;placeholder&quot; | &quot;edit_team&quot;</text>
+
+</g>
+</g>
+<g transform="translate(6787, 201.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="teams" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="teams" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="teams" data-compartment="2">+createTeam(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="teams" data-compartment="2">+onTeamSelection(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="teams" data-compartment="2">+addPlayer(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="teams" data-compartment="2">+updatePlayer(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="teams" data-compartment="2">+removePlayer(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="teams" data-compartment="2">+onSaveChanges(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="teams" data-compartment="2">+onDeleteTeam(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="teams" data-compartment="2">+onTeamSelectForSession(): string | null</text>
+
+</g>
+</g>
+</g>
+<g data-name="ActivitiesSync">
+<g fill="#eee8d5" stroke="#33322E" data-name="ActivitiesSync">
+<rect x="7194.0" y="96.5" height="259.0" width="2342.0" data-name="ActivitiesSync"></rect>
+<path d="M7194.0 128.5 L9536.0 128.5" fill="none" data-name="ActivitiesSync"></path>
+<path d="M7194.0 209.5 L9536.0 209.5" fill="none" data-name="ActivitiesSync"></path>
+</g>
+<g transform="translate(7194, 96.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ActivitiesSync" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ActivitiesSync" data-compartment="0">
+<a id="..\web\src\libs\graphql\sync\activitiesSync.ts.ActivitiesSync" xlink:href="..\web\src\libs\graphql\sync\activitiesSync.ts"><text x="1163.0" y="14.1" stroke="none" text-anchor="middle" data-name="ActivitiesSync" data-compartment="0">ActivitiesSync</text></a>
+
+</g>
+</g>
+<g transform="translate(7194, 128.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ActivitiesSync" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ActivitiesSync" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="ActivitiesSync" data-compartment="1">-static ACTIVITIES_LIST_QUERY: &quot;
+query getActivities {
+activityTemplates {
+id
+name
+duration
+description
+imgUrl
+lastModified
+}
+}
+&quot;</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ActivitiesSync" data-compartment="1">-static DELETE_MUTATION: &quot;
+mutation deleteActivities($id: Int!) {
+deleteFromActivityTemplates(where: { id: { eq: $id } }) {
+id
+}
+}
+&quot;</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ActivitiesSync" data-compartment="1">-static POST_MUTATION: &quot;
+mutation insertActivities($activity: ActivityTemplatesInsertInput!) {
+insertIntoActivityTemplatesSingle(values: $activity) {
+id
+name
+duration
+description
+imgUrl
+lastModified
+}
+}
+&quot;</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ActivitiesSync" data-compartment="1">-static PUT_MUTATION: &quot;
+mutation updateActivities(
+$id: Int!
+$activity: ActivityTemplatesUpdateInput!
+) {
+updateActivityTemplates(where: { id: { eq: $id } }, set: $activity) {
+id
+name
+duration
+description
+imgUrl
+lastModified
+}
+}
+&quot;</text>
+
+</g>
+</g>
+<g transform="translate(7194, 209.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ActivitiesSync" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ActivitiesSync" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="ActivitiesSync" data-compartment="2">-static hhmmToMinutes(): number</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ActivitiesSync" data-compartment="2">-static minutesToHHMM(): string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ActivitiesSync" data-compartment="2">-static convertGraphQLActivityToActivity(): Activity[]</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ActivitiesSync" data-compartment="2">-static convertActivityToGraphQLActivity(): GraphQLActivity</text>
+<text x="0.0" y="78.9" stroke="none" data-name="ActivitiesSync" data-compartment="2">+subscribeToActivitiesList(): Promise&lt;void&gt;</text>
+<text x="0.0" y="95.1" stroke="none" data-name="ActivitiesSync" data-compartment="2">+delete(): Promise&lt;void&gt;</text>
+<text x="0.0" y="111.3" stroke="none" data-name="ActivitiesSync" data-compartment="2">+post(): Promise&lt;void&gt;</text>
+<text x="0.0" y="127.5" stroke="none" data-name="ActivitiesSync" data-compartment="2">+put(): Promise&lt;void&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="ActivitiesListsSync">
+<g fill="#eee8d5" stroke="#33322E" data-name="ActivitiesListsSync">
+<rect x="9576.0" y="105.0" height="242.0" width="2438.0" data-name="ActivitiesListsSync"></rect>
+<path d="M9576.0 137.0 L12014.0 137.0" fill="none" data-name="ActivitiesListsSync"></path>
+<path d="M9576.0 234.0 L12014.0 234.0" fill="none" data-name="ActivitiesListsSync"></path>
+</g>
+<g transform="translate(9576, 105)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ActivitiesListsSync" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ActivitiesListsSync" data-compartment="0">
+<a id="..\web\src\libs\graphql\sync\activitiesSync.ts.ActivitiesListsSync" xlink:href="..\web\src\libs\graphql\sync\activitiesSync.ts"><text x="1211.0" y="14.1" stroke="none" text-anchor="middle" data-name="ActivitiesListsSync" data-compartment="0">ActivitiesListsSync</text></a>
+
+</g>
+</g>
+<g transform="translate(9576, 137)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ActivitiesListsSync" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ActivitiesListsSync" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="ActivitiesListsSync" data-compartment="1">-static LISTS_LIST_QUERY: &quot;
+query getLists {
+lists {
+id
+name
+listToActivityTemplate {
+id
+activityTemplate {
+id
+}
+}
+accentColor
+lastModified
+}
+}
+&quot;</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ActivitiesListsSync" data-compartment="1">-static DELETE_MUTATION: &quot;
+mutation deleteLists($id: Int!) {
+deleteFromLists(where: { id: { eq: $id } }) {
+id
+}
+
+deleteFromActivityTemplateList(where: { list: { eq: $id } }) {
+id
+}
+}
+&quot;</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ActivitiesListsSync" data-compartment="1">-static POST_MUTATION: &quot;
+mutation insertLists($list: ListsInsertInput!) {
+insertIntoListsSingle(values: $list) {
+id
+name
+accentColor
+lastModified
+}
+}
+&quot;</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ActivitiesListsSync" data-compartment="1">-static PUT_MUTATION: &quot;
+mutation updateLists(
+$id: Int!
+$list: ListsUpdateInput!
+$activities: [ActivityTemplateListInsertInput!]!
+) {
+updateLists(where: { id: { eq: $id } }, set: $list) {
+id
+name
+accentColor
+lastModified
+}
+deleteFromActivityTemplateLi...</text>
+<text x="0.0" y="78.9" stroke="none" data-name="ActivitiesListsSync" data-compartment="1">-static PUT_NO_ACTIVITIES_MUTATION: &quot;
+mutation updateLists($id: Int!, $list: ListsUpdateInput!) {
+updateLists(where: { id: { eq: $id } }, set: $list) {
+id
+name
+accentColor
+lastModified
+}
+}
+&quot;</text>
+
+</g>
+</g>
+<g transform="translate(9576, 234)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ActivitiesListsSync" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ActivitiesListsSync" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="ActivitiesListsSync" data-compartment="2">-static convertGraphQLListToList(): ActivitiesList[]</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ActivitiesListsSync" data-compartment="2">-static convertListToGraphQLList(): GraphQLListPost</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ActivitiesListsSync" data-compartment="2">+subscribeToActivitiesListsList(): Promise&lt;void&gt;</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ActivitiesListsSync" data-compartment="2">+delete(): Promise&lt;void&gt;</text>
+<text x="0.0" y="78.9" stroke="none" data-name="ActivitiesListsSync" data-compartment="2">+post(): Promise&lt;void&gt;</text>
+<text x="0.0" y="95.1" stroke="none" data-name="ActivitiesListsSync" data-compartment="2">+put(): Promise&lt;void&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="Sync">
+<g fill="#eee8d5" stroke="#33322E" data-name="Sync">
+<rect x="12054.0" y="153.5" height="145.0" width="387.0" data-name="Sync"></rect>
+<path d="M12054.0 185.5 L12441.0 185.5" fill="none" data-name="Sync"></path>
+<path d="M12054.0 266.5 L12441.0 266.5" fill="none" data-name="Sync"></path>
+</g>
+<g transform="translate(12054, 153.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Sync" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Sync" data-compartment="0">
+<a id="..\web\src\libs\graphql\sync\index.ts.Sync" xlink:href="..\web\src\libs\graphql\sync\index.ts"><text x="185.5" y="14.1" stroke="none" text-anchor="middle" data-name="Sync" data-compartment="0">Sync</text></a>
+
+</g>
+</g>
+<g transform="translate(12054, 185.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Sync" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Sync" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Sync" data-compartment="1">+static activities: { activity: ActivitiesSync</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Sync" data-compartment="1">list: ActivitiesListsSync</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Sync" data-compartment="1">}</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Sync" data-compartment="1">+static teams: TeamsSync</text>
+
+</g>
+</g>
+<g transform="translate(12054, 266.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Sync" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Sync" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="Sync" data-compartment="2">+static subscribeToStateLists(): Promise&lt;void&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="TeamsSync">
+<g fill="#eee8d5" stroke="#33322E" data-name="TeamsSync">
+<rect x="10987.5" y="492.0" height="226.0" width="2520.0" data-name="TeamsSync"></rect>
+<path d="M10987.5 524.0 L13507.5 524.0" fill="none" data-name="TeamsSync"></path>
+<path d="M10987.5 621.0 L13507.5 621.0" fill="none" data-name="TeamsSync"></path>
+</g>
+<g transform="translate(10987.5, 492)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TeamsSync" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TeamsSync" data-compartment="0">
+<a id="..\web\src\libs\graphql\sync\teamsSync.ts.TeamsSync" xlink:href="..\web\src\libs\graphql\sync\teamsSync.ts"><text x="1252.0" y="14.1" stroke="none" text-anchor="middle" data-name="TeamsSync" data-compartment="0">TeamsSync</text></a>
+
+</g>
+</g>
+<g transform="translate(10987.5, 524)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TeamsSync" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TeamsSync" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="TeamsSync" data-compartment="1">-static TEAMS_LIST_QUERY: &quot;
+query getTeams {
+teams {
+id
+name
+description
+lastModified
+player {
+id
+name
+lastModified
+}
+}
+}
+&quot;</text>
+<text x="0.0" y="30.3" stroke="none" data-name="TeamsSync" data-compartment="1">-static DELETE_MUTATION: &quot;
+mutation deleteTeam($id: Int!) {
+deleteFromTeams(where: { id: { eq: $id } }) {
+id
+}
+}
+&quot;</text>
+<text x="0.0" y="46.5" stroke="none" data-name="TeamsSync" data-compartment="1">-static POST_MUTATION: &quot;
+mutation insertTeam($team: TeamsInsertInput!) {
+insertIntoTeamsSingle(values: $team) {
+id
+}
+}
+&quot;</text>
+<text x="0.0" y="62.7" stroke="none" data-name="TeamsSync" data-compartment="1">-static PUT_MUTATION: &quot;
+mutation updateTeam(
+$id: Int!
+$team: TeamsUpdateInput!
+$players: [PlayersInsertInput!]!
+) {
+updateTeams(set: $team, where: { id: { eq: $id } }) {
+id
+name
+description
+lastModified
+}
+
+deleteFromPlayers(where: { team: { eq: $id ...</text>
+<text x="0.0" y="78.9" stroke="none" data-name="TeamsSync" data-compartment="1">-static PUT_NO_PLAYERS_MUTATION: &quot;
+mutation updateTeam($id: Int!, $team: TeamsUpdateInput!) {
+updateTeams(set: $team, where: { id: { eq: $id } }) {
+id
+name
+description
+lastModified
+}
+
+deleteFromPlayers(where: { team: { eq: $id } }) {
+id
+}
+}
+&quot;</text>
+
+</g>
+</g>
+<g transform="translate(10987.5, 621)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TeamsSync" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TeamsSync" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="TeamsSync" data-compartment="2">-static convertGraphQLTeamToTeam(): Team[]</text>
+<text x="0.0" y="30.3" stroke="none" data-name="TeamsSync" data-compartment="2">+subscribeToTeamsList(): Promise&lt;void&gt;</text>
+<text x="0.0" y="46.5" stroke="none" data-name="TeamsSync" data-compartment="2">+delete(): Promise&lt;void&gt;</text>
+<text x="0.0" y="62.7" stroke="none" data-name="TeamsSync" data-compartment="2">+post(): Promise&lt;void&gt;</text>
+<text x="0.0" y="78.9" stroke="none" data-name="TeamsSync" data-compartment="2">+put(): Promise&lt;void&gt;</text>
+
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>
