@@ -1,4 +1,10 @@
-import type { ActivitiesList, Activity, Team } from "@/typedefs/storeTypes";
+/**
+ * Sync syncronises data between the frontend Alpine.js stores and the backend via GraphQL.
+ * It exposes modular sync libs for different data types (activities, teams, etc.)
+ * @module
+ */
+
+import type { ActivitiesList, Activity, Team } from "@/typeDefs/storeTypes";
 
 import { ActivitiesSync, ActivitiesListsSync } from "./activitiesSync";
 import TeamsSync from "./teamsSync";
@@ -15,7 +21,7 @@ import TeamsSync from "./teamsSync";
  *    ..
  *    ..
  */
-class Sync {
+export class Sync {
   static activities = {
     activity: new ActivitiesSync(),
     list: new ActivitiesListsSync(),

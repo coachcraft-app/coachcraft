@@ -1,8 +1,18 @@
-import type { GraphQLTeam } from "@/typedefs/graphqlTypes";
-import urql from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
-import type { Team } from "@/typedefs/storeTypes";
+/**
+ * TeamsSync class to handle synchronization of Team data between frontend and backend using GraphQL.
+ * It provides methods to subscribe to team list updates, and to create, update, and delete teams.
+ * @module
+ */
 
-class TeamsSync {
+import type { GraphQLTeam } from "@/typeDefs/graphqlTypes";
+import urql from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
+import type { Team } from "@/typeDefs/storeTypes";
+
+/**
+ * TeamsSync class to handle synchronization of Team data between frontend and backend using GraphQL.
+ * It provides methods to subscribe to team list updates, and to create, update, and delete teams.
+ */
+export class TeamsSync {
   // GraphQL Queries and Mutations
   private static readonly TEAMS_LIST_QUERY = /* GraphQL */ `
     query getTeams {
@@ -80,7 +90,10 @@ class TeamsSync {
     }));
   }
 
-  // Public API methods
+  /**
+   * Subscribe teams store to mutations in frontend
+   * @param teamsList Array of teams on team store on Alpine.js
+   */
   async subscribeToTeamsList(teamsList: Team[]): Promise<void> {
     (await urql.getInstance())
       .getUrqlClient()
@@ -95,6 +108,11 @@ class TeamsSync {
         }
       });
   }
+
+  /**
+   * Deletes a team by ID from the backend
+   * @param id ID of team to delete
+   */
   async delete(id: string): Promise<void> {
     const result = (await urql.getInstance())
       .getUrqlClient()
@@ -103,6 +121,11 @@ class TeamsSync {
       });
     console.log("delete team", result);
   }
+
+  /**
+   * Creates a new team on the backend
+   * @param team Team object with new data
+   */
   async post(team: Team): Promise<void> {
     const result = (await urql.getInstance())
       .getUrqlClient()
@@ -114,6 +137,11 @@ class TeamsSync {
       });
     console.log("post team", result);
   }
+
+  /**
+   * Updates a team on the backend
+   * @param team Team object with updated data
+   */
   async put(team: Team): Promise<void> {
     if (team.players.length > 0) {
       const result = (await urql.getInstance())
