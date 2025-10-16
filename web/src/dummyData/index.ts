@@ -1,15 +1,25 @@
+/**
+ * Loads dummy data into Alpine.js stores for development and testing purposes.
+ * Used in main.ts when not in production mode.
+ * @module
+ */
+
 import alpine from "@/libs/alpine";
 import dummyAuth from "./auth.json";
 import dummyActivities from "./activities.json";
 import dummyScheduling from "./scheduling.json";
 import dummyTeams from "./teams.json";
 
-import type { Auth } from "@/typedefs/storeTypes";
-import type activities from "@/stores/views/activities";
-import type teams from "@/stores/views/teams";
-import type scheduling from "@/stores/views/scheduling";
+import type { Auth } from "@/typeDefs/storeTypes";
+import type ActivitiesView from "@/stores/views/activities";
+import type TeamsView from "@/stores/views/teams";
+import type SchedulingView from "@/stores/views/scheduling";
 
-export default function loadDummyData() {
+/**
+ * Loads dummy data into Alpine.js stores for development and testing purposes.
+ * Used in main.ts when not in production mode.
+ */
+export function loadDummyData() {
   const globalAlpine = alpine.getInstance().getGlobalAlpine();
 
   const auth: Auth = globalAlpine.store("auth") as Auth;
@@ -44,13 +54,19 @@ export default function loadDummyData() {
   // auth.user.profile.given_name = dummyAuth.given_name;
   // auth.user.profile.email = dummyAuth.email;
 
-  const activities: activities = globalAlpine.store("activities") as activities;
+  const activities: ActivitiesView = globalAlpine.store(
+    "activities",
+  ) as ActivitiesView;
   activities.activitiesList = dummyActivities.activitiesList;
   activities.activitiesListsList = dummyActivities.activitiesListsList;
 
-  const teams: teams = globalAlpine.store("teams") as teams;
+  const teams: TeamsView = globalAlpine.store("teams") as TeamsView;
   teams.teamsList = dummyTeams.teamsList;
 
-  const scheduling: scheduling = globalAlpine.store("scheduling") as scheduling;
+  const scheduling: SchedulingView = globalAlpine.store(
+    "scheduling",
+  ) as SchedulingView;
   scheduling.previousSessions = dummyScheduling.previousSessions;
 }
+
+export default loadDummyData;
