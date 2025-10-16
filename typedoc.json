@@ -1,4 +1,0 @@
-{
-  //   "entryPointStrategy": "packages",
-  "entryPoints": ["backend/src/**/*.ts", "web/src/**/*.ts"]
-}
