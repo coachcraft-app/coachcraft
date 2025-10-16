@@ -1,4 +1,12 @@
-export default class router {
+/**
+ * A simple router class to manage page navigation in a single-page application (SPA).
+ * It uses the URL hash to determine the current page and allows for navigation between different views.
+ */
+
+/**
+ * Router class to manage page navigation
+ */
+export class Router {
   public defaultPage: string = "activities";
   public currentPage: string = "";
 
@@ -22,3 +30,5 @@ export default class router {
     });
   }
 }
+
+export default Router;
