@@ -57,14 +57,28 @@ export function loadDummyData() {
   const activities: ActivitiesView = globalAlpine.store(
     "activities",
   ) as ActivitiesView;
-  activities.activitiesList = dummyActivities.activitiesList;
-  activities.activitiesListsList = dummyActivities.activitiesListsList;
+
+  activities.activitiesList.length = 0;
+  for (const activity of dummyActivities.activitiesList) {
+    activities.activitiesList.unshift(activity);
+  }
+
+  activities.activitiesListsList.length = 0;
+  for (const list of dummyActivities.activitiesListsList) {
+    activities.activitiesListsList.unshift(list);
+  }
 
   const teams: TeamsView = globalAlpine.store("teams") as TeamsView;
-  teams.teamsList = dummyTeams.teamsList;
+  teams.teamsList.length = 0;
+  for (const team of dummyTeams.teamsList) {
+    teams.teamsList.unshift(team);
+  }
 
   const scheduling: SchedulingView = globalAlpine.store(
     "scheduling",
   ) as SchedulingView;
-  scheduling.previousSessions = dummyScheduling.previousSessions;
+  scheduling.previousSessions.length = 0;
+  for (const session of dummyScheduling.previousSessions) {
+    scheduling.previousSessions.unshift(session);
+  }
 }
