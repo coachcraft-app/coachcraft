@@ -10,7 +10,7 @@ import dummyActivities from "./activities.json";
 import dummyScheduling from "./scheduling.json";
 import dummyTeams from "./teams.json";
 
-import type { Auth } from "@/typeDefs/storeTypes";
+import type { Auth } from "@/typedefs/storeTypes";
 import type { ActivitiesView } from "@/stores/views/activities";
 import type { TeamsView } from "@/stores/views/teams";
 import type { SchedulingView } from "@/stores/views/scheduling";

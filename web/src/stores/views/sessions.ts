@@ -4,7 +4,7 @@
  * @class
  */
 
-import type { Session } from "@/typeDefs/storeTypes";
+import type { Session } from "@/typedefs/storeTypes";
 
 /**
  * SessionsView class

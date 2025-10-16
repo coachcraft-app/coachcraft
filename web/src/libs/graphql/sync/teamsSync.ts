@@ -4,9 +4,9 @@
  * @module
  */
 
-import type { GraphQLTeam } from "@/typeDefs/graphqlTypes";
+import type { GraphQLTeam } from "@/typedefs/graphqlTypes";
 import { urql } from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
-import type { Team } from "@/typeDefs/storeTypes";
+import type { Team } from "@/typedefs/storeTypes";
 
 /**
  * TeamsSync class to handle synchronization of Team data between frontend and backend using GraphQL.
