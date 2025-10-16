@@ -9,7 +9,7 @@
  * @param $storeObj - The $store object as String, for ex. "$store.x.y"
  * @param objName - String "y" in "$store.x.y(arg)"" || "$store.x.y()"" || "$store.x.y"
  */
-export default ($storeObj: string, objName: string): string => {
+export function reactify($storeObj: string, objName: string): string {
   //
   //  How the SIGNATURE_ARG_REGEX regex works -
   //
@@ -30,4 +30,4 @@ export default ($storeObj: string, objName: string): string => {
   else {
     return `get ${objName}() { return ${$storeObj}; }`;
   }
-};
+}
