@@ -26,7 +26,7 @@ export function applyMigrationsFromDir(
     const sql = fs.readFileSync(path.join(migrationsDir, file), "utf8");
     // Run each statement separately to handle multiple statements in one file
     sql.split("--> statement-breakpoint").forEach((sql) => {
-      const result = db.run(sql);
+      db.run(sql);
     });
     console.log(`applied migration ${file}`);
   }
@@ -46,7 +46,7 @@ export function applyMigrationsUsingDrizzleKit({
     // We use execSync so this is synchronous in setup scripts; escape paths for PowerShell
     const cmd = `npx --yes drizzle-kit generate --config "${config}"`;
     console.log("running:", cmd);
-    const out = execSync(cmd, { stdio: "inherit" });
+    execSync(cmd, { stdio: "inherit" });
     console.log("drizzle-kit generate completed");
 
     // Apply SQL files from outDir
