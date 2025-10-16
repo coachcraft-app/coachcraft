@@ -53,5 +53,3 @@ export class Toast {
     }, 400);
   }
 }
-
-export default Toast;
