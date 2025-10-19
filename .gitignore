@@ -7,8 +7,6 @@ node_modules
 # Build artifacts / test reports
 dist
 coverage
-/docs
-
 # Frontend build artifacts
 /web/.astro
 
