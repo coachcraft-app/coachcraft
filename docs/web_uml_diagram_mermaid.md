@@ -23,7 +23,7 @@ class auth{
 +userEmail: string | undefined
             
         }
-class router{
+class Router{
             +defaultPage: string
 +currentPage: string
             
@@ -72,6 +72,7 @@ class GraphQLListPost {
 +lastModified?: string
             
         }
+GraphQLTeam  -- "0..*" GraphQLPlayer
 class Auth {
             <<interface>>
             +user: User
@@ -144,6 +145,7 @@ class ToastNotification {
             
         }
 Activity<|..SessionActivity
+Session  -- "0..*" SessionActivity
 class urql{
             -instance: urql$
 -urqlClient: Client | undefined
@@ -151,13 +153,14 @@ class urql{
 +getUrqlClient() Client
         }
 urql  --  urql
-class toast{
+class Toast{
             +notifications: ToastNotification[]
 +displayDuration: number
             +addNotification() void
 +removeNotification() void
         }
-class activities{
+Toast  -- "0..*" ToastNotification
+class ActivitiesView{
             +activitiesListsList: ActivitiesList[]
 +activitiesList: Activity[]
 +activitiesListAccentColors: ActivitiesListAccentColors[]
@@ -179,7 +182,10 @@ class activities{
 +saveActivity() void
 +createActivity() void
         }
-class scheduling{
+ActivitiesView  -- "0..*" ActivitiesList
+ActivitiesView  -- "0..*" Activity
+ActivitiesView  -- "0..*" ActivitiesListAccentColors
+class SchedulingView{
             +sessionName: string
 +sessionDate: string
 +sessionNotes: string
@@ -204,14 +210,21 @@ class scheduling{
 +moveActivityDown() void
 +deleteSession() void
         }
-class sessions{
+SchedulingView  -- "0..*" SessionActivity
+SchedulingView  -- "0..*" Session
+SchedulingView  -- "0..*" Session
+SchedulingView  -- "0..*" Activity
+SchedulingView  -- "0..*" Team
+class SessionsView{
             -upcomingSessions: Session[]
 -previousSessions: Session[]
             +completeSession() void
 +updateNotes() void
 +toggleAttendance() void
         }
-class teams{
+SessionsView  -- "0..*" Session
+SessionsView  -- "0..*" Session
+class TeamsView{
             +teamsList: Team[]
 +selectedTeam: string | null
 +rightPanelState: "placeholder" | "edit_team"
@@ -224,6 +237,7 @@ class teams{
 +onDeleteTeam() void
 +onTeamSelectForSession() string | null
         }
+TeamsView  -- "0..*" Team
 class ActivitiesSync{
             -ACTIVITIES_LIST_QUERY: "\n    query getActivities #123;\n      activityTemplates {\n        id\n        name\n        duration\n        description\n        imgUrl\n        lastModified\n      #125;\n    }\n  "$
 -DELETE_MUTATION: "\n    mutation deleteActivities($id: Int!) #123;\n      deleteFromActivityTemplates(where: { id: { eq: $id #125; }) {\n        id\n      }\n    }\n  "$
