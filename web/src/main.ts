@@ -43,6 +43,9 @@ export async function main(alpineObj: Alpine) {
     // init GraphQL client (backend API)
     await urql.getInstance();
 
+    // init prod version of Sync
+    Sync.getInstance();
+
     // sync state lists with backend
     await Sync.subscribeToStateLists(
       activitiesStore.activitiesList,
@@ -52,6 +55,9 @@ export async function main(alpineObj: Alpine) {
   } else {
     // inject dummy data into state if disconnected from backend
     loadDummyData();
+
+    // init mock version of Sync
+    Sync.getMockInstance();
 
     console.log(
       "Development mode: Skipping Cognito and Urql initialization for testing",
