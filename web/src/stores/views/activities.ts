@@ -74,7 +74,7 @@ export class ActivitiesView {
    */
   public get listsNames() {
     const listsNames: string[] = [];
-    this.activitiesList.forEach((list) => listsNames.push(list.name));
+    for (const list of this.activitiesListsList) listsNames.push(list.name);
     return listsNames;
   }
 
@@ -211,11 +211,11 @@ export class ActivitiesView {
       (activity) => activity.id != this.selectedActivity,
     );
 
-    this.activitiesListsList.forEach((list) => {
-      list.activities.filter(
+    for (const list of this.activitiesListsList) {
+      list.activities = list.activities.filter(
         (activity_id) => activity_id != this.selectedActivity,
       );
-    });
+    }
 
     // Sync to backend
     Sync.activities.activity.delete(Number(this.selectedActivity));
