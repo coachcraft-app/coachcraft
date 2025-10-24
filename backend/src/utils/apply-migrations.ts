@@ -30,7 +30,7 @@ export function applyMigrationsFromDirectory(
     .filter((f) => f.endsWith(".sql"))
     .sort();
 
-  for (let file of files) {
+  for (const file of files) {
     const sql = fs.readFileSync(path.join(migrationsDirectory, file), "utf8");
     // Run each statement separately to handle multiple statements in one file
     const sql_statements = sql.split("--> statement-breakpoint");
