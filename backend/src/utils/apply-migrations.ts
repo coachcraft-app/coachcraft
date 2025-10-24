@@ -9,6 +9,7 @@
 import fs from "fs";
 // eslint-disable-next-line unicorn/prefer-node-protocol -- This is jest not node
 import path from "path";
+// eslint-disable-next-line unicorn/prefer-node-protocol -- This is jest not node
 import { execSync } from "child_process";
 import { database } from "../database/database";
 
