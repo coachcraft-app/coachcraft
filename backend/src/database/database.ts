@@ -14,7 +14,7 @@ const database_file: string = process.env["DEV_DB_URL"] || ":memory:";
 
 if (database_file === ":memory:") {
   logger.warn(
-    ".env property DEV_DB_URL not set! Using impermanent memory as database storage."
+    ".env property DEV_DB_URL not set! Using impermanent memory as database storage.",
   );
 }
 
@@ -25,5 +25,5 @@ export const database: BetterSQLite3Database<typeof database_schema> = drizzle(
   database_file,
   {
     schema: database_schema,
-  }
+  },
 );
