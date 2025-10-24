@@ -19,7 +19,7 @@ import { database } from "../database/database";
  */
 export function applyMigrationsFromDirectory(
   // Default to "drizzle/migrations" directory in project root
-  migrationsDirectory = path.resolve(process.cwd(), "drizzle", "migrations"),
+  migrationsDirectory = path.resolve(process.cwd(), "drizzle", "migrations")
 ): void {
   // Check if directory exists
   if (!fs.existsSync(migrationsDirectory)) return;
@@ -30,14 +30,16 @@ export function applyMigrationsFromDirectory(
     .filter((f) => f.endsWith(".sql"))
     .sort();
 
-  files.forEach((file: string) => {
+  for (let file of files) {
     const sql = fs.readFileSync(path.join(migrationsDirectory, file), "utf8");
     // Run each statement separately to handle multiple statements in one file
-    sql.split("--> statement-breakpoint").forEach((sql) => {
-      database.run(sql);
-    });
+    const sql_statements = sql.split("--> statement-breakpoint");
+    for (let statement of sql_statements) {
+      database.run(statement);
+    }
+
     console.log(`applied migration ${file}`);
-  });
+  }
 }
 
 /**
