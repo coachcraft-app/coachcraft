@@ -9,12 +9,22 @@ import type { ActivitiesList, Activity, Team } from "@/typeDefs/storeTypes";
 import { ActivitiesSync, ActivitiesListsSync } from "./activitiesSync";
 import { TeamsSync } from "./teamsSync";
 
+import {
+  MockActivitiesSync,
+  MockActivitiesListsSync,
+  MockTeamsSync,
+} from "./mockSync";
+
 /**
- * Sync statically exposes modular sync libs (activitiesSync, teamsSync, etc.)
+ * `Sync` is a singleton that statically exposes modular sync libs (activitiesSync, teamsSync, etc.)
+ *
+ * use `getInstance()` to init prod version of Sync
+ * use `getMockInstance()` to init mock version of Sync
  *
  * - Accessing sync libs:
  *  - import Sync from "sync.ts";
  *
+ *    Sync.getInstance();
  *    Sync.activities.list.put(<args>);
  *    Sync.activities.activity.post(<args>);
  *    Sync.teams.delete(<args>);
@@ -22,16 +32,43 @@ import { TeamsSync } from "./teamsSync";
  *    ..
  */
 export class Sync {
-  static activities = {
+  private static instance: Sync;
+  public static activities = {
     activity: new ActivitiesSync(),
     list: new ActivitiesListsSync(),
   };
-  static teams = new TeamsSync();
+  public static teams: TeamsSync = new TeamsSync();
+
+  private constructor() {}
+
+  public static getInstance(): Sync {
+    if (!Sync.instance) {
+      Sync.instance = new Sync();
+    }
+
+    return Sync.instance;
+  }
+
+  public static getMockInstance(): Sync {
+    if (!Sync.instance) {
+      Sync.instance = new Sync();
+
+      Sync.activities = {
+        activity: new MockActivitiesSync(),
+        list: new MockActivitiesListsSync(),
+      };
+      Sync.teams = new MockTeamsSync();
+
+      console.log("Using mock sync layer");
+    }
+
+    return Sync.instance;
+  }
 
   /**
    * Sync activitiesList, listsList, teamsList to the server
    */
-  static async subscribeToStateLists(
+  public static async subscribeToStateLists(
     activitiesList: Activity[],
     activitiesListsList: ActivitiesList[],
     teamsList: Team[],
