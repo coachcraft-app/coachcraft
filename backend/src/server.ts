@@ -25,33 +25,37 @@ export const yoga = createYoga<{
   context: createContext,
   // enable Fastify logging
   logging: {
-    debug: (...args) => {
-      for (const arg of args) app.log.debug(arg);
+    debug: (...arguments_) => {
+      for (const argument of arguments_) app.log.debug(argument);
     },
-    info: (...args) => {
-      for (const arg of args) app.log.info(arg);
+    info: (...arguments_) => {
+      for (const argument of arguments_) app.log.info(argument);
     },
-    warn: (...args) => {
-      for (const arg of args) app.log.warn(arg);
+    warn: (...arguments_) => {
+      for (const argument of arguments_) app.log.warn(argument);
     },
-    error: (...args) => {
-      for (const arg of args) app.log.error(arg);
+    error: (...arguments_) => {
+      for (const argument of arguments_) app.log.error(argument);
     },
   },
 });
 
 // Yoga needs this to avoid errors with multipart data
-app.addContentTypeParser("multipart/form-data", {}, (_req, _payload, done) =>
-  done(null),
+app.addContentTypeParser(
+  "multipart/form-data",
+  {},
+  (_request, _payload, done) =>
+    // eslint-disable-next-line unicorn/no-null -- `done` expects `null` or `Error` as first arg
+    done(null),
 );
 
 // add /graphql endpoint
 app.route({
   url: yoga.graphqlEndpoint,
   method: ["GET", "POST", "OPTIONS"],
-  handler: (req, reply) =>
-    yoga.handleNodeRequestAndResponse(req, reply, {
-      req,
+  handler: (request, reply) =>
+    yoga.handleNodeRequestAndResponse(request, reply, {
+      req: request,
       reply,
     }),
 });

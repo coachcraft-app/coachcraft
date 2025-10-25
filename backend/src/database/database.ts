@@ -7,13 +7,12 @@
  */
 
 import { BetterSQLite3Database, drizzle } from "drizzle-orm/better-sqlite3";
-import logger from "../logger";
-import * as dbSchema from "../db/schema";
+import * as database_schema from "./schema";
 
 /** SQLite db is either stored at path set in .env or in RAM */
-const db_file: string = process.env["DEV_DB_URL"] || ":memory:";
+const database_file: string = process.env["DEV_DB_URL"] || ":memory:";
 
-if (db_file === ":memory:") {
+if (database_file === ":memory:") {
   logger.warn(
     ".env property DEV_DB_URL not set! Using impermanent memory as database storage.",
   );
@@ -22,6 +21,9 @@ if (db_file === ":memory:") {
 /**
  * A Drizzle instance using betterSQLite3
  */
-export const db: BetterSQLite3Database<typeof dbSchema> = drizzle(db_file, {
-  schema: dbSchema,
-});
+export const database: BetterSQLite3Database<typeof database_schema> = drizzle(
+  database_file,
+  {
+    schema: database_schema,
+  },
+);
