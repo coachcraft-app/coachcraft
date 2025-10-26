@@ -6,7 +6,7 @@
  */
 
 import type { GraphQLSession } from "@/typeDefs/graphqlTypes";
-import type { Session, SessionActivity } from "@/typeDefs/storeTypes";
+import type { Session } from "@/typeDefs/storeTypes";
 import { urql } from "@/libs/graphql/urql"; // importing a pre-initialised instance of urql
 import { ActivitiesSync } from "./activitiesSync";
 
@@ -15,6 +15,14 @@ import { ActivitiesSync } from "./activitiesSync";
  * It provides methods to subscribe to the sessions list, and to perform CRUD operations.
  */
 export class SessionsSync {
+  private static urqlInstancePromise: Promise<urql> | undefined = undefined;
+  private static async getClient() {
+    if (!SessionsSync.urqlInstancePromise) {
+      SessionsSync.urqlInstancePromise = urql.getInstance();
+    }
+    const instance = await SessionsSync.urqlInstancePromise;
+    return instance.getUrqlClient();
+  }
   // GraphQL Queries and Mutations
   private static readonly SESSIONS_LIST_QUERY = /* GraphQL */ `
     query getSessions {
@@ -93,7 +101,7 @@ export class SessionsSync {
       activities: ActivitiesSync.convertGraphQLActivityToActivity(
         activities || [],
       ),
-      team: teams?.name,
+      team: teams?.id?.toString(),
     }));
   }
 
@@ -103,7 +111,7 @@ export class SessionsSync {
     return {
       id: +session.id,
       name: session.name,
-      date: new Date(session.date).toString(),
+      date: session.date,
       notes: session.notes,
       lastModified:
         (session.lastModified && session.lastModified.toString()) ||
@@ -134,28 +142,27 @@ export class SessionsSync {
     previousSessionsList: Session[],
     upcomingSessionsList: Session[],
   ): Promise<void> {
-    (await urql.getInstance())
-      .getUrqlClient()
-      .query(SessionsSync.SESSIONS_LIST_QUERY, {})
-      .subscribe((result) => {
-        // empty the array and repopulate
-        previousSessionsList.length = 0;
-        upcomingSessionsList.length = 0;
-        for (const session of SessionsSync.convertGraphQLSessionToSession(
-          result.data?.sessions || [],
-        )) {
-          const sessionDate = new Date(session.date);
-          const currentDate = new Date();
-          if (sessionDate >= currentDate) upcomingSessionsList.push(session);
-          else previousSessionsList.push(session);
-        }
-      });
+    const client = await SessionsSync.getClient();
+    client.query(SessionsSync.SESSIONS_LIST_QUERY, {}).subscribe((result) => {
+      // empty the array and repopulate
+      previousSessionsList.length = 0;
+      upcomingSessionsList.length = 0;
+      for (const session of SessionsSync.convertGraphQLSessionToSession(
+        result.data?.sessions || [],
+      )) {
+        const sessionDate = new Date(session.date);
+        const currentDate = new Date();
+        if (sessionDate >= currentDate) upcomingSessionsList.push(session);
+        else previousSessionsList.push(session);
+      }
+    });
   }
 
   async delete(id: number): Promise<void> {
-    const result = await (await urql.getInstance())
-      .getUrqlClient()
-      .mutation(SessionsSync.DELETE_MUTATION, { id: id });
+    const client = await SessionsSync.getClient();
+    const result = await client
+      .mutation(SessionsSync.DELETE_MUTATION, { id: id })
+      .toPromise();
     console.log("delete session", result);
   }
 
@@ -169,35 +176,49 @@ export class SessionsSync {
       notes: graphql_session.notes,
       team: (session.team && +session.team) || 1,
     };
-
-    const result = await (await urql.getInstance())
-      .getUrqlClient()
+    const client = await SessionsSync.getClient();
+    const result = await client
       .mutation(SessionsSync.POST_MUTATION, {
         session: post,
-      });
+      })
+      .toPromise();
 
-    const activities_result = await (await urql.getInstance())
-      .getUrqlClient()
+    const newSessionId = result.data?.insertIntoSessionsSingle?.id;
+    if (newSessionId) {
+      session.id = String(newSessionId);
+    }
+
+    const activitiesPayload = session.activities.map((activity) => ({
+      name: activity.name,
+      description: activity.description,
+      // convert HH:MM to minutes
+      duration: (() => {
+        const [h, m] = activity.duration.split(":").map(Number);
+        return h * 60 + m;
+      })(),
+      imgUrl: activity.img_url,
+      session: newSessionId,
+    }));
+
+    const activities_result = await client
       .mutation(SessionsSync.POST_ACTIVITIES, {
-        activities: session.activities.map((activity) => {
-          let new_activity =
-            ActivitiesSync.convertActivityToGraphQLActivity(activity);
-          new_activity.session = result.data.insertIntoSessionsSingle.id;
-          return new_activity;
-        }),
-      });
+        activities: activitiesPayload,
+      })
+      .toPromise();
     console.log("post session", result);
     console.log("post session activities", activities_result);
   }
 
   async notes(session: Session): Promise<void> {
-    const result = await (await urql.getInstance())
-      .getUrqlClient()
+    const client = await SessionsSync.getClient();
+    const result = await client
       .mutation(SessionsSync.PUT_MUTATION, {
         id: +session.id,
         set: {
           notes: session.notes,
         },
-      });
+      })
+      .toPromise();
+    console.log("update session notes", result);
   }
 }
