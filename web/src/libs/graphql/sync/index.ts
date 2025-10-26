@@ -19,6 +19,7 @@ import {
   MockActivitiesSync,
   MockActivitiesListsSync,
   MockTeamsSync,
+  MockSessionsSync,
 } from "./mockSync";
 
 /**
@@ -65,6 +66,7 @@ export class Sync {
         list: new MockActivitiesListsSync(),
       };
       Sync.teams = new MockTeamsSync();
+      Sync.sessions = new MockSessionsSync();
 
       console.log("Using mock sync layer");
     }
