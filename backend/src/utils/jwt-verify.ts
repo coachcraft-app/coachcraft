@@ -24,7 +24,7 @@ const jwksClient = ISSUER
 
 function getSigningKey(
   header: JwtHeader,
-  callback: (error: Error | null, key?: string) => void
+  callback: (error: Error | null, key?: string) => void,
 ): void {
   jwksClient?.getSigningKey(header.kid, (error, key) => {
     if (error) return callback(error as Error);
@@ -49,7 +49,7 @@ function getBearerToken(request: FastifyRequest): string | undefined {
  */
 export async function verifyJwtOnRequest(
   request: FastifyRequest,
-  reply: FastifyReply
+  reply: FastifyReply,
 ): Promise<void> {
   // break early in testing
   if ("NO_AUTH" in process.env) return;
@@ -71,7 +71,7 @@ export async function verifyJwtOnRequest(
       getSigningKey,
       { algorithms: ["RS256"], issuer: ISSUER },
       (error, decoded) =>
-        error ? reject(error) : resolve(decoded as JwtPayload | string)
+        error ? reject(error) : resolve(decoded as JwtPayload | string),
     );
   });
 
