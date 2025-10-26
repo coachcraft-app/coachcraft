@@ -50,7 +50,7 @@ export const sessions = sqliteTable("session", {
   // user: integer( {mode: 'number' })
   //     // .references(() => UsersTable.id, {onDelete: 'cascade', onUpdate: 'cascade'})
   //     .notNull(),
-  date: integer({ mode: "timestamp" }).unique().notNull(),
+  date: integer({ mode: "timestamp" }).notNull(),
   lastModified: integer({ mode: "timestamp" })
     .notNull()
     .default(sql`(unixepoch())`),
@@ -130,7 +130,7 @@ export const activityTemplateRelations = relations(
   activityTemplates,
   ({ many }) => ({
     activityTemplatesToList: many(activityTemplateList),
-  }),
+  })
 );
 
 /** A list (or category) of activity templates for organisation */
@@ -177,5 +177,5 @@ export const activityTemplateListRelations = relations(
       fields: [activityTemplateList.list],
       references: [lists.id],
     }),
-  }),
+  })
 );
