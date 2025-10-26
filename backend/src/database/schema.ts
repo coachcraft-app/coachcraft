@@ -127,7 +127,7 @@ export const activityTemplateRelations = relations(
   activityTemplates,
   ({ many }) => ({
     activityTemplatesToList: many(activityTemplateList),
-  })
+  }),
 );
 
 /** A list (or category) of activity templates for organisation */
@@ -175,5 +175,5 @@ export const activityTemplateListRelations = relations(
       fields: [activityTemplateList.list],
       references: [lists.id],
     }),
-  })
+  }),
 );
