@@ -35,6 +35,8 @@ export function applyMigrationsFromDirectory(
     // Run each statement separately to handle multiple statements in one file
     const sql_statements = sql.split("--> statement-breakpoint");
     for (const statement of sql_statements) {
+      const trimmed = statement.trim();
+      if (!trimmed) continue;
       database.run(statement);
     }
 
@@ -51,22 +53,10 @@ export function applyMigrationsUsingDrizzleKit({
   config = path.resolve(process.cwd(), "drizzle.config.ts"),
   outDirectory = path.resolve(process.cwd(), "drizzle", "migrations"),
 } = {}): void {
-  // Use the drizzle-kit CLI to generate migration SQL then apply it.
-  try {
-    // Ensure output directory exists
-    fs.mkdirSync(outDirectory, { recursive: true });
+  // Run drizzle-kit generate to produce SQL migrations into outDir
+  const cmd = `npx --yes drizzle-kit generate --config "${config}"`;
+  execSync(cmd, { stdio: "inherit" });
+  console.log("drizzle-kit generate completed");
 
-    // Run drizzle-kit generate to produce SQL migrations into outDir
-    // We use execSync so this is synchronous in setup scripts; escape paths for PowerShell
-    const cmd = `npx --yes drizzle-kit generate --config "${config}"`;
-    console.log("running:", cmd);
-    execSync(cmd, { stdio: "inherit" });
-    console.log("drizzle-kit generate completed");
-
-    // Apply SQL files from outDir
-    applyMigrationsFromDirectory(outDirectory);
-  } catch (error) {
-    console.error("applyMigrationsUsingDrizzleKit error:", error);
-    throw error;
-  }
+  applyMigrationsFromDirectory(outDirectory);
 }
