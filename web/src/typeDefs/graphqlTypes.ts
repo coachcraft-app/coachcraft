@@ -21,6 +21,7 @@ export interface GraphQLActivity {
   description: string; //
   imgUrl: string; //
   lastModified: string; //
+  session?: number;
 }
 
 export type listToActivityTemplate = { activityTemplate: { id: number } }[];
@@ -38,5 +39,15 @@ export interface GraphQLListPost {
   name: string;
   listToActivityTemplate?: { id: number }[];
   accentColor?: string;
+  lastModified?: string;
+}
+
+export interface GraphQLSession {
+  id: number;
+  name: string;
+  date: string;
+  notes: string;
+  activities?: GraphQLActivity[];
+  teams?: GraphQLTeam;
   lastModified?: string;
 }

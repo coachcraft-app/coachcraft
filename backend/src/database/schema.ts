@@ -46,7 +46,7 @@ export const sessions = sqliteTable("session", {
   // user: integer( {mode: 'number' })
   //     // .references(() => UsersTable.id, {onDelete: 'cascade', onUpdate: 'cascade'})
   //     .notNull(),
-  date: integer({ mode: "timestamp" }).unique().notNull(),
+  date: integer({ mode: "timestamp" }).notNull(),
   lastModified: integer({ mode: "timestamp" })
     .notNull()
     .default(sql`(unixepoch())`),

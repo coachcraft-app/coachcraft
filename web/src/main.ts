@@ -15,6 +15,7 @@ import { loadDummyData } from "@/dummyData";
 import type { Alpine } from "alpinejs";
 import type { ActivitiesView } from "./stores/views/activities";
 import type { TeamsView } from "./stores/views/teams";
+import type { SessionsView } from "./stores/views/sessions";
 
 /**
  * This is the entry point for the SPA.
@@ -35,6 +36,9 @@ export async function main(alpineObj: Alpine) {
     "activities",
   ) as ActivitiesView;
   const teamsStore: TeamsView = globalAlpine.store("teams") as TeamsView;
+  const sessionsStore: SessionsView = globalAlpine.store(
+    "sessions",
+  ) as SessionsView;
 
   if (import.meta.env.MODE === "production") {
     // configure OIDC client, prompt for login / retrieve credentials
@@ -51,6 +55,8 @@ export async function main(alpineObj: Alpine) {
       activitiesStore.activitiesList,
       activitiesStore.activitiesListsList,
       teamsStore.teamsList,
+      sessionsStore.previousSessions,
+      sessionsStore.upcomingSessions,
     );
   } else {
     // inject dummy data into state if disconnected from backend

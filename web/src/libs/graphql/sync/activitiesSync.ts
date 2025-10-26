@@ -85,7 +85,7 @@ export class ActivitiesSync {
     const m = minutes % 60;
     return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
   }
-  private static convertGraphQLActivityToActivity(
+  public static convertGraphQLActivityToActivity(
     activities: GraphQLActivity[],
   ): Activity[] {
     return activities.map(
@@ -99,7 +99,7 @@ export class ActivitiesSync {
       }),
     );
   }
-  private static convertActivityToGraphQLActivity(
+  public static convertActivityToGraphQLActivity(
     activity: Activity,
   ): GraphQLActivity {
     return {

@@ -4,15 +4,22 @@
  * @module
  */
 
-import type { ActivitiesList, Activity, Team } from "@/typeDefs/storeTypes";
+import type {
+  ActivitiesList,
+  Activity,
+  Team,
+  Session,
+} from "@/typeDefs/storeTypes";
 
 import { ActivitiesSync, ActivitiesListsSync } from "./activitiesSync";
 import { TeamsSync } from "./teamsSync";
+import { SessionsSync } from "./sessionsSync";
 
 import {
   MockActivitiesSync,
   MockActivitiesListsSync,
   MockTeamsSync,
+  MockSessionsSync,
 } from "./mockSync";
 
 /**
@@ -38,6 +45,7 @@ export class Sync {
     list: new ActivitiesListsSync(),
   };
   public static teams: TeamsSync = new TeamsSync();
+  static sessions = new SessionsSync();
 
   private constructor() {}
 
@@ -58,6 +66,7 @@ export class Sync {
         list: new MockActivitiesListsSync(),
       };
       Sync.teams = new MockTeamsSync();
+      Sync.sessions = new MockSessionsSync();
 
       console.log("Using mock sync layer");
     }
@@ -72,11 +81,17 @@ export class Sync {
     activitiesList: Activity[],
     activitiesListsList: ActivitiesList[],
     teamsList: Team[],
+    previousSessionsList: Session[],
+    upcomingSessionsList: Session[],
   ): Promise<void> {
     await Sync.activities.activity.subscribeToActivitiesList(activitiesList);
     await Sync.activities.list.subscribeToActivitiesListsList(
       activitiesListsList,
     );
     await Sync.teams.subscribeToTeamsList(teamsList);
+    await Sync.sessions.subscribeToSessionsList(
+      previousSessionsList,
+      upcomingSessionsList,
+    );
   }
 }

@@ -5,6 +5,7 @@
  */
 
 import type { Session } from "@/typeDefs/storeTypes";
+import { Sync } from "@/libs/graphql/sync";
 
 /**
  * SessionsView class
@@ -14,9 +15,9 @@ import type { Session } from "@/typeDefs/storeTypes";
  */
 export class SessionsView {
   /** List of upcoming sessions (date is more than Date.now()) */
-  private upcomingSessions: Session[];
+  public upcomingSessions: Session[];
   /** List of previous sessions (date is less than Date.now()) */
-  private previousSessions: Session[];
+  public previousSessions: Session[];
 
   /**
    * empty constructor for instantiation
@@ -53,6 +54,7 @@ export class SessionsView {
     );
     if (upcomingIndex !== -1) {
       this.upcomingSessions[upcomingIndex].notes = newNotes;
+      Sync.sessions.notes(this.upcomingSessions[upcomingIndex]);
       return;
     }
 
@@ -62,6 +64,7 @@ export class SessionsView {
     );
     if (previousIndex !== -1) {
       this.previousSessions[previousIndex].notes = newNotes;
+      Sync.sessions.notes(this.previousSessions[previousIndex]);
     }
   }
 
