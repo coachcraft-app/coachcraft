@@ -13,6 +13,7 @@ coverage
 # Backend build artifacts
 /backend/public
 /backend/drizzle
+/backend/**/*.db
 
 # Logs
 log.txt

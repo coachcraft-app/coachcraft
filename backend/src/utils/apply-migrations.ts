@@ -1,0 +1,62 @@
+/**
+ * Utility to apply SQL migrations from a directory to the database.
+ * Useful for setting up test databases.
+ * Makes sure to import AFTER setting TEST/DEV_DB_URL if using jest.setup.ts
+ * @module
+ */
+
+// eslint-disable-next-line unicorn/prefer-node-protocol -- This is jest not node
+import fs from "fs";
+// eslint-disable-next-line unicorn/prefer-node-protocol -- This is jest not node
+import path from "path";
+// eslint-disable-next-line unicorn/prefer-node-protocol -- This is jest not node
+import { execSync } from "child_process";
+import { database } from "../database/database";
+
+/**
+ * Apply drizzle-kit migrations in a directory to a Drizzle instance
+ * @param migrationsDirectory The directory that stores drizzle-kit migrations
+ */
+export function applyMigrationsFromDirectory(
+  // Default to "drizzle/migrations" directory in project root
+  migrationsDirectory = path.resolve(process.cwd(), "drizzle", "migrations"),
+): void {
+  // Check if directory exists
+  if (!fs.existsSync(migrationsDirectory)) return;
+
+  // Get all sql files, sort them, and apply in order
+  const files = fs
+    .readdirSync(migrationsDirectory)
+    .filter((f) => f.endsWith(".sql"))
+    .sort();
+
+  for (const file of files) {
+    const sql = fs.readFileSync(path.join(migrationsDirectory, file), "utf8");
+    // Run each statement separately to handle multiple statements in one file
+    const sql_statements = sql.split("--> statement-breakpoint");
+    for (const statement of sql_statements) {
+      const trimmed = statement.trim();
+      if (!trimmed) continue;
+      database.run(statement);
+    }
+
+    console.log(`applied migration ${file}`);
+  }
+}
+
+/**
+ * Apply drizzle-kit migrations to a drizzle instance by first generating them
+ * @param config { drizzle.config.ts path, drizzle/migrations path }
+ */
+export function applyMigrationsUsingDrizzleKit({
+  // Allow overriding config path and output dir
+  config = path.resolve(process.cwd(), "drizzle.config.ts"),
+  outDirectory = path.resolve(process.cwd(), "drizzle", "migrations"),
+} = {}): void {
+  // Run drizzle-kit generate to produce SQL migrations into outDir
+  const cmd = `npx --yes drizzle-kit generate --config "${config}"`;
+  execSync(cmd, { stdio: "inherit" });
+  console.log("drizzle-kit generate completed");
+
+  applyMigrationsFromDirectory(outDirectory);
+}

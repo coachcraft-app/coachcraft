@@ -18,6 +18,15 @@ import { urql } from "@/libs/graphql/urql"; // importing a pre-initialised insta
  * It provides methods to subscribe to the activities list, and to perform CRUD operations.
  */
 export class ActivitiesSync {
+  private static urqlInstancePromise: Promise<urql> | undefined = undefined;
+  private static async getUrqlClient() {
+    if (!ActivitiesSync.urqlInstancePromise) {
+      ActivitiesSync.urqlInstancePromise = urql.getInstance();
+    }
+    const uqrlInstance = await ActivitiesSync.urqlInstancePromise;
+    return uqrlInstance.getUrqlClient();
+  }
+
   // GraphQL Queries and Mutations
   private static readonly ACTIVITIES_LIST_QUERY = /* GraphQL */ `
     query getActivities {
@@ -110,8 +119,8 @@ export class ActivitiesSync {
    * @param activitiesList Array of activities from activityStore in Alpine.js
    */
   async subscribeToActivitiesList(activitiesList: Activity[]): Promise<void> {
-    (await urql.getInstance())
-      .getUrqlClient()
+    const client = await ActivitiesSync.getUrqlClient();
+    client
       .query(ActivitiesSync.ACTIVITIES_LIST_QUERY, {})
       .subscribe((result) => {
         // empty the array and repopulate
@@ -129,9 +138,10 @@ export class ActivitiesSync {
    * @param id ID of activity to delete
    */
   async delete(id: number): Promise<void> {
-    const result = (await urql.getInstance())
-      .getUrqlClient()
-      .mutation(ActivitiesSync.DELETE_MUTATION, { id: id });
+    const client = await ActivitiesSync.getUrqlClient();
+    const result = await client
+      .mutation(ActivitiesSync.DELETE_MUTATION, { id: id })
+      .toPromise();
     console.log("delete activity", result);
   }
 
@@ -150,11 +160,12 @@ export class ActivitiesSync {
       imgUrl: graphqlActivity.imgUrl,
     };
 
-    const result = (await urql.getInstance())
-      .getUrqlClient()
+    const client = await ActivitiesSync.getUrqlClient();
+    const result = await client
       .mutation(ActivitiesSync.POST_MUTATION, {
-        activity: post,
-      });
+        activity: { ...post },
+      })
+      .toPromise();
     console.log("post activity", result);
   }
 
@@ -163,12 +174,13 @@ export class ActivitiesSync {
    * @param activity Activity object with updated data
    */
   async put(activity: Activity): Promise<void> {
-    const result = (await urql.getInstance())
-      .getUrqlClient()
+    const client = await ActivitiesSync.getUrqlClient();
+    const result = await client
       .mutation(ActivitiesSync.PUT_MUTATION, {
         id: +activity.id,
         activity: ActivitiesSync.convertActivityToGraphQLActivity(activity),
-      });
+      })
+      .toPromise();
     console.log("put activity", result);
   }
 }
@@ -178,6 +190,15 @@ export class ActivitiesSync {
  * It provides methods to subscribe to the activity lists, and to perform CRUD operations.
  */
 export class ActivitiesListsSync {
+  private static urqlInstancePromise: Promise<urql> | undefined = undefined;
+  private static async getUrqlClient() {
+    if (!ActivitiesListsSync.urqlInstancePromise) {
+      ActivitiesListsSync.urqlInstancePromise = urql.getInstance();
+    }
+    const urqlInstance = await ActivitiesListsSync.urqlInstancePromise;
+    return urqlInstance.getUrqlClient();
+  }
+
   // GraphQL Queries and Mutations
   private static readonly LISTS_LIST_QUERY = /* GraphQL */ `
     query getLists {
@@ -288,8 +309,8 @@ export class ActivitiesListsSync {
   async subscribeToActivitiesListsList(
     activitiesListsList: ActivitiesList[],
   ): Promise<void> {
-    (await urql.getInstance())
-      .getUrqlClient()
+    const client = await ActivitiesListsSync.getUrqlClient();
+    client
       .query(ActivitiesListsSync.LISTS_LIST_QUERY, {})
       .subscribe((result) => {
         // empty the array and repopulate
@@ -308,11 +329,12 @@ export class ActivitiesListsSync {
    * @param id ID of activity list to delete
    */
   async delete(id: string): Promise<void> {
-    const result = (await urql.getInstance())
-      .getUrqlClient()
+    const client = await ActivitiesListsSync.getUrqlClient();
+    const result = await client
       .mutation(ActivitiesListsSync.DELETE_MUTATION, {
         id: +id,
-      });
+      })
+      .toPromise();
     console.log("delete", result);
   }
 
@@ -329,11 +351,13 @@ export class ActivitiesListsSync {
       accentColor: graphqlList.accentColor,
     };
 
-    const result = (await urql.getInstance())
-      .getUrqlClient()
+    const urqlInstance = await urql.getInstance();
+    const client = urqlInstance.getUrqlClient();
+    const result = await client
       .mutation(ActivitiesListsSync.POST_MUTATION, {
-        list: post,
-      });
+        list: { ...post },
+      })
+      .toPromise();
     console.log("post list", result);
   }
 
@@ -348,17 +372,18 @@ export class ActivitiesListsSync {
       accentColor: graphqlList.accentColor,
     };
 
-    if (list.activities.length == 0) {
-      const result = (await urql.getInstance())
-        .getUrqlClient()
+    if (list.activities.length === 0) {
+      const client = await ActivitiesListsSync.getUrqlClient();
+      const result = await client
         .mutation(ActivitiesListsSync.PUT_NO_ACTIVITIES_MUTATION, {
           id: +list.id,
           list: base,
-        });
+        })
+        .toPromise();
       console.log("put list", result);
     } else {
-      const result = (await urql.getInstance())
-        .getUrqlClient()
+      const client = await ActivitiesListsSync.getUrqlClient();
+      const result = await client
         .mutation(ActivitiesListsSync.PUT_MUTATION, {
           id: +list.id,
           list: base,
@@ -367,7 +392,8 @@ export class ActivitiesListsSync {
               activityTemplate: +activity,
               list: +list.id,
             })) || [],
-        });
+        })
+        .toPromise();
       console.log("put list", result);
     }
   }
