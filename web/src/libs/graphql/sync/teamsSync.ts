@@ -13,6 +13,15 @@ import type { Team } from "@/typeDefs/storeTypes";
  * It provides methods to subscribe to team list updates, and to create, update, and delete teams.
  */
 export class TeamsSync {
+  private static urqlInstancePromise: Promise<urql> | undefined = undefined;
+  private static async getClient() {
+    if (!TeamsSync.urqlInstancePromise) {
+      TeamsSync.urqlInstancePromise = urql.getInstance();
+    }
+    const instance = await TeamsSync.urqlInstancePromise;
+    return instance.getUrqlClient();
+  }
+
   // GraphQL Queries and Mutations
   private static readonly TEAMS_LIST_QUERY = /* GraphQL */ `
     query getTeams {
@@ -95,18 +104,16 @@ export class TeamsSync {
    * @param teamsList Array of teams on team store on Alpine.js
    */
   async subscribeToTeamsList(teamsList: Team[]): Promise<void> {
-    (await urql.getInstance())
-      .getUrqlClient()
-      .query(TeamsSync.TEAMS_LIST_QUERY, {})
-      .subscribe((result) => {
-        // empty the array and repopulate
-        teamsList.length = 0;
-        for (const team of TeamsSync.convertGraphQLTeamToTeam(
-          result.data?.teams || [],
-        )) {
-          teamsList.push(team);
-        }
-      });
+    const client = await TeamsSync.getClient();
+    client.query(TeamsSync.TEAMS_LIST_QUERY, {}).subscribe((result) => {
+      // empty the array and repopulate
+      teamsList.length = 0;
+      for (const team of TeamsSync.convertGraphQLTeamToTeam(
+        result.data?.teams || [],
+      )) {
+        teamsList.push(team);
+      }
+    });
   }
 
   /**
@@ -114,11 +121,12 @@ export class TeamsSync {
    * @param id ID of team to delete
    */
   async delete(id: string): Promise<void> {
-    const result = (await urql.getInstance())
-      .getUrqlClient()
+    const client = await TeamsSync.getClient();
+    const result = await client
       .mutation(TeamsSync.DELETE_MUTATION, {
         id: +id,
-      });
+      })
+      .toPromise();
     console.log("delete team", result);
   }
 
@@ -127,14 +135,15 @@ export class TeamsSync {
    * @param team Team object with new data
    */
   async post(team: Team): Promise<void> {
-    const result = (await urql.getInstance())
-      .getUrqlClient()
+    const client = await TeamsSync.getClient();
+    const result = await client
       .mutation(TeamsSync.POST_MUTATION, {
         team: {
           name: team.name,
           description: team.description,
         },
-      });
+      })
+      .toPromise();
     console.log("post team", result);
   }
 
@@ -144,8 +153,8 @@ export class TeamsSync {
    */
   async put(team: Team): Promise<void> {
     if (team.players.length > 0) {
-      const result = (await urql.getInstance())
-        .getUrqlClient()
+      const client = await TeamsSync.getClient();
+      const result = await client
         .mutation(TeamsSync.PUT_MUTATION, {
           id: +team.id,
           team: {
@@ -156,19 +165,21 @@ export class TeamsSync {
             name: player,
             team: +team.id,
           })),
-        });
+        })
+        .toPromise();
       console.log("put team", result);
     } else {
       // No players
-      const result = (await urql.getInstance())
-        .getUrqlClient()
+      const client = await TeamsSync.getClient();
+      const result = await client
         .mutation(TeamsSync.PUT_NO_PLAYERS_MUTATION, {
           id: +team.id,
           team: {
             name: team.name,
             description: team.description,
           },
-        });
+        })
+        .toPromise();
       console.log("put team", result);
     }
   }
