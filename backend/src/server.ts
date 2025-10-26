@@ -48,7 +48,7 @@ app.addContentTypeParser(
   {},
   (_request, _payload, done) =>
     // eslint-disable-next-line unicorn/no-null -- `done` expects `null` or `Error` as first arg
-    done(null)
+    done(null),
 );
 
 // add /graphql endpoint
