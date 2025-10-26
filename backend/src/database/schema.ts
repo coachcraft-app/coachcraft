@@ -10,28 +10,24 @@
 import { sql, relations } from "drizzle-orm";
 import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
 
-// ----- SESSION CREATION -----
-// A user of the application
-// export const UsersTable = sqliteTable("user", {
-//     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-//     username: text(),
-//     email: text(),
-//     firstname: text(),
-//     lastname: text(),
-//     lastLogin: text("last_login"),
-//     role: text({ enum: ["coach", "parent", "anonymous"]}).default("anonymous"),
-//     lastModified: integer({ mode: 'timestamp' })
-//         .notNull()
-//         .default(sql`(unixepoch())`),
-// }, (table) => [
-//     check("role_check", sql`${table.role} in ('coach', 'parent', 'anonymous')`)
-// ]);
+/** A user of the application */
+export const users = sqliteTable("users", {
+  id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
+  sub: text().notNull().unique(),
+  email: text(),
+  givenName: text(),
+  profilePic: text(),
+  lastModified: integer({ mode: "timestamp" })
+    .notNull()
+    .default(sql`(unixepoch())`),
+});
 
 /** A sports team */
 export const teams = sqliteTable("teams", {
   id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
   name: text().notNull().unique(),
   description: text(),
+  owner: text(),
   lastModified: integer({ mode: "timestamp" })
     .notNull()
     .default(sql`(unixepoch())`),
@@ -120,6 +116,7 @@ export const activityTemplates = sqliteTable("activity_template", {
   description: text(),
   duration: integer({ mode: "number" }).notNull(),
   imgUrl: text("img_url"),
+  owner: text(),
   lastModified: integer({ mode: "timestamp" })
     .notNull()
     .default(sql`(unixepoch())`),
@@ -130,7 +127,7 @@ export const activityTemplateRelations = relations(
   activityTemplates,
   ({ many }) => ({
     activityTemplatesToList: many(activityTemplateList),
-  }),
+  })
 );
 
 /** A list (or category) of activity templates for organisation */
@@ -138,6 +135,7 @@ export const lists = sqliteTable("list", {
   id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
   name: text().notNull().unique(),
   accentColor: text(),
+  owner: text(),
   lastModified: integer({ mode: "timestamp" })
     .notNull()
     .default(sql`(unixepoch())`),
@@ -177,5 +175,5 @@ export const activityTemplateListRelations = relations(
       fields: [activityTemplateList.list],
       references: [lists.id],
     }),
-  }),
+  })
 );
