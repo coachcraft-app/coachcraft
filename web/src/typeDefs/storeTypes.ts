@@ -66,7 +66,9 @@ export interface Session {
   activities: SessionActivity[];
   team?: string;
   attendance?: { [key: string]: boolean };
+  lastModified?: Date;
 }
+
 export interface SessionActivity extends Activity {
   isSessionCopy?: boolean;
   originalTemplateId?: string;

@@ -4,10 +4,16 @@
  * @module
  */
 
-import type { ActivitiesList, Activity, Team } from "@/typeDefs/storeTypes";
+import type {
+  ActivitiesList,
+  Activity,
+  Team,
+  Session,
+} from "@/typeDefs/storeTypes";
 
 import { ActivitiesSync, ActivitiesListsSync } from "./activitiesSync";
 import { TeamsSync } from "./teamsSync";
+import { SessionsSync } from "./sessionsSync";
 
 /**
  * Sync statically exposes modular sync libs (activitiesSync, teamsSync, etc.)
@@ -27,6 +33,7 @@ export class Sync {
     list: new ActivitiesListsSync(),
   };
   static teams = new TeamsSync();
+  static sessions = new SessionsSync();
 
   /**
    * Sync activitiesList, listsList, teamsList to the server
@@ -35,11 +42,17 @@ export class Sync {
     activitiesList: Activity[],
     activitiesListsList: ActivitiesList[],
     teamsList: Team[],
+    previousSessionsList: Session[],
+    upcomingSessionsList: Session[],
   ): Promise<void> {
     await Sync.activities.activity.subscribeToActivitiesList(activitiesList);
     await Sync.activities.list.subscribeToActivitiesListsList(
       activitiesListsList,
     );
     await Sync.teams.subscribeToTeamsList(teamsList);
+    await Sync.sessions.subscribeToSessionsList(
+      previousSessionsList,
+      upcomingSessionsList,
+    );
   }
 }

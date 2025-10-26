@@ -12,6 +12,8 @@ import type {
   Team,
 } from "@/typeDefs/storeTypes";
 
+import { Sync } from "@/libs/graphql/sync";
+
 /**
  * SchedulingView class
  * Holds state and methods for scheduling sessions
@@ -185,6 +187,8 @@ export class SchedulingView {
 
     this.upcomingSessions.unshift(newSession);
 
+    Sync.sessions.post(newSession);
+
     // Reset form fields
     this.sessionName = "";
     this.sessionDate = "";
@@ -227,12 +231,14 @@ export class SchedulingView {
     let idx = this.upcomingSessions.findIndex((s) => s.id === sessionId);
     if (idx !== -1) {
       this.upcomingSessions.splice(idx, 1);
+      Sync.sessions.delete(Number(sessionId));
       return;
     }
 
     idx = this.previousSessions.findIndex((s) => s.id === sessionId);
     if (idx !== -1) {
       this.previousSessions.splice(idx, 1);
+      Sync.sessions.delete(Number(sessionId));
     }
   }
 }
