@@ -32,9 +32,8 @@ export async function main() {
 
   // Generate and apply SQL migrations at startup (works with gitignored migrations dir)
   try {
-    const { applyMigrationsUsingDrizzleKit } = await import(
-      "./utils/apply-migrations"
-    );
+    const { applyMigrationsUsingDrizzleKit } =
+      await import("./utils/apply-migrations");
     applyMigrationsUsingDrizzleKit();
   } catch (error) {
     console.error("Failed to apply migrations:", error);
