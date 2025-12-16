@@ -4,13 +4,15 @@ repository:
   # See https://docs.github.com/en/rest/reference/repos#update-a-repository for all available settings.
 
   # The name of the repository. Changing this will rename the repository
-  name:
+  name: coachcraft
 
   # A short description of the repository that will show up on GitHub
-  description:
+  description: CoachCraft's mono-repo. Create, Manage and Optimise your Schedules, Teams, Attendance, & more as a Sports Coach, Trainer or Instructor.
+
+  homepage: https://coachcraft.athn.dev
 
   # Either `true` to make the repository private, or `false` to make it public.
-  private: true
+  private: false
 
   has_issues: true
   has_projects: true
@@ -24,7 +26,7 @@ repository:
 
   # Either `true` to allow squash-merging pull requests, or `false` to prevent
   # squash-merging.
-  allow_squash_merge: true
+  allow_squash_merge: false
 
   # Either `true` to allow merging pull requests with a merge commit, or `false`
   # to prevent merging pull requests with merge commits.
@@ -32,14 +34,14 @@ repository:
 
   # Either `true` to allow rebase-merging pull requests, or `false` to prevent
   # rebase-merging.
-  allow_rebase_merge: true
+  allow_rebase_merge: false
 
   # Either `true` to enable automatic deletion of branches on merge, or `false` to disable
-  delete_branch_on_merge: false
+  delete_branch_on_merge: true
 
   # Either `true` to enable automated security fixes, or `false` to disable
   # automated security fixes.
-  enable_automated_security_fixes: false
+  enable_automated_security_fixes: true
 
   # Either `true` to enable vulnerability alerts, or `false` to disable
   # vulnerability alerts.
