@@ -1,5 +1,9 @@
 # CoachCraft
 
+<div align="center">
+  <img src="web/public/images/coach_craft_logo.svg" alt="CoachCraft Logo" width="180">
+</div>
+
 CoachCraft is a lightweight coaching toolkit for planning sessions and managing teams.
 
 It’s split into:
