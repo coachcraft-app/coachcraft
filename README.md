@@ -1,8 +1,13 @@
-# CoachCraft
-
-<div align="center">
+<div>
   <img src="web/public/images/coach_craft_logo.svg" alt="CoachCraft Logo" width="180">
 </div>
+
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-blue)
+![Astro](https://img.shields.io/badge/Astro-5.16+-orange)
+![Fastify](https://img.shields.io/badge/Fastify-5.6+-green)
+![GraphQL](https://img.shields.io/badge/GraphQL-16.11+-pink)
+![SQLite](https://img.shields.io/badge/SQLite-3.0+-lightgrey)
 
 CoachCraft is a lightweight coaching toolkit for planning sessions and managing teams.
 
