@@ -1,0 +1,77 @@
+---
+import HeaderBar from "@/components/navigation/HeaderBar.astro";
+import LeftNav from "@/components/navigation/LeftNav.astro";
+
+import Toast from "@/components/common/Toast.astro";
+
+import Activities from "@/components/views/Activities.astro";
+import Scheduling from "@/components/views/Scheduling.astro";
+import Sessions from "@/components/views/Sessions.astro";
+import Teams from "@/components/views/Teams.astro";
+
+import "@/styles/global.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>CoachCraft</title>
+  </head>
+
+  <body class="bg-bg-black mx-5 my-1" x-data>
+    <HeaderBar />
+
+    <div class="flex gap-4 max-h-[85vh]">
+      <LeftNav />
+      <div class="w-full flex justify-center mt-10">
+        <div class="min-w-[80vw]">
+          <!-- Activities Page -->
+          <div
+            x-cloak
+            x-show="$store.router.currentPage === 'activities'"
+            x-transition
+          >
+            <Activities />
+          </div>
+
+          <!-- Scheduling Page -->
+          <div
+            x-cloak
+            x-show="$store.router.currentPage === 'scheduling'"
+            x-transition
+          >
+            <Scheduling />
+          </div>
+
+          <!-- Sessions Page -->
+          <div
+            x-cloak
+            x-show="$store.router.currentPage === 'sessions'"
+            x-transition
+          >
+            <Sessions />
+          </div>
+
+          <!-- Teams Page -->
+          <div
+            x-cloak
+            x-show="$store.router.currentPage === 'teams'"
+            x-transition
+          >
+            <Teams />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <Toast />
+
+    <script>
+      import main from "@/main.ts";
+      import Alpine from "alpinejs";
+      
+      main(Alpine);
+    </script>
+  </body>
+</html>

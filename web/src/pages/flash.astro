@@ -1,15 +1,17 @@
 ---
 import "@/styles/global.css";
+
+const mode = import.meta.env.MODE;
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>CoachCraft - Loading...</title>
+    <title>CoachCraft</title>
   </head>
 
-  <body class="bg-bg-black min-h-screen flex items-center justify-center" x-data="flashPage()">
+  <body class="bg-bg-black min-h-screen flex items-center justify-center" data-mode={mode}>
     <div class="text-center">
       <!-- Logo -->
       <div class="mb-8">
@@ -22,19 +24,10 @@ import "@/styles/global.css";
     </div>
 
     <script>
-      function flashPage() {
-        return {
-          loading: false,
-          
-          init() {
-            // In production, main.ts will handle authentication and redirect
-            // In development, redirect immediately
-            if (typeof import.meta.env !== 'undefined' && import.meta.env.MODE !== 'production') {
-              window.location.href = '/';
-            }
-          }
-        }
-      }
+      import { initApp } from '@/utils/flash-init';
+      
+      const mode = document.body.getAttribute('data-mode') || '';
+      initApp(mode);
     </script>
   </body>
 </html>

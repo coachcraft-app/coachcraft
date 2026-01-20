@@ -1,8 +1,8 @@
 /**
- * Main entry point for SPA
- * Initializes Alpine.js, OIDC authentication, and GraphQL client
- * in that order
+ * Main entry point for SPA (app page)
+ * Initializes Alpine.js, user authentication state, and GraphQL client
  * Also handles loading dummy data in development mode
+ * Note: OIDC authentication is handled by the flash screen before this
  * @module
  */
 
@@ -16,11 +16,12 @@ import type { Alpine } from "alpinejs";
 import type { ActivitiesView } from "./stores/views/activities";
 import type { TeamsView } from "./stores/views/teams";
 import type { SessionsView } from "./stores/views/sessions";
+import type { auth } from "./stores/auth";
 
 /**
- * This is the entry point for the SPA.
- * It sets up Alpine.js, OIDC authentication, and the GraphQL client (urql).
- * In development mode, it skips OIDC and urql initialization and loads dummy data instead.
+ * This is the entry point for the app page (after authentication).
+ * It sets up Alpine.js and the GraphQL client (urql).
+ * In development mode, it loads dummy data instead.
  * @param alpineObj The Alpine instance created automatically by astro
  */
 export async function main(alpineObj: Alpine) {
@@ -41,8 +42,25 @@ export async function main(alpineObj: Alpine) {
   ) as SessionsView;
 
   if (import.meta.env.MODE === "production") {
-    // configure OIDC client, prompt for login / retrieve credentials
-    await oidc.getInstance().initOidcFlow();
+    // Load user info from OIDC (authentication already handled by flash screen)
+    const authStore: auth = globalAlpine.store("auth") as auth;
+
+    try {
+      const user = await oidc.getInstance().getUserManager().getUser();
+
+      if (user && !user.expired) {
+        authStore.userProfilePic = user.profile.profile;
+        authStore.givenName = user.profile.given_name;
+        authStore.userEmail = user.profile.email;
+      } else {
+        // No valid user - log warning but don't redirect to avoid loops
+        console.warn(
+          "No valid user session found. App may not function correctly.",
+        );
+      }
+    } catch (error) {
+      console.error("Error loading user info:", error);
+    }
 
     // init GraphQL client (backend API)
     await urql.getInstance();
