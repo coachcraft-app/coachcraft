@@ -10,12 +10,6 @@ import Sessions from "@/components/views/Sessions.astro";
 import Teams from "@/components/views/Teams.astro";
 
 import "@/styles/global.css";
-
-// Server-side redirect check
-if (import.meta.env.MODE === 'production' || Astro.url.pathname === '/') {
-  // Always redirect to flash page from root
-  return Astro.redirect('/flash');
-}
 ---
 
 <html lang="en">
@@ -25,7 +19,7 @@ if (import.meta.env.MODE === 'production' || Astro.url.pathname === '/') {
     <title>CoachCraft</title>
   </head>
 
-  <body class="bg-bg-black mx-5 my-1" x-data="mainPage()">
+  <body class="bg-bg-black mx-5 my-1" x-data>
     <HeaderBar />
 
     <div class="flex gap-4 max-h-[85vh]">
@@ -73,15 +67,5 @@ if (import.meta.env.MODE === 'production' || Astro.url.pathname === '/') {
 
     <Toast />
 
-    <script>
-      function mainPage() {
-        return {
-          init() {
-            // Page initialization logic
-            console.log("Main page loaded");
-          }
-        }
-      }
-    </script>
   </body>
 </html>
