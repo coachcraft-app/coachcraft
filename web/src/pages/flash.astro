@@ -1,0 +1,45 @@
+---
+import "@/styles/global.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>CoachCraft - Loading...</title>
+  </head>
+
+  <body class="bg-bg-black min-h-screen flex items-center justify-center" x-data="flashPage()">
+    <div class="text-center">
+      <!-- Logo -->
+      <div class="mb-8">
+        <img 
+          src="/images/coach_craft_logo.svg" 
+          alt="CoachCraft Logo" 
+          class="w-32 h-32 mx-auto animate-pulse"
+        />
+      </div>
+    </div>
+
+    <script>
+      function flashPage() {
+        return {
+          loading: true,
+          
+          async init() {
+            // Wait a moment for the app to initialize
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            this.loading = false;
+            
+            // Redirect to main app after loading
+            // The main app will handle authentication flow
+            setTimeout(() => {
+              window.location.href = '/';
+            }, 500);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
