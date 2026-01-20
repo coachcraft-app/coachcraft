@@ -17,21 +17,30 @@ export async function initApp(mode: string) {
     // Production mode: Check authentication status
     console.log("Production mode - initializing OIDC...");
 
-    // Loop detection - check if we've been here too many times
-    const redirectCount = parseInt(
-      sessionStorage.getItem("flashRedirectCount") || "0",
-    );
-    if (redirectCount > 3) {
-      console.error("Too many redirects detected. Breaking loop.");
+    // Enhanced loop detection
+    const now = Date.now();
+    const lastRedirectTime = parseInt(sessionStorage.getItem("lastFlashRedirectTime") || "0");
+    const redirectCount = parseInt(sessionStorage.getItem("flashRedirectCount") || "0");
+    
+    // If we're redirecting too frequently (within 1 second) or too many times (>2), break the loop
+    const timeSinceLastRedirect = now - lastRedirectTime;
+    if ((timeSinceLastRedirect < 1000 && redirectCount > 0) || redirectCount > 2) {
+      console.error("Redirect loop detected. Attempts:", redirectCount, "Time since last:", timeSinceLastRedirect);
       sessionStorage.removeItem("flashRedirectCount");
+      sessionStorage.removeItem("lastFlashRedirectTime");
       document.body.innerHTML =
-        '<div style="color: white; text-align: center; padding: 50px;"><h1>Authentication Error</h1><p>Unable to authenticate. Please check your Cognito configuration.</p><p><a href="/app" style="color: #60a5fa;">Continue to app anyway (dev)</a></p></div>';
+        '<div style="color: white; text-align: center; padding: 50px;">' +
+        '<h1>Authentication Error</h1>' +
+        '<p>Unable to authenticate. The app is stuck in a redirect loop.</p>' +
+        '<p>This may be due to Cognito configuration issues.</p>' +
+        '<button onclick="sessionStorage.clear(); window.location.reload();" style="background: #60a5fa; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 10px;">Retry</button>' +
+        '<button onclick="window.location.href=\'/app\';" style="background: #4b5563; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 10px;">Skip Auth (Dev Only)</button>' +
+        '</div>';
       return;
     }
-    sessionStorage.setItem(
-      "flashRedirectCount",
-      (redirectCount + 1).toString(),
-    );
+    
+    sessionStorage.setItem("flashRedirectCount", (redirectCount + 1).toString());
+    sessionStorage.setItem("lastFlashRedirectTime", now.toString());
 
     const oidcInstance = oidc.getInstance();
     const userManager = oidcInstance.getUserManager();

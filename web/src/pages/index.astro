@@ -1,4 +1,20 @@
 ---
-// Redirect to flash screen (entry point)
-return Astro.redirect('/flash');
+import "@/styles/global.css";
 ---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="refresh" content="0; url=/flash" />
+    <title>CoachCraft</title>
+    <script>
+      window.location.replace('/flash');
+    </script>
+  </head>
+  <body class="bg-bg-black min-h-screen">
+    <noscript>
+      <meta http-equiv="refresh" content="0; url=/flash" />
+    </noscript>
+  </body>
+</html>
