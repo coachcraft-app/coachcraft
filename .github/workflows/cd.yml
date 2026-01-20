@@ -9,32 +9,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone repository
-        uses: GuillaumeFalourd/clone-github-repo-action@v2.1
-        with:
-          owner: "athNdev"
-          repository: ${{ github.event.repository.name }}
-          access-token: ${{ secrets.COACHCRAFT_PLATFORM_CONTENTS_RW }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Build SPA
         run: |
-          cd ${{ github.event.repository.name }}/web
+          cd web
           npm i
           npm run prod
 
       - name: Bundle web app for Pages depl
         run: |
-          REPO_NAME="${{ github.event.repository.name }}"
-          BUILD_DIR="$REPO_NAME/pages-build"
+          BUILD_DIR="pages-build"
 
           # copy built SPA
-          cp -a "$REPO_NAME/web/dist/." "$BUILD_DIR/"
+          cp -a "web/dist/." "$BUILD_DIR/"
 
       - name: Upload static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ github.event.repository.name }}/pages-build
+          path: pages-build
 
   deploy:
     needs: build
