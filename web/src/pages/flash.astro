@@ -24,19 +24,14 @@ import "@/styles/global.css";
     <script>
       function flashPage() {
         return {
-          loading: true,
+          loading: false,
           
-          async init() {
-            // Wait a moment for the app to initialize
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            this.loading = false;
-            
-            // Redirect to main app after loading
-            // The main app will handle authentication flow
-            setTimeout(() => {
+          init() {
+            // In production, main.ts will handle authentication and redirect
+            // In development, redirect immediately
+            if (typeof import.meta.env !== 'undefined' && import.meta.env.MODE !== 'production') {
               window.location.href = '/';
-            }, 500);
+            }
           }
         }
       }
