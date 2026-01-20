@@ -27,13 +27,6 @@ export async function main(alpineObj: Alpine) {
   console.log("Mode:", import.meta.env.MODE);
   console.log("Current pathname:", window.location.pathname);
 
-  // Only redirect if we're on the root page
-  if (window.location.pathname === "/") {
-    console.log("Redirecting to flash page...");
-    window.location.href = "/flash";
-    return;
-  }
-
   // SPA initialisation sequence
 
   // init Alpine plugins, register stores, init global Alpine object
@@ -67,9 +60,13 @@ export async function main(alpineObj: Alpine) {
       sessionsStore.upcomingSessions,
     );
 
-    // After authentication is handled, redirect to main app
+    // Only redirect from flash page if we have a valid user
     if (window.location.pathname === "/flash") {
-      window.location.href = "/";
+      const user = await oidc.getInstance().getUserManager().getUser();
+      if (user && !user.expired) {
+        console.log("User authenticated, redirecting to main app");
+        window.location.href = "/";
+      }
     }
   } else {
     // inject dummy data into state if disconnected from backend

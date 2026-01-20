@@ -10,6 +10,12 @@ import Sessions from "@/components/views/Sessions.astro";
 import Teams from "@/components/views/Teams.astro";
 
 import "@/styles/global.css";
+
+// Server-side redirect check
+if (import.meta.env.MODE === 'production' || Astro.url.pathname === '/') {
+  // Always redirect to flash page from root
+  return Astro.redirect('/flash');
+}
 ---
 
 <html lang="en">
@@ -71,9 +77,8 @@ import "@/styles/global.css";
       function mainPage() {
         return {
           init() {
-            // Check if user is authenticated
-            // If not, redirect to flash page
-            // This will be handled by the main.ts initialization
+            // Page initialization logic
+            console.log("Main page loaded");
           }
         }
       }
