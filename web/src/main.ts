@@ -25,6 +25,14 @@ import type { SessionsView } from "./stores/views/sessions";
  */
 export async function main(alpineObj: Alpine) {
   console.log("Mode:", import.meta.env.MODE);
+  console.log("Current pathname:", window.location.pathname);
+
+  // Only redirect if we're on the root page
+  if (window.location.pathname === "/") {
+    console.log("Redirecting to flash page...");
+    window.location.href = "/flash";
+    return;
+  }
 
   // SPA initialisation sequence
 
@@ -58,6 +66,11 @@ export async function main(alpineObj: Alpine) {
       sessionsStore.previousSessions,
       sessionsStore.upcomingSessions,
     );
+
+    // After authentication is handled, redirect to main app
+    if (window.location.pathname === "/flash") {
+      window.location.href = "/";
+    }
   } else {
     // inject dummy data into state if disconnected from backend
     loadDummyData();
@@ -68,6 +81,13 @@ export async function main(alpineObj: Alpine) {
     console.log(
       "Development mode: Skipping Cognito and Urql initialization for testing",
     );
+
+    // In development, redirect to main app after initialization
+    if (window.location.pathname === "/flash") {
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+    }
   }
 }
 
